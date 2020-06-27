@@ -5,11 +5,11 @@
 # Site
 title: 一步一步
 subtitle: ''
-description: ''
+description: '云天收夏色，木叶动秋声'
 keywords:
-author: 刘理想
-language: cn
-timezone: ''
+author: 'Liu Lixiang'
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -101,3 +101,17 @@ deploy:
   type: git
   repository: https://github.com/liulixiang1988/liulixiang1988.github.io
   branch: master
+
+# rss
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:

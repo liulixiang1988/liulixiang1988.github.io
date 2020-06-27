@@ -6,25 +6,27 @@ tags: CSS3
 author: 刘理想
 ---
 
-##1. 页面整体分析
+## 1. 页面整体分析
 
 做一个网页或者网站，第一步就是先定义网页与网站的结构，这是所有任务的前提。
 
 ---
 
-##2 准备工作
+## 2 准备工作
 
 在这个案例中，我们将使用Gulp, SASS和Compass来创建。
 
-###2.1 安装Gulp
+### 2.1 安装Gulp
+
 Gulp是为了后期进行自动化工作而做的。
 
-- 如果电脑没有安装node，那么第一步就是下载node，并且安装。
-- 安装http-server来查看网页: `npm install -g http-server`
-- 全局安装gulp:`sudo npm install -g gulp`
-- 初始化项目：`npm init`
-- 安装gulp及常用库
-```
+* 如果电脑没有安装node，那么第一步就是下载node，并且安装。
+* 安装http-server来查看网页: `npm install -g http-server` 
+* 全局安装gulp: `sudo npm install -g gulp` 
+* 初始化项目： `npm init` 
+* 安装gulp及常用库
+
+``` 
 npm install gulp --save-dev
 npm install gulp-concat --save-dev
 npm install gulp-uglify --save-dev
@@ -36,11 +38,12 @@ npm install gulp-sourcemaps
 npm install del --save-dev
 ```
 
-###2.2 安装SASS与Compass
+### 2.2 安装SASS与Compass
 
-- 如果没有安装ruby，请先安装ruby
-- 配置ruby gem的source:
-```
+* 如果没有安装ruby，请先安装ruby
+* 配置ruby gem的source:
+
+``` 
 $ gem sources --remove https://rubygems.org/
 $ gem sources -a https://ruby.taobao.org/
 $ gem sources -l
@@ -53,39 +56,47 @@ $ gem update #更新
 $ gem install sass --version=3.3
 $gem uninstall sass
 ```
-- 安装SASS
-```
+
+* 安装SASS
+
+``` 
 $gem install sass
 $gem install sass --version=3.3
 $sass -v
 ```
-- 安装Compass
-```
+
+* 安装Compass
+
+``` 
 gem isntall compass
 ```
 
 接下来我们来配置项目
 
-###2.3 使用Compass配置SASS
-```
+### 2.3 使用Compass配置SASS
+
+``` 
 compass create
 ```
 
-一般来说，我们使用`compass create [项目名]`来创建项目，但是我们在之前已经使用`node init`初始化过了，所以此处我们略去项目名。
+一般来说，我们使用 `compass create [项目名]` 来创建项目，但是我们在之前已经使用 `node init` 初始化过了，所以此处我们略去项目名。
 
-###2.4 配置bower
-创建`.bowerrc`文件，然后添加：
-```
+### 2.4 配置bower
+创建 `.bowerrc` 文件，然后添加：
+
+``` 
 {
   "directory": "lib"
 }
 ```
+
 这里是指定bower安装的第三方库都在lib目录下。
 
-###2.4 创建gulp任务
+### 2.5 创建gulp任务
 
 在根目录下创建gulpfile.js
-```
+
+``` 
 'use strict';
 
 var gulp = require('gulp'),
@@ -171,7 +182,8 @@ gulp.task('default', ['clean'], function() {
 ```
 
 目前为止我们的目录如下：
-```
+
+``` 
 ├── config.rb
 ├── css
 ├── fonts
@@ -203,25 +215,31 @@ gulp.task('default', ['clean'], function() {
 ```
 
 经过一番配置，后面我们只需要运行:
-```
+
+``` 
 gulp serve
 ```
+
 就可以监视文件的变化，并且自动进行编译了。
 
 ---
-##3. 模块分析与细节实现
 
-###3.1 重置样式与文件结构
+## 3. 模块分析与细节实现
 
-我们使用normalize来对样式进行重置，normailze的SCSS版本在这里：https://github.com/JohnAlbin/normalize-scss 下载到`scss/base/_normalize.scss`。
+### 3.1 重置样式与文件结构
 
-然后打开`application.scss`，引入:
-```
+我们使用normalize来对样式进行重置，normailze的SCSS版本在这里：https://github.com/JohnAlbin/normalize-scss 下载到 `scss/base/_normalize.scss` 。
+
+然后打开 `application.scss` ，引入:
+
+``` 
 @import "base/normalize";
 ```
+
 就完成对页面的重置了。
 如果此时定义一个页面如下：
-```
+
+``` 
 <!DOCTYPE html>
 <html>
     <head>
@@ -243,12 +261,13 @@ gulp serve
 </html>
 ```
 
-此时运行`http-server`可以再浏览器的`localhost:8080`中进行查看。
+此时运行 `http-server` 可以再浏览器的 `localhost:8080` 中进行查看。
 
-###3.2 页头、Banner、正文、页脚的宏观布局
+### 3.2 页头、Banner、正文、页脚的宏观布局
 
 布局一直都是从大到小，因此刚开始不必对细节过分关注。
-```
+
+``` 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,9 +295,9 @@ gulp serve
 </html>
 ```
 
-###3.3 页头结构分析及布局
+### 3.3 页头结构分析及布局
 
-```
+``` 
 <header id="header" class="">
     <nav>
         <div class="logo"><a href="#" >理想</a></div>
@@ -300,8 +319,9 @@ gulp serve
 </header>
 ```
 
-定义`_header.scss`
-```
+定义 `_header.scss` 
+
+``` 
 nav {
     background: $navbar-bgColor;
     height: $navbar-height;
@@ -330,8 +350,9 @@ nav{
 }
 ```
 
-定义`_logo.scss`:
-```
+定义 `_logo.scss` :
+
+``` 
 .logo{
     font-size: $logo-fontSize;
     font-weight: $logo-fontWeight;
@@ -348,8 +369,9 @@ nav{
 }
 ```
 
-定义`_banner.scss`:
-```
+定义 `_banner.scss` :
+
+``` 
 #banner{
     background: $banner-bgColor;
     height: $banner-height;
@@ -379,8 +401,10 @@ nav{
     }
 }
 ```
-定义`_buttons.scss`
-```
+
+定义 `_buttons.scss` 
+
+``` 
 button{
     border: $button-border;
     background-color: $button-bgColor;
@@ -389,8 +413,9 @@ button{
 }
 ```
 
-其中变量定义再`_variables.scss`:
-```
+其中变量定义再 `_variables.scss` :
+
+``` 
 $navbar-height : 50px;
 $navbar-bgColor: #ccc;
 $navbar-menu-float: right;
@@ -427,20 +452,13 @@ $logo-lineHeight: $navbar-height;
 $logo-padding: 0 0 0 10px;
 ```
 
-###3.3 正文部分结构分析及布局
+### 3.3 正文部分结构分析及布局
 
 使用normalize之后，h1~6可能会造成margin collapse，解释在：
 http://stackoverflow.com/questions/7374657/normalize-css-top-header-gap
 
->When an element with a margin is inside an element without border or padding, the margin collapses with the margin of the parent element.
+> When an element with a margin is inside an element without border or padding, the margin collapses with the margin of the parent element.
+
 It's the margin of the h1 element that you see at the top. As none of the parents have border or padding, the margin collapses all the way out to the outermost container.
 `h1, h2, h3, h4, h5, h6{margin:0;padding:0}` solve the problem, for the moment.
 Adding `overflow:auto` on the parent also keeps the margins from collapsing. 
-
-```
-```
-
-
-
-
-
