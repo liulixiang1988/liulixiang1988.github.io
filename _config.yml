@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://liulixiang1988.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -115,3 +115,13 @@ feed:
   icon: icon.png
   autodiscovery: true
   template:
+
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 2
+  wpm: 275
+  suffix: "mins."
