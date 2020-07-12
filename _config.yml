@@ -115,3 +115,9 @@ feed:
   icon: icon.png
   autodiscovery: true
   template:
+
+excerpt:
+  depth: 10
+  excerpt_excludes: []
+  more_excludes: []
+  hideWholePostExcerpts: true
