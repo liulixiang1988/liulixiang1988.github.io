@@ -368,3 +368,22 @@ $ kubectl describe pod -l app=myboot
     Restart Count:  1
 ...
 ```
+
+## JIB
+
+```xml
+<plugin>
+    <groupId>com.google.cloud.tools</groupId>
+    <artifactId>jib-maven-plugin</artifactId>
+    <version>1.6.1</version>
+</plugin>
+```
+
+Build Docker Image and run:
+
+```bash
+eval $(minishift docker-env)
+mvn compile jib:dockerBuild -Dimage=9stepsawesome/myboot:v1
+docker run -it -p 8080:8080 9stepsawesome/myboot:v1
+curl $(minishift ip):8080
+```

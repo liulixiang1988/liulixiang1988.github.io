@@ -220,6 +220,13 @@ $ eval $(minikube --profile 9steps docker-env)
 1. This command allows configure your "docker" CLI tool against your minikube or minishift’s Docker daemon. If you are using GKE, AKS, EKS or other, then you will need to "docker push" your image to that platform’s favorite image registry. You can also use quay.io as a vendor neutral registry
 2. This command puts the "oc" CLI tool in your PATH
 
+If you use minikube with error for pulling images, to use an image without uploading it, you can follow these steps:
+
+- Set the environment variables with eval $(minikube docker-env)
+- Build the image with the Docker daemon of Minikube (eg docker build -t my-image .)
+- Set the image in the pod spec like the build tag (eg my-image)
+- Set the imagePullPolicy to Never, otherwise Kubernetes will try to download the image.
+
 ### Using Docker CLI
 
 ```bash
