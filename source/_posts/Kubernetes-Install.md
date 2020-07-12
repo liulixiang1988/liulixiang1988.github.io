@@ -1,0 +1,498 @@
+---
+
+title: Kubernetes Environment
+
+date: 2020-07-12 08:30
+
+category: Kubernetes
+
+tags: 
+
+- Kubernetes
+- Minikube
+- Docker
+
+author: 刘理想
+
+---
+
+## Setup
+
+OpenShift is Red Hat’s distribution of Kubernetes
+
+minikube and minishift are essentially equivalent and will be used for the demonstrations/examples below.
+
+### Prerequisites
+
+- Docker or
+- Podman
+- brew install kubectx
+- minikube
+- kubectl
+
+### Downloads
+
+Downloads & Install Kubectl CLI
+
+```bash
+# MacOS
+$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/darwin/amd64/kubectl
+#
+$ chmod +x kubectl
+# or
+$ brew install kubernetes-cli
+```
+
+Linux & Windows instructions for finding and downloading the a kubectl https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl
+
+Download & Install Minikube Cluster
+
+```bash
+$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.4.0/minikube-darwin-amd64
+$ chmod +x minikube
+# or
+$ brew install minikube
+# if you don't have VirtualBox installed
+$ brew cask install virtualbox
+```
+
+More Minikube releases https://github.com/kubernetes/minikube/releases
+
+OR
+
+Download & Install Minishift Cluster
+
+```bash
+$ curl -LO https://github.com/minishift/minishift/releases/download/v1.33.0/minishift-1.33.0-darwin-amd64.tgz
+$ tar -xvf minishift-1.33.0-darwin-amd64.tgz
+```
+
+More Minishift releases https://github.com/minishift/minishift/releases
+
+Note: "minikube" should be interchangeable with "minishift" in the instructions below, if there is a unique aspect then that will be called out.
+
+### Environment
+
+```bash
+#!/bin/bash
+
+export MINIKUBE_HOME=/Users/burrsutter/minikube/;
+export PATH=$MINIKUBE_HOME/bin:$PATH
+$ minikube version
+minikube version: v1.4.0
+# or
+$ minishift version
+minishift v1.33.0+ba29431
+```
+
+### Create the VM
+
+minikube support multiple instance. Use profile to set the instance.
+
+```bash
+#!/bin/bash
+
+# minishift profile set 9steps
+minikube --profile 9steps config set memory 6144
+minikube --profile 9steps config set cpus 2 (1)
+minikube --profile 9steps config set vm-driver virtualbox #hyperkit (2)
+# kubernetes version only applies to minikube
+minikube --profile 9steps config set kubernetes-version v1.12.0 (3)
+# minishift addon enable admin-user (4)
+# minishift addon enable anyuid (5)
+minikube start --profile 9steps (6)
+```
+
+1. I use 2 cpus here because I have 6 core laptop. Keep this number at or below 50% of overall laptop resources. There is nothing in this series of exercises that is CPU intensive but minishift has a 10 pod per core limit.
+2. I use virtualbox because it is available on all platforms. There a number of hypervisor options https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor
+3. Setting the Kubernetes version explicitly so you know what you are getting, only applies to minikube
+4. Minishift is secured by default, this creates an cluster "admin" user
+5. A mechanism on OpenShift that allows the execution of an image with any user id, including root. https://github.com/burrsutter/9stepsawesome/issues/3
+6. Profiles are somewhat new in minikube land. These allow you to more easily switch between versions of Kubernetes as well as configurations involving Istio and/or Knative
+
+### Check status, IP & Dashboard/Console
+
+```bash
+$ minikube --profile 9steps config view
+- cpus: 2
+- memory: 6144
+- vm-driver: virtualbox
+$ minikube --profile 9steps status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.103
+$ minikube --profile 9steps ip
+192.168.99.103
+$ minikube --profile 9steps dashboard --url
+http://192.168.99.103:30000
+$ minikube --profile 9steps dashboard
+```
+
+![Minikube Dashboard](/images/minikube_dashboard.png)
+
+Figure 1. minikube dashboard
+
+![minishift Dashboard](/images/openshift_dashboard.png)
+
+### Check your kubectl CLI
+
+```bash
+$ kubectl config current-context
+9steps
+# or in the case of minishift
+# myproject/192-168-99-102:8443/admin
+
+$ kubectl version
+Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.3", GitCommit:"721bfa751924da8d1680787490c54b9179b1fed0", GitTreeState:"clean", BuildDate:"2019-02-04T04:48:03Z", GoVersion:"go1.11.5", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"1", Minor:"12", GitVersion:"v1.12.0", GitCommit:"0ed33881dc4355495f623c6f22e7dd0b7632b7c0", GitTreeState:"clean", BuildDate:"2018-09-27T16:55:41Z", GoVersion:"go1.10.4", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+and if needed, point kubectl back at minikube with "kubectl config use-context minikube"
+
+Also, there is a cool tool that makes switching between Kubernetes clusters and the context a lot easier https://github.com/ahmetb/kubectx
+
+```bash
+brew install kubectx
+```
+
+### Namespaces & Pods
+
+```bash
+$ kubectl get namespaces (1)
+$ kubectl get pod --all-namespaces
+```
+
+1. Running this command when using minishift will likely result in the following error due to not having admin rights on the openshift cluster. To login as an admin so that you can execute the following command and login with admin (password: admin)
+
+```bash
+Error from server (Forbidden): namespaces is forbidden: User "developer" cannot list namespaces at the cluster scope: no RBAC policy matched
+
+$ oc login $(minishift dashboard --url | sed 's/\/console//')
+Authentication required for https://192.168.99.104:8443 (openshift)
+Username: admin
+Password: admin
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    default
+    kube-dns
+    kube-proxy
+    kube-public
+    kube-system
+  * myproject
+    openshift
+    openshift-apiserver
+    openshift-controller-manager
+    openshift-core-operators
+    openshift-infra
+    openshift-node
+    openshift-service-cert-signer
+    openshift-web-console
+
+Using project "myproject".
+```
+
+### Nodes
+
+A Kubernetes cluster normally consists of 3 Masters and N Workers. Minikube and Minishift are all-in-one Master+Worker single VMs
+
+```bash
+$ kubectl get nodes --show-labels
+```
+
+### Configure Env for Docker
+
+```bash
+$ minikube --profile 9steps docker-env (1)
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.108:2376"
+export DOCKER_CERT_PATH="/Users/burrsutter/minikube_0.33.1/bin/.minikube/certs"
+export DOCKER_API_VERSION="1.35"
+# Run this command to configure your shell:
+# eval $(minikube --profile 9steps docker-env)
+# or
+$ eval $(minikube --profile 9steps docker-env)
+# and
+# eval $(minishift oc-env) (2)
+```
+
+1. This command allows configure your "docker" CLI tool against your minikube or minishift’s Docker daemon. If you are using GKE, AKS, EKS or other, then you will need to "docker push" your image to that platform’s favorite image registry. You can also use quay.io as a vendor neutral registry
+2. This command puts the "oc" CLI tool in your PATH
+
+### Using Docker CLI
+
+```bash
+$ docker ps
+$ docker images
+```
+
+These commands should now be pulling from your minikube/minishift hosted docker daemon. You can turn off the Docker for Mac/Windows daemon to save memory.
+
+### Minikube/Minishift Happy?
+
+```bash
+$ minikube --profile 9steps ssh (1)
+$ free -h
+$ df -h
+$ top
+$ ctrl-c
+$ exit
+```
+
+1. you can shell into your VM and check on resources
+
+## Hello World
+
+Minishift is secured by default and requires you to login
+
+```bash
+$ oc login $(minishift --profile ip):8443 -u admin -p admin
+```
+
+The "default" namespace should already be the current context, but setting it here to make it obvious
+
+```bash
+$ kubectl config set-context $(kubectl config current-context) --namespace=default
+# or
+$ kubens default
+# kubens comes with the kubectx tool
+```
+
+The command "kubectl run" is the fastest way to deploy a pod (think linux container). It is useful during development but NOT recommended for production. You will receive a deprecation warning.
+
+```bash
+$ kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080
+
+# Non-deprecated run command is
+# kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080 --generator=run-pod/v1
+# but this only results in a single Pod
+```
+
+It produces a Deployment
+
+```bash
+$ kubectl get deployments
+NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+hello-minikube   1         1         1            1           7s
+```
+
+which produces a ReplicaSet
+
+```bash
+$ kubectl get replicaset
+```
+
+which produces a Pod
+
+```bash
+$ kubectl get pods
+NAME                              READY     STATUS    RESTARTS   AGE
+hello-minikube-7c77b68cff-2xcpp   1/1       Running   0          27s
+
+# Tip, if you can not find your pod, perhaps it is in another namespace
+$ kubectl get pods --all-namespaces
+
+# and it can be fun to see what labels were applied to your pod
+$ kubectl get pods --show-labels
+```
+
+You create a Service
+
+```bash
+$ kubectl expose deployment hello-minikube --type=NodePort
+service "hello-minikube" exposed
+```
+
+and see that newly minted Service object
+
+```bash
+$ kubectl get service
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+hello-minikube   NodePort    10.97.139.177   <none>        8080:32403/TCP   20s
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP           1h
+```
+
+You can find the Service’s URL
+
+```bash
+$ minikube --profile 9steps service hello-minikube --url
+http://192.168.99.103:32403
+# and curl it
+$ curl $(minikube --profile 9steps service hello-minikube --url)
+```
+
+or just load up the URL in your favorite browser https://screencast.com/t/k5GVJlfg
+
+Note: minishift has a slightly different variant on the "service" command
+
+```bash
+$ minishift openshift service hello-minikube --url
+# and curl it
+$ curl $(minishift openshift service hello-minikube --url)
+```
+
+You can also get the NodePort using jsonpath
+
+```bash
+$ kubectl get service hello-minikube -o jsonpath="{.spec.ports[*].nodePort}"
+```
+
+Or using the "jq" (brew install jq) command line tool to parse the JSON is also a very handy trick
+
+```bash
+$ kubectl get service hello-minikube -ojson | jq -r '.spec.ports[].nodePort'
+```
+
+The Deployment that was generated via your "kubectl run" commamnd actually has a bunch of interesting defaults
+
+```
+$ kubectl describe deployment hello-minikube
+Name:                   hello-minikube
+Namespace:              default
+CreationTimestamp:      Sun, 29 Jul 2018 15:21:38 -0400
+Labels:                 run=hello-minikube
+Annotations:            deployment.kubernetes.io/revision=1
+Selector:               run=hello-minikube
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  1 max unavailable, 1 max surge
+Pod Template:
+  Labels:  run=hello-minikube
+  Containers:
+   hello-minikube:
+    Image:        k8s.gcr.io/echoserver:1.10
+    Port:         8080/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   hello-minikube-7c77b68cff (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  5m    deployment-controller  Scaled up replica set hello-minikube-7c77b68cff to 1
+```
+
+but that is beyond the scope of simply getting started, just remember the "kubectl describe <object>" trick for future reference.
+
+Another key tip to remember, is "get all" which is useful for seeing what other objects might be floating around
+
+```yaml
+$ kubectl get all
+# or with -n mynamespace
+$ kubectl get all -n default
+$ curl $(minikube --profile 9steps ip):$(kubectl get service hello-minikube -o jsonpath="{.spec.ports[*].nodePort}")
+
+
+Hostname: hello-minikube-56cdb79778-cpbc8
+
+Pod Information:
+	-no pod information available-
+
+Server values:
+	server_version=nginx: 1.13.3 - lua: 10008
+
+Request Information:
+	client_address=172.17.0.1
+	method=GET
+	real path=/
+	query=
+	request_version=1.1
+	request_scheme=http
+	request_uri=http://192.168.99.100:8080/
+
+Request Headers:
+	accept=*/*
+	host=192.168.99.100:32570
+	user-agent=curl/7.54.0
+
+Request Body:
+	-no body in request-
+```
+
+### Clean up
+
+```bash
+$ kubectl delete service hello-minikube
+
+$ kubectl delete deployment hello-minikube
+```
+
+And you will notice that the pod also terminates. In another terminal window, use the -w to watch as the pod changes state
+
+```bash
+$ kubectl get pods -w
+NAME                              READY     STATUS    RESTARTS   AGE
+hello-minikube-7c77b68cff-2xcpp   1/1       Running   0          8m
+hello-minikube-7c77b68cff-2xcpp   1/1       Terminating   0         9m
+hello-minikube-7c77b68cff-2xcpp   0/1       Terminating   0         9m
+```
+
+Use Ctrl-c to stop watching pods
+
+You can shutdown the VM to save resources when not in use
+
+```bash
+$ minikube --profile 9steps stop
+# go about your business, come back later and
+$ minikube --profile 9steps start
+```
+
+and if you need to wipe out the VM entirely
+
+```bash
+$ minikube --profile 9steps delete
+```
+
+Your minikube configuration goes in a hidden directory at
+
+```bash
+$ ls $MINIKUBE_HOME/.minikube/profiles/9steps/
+```
+
+and your kubectl configuration goes in a different hidden directory that is normally at
+
+```bash
+$ cat $HOME/.kube/config
+```
+
+BUT, based on the change in the 0_setenv_minikube.sh, this directory has been moved by setting an env variable, helping to keep your various minikube worlds separated
+
+```bash
+export KUBECONFIG=$MINIKUBE_HOME/.kube/config
+```
+
+So if things go really badly, you might need to wipe out those directories
+
+```bash
+$ rm -rf ~/.kube
+# OR
+$ rm -rf $MINIKUBE_HOME/.kube/config
+$ rm -rf $MINIKUBE_HOME/.minikube
+```
+
+## More resources
+
+https://github.com/kubernetes/minikube#installation
+
+https://kubernetes.io/docs/setup/minikube/#quickstart including proxy challenges
+
+**Hyperkit for Mac**
+
+https://github.com/kubernetes/minikube/blob/master/docs/drivers.md#hyperkit-driver
+
+**Node.js tutorial**
+
+https://kubernetes.io/docs/tutorials/hello-minikube/
+
+**Dealing with multiple clusters**
+
+https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#define-clusters-users-and-contexts

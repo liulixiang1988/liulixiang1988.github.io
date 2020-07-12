@@ -2,11 +2,15 @@
 
 title: Building Images & Running Containers
 
-date: 2020-07-12 00:30
+date: 2020-07-12 09:30
 
 category: Kubernetes
 
-tags: Kubernetes;MiniKube;Docker
+tags: 
+
+- Kubernetes
+- Minikube
+- Docker
 
 author: 刘理想
 
@@ -67,13 +71,12 @@ Options Include:
 ## Namespaces
 
 ```
-kubectl create namespace demo
-kubectl get namespace demo -o yaml
-kubectl get namesapce demo --export -o yaml
-kubectl delete namespace/demo
-kubectl config set-context --current --namespace=myspace
- kubectl config view --minify --template '{{ index .contexts 0 "context" "namespace" }}' : confirm your context
-
+- `kubectl create namespace demo`
+- `kubectl get namespace demo -o yaml`
+- `kubectl get namesapce demo --export -o yaml`
+- `kubectl delete namespace/demo`
+- `kubectl config set-context --current --namespace=myspace`
+- ` kubectl config view --minify --template '{{ index .contexts 0 "context" "namespace" }}'` confirm your context
 ```
 
 ## Pods
