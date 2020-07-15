@@ -269,3 +269,89 @@ See [bit.ly/istio-tutorial](https://bit.ly/istio-tutorial)
 
 
 ## Store data with PersistentVolume and PersistentVolumeClaim
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+  labels:
+    type: local
+spec:
+  storageClassName: mystorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: "/data/mypostgresdata/"
+```
+
+```yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pvc
+  labels: 
+   app: postgres
+spec:
+  storageClassName: mystorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:10.5
+        imagePullPolicy: "IfNotPresent"
+        env: 
+        - name: POSTGRES_DB 
+          value: postgresdb
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: adminS3cret
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+          # mountPath within the container
+        - name: postgres-pvc
+          mountPath: "/var/lib/postgresql/data/:Z"          
+      volumes:
+          # mapped to the PVC
+        - name: postgres-pvc
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+```
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata: 
+  name: postgres
+  labels:
+    app: postgres
+    visualize: "true"
+spec: 
+  ports:
+    # the port that this service should serve on
+    - port: 5432  
+  selector: 
+    app: postgres
+```
