@@ -1,5 +1,5 @@
 ---
-title: Extend Your Kubernetes
+title: Extend The Istio Service Mesh
 date: 2020-07-19 10:48
 category: Kubernetes
 tags: 
@@ -385,5 +385,6 @@ We can see the nodeport is 30350
 % minikube --profile istio-mk ip
 192.168.99.102
 % curl 192.168.99.102:30350/customer
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1
 ```
 
