@@ -658,3 +658,105 @@ customer => preference => recommendation v2 from '3cbba7a9cde5': 2654
 customer => preference => recommendation v1 from 'f11b097f1dd0': 1737
 customer => preference => recommendation v2 from '3cbba7a9cde5': 2655
 ```
+
+## Perform smarter canery deployments
+
+Smart routing based on user-agent header (Canary Deployment).
+
+Set recommendation for all v1:
+
+```
+kubectl create -f istiofiles/destination-rule-recommendation-v1-v2.yml
+kubectl create -f istiofiles/virtual-service-recommendation-v1.yml
+```
+
+virtual-service-recommendation-v1.yml:
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+      weight: 100
+```
+
+Set Safari users to v2 ()
+
+```yaml
+kubectl replace -f istiofiles/virtual-service-safari-recommendation-v2.yml 
+
+kubectl get virtualservice
+```
+
+virtual-service-safari-recommendation-v2.yml:
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - match:
+    - headers:
+        baggage-user-agent:
+          regex: .*Safari.*
+    route:
+    - destination:
+        host: recommendation
+        subset: version-v2
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+```
+
+## Practice the mirroring and the dark luanch
+
+virtual-service-recommendation-v1-mirror-v2.yml
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+    mirror:
+      host: recommendation
+      subset: version-v2
+```
+
+```bash
+kubectl logs -f `kubectl get pods | grep recommendation-v2 | awk '{ print $1}'` -c recommendation
+```
+
+## Load Balancer
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: recommendation
+spec:
+  host: recommendation
+  trafficPolicy:
+    loadBalancer:
+      simple: RANDOM
+```
