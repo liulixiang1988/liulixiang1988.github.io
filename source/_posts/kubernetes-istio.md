@@ -388,3 +388,273 @@ We can see the nodeport is 30350
 customer => preference => recommendation v1 from 'f11b097f1dd0': 1
 ```
 
+## Shift traffic with VirtualService and DestinationRule
+
+Let's deploy recommendation v2:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: recommendation
+    version: v2
+  name: recommendation-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: recommendation
+        version: v2
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTIONS
+          value: -Xms15m -Xmx15m -Xmn15m
+        name: recommendation          
+        image: quay.io/rhdevelopers/istio-tutorial-recommendation:v2.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
+        resources:
+          requests: 
+            memory: "40Mi" 
+            cpu: "200m" # 1/5 core
+          limits:
+            memory: "100Mi"
+            cpu: "500m" 
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/health/live
+          initialDelaySeconds: 5
+          periodSeconds: 4
+          timeoutSeconds: 1
+        readinessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/health/ready
+          initialDelaySeconds: 6
+          periodSeconds: 5
+          timeoutSeconds: 1
+        securityContext:
+          privileged: false
+```
+
+```bash
+kubectl apply -f recommendation/kubernetes/Deployment-v2.yml
+```
+
+Then watch the curl result:
+```bash
+while true
+do curl 192.168.99.102:30350/customer
+sleep .3
+done
+```
+
+The output is:
+
+```
+customer => preference => recommendation v2 from '3cbba7a9cde5': 507
+customer => preference => recommendation v1 from 'f11b097f1dd0': 540
+customer => preference => recommendation v2 from '3cbba7a9cde5': 508
+customer => preference => recommendation v1 from 'f11b097f1dd0': 541
+customer => preference => recommendation v2 from '3cbba7a9cde5': 509
+```
+
+We scale the v2 to 2 replicas:
+
+```
+kubectl scale replicas=2 deployment/recommendation-v2
+```
+
+The output is below. v1: v2 is 1:2
+
+```
+customer => preference => recommendation v1 from 'f11b097f1dd0': 561
+customer => preference => recommendation v2 from '3cbba7a9cde5': 530
+customer => preference => recommendation v2 from '3cbba7a9cde5': 10
+customer => preference => recommendation v1 from 'f11b097f1dd0': 562
+customer => preference => recommendation v2 from '3cbba7a9cde5': 531
+customer => preference => recommendation v2 from '3cbba7a9cde5': 11
+```
+
+Then set the v2 replicas to 1:
+
+```
+kubectl scale replicas=1 deployment/recommendation-v2
+```
+
+Now let's define the DestinationRule (destination-rule-recommendation-v1-v2.yml):
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: recommendation
+spec:
+  host: recommendation
+  subsets:
+  - labels:
+      version: v1
+    name: version-v1
+  - labels:
+      version: v2
+    name: version-v2
+```
+
+And define the VirtualService (virtual-service-recommendation-v2.yml):
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v2
+      weight: 100
+```
+
+```bash
+% kubectl apply -f istiofiles/destination-rule-recommendation-v1-v2.yml
+destinationrule.networking.istio.io/recommendation created
+% kubectl apply -f istiofiles/virtual-service-recommendation-v2.yml
+virtualservice.networking.istio.io/recommendation created
+```
+
+Now the curl output is:
+
+```
+customer => preference => recommendation v2 from '3cbba7a9cde5': 1298
+customer => preference => recommendation v2 from '3cbba7a9cde5': 1299
+customer => preference => recommendation v2 from '3cbba7a9cde5': 1300
+```
+
+```bash
+% kubectl get virtualservices
+NAME               GATEWAYS             HOSTS              AGE
+customer-gateway   [customer-gateway]   [*]                10d
+recommendation                          [recommendation]   115s
+% kubectl get destinationrules
+NAME             HOST             AGE
+recommendation   recommendation   3m58s
+% kubectl describe vs recommendation
+Name:         recommendation
+Namespace:    istio-demo
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"recommendation","namespace":"ist...
+API Version:  networking.istio.io/v1beta1
+Kind:         VirtualService
+Metadata:
+  Creation Timestamp:  2020-08-02T03:35:26Z
+  Generation:          1
+  Managed Fields:
+    API Version:  networking.istio.io/v1alpha3
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:hosts:
+        f:http:
+    Manager:         kubectl
+    Operation:       Update
+    Time:            2020-08-02T03:35:26Z
+  Resource Version:  8166
+  Self Link:         /apis/networking.istio.io/v1beta1/namespaces/istio-demo/virtualservices/recommendation
+  UID:               e568bf42-8e1e-483e-aac9-102a63679547
+Spec:
+  Hosts:
+    recommendation
+  Http:
+    Route:
+      Destination:
+        Host:    recommendation
+        Subset:  version-v2
+      Weight:    100 #The weight
+Events:          <none>
+```
+
+Let's swift the route to v1.
+
+```bash
+% kubectl edit vs/recommendation # change subset from v2->v1
+```
+
+We alse can split the weight(virtual-service-recommendation-v1_and_v2.yml):
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+      weight: 90
+    - destination:
+        host: recommendation
+        subset: version-v2
+      weight: 10
+```
+
+```
+customer => preference => recommendation v2 from '3cbba7a9cde5': 2535
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1246
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1247
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1248
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1249
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1250
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1251
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1252
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1253
+```
+
+If we delete the virtualservice and destinationRule, then the weight for v1 and v2 is 50%.
+
+```bash
+% kubectl delete vs recommendation
+virtualservice.networking.istio.io "recommendation" deleted
+% kubectl delete dr recommendation
+destinationrule.networking.istio.io "recommendation" deleted
+```
+
+```
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1736
+customer => preference => recommendation v2 from '3cbba7a9cde5': 2654
+customer => preference => recommendation v1 from 'f11b097f1dd0': 1737
+customer => preference => recommendation v2 from '3cbba7a9cde5': 2655
+```
