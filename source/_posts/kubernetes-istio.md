@@ -68,7 +68,7 @@ export KUBECONFIG=$MINIKUBE_HOME/.kube/config
 export KUBE_EDITOR="code -w"
 
 export ISTIO_HOME=$MINIKUBE_HOME/istio-1.6.5
-export PATH=$ISITIO_HOME/bin:$PATH
+export PATH=$ISTIO_HOME/bin:$PATH
 cd $MINIKUBE_HOME
 ```
 
@@ -412,7 +412,7 @@ spec:
         app: recommendation
         version: v2
       annotations:
-        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/inject: "true" #add this for istio
     spec:
       containers:
       - env:
