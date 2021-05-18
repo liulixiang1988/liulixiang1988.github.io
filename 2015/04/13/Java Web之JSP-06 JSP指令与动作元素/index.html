@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liulixiang1988.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. include指令常用的有page、include、taglib指令这三种指令；page：位于页面顶端，一个页面可以包含多个page指令include：将一个外部文件嵌入jsp中，同时解析这个页面中的jsp语句。taglib：使用标签库，自定义新的标签，在jsp中启动定制行为。 语法 &lt;% include file&#x3D;&quot;地址&quot;%&gt;。案例：显示当前时间的页面。（1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web之JSP-06 JSP指令与动作元素">
+<meta property="og:url" content="http://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1. include指令常用的有page、include、taglib指令这三种指令；page：位于页面顶端，一个页面可以包含多个page指令include：将一个外部文件嵌入jsp中，同时解析这个页面中的jsp语句。taglib：使用标签库，自定义新的标签，在jsp中启动定制行为。 语法 &lt;% include file&#x3D;&quot;地址&quot;%&gt;。案例：显示当前时间的页面。（1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://liulixiang1988.github.io/images/java-web-jsp-04.jpg">
+<meta property="article:published_time" content="2015-04-13T11:37:00.000Z">
+<meta property="article:modified_time" content="2021-05-15T05:16:53.413Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Web, JSP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liulixiang1988.github.io/images/java-web-jsp-04.jpg">
+
+<link rel="canonical" href="http://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Web之JSP-06 JSP指令与动作元素 | 一步一步</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b957d06ffb0f1adb33d042abed4121cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">一步一步</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web之JSP-06 JSP指令与动作元素
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-04-13 19:37:00" itemprop="dateCreated datePublished" datetime="2015-04-13T19:37:00+08:00">2015-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-15 13:16:53" itemprop="dateModified" datetime="2021-05-15T13:16:53+08:00">2021-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/13/Java Web之JSP-06 JSP指令与动作元素/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-include指令"><a href="#1-include指令" class="headerlink" title="1. include指令"></a>1. include指令</h2><p>常用的有page、include、taglib指令这三种指令；<br>page：位于页面顶端，一个页面可以包含多个page指令<br>include：将一个外部文件嵌入jsp中，同时解析这个页面中的jsp语句。<br>taglib：使用标签库，自定义新的标签，在jsp中启动定制行为。</p>
+<p>语法 <code>&lt;% include file=&quot;地址&quot;%&gt;</code>。<br>案例：显示当前时间的页面。<br>（1）写一个只输出时间的方法的date.jsp。<br>（2）用于显示的页面,包含<code>&lt;% include file=&quot;date.jsp&quot;%&gt;</code></p>
+<h2 id="2-include动作"><a href="#2-include动作" class="headerlink" title="2. include动作"></a>2. include动作</h2><ol>
+<li>是一个动作标签<code>&lt;jsp:xxx&gt;</code></li>
+<li>语法：<code>&lt;jsp:include page=&quot;URL&quot; flush=&quot;true|false&quot;&gt;</code></li>
+</ol>
+<ul>
+<li>page属性：要包含的页面</li>
+<li>flush属性：被包含的页面是否从缓冲区里读取</li>
+</ul>
+<h2 id="3-include指令和动作的区别"><a href="#3-include指令和动作的区别" class="headerlink" title="3. include指令和动作的区别"></a>3. include指令和动作的区别</h2><ol>
+<li>包含内容： 指令包含的是【源代码】，动作包含的是页面输出的【结果】</li>
+<li>生成的servlet：指令会生成一个整体的Servlet；而动作会分别生成两个，即在一个Servlet中调用另一个Servlet</li>
+<li>其他区别如图：</li>
+<li>使用场合】：页面内容不经常变化使用include指令，页面内容经常变化使用<code>&lt;jsp:include&gt;</code>动作</li>
+</ol>
+<p><img src="/images/java-web-jsp-04.jpg" alt="images/java-web-jsp-04.jpg"></p>
+<h2 id="4-forward指令"><a href="#4-forward指令" class="headerlink" title="4. forward指令"></a>4. forward指令</h2><p>forward动作<br>1、语法：<code>&lt;jsp:forward page=&quot;URL&quot;/&gt;</code><br>2、等于服务器内部转发指令 <code>request.getRequestDispacher(&quot;URL&quot;).forward(req,res);</code><br>相当于是服务器内部跳转，URL地址不会发生变化。<br>四种跳转.<br><code>&lt;% response.sendRedirect(&quot;login_seccess.jsp&quot;); %&gt;</code>//告诉浏览器此路不通,你再问问另一页面能解决你的问题不?<br><code>&lt;jsp:forward page=&quot;login_fail.jsp&quot;/&gt;</code> //服务器将请求转发到另一页面,浏览器不知情.<br><code>&lt;% pageContext.forward(&quot;login_fail.jsp&quot;);%&gt;</code> //服务器将请求转发到另一页面,浏览器不知情.<br><code>&lt;% request.getRequestDispatcher(&quot;login_fail.jsp&quot;).forward(request,response);%&gt;</code> //服务器将请求转发到另一页面,浏览器不知情.</p>
+<h2 id="5-param动作"><a href="#5-param动作" class="headerlink" title="5. param动作"></a>5. param动作</h2><ol>
+<li>语法：<code>&lt;jsp:param name=&quot;参数名&quot; value=&quot;参数值&quot;&gt;</code></li>
+<li>【常常与<code>&lt;jsp:forward&gt;&lt;/jsp:forward&gt;</code>一起使用】，并作为其【子标签】。</li>
+<li>用于传递新参数或者【修改原有参数值】，修改参数时使用form表单里的参数名称即可。同样用request.getParameter(“参数名”)获取</li>
+</ol>
+<p>必须与forward、include及plugin动作配合使用。通常与forward动作一起使用，作为它的子标签，它的作用是指定某个参数值，可以用于传递参数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:forward page&#x3D;&quot;url&quot;&gt; </span><br><span class="line">&lt;jsp:param value&#x3D;&quot;123@qq.com&quot; name&#x3D;&quot;email&quot;&#x2F;&gt; </span><br><span class="line">&lt;&#x2F;jsp:forward&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你的赞赏是我继续的动力～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>刘理想
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/" title="Java Web之JSP-06 JSP指令与动作元素">http://liulixiang1988.github.io/2015/04/13/Java Web之JSP-06 JSP指令与动作元素/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java-Web-JSP/" rel="tag"># Java, Web, JSP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/04/10/Java%20Web%E4%B9%8BJSP-05%20JSP%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" rel="prev" title="Java Web之JSP-05 JSP状态管理">
+      <i class="fa fa-chevron-left"></i> Java Web之JSP-05 JSP状态管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/04/13/Java%20Web%E4%B9%8BJSP-07%20%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/" rel="next" title="Java Web之JSP-07 综合案例">
+      Java Web之JSP-07 综合案例 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-include指令"><span class="nav-number">1.</span> <span class="nav-text">1. include指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-include动作"><span class="nav-number">2.</span> <span class="nav-text">2. include动作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-include指令和动作的区别"><span class="nav-number">3.</span> <span class="nav-text">3. include指令和动作的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-forward指令"><span class="nav-number">4.</span> <span class="nav-text">4. forward指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-param动作"><span class="nav-number">5.</span> <span class="nav-text">5. param动作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://liulixiang1988github.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/";
+    this.page.identifier = "2015/04/13/Java Web之JSP-06 JSP指令与动作元素/";
+    this.page.title = "Java Web之JSP-06 JSP指令与动作元素";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://liulixiang1988github.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

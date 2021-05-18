@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>一步一步</title>
+  <icon>http://liulixiang1988.github.io/icon.png</icon>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://liulixiang1988.github.io/"/>
+  <updated>2021-05-18T15:48:07.949Z</updated>
+  <id>http://liulixiang1988.github.io/</id>
+  
+  <author>
+    <name>Liu Lixiang</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HDFS学习笔记</title>
+    <link href="http://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/"/>
+    <id>http://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/</id>
+    <published>2021-05-15T12:37:00.000Z</published>
+    <updated>2021-05-18T15:48:07.949Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-HDFS-概述及设计目标&quot;&gt;&lt;a href=&quot;#1-HDFS-概述及设计目标&quot; class=&quot;headerlink&quot; title=&quot;1. HDFS 概述及设计目标&quot;&gt;&lt;/a&gt;1. HDFS 概述及设计目标&lt;/h2&gt;&lt;p&gt;Hadoop设计目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非常巨大的分布式文件系统&lt;/li&gt;
+&lt;li&gt;运行在普通廉价的硬件上&lt;/li&gt;
+&lt;li&gt;易扩展、为用户提供性能不错的文件存储服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;具体见：&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-HDFS架构&quot;&gt;&lt;a href=&quot;#2-HDFS架构&quot; class=&quot;headerlink&quot; title=&quot;2. HDFS架构&quot;&gt;&lt;/a&gt;2. HDFS架构&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;HDFS采用1个Master(NameNode/NN) 带N个Slaves(DataNode/DN)架构。同时YARN、HBase也是一个Master带多个Slave。&lt;/p&gt;
+&lt;p&gt;1个文件会被拆分成多个Block。(BlockSize默认是128M)。比如一个130M的文件会被分成128M和2M的Block。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/categories/Big-Data/"/>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/tags/Big-Data/"/>
+    
+      <category term="HDFS" scheme="http://liulixiang1988.github.io/tags/HDFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop 101</title>
+    <link href="http://liulixiang1988.github.io/2021/05/15/2021-05-15-Hadoop101/"/>
+    <id>http://liulixiang1988.github.io/2021/05/15/2021-05-15-Hadoop101/</id>
+    <published>2021-05-15T05:18:00.000Z</published>
+    <updated>2021-05-15T12:24:59.722Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-Hadoop概述&quot;&gt;&lt;a href=&quot;#1-Hadoop概述&quot; class=&quot;headerlink&quot; title=&quot;1. Hadoop概述&quot;&gt;&lt;/a&gt;1. Hadoop概述&lt;/h2&gt;&lt;p&gt;官网：&lt;a href=&quot;https://hadoop.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Hadoop包含以下模块：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Hadoop Common: 支撑其他模块的通用工具&lt;/li&gt;
+&lt;li&gt;Hadoop Distributed File System(HDFS): 分布式文件系统，提供高吞吐数据读取&lt;/li&gt;
+&lt;li&gt;Hadoop YARN: 作业调度与资源管理框架&lt;/li&gt;
+&lt;li&gt;Hadoop MapReduce: 基于YARN的大数据并行处理。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;开源的分布式存储与分布式计算平台&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&quot;1-1-Hadoop能做什么&quot;&gt;&lt;a href=&quot;#1-1-Hadoop能做什么&quot; class=&quot;headerlink&quot; title=&quot;1.1 Hadoop能做什么&quot;&gt;&lt;/a&gt;1.1 Hadoop能做什么&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;搜索引擎&lt;/li&gt;
+&lt;li&gt;日志分析&lt;/li&gt;
+&lt;li&gt;商业智能&lt;/li&gt;
+&lt;li&gt;数据挖掘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2-Hadoop核心组件&quot;&gt;&lt;a href=&quot;#2-Hadoop核心组件&quot; class=&quot;headerlink&quot; title=&quot;2. Hadoop核心组件&quot;&gt;&lt;/a&gt;2. Hadoop核心组件&lt;/h2&gt;&lt;h3 id=&quot;2-1-分布式文件系统HDFS&quot;&gt;&lt;a href=&quot;#2-1-分布式文件系统HDFS&quot; class=&quot;headerlink&quot; title=&quot;2.1 分布式文件系统HDFS&quot;&gt;&lt;/a&gt;2.1 分布式文件系统HDFS&lt;/h3&gt;
+    
+    </summary>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/categories/Big-Data/"/>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/tags/Big-Data/"/>
+    
+      <category term="Hadoop" scheme="http://liulixiang1988.github.io/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术人的思维修炼</title>
+    <link href="http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/"/>
+    <id>http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/</id>
+    <published>2021-03-14T13:00:00.000Z</published>
+    <updated>2021-05-15T05:16:53.403Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[toc]&lt;/p&gt;
+&lt;h2 id=&quot;德雷福斯模型&quot;&gt;&lt;a href=&quot;#德雷福斯模型&quot; class=&quot;headerlink&quot; title=&quot;德雷福斯模型&quot;&gt;&lt;/a&gt;德雷福斯模型&lt;/h2&gt;&lt;p&gt;德雷福斯是一个专业人员能力成长模型，这个模型认为所有专业人员都需要经历 5 个成长阶段，不管是医生还是律师，或者是软件开发，任何专业技能的从业者都需要经历新手、高级新手、胜任者、精通者、专家 5 个阶段。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-03-14-deleifusi.png&quot; alt=&quot;link&quot;&gt;&lt;/p&gt;
+&lt;p&gt;通常一个人进入专业的技能领域，即使在学校已经系统学习过这个专业的相关知识，但依然无法独立完成工作，必须在有经验的同事指导下，学习相关的技能。这里主要学习的是有关工作的规则和套路。比如用什么工具、什么框架，如何开发程序，如何开会、写周报，如何和同事合作，业务领域的名词术语是什么意思等等这些各种各样和工作有关的大小事情。这个阶段叫做&lt;strong&gt;新手&lt;/strong&gt;阶段。&lt;/p&gt;
+&lt;p&gt;通常说来，一个人大约工作两三年后，就差不多掌握了工作的各种套路，可以摆脱新手阶段，独立完成一些基本的工作了。通过新手阶段的人，少部分会直接进入胜任者阶段，而大多数则进入&lt;strong&gt;高级新手&lt;/strong&gt;阶段。&lt;/p&gt;
+&lt;p&gt;高级新手其实是新手的自然延续，他不需要别人指导工作，也不需要学习工作的规则和套路，因为高级新手已经在新手阶段掌握了这些套路，他可以熟练应用这些规则套路完成他的工作。但是高级新手的能力也仅限于此，他不明白这些规则是如何制定出来的，为什么使用这个框架开发而不是另一个框架，也不明白这个框架是如何开发出来的。&lt;/p&gt;
+&lt;p&gt;一个悲观的事实是，新手会自然进入高级新手阶段，而高级新手却无法自然进入其后的其他等级阶段。实际上，&lt;strong&gt;在各个专业领域中，超过半数的人终其一生都停留在高级新手阶段&lt;/strong&gt;，也就是说，大多数人一生的工作就是基于其专业领域的规则在进行重复性的劳动。他们不了解这些规则背后的原理，也无法在面对新的问题时，开创出新的方法和规则。那些简历上十多年如一日使用相同的技术方案、开发类似软件项目的资深工程师大部分都是高级新手。&lt;/p&gt;
+&lt;p&gt;导致一个人终身停留在高级新手阶段的原因有很多，其中一个重要的原因是：&lt;strong&gt;高级新手不知道自己是高级新手&lt;/strong&gt;。高级新手觉得自己在这个专业领域混得很不错，做事熟练，经验丰富。&lt;/p&gt;
+&lt;p&gt;事实上，这种熟练只是对既有规则的熟练，如果岁月静好，一切都循规蹈矩，也没什么问题。而一旦行业出现技术变革或者工作出现新情况，高级新手就会遇到巨大的工作困难。事实上，各行各业都存在大量的高级新手，只是软件开发领域的技术变革更加频繁，问题变化也更加快速，使高级新手问题更加突出。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="编程随想" scheme="http://liulixiang1988.github.io/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
+    
+    
+      <category term="编程随想" scheme="http://liulixiang1988.github.io/tags/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件设计文档示例模板</title>
+    <link href="http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/</id>
+    <published>2021-03-14T13:00:00.000Z</published>
+    <updated>2021-05-15T05:16:53.404Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[toc]&lt;/p&gt;
+&lt;p&gt;对于规模不太大的软件系统，我们可以将概要设计文档和详细设计文档合并成一个设计文档。这一篇文章中，我会展现一个设计文档示例模板，你可以参考这个模板编写你的设计文档。&lt;/p&gt;
+&lt;p&gt;文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业务场景，应该在专门的需求文档中描述，但是在设计文档中，必须要再简单描述一下，以保证设计文档的完整性，这样，即使脱离需求文档，阅读者也能理解主要的设计。&lt;/p&gt;
+&lt;p&gt;此外，在设计概述中，还需要描述设计的非功能约束，比如关于性能、可用性、维护性、安全性，甚至开发和部署成本方面的设计目标。&lt;/p&gt;
+&lt;p&gt;然后就是具体的设计了，第一张设计图应该是部署图，通过部署图描述系统整个物理模型蓝图，包括未来系统长什么样。&lt;/p&gt;
+&lt;p&gt;如果系统中包含几个子系统，那么还需要描述子系统间的关系，可以通过子系统序列图，子系统活动图进行描述。&lt;/p&gt;
+&lt;p&gt;子系统内部的最顶层设计就是组件图，描述子系统由哪些组件组成，不同场景中，组件之间的调用序列图是什么样的。&lt;/p&gt;
+&lt;p&gt;每个组件内部，需要用类图进行建模描述，对于不同场景，用时序图描述类之间的动态调用关系，对于有复杂状态的类，用状态图描述其状态转换。&lt;/p&gt;
+&lt;p&gt;具体示例模板如下：&lt;/p&gt;
+&lt;h2 id=&quot;1-设计概述&quot;&gt;&lt;a href=&quot;#1-设计概述&quot; class=&quot;headerlink&quot; title=&quot;1 设计概述&quot;&gt;&lt;/a&gt;1 设计概述&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/categories/System-Design/"/>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式架构101</title>
+    <link href="http://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/"/>
+    <id>http://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/</id>
+    <published>2021-02-19T02:35:00.000Z</published>
+    <updated>2021-05-15T05:16:53.402Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;分布式架构&quot;&gt;&lt;a href=&quot;#分布式架构&quot; class=&quot;headerlink&quot; title=&quot;分布式架构&quot;&gt;&lt;/a&gt;分布式架构&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-19-arch-01.jpeg&quot; alt=&quot;arch&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;缓存架构：如何减少不必要的计算&quot;&gt;&lt;a href=&quot;#缓存架构：如何减少不必要的计算&quot; class=&quot;headerlink&quot; title=&quot;缓存架构：如何减少不必要的计算?&quot;&gt;&lt;/a&gt;缓存架构：如何减少不必要的计算?&lt;/h2&gt;&lt;p&gt;缓存分为&lt;strong&gt;通读缓存&lt;/strong&gt;与&lt;strong&gt;旁路缓存&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&quot;通读缓存&quot;&gt;&lt;a href=&quot;#通读缓存&quot; class=&quot;headerlink&quot; title=&quot;通读缓存&quot;&gt;&lt;/a&gt;通读缓存&lt;/h3&gt;&lt;p&gt;通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-19-cache-read-through.png&quot; alt=&quot;read-through&quot;&gt;&lt;/p&gt;
+&lt;p&gt;互联网应用中主要使用的通读缓存是 CDN 和反向代理缓存。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-19-cdn.png&quot; alt=&quot;cdn&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Distributed System" scheme="http://liulixiang1988.github.io/categories/Distributed-System/"/>
+    
+    
+      <category term="Distributed System" scheme="http://liulixiang1988.github.io/tags/Distributed-System/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件设计原理3-设计模式</title>
+    <link href="http://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/"/>
+    <id>http://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/</id>
+    <published>2021-02-18T13:30:00.000Z</published>
+    <updated>2021-05-15T05:16:53.400Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;设计模式基础&quot;&gt;&lt;a href=&quot;#设计模式基础&quot; class=&quot;headerlink&quot; title=&quot;设计模式基础&quot;&gt;&lt;/a&gt;设计模式基础&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;设计模式的精髓是对多态的使用&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;装饰器模式&quot;&gt;&lt;a href=&quot;#装饰器模式&quot; class=&quot;headerlink&quot; title=&quot;装饰器模式&quot;&gt;&lt;/a&gt;装饰器模式&lt;/h3&gt;&lt;p&gt;装饰模式最大的特点是，通过类的构造函数传入一个同类对象，也就是每个类实现的接口和构造函数传入的对象是同一个接口。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Moon&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Moon&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a = a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;明月装饰了&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Dream&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Dream&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a=a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;梦装饰了&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;You&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;You&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a = a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;你&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;调用：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;AnyThing t = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Moon(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Dream(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; You(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;t.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;输出：明月装饰了梦装饰了你&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;AnyThing t = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Dream(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Moon(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; You(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;t.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;输出：梦装饰了明月装饰了你&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;面试官让你“聊聊设计模式”，也许你可以这样回答：“除了单例和工厂，我更喜欢适配器和观察者，还有，组合模式在处理树形结构的时候也非常有用。”&lt;/p&gt;
+&lt;p&gt;组合模式遍历树：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DefaultModule&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DefaultModule&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String value)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.value = value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(value);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ComponentModule&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Module currentModule;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; List&amp;lt;Module&amp;gt; modules;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ComponentModule&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Module currentModule, Module... modules)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.currentModule = currentModule;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.modules = Arrays.asList(modules);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.currentModule.print();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.modules.forEach(Module::print);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule subModule31 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;31&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;311&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;312&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;313&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule subModule3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;3&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            subModule31,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;32&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;33&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule &lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;0&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;2&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            subModule3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt;.print();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/categories/System-Design/"/>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件设计原理2-SOLID原则</title>
+    <link href="http://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/"/>
+    <id>http://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/</id>
+    <published>2021-02-18T07:00:00.000Z</published>
+    <updated>2021-05-15T05:16:53.399Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;设计的两个基本原则：高内聚，低耦合。&lt;/p&gt;
+&lt;h2 id=&quot;开闭原则：不修改代码实现变更&quot;&gt;&lt;a href=&quot;#开闭原则：不修改代码实现变更&quot; class=&quot;headerlink&quot; title=&quot;开闭原则：不修改代码实现变更&quot;&gt;&lt;/a&gt;开闭原则：不修改代码实现变更&lt;/h2&gt;&lt;p&gt;OCP&lt;/p&gt;
+&lt;p&gt;开闭原则：&lt;strong&gt;软件实体（模块、类、函数等等）应该对扩展是开放的，对修改是关闭的。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 使用策略模式实现开闭原则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-18-strategy.png&quot; alt=&quot;strategy&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 使用适配器模式实现开闭原则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-18-adapter.png&quot; alt=&quot;adapter&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 使用观察者模式实现开闭原则&lt;/strong&gt;: 如果要实现多个控制，使用观察者模式+策略+适配器模式&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-18-observer.png&quot; alt=&quot;observer&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/categories/System-Design/"/>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件设计原理1-4+1架构图与UML</title>
+    <link href="http://liulixiang1988.github.io/2021/02/18/2021-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/"/>
+    <id>http://liulixiang1988.github.io/2021/02/18/2021-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-02-18T04:15:00.000Z</published>
+    <updated>2021-05-15T05:16:53.405Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;4-1架构视图&quot;&gt;&lt;a href=&quot;#4-1架构视图&quot; class=&quot;headerlink&quot; title=&quot;4+1架构视图&quot;&gt;&lt;/a&gt;4+1架构视图&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-02-18-4-1.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;逻辑视图&lt;/strong&gt;：描述软件的功能逻辑，由哪些模块组成，模块中包含哪些类，其依赖关系如何。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开发视图&lt;/strong&gt;：包括系统架构层面的层次划分，包的管理，依赖的系统与第三方的程序包。开发视图某些方面和逻辑视图有一定重复性，不同视角看到的可能是同一个东西，开发视图中一个程序包，可能正好对应逻辑视图中的一个功能模块。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;过程视图&lt;/strong&gt;：描述程序运行期的进程、线程、对象实例，以及与此相关的并发、同步、通信等问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;物理视图&lt;/strong&gt;：描述软件如何安装并部署到物理的服务上，以及不同的服务器之间如何关联、通信。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;场景视图&lt;/strong&gt;：针对具体的用例场景，将上述 4 个视图关联起来，一方面从业务角度描述，功能流程如何完成，一方面从软件角度描述，相关组成部分如何互相依赖、调用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;UML&quot;&gt;&lt;a href=&quot;#UML&quot; class=&quot;headerlink&quot; title=&quot;UML&quot;&gt;&lt;/a&gt;UML&lt;/h2&gt;&lt;h3 id=&quot;类图&quot;&gt;&lt;a href=&quot;#类图&quot; class=&quot;headerlink&quot; title=&quot;类图&quot;&gt;&lt;/a&gt;类图&lt;/h3&gt;&lt;p&gt;在&lt;strong&gt;详细设计阶段&lt;/strong&gt;与&lt;strong&gt;需求分析阶段&lt;/strong&gt;使用。&lt;/p&gt;
+&lt;p&gt;一个类包含三个部分：类的名字、类的属性列表和类的方法列表。类之间有 6 种静态关系：关联、依赖、组合、聚合、继承、泛化。&lt;/p&gt;
+&lt;p&gt;在需求分析阶段，可以将关键的领域模型对象用类图画出来，在这个阶段中，我们需要关注的是领域对象的识别及其关系，所以用简化的类图来描述，只画出类的名字及关系就可以了。&lt;/p&gt;
+&lt;h3 id=&quot;序列图&quot;&gt;&lt;a href=&quot;#序列图&quot; class=&quot;headerlink&quot; title=&quot;序列图&quot;&gt;&lt;/a&gt;序列图&lt;/h3&gt;&lt;p&gt;序列图通常用于表示对象之间的交互，这个对象可以是类对象，也可以是更大粒度的参与者，比如组件、服务器、子系统等，总之，只要是描述不同参与者之间交互的，都可以使用序列图，也就是说，&lt;strong&gt;在软件设计的不同阶段&lt;/strong&gt;，都可以画序列图。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/categories/System-Design/"/>
+    
+    
+      <category term="System Design" scheme="http://liulixiang1988.github.io/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式架构笔记</title>
+    <link href="http://liulixiang1988.github.io/2021/02/15/2021-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E7%AC%94%E8%AE%B0/"/>
+    <id>http://liulixiang1988.github.io/2021/02/15/2021-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-02-15T04:15:00.000Z</published>
+    <updated>2021-05-15T05:16:53.404Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-为什么需要分布式架构&quot;&gt;&lt;a href=&quot;#1-为什么需要分布式架构&quot; class=&quot;headerlink&quot; title=&quot;1. 为什么需要分布式架构&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Distributed System" scheme="http://liulixiang1988.github.io/categories/Distributed-System/"/>
+    
+    
+      <category term="Distributed System" scheme="http://liulixiang1988.github.io/tags/Distributed-System/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Explore the Istio Service Mesh</title>
+    <link href="http://liulixiang1988.github.io/2020/08/09/kubernetes-istio2/"/>
+    <id>http://liulixiang1988.github.io/2020/08/09/kubernetes-istio2/</id>
+    <published>2020-08-09T09:36:00.000Z</published>
+    <updated>2021-05-15T05:16:53.429Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-Explorer-Observability&quot;&gt;&lt;a href=&quot;#1-Explorer-Observability&quot; class=&quot;headerlink&quot; title=&quot;1.Explorer Observability&quot;&gt;&lt;/a&gt;1.Explorer Observability&lt;/h2&gt;&lt;p&gt;Open the dashboard:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#!/bin/bash&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; MINIKUBE_IP=$(minikube --profile istio-mk  ip)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/grafana -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc grafana -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/jaeger-query -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc jaeger-query -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/prometheus -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc prometheus -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/kiali -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc kiali -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)/kiali&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;Kiali: default username/password: admin/admin&lt;/p&gt;
+&lt;h3 id=&quot;1-1-Grafana&quot;&gt;&lt;a href=&quot;#1-1-Grafana&quot; class=&quot;headerlink&quot; title=&quot;1.1 Grafana&quot;&gt;&lt;/a&gt;1.1 Grafana&lt;/h3&gt;&lt;p&gt;In the grapana. Home-&amp;gt;Istio-&amp;gt;Istio Workload Dashboard.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/istio-5.png&quot; alt=&quot;Grapha&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-2-Jaeger&quot;&gt;&lt;a href=&quot;#1-2-Jaeger&quot; class=&quot;headerlink&quot; title=&quot;1.2 Jaeger&quot;&gt;&lt;/a&gt;1.2 Jaeger&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/images/istio-6.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/istio-7.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Istio" scheme="http://liulixiang1988.github.io/tags/Istio/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Extend The Istio Service Mesh</title>
+    <link href="http://liulixiang1988.github.io/2020/07/19/kubernetes-istio/"/>
+    <id>http://liulixiang1988.github.io/2020/07/19/kubernetes-istio/</id>
+    <published>2020-07-19T02:48:00.000Z</published>
+    <updated>2021-05-15T05:16:53.429Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Understand-Microservices-architecture-requirements-and-challenges&quot;&gt;&lt;a href=&quot;#Understand-Microservices-architecture-requirements-and-challenges&quot; class=&quot;headerlink&quot; title=&quot;Understand Microservices architecture requirements and challenges&quot;&gt;&lt;/a&gt;Understand Microservices architecture requirements and challenges&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;/images/Istio-on-Kubernetes.pdf&quot;&gt;resource&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API&lt;/li&gt;
+&lt;li&gt;Discovery&lt;/li&gt;
+&lt;li&gt;Invocation&lt;/li&gt;
+&lt;li&gt;Elasticity&lt;/li&gt;
+&lt;li&gt;Resillience&lt;/li&gt;
+&lt;li&gt;Pipeline&lt;/li&gt;
+&lt;li&gt;Authentication&lt;/li&gt;
+&lt;li&gt;Logging&lt;/li&gt;
+&lt;li&gt;Monitoring&lt;/li&gt;
+&lt;li&gt;Tracing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;/images/before-istio.png&quot; alt=&quot;before Istio&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/after-istio.png&quot; alt=&quot;after Istio&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The sidecar intercepts all network traffic.&lt;/p&gt;
+&lt;h3 id=&quot;How-to-add-an-Istio-Proxy-sidecar&quot;&gt;&lt;a href=&quot;#How-to-add-an-Istio-Proxy-sidecar&quot; class=&quot;headerlink&quot; title=&quot;How to add an Istio-Proxy(sidecar)?&quot;&gt;&lt;/a&gt;How to add an Istio-Proxy(sidecar)?&lt;/h3&gt;&lt;p&gt;&lt;code&gt;istioctl kube-inject -f NormalDeployment.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;kubectl label namespace myspace istio-injection=enabled&lt;/code&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Istio" scheme="http://liulixiang1988.github.io/tags/Istio/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Extend Your Kubernetes</title>
+    <link href="http://liulixiang1988.github.io/2020/07/16/kubernetes-Entend-Your-K8s/"/>
+    <id>http://liulixiang1988.github.io/2020/07/16/kubernetes-Entend-Your-K8s/</id>
+    <published>2020-07-15T23:15:00.000Z</published>
+    <updated>2021-05-15T05:16:53.428Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Discover-CustomResourceDefinitions&quot;&gt;&lt;a href=&quot;#Discover-CustomResourceDefinitions&quot; class=&quot;headerlink&quot; title=&quot;Discover CustomResourceDefinitions&quot;&gt;&lt;/a&gt;Discover CustomResourceDefinitions&lt;/h2&gt;&lt;p&gt;Custom Resources extend the API&lt;/p&gt;
+&lt;p&gt;Custom Controllers provide the functionality - continually maintains the desired state -  to monitor its state and reconcile the resource to match with the configuration&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Custom Resource Definitions (CRDs) in version 1.7&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ kubectl get crds&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ kubectl api-resources&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;apiVersion:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;apiextensions.k8s.io/v1beta1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;kind:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;CustomResourceDefinition&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;pizzas.mykubernetes.burrsutter.com&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;labels:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;app:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;pizzamaker&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;mylabel:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;stuff&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;spec:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;group:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;mykubernetes.burrsutter.com&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;scope:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Namespaced&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;v1beta2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;names:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;kind:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Pizza&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;listKind:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;PizzaList&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;plural:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;pizzas&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;singular:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;pizza&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;shortNames:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;pz&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;validation:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;openAPIV3Schema:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;properties:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;spec:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;attr&quot;&gt;type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;attr&quot;&gt;properties:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;toppings:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;attr&quot;&gt;type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;array&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;sauce:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;attr&quot;&gt;type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;Add-Pizzas-to-your-Kubernets-Cluster&quot;&gt;&lt;a href=&quot;#Add-Pizzas-to-your-Kubernets-Cluster&quot; class=&quot;headerlink&quot; title=&quot;Add Pizzas to your Kubernets Cluster&quot;&gt;&lt;/a&gt;Add Pizzas to your Kubernets Cluster&lt;/h2&gt;&lt;p&gt;cheese-pizza.yaml&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Craft your Apps for Kubernetes</title>
+    <link href="http://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/"/>
+    <id>http://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/</id>
+    <published>2020-07-12T15:15:00.000Z</published>
+    <updated>2021-05-15T05:16:53.428Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Use-Service’s-Discovery&quot;&gt;&lt;a href=&quot;#Use-Service’s-Discovery&quot; class=&quot;headerlink&quot; title=&quot;Use Service’s Discovery&quot;&gt;&lt;/a&gt;Use Service’s Discovery&lt;/h2&gt;&lt;p&gt;Say you have a service &lt;code&gt;mynode&lt;/code&gt; in &lt;code&gt;yourspace&lt;/code&gt; and a service &lt;code&gt;myapp&lt;/code&gt; in &lt;code&gt;myspace&lt;/code&gt;. If the &lt;code&gt;myapp&lt;/code&gt; wants to access the &lt;code&gt;mynode&lt;/code&gt; servcie, the url is:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mynode.yourspace.svc.cluster.local:8000 # 8000 is the service port, not the node port.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;Configure-Liveness-and-Readiness-Probes&quot;&gt;&lt;a href=&quot;#Configure-Liveness-and-Readiness-Probes&quot; class=&quot;headerlink&quot; title=&quot;Configure Liveness and Readiness Probes&quot;&gt;&lt;/a&gt;Configure Liveness and Readiness Probes&lt;/h2&gt;&lt;p&gt;&lt;code&gt;kubectl scale --replicas=3 deployment xxx&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;StrategyType: RollingUpdate&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;RollingUpdateStrategy: 1max unavailable, 1max surge&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;template:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;labels:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;app:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;spec:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;containers:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;image:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot:v1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;ports:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;containerPort:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;livenessProbe:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;httpGet:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;port:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;path:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;initialDelaySeconds:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;periodSeconds:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;timeoutSeconds:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;          &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;readinessProbe:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;httpGet:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;path:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;/health&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;port:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;initialDelaySeconds:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;periodSeconds:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Once you understand the basics then you can try the advanced demonstration.  Where a stateful shopping cart is preserved across a rolling update based on leveraging the readiness probe.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/redhat-developer-demos/popular-movie-store&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/redhat-developer-demos/popular-movie-store&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;More information on Live &amp;amp; Ready&lt;br&gt;&lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Minikube" scheme="http://liulixiang1988.github.io/tags/Minikube/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kubernetes Logs, Exec, Resource Constraint, ConfigMap, Secret</title>
+    <link href="http://liulixiang1988.github.io/2020/07/12/kubernetes-logs/"/>
+    <id>http://liulixiang1988.github.io/2020/07/12/kubernetes-logs/</id>
+    <published>2020-07-12T05:30:00.000Z</published>
+    <updated>2021-05-15T05:16:53.430Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;logs&quot;&gt;&lt;a href=&quot;#logs&quot; class=&quot;headerlink&quot; title=&quot;logs&quot;&gt;&lt;/a&gt;logs&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;kubectl get pods&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl logs podname -p&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl logs podname&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;exec&quot;&gt;&lt;a href=&quot;#exec&quot; class=&quot;headerlink&quot; title=&quot;exec&quot;&gt;&lt;/a&gt;exec&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;kubectl &lt;span class=&quot;built_in&quot;&gt;exec&lt;/span&gt; -it pod-name /bin/bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 查看cgroup配置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; /sys/fs/cgroup/memory&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;Constraint-CPU-amp-Memory&quot;&gt;&lt;a href=&quot;#Constraint-CPU-amp-Memory&quot; class=&quot;headerlink&quot; title=&quot;Constraint CPU &amp;amp; Memory&quot;&gt;&lt;/a&gt;Constraint CPU &amp;amp; Memory&lt;/h2&gt;&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;apiVersion:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;apps/v1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;kind:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Deployment&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;labels:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;app:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;spec:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;replicas:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;selector:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;matchLabels:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;app:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;template:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;labels:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;app:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;spec:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;containers:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;myboot&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;image:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;9stepsawesome/myboot:v1&lt;/span&gt;     &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;ports:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;containerPort:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;resources:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;attr&quot;&gt;requests:&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;memory:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;300Mi&quot;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;cpu:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;250m&quot;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;# 1/4 core&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;attr&quot;&gt;limits:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;memory:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;400Mi&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;cpu:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;1000m&quot;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;# 1 core&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;ConfigMap&quot;&gt;&lt;a href=&quot;#ConfigMap&quot; class=&quot;headerlink&quot; title=&quot;ConfigMap&quot;&gt;&lt;/a&gt;ConfigMap&lt;/h2&gt;&lt;p&gt;First Let’s see the environment.&lt;/p&gt;
+&lt;p&gt;Change the environment on deployment:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;kubectl set env deployment&amp;#x2F;myboot GREETING&amp;#x3D;&amp;quot;hi&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Docker" scheme="http://liulixiang1988.github.io/tags/Docker/"/>
+    
+      <category term="Minikube" scheme="http://liulixiang1988.github.io/tags/Minikube/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Building Images &amp; Running Containers</title>
+    <link href="http://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/"/>
+    <id>http://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/</id>
+    <published>2020-07-12T01:30:00.000Z</published>
+    <updated>2021-05-15T05:16:53.420Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;End-to-End&quot;&gt;&lt;a href=&quot;#End-to-End&quot; class=&quot;headerlink&quot; title=&quot;End to End&quot;&gt;&lt;/a&gt;End to End&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Find a base image: docker.io, quay.io, gcr.io, registry.redhat.io&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Craft your Dockerfile&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Configure docker: &lt;code&gt;eval $(minikube --profile myprofile decoder-env)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Build your image: &lt;code&gt;docker build -t liulx/myimage:v1 .&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;a. Test via:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- `docker run -it -p 8080:8080 --name myboot liulx/myimage:v1`
+- `docker run -d -p 8080:8080 --name my boot liulx/myboot:v1`
+- `curl $(minikube --profile myprofile ip):8080`&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;b. If remote repo, do &lt;code&gt;docker tag&lt;/code&gt; and &lt;code&gt;docker push&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;c. &lt;code&gt;docker stop containername&lt;/code&gt; to stop testing&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;kubectl apply -f myDeployment.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;kubectl apply -f myService.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Expose a URL via your kubernetes distribution’s load-balancer&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;docker-build&quot;&gt;&lt;a href=&quot;#docker-build&quot; class=&quot;headerlink&quot; title=&quot;docker build&quot;&gt;&lt;/a&gt;docker build&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker build -t something/animagename:tag&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code&gt;.&lt;/code&gt;indicates where to find the Dockerfile and assets to be included in the build process.&lt;/p&gt;
+&lt;p&gt;You can alse explicitly identify the Dockerfile:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;docker build -t somestring/animagename:tag -f somedirectory/Dockerfile_Production .&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docker build -t somestring/animagename:tag -f somedirectory/Dockerfile_Testing .&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docker build -f src/main/docker/Dockerfile.native -t mystuff/myimage:v1 .&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Builiding-Images&quot;&gt;&lt;a href=&quot;#Builiding-Images&quot; class=&quot;headerlink&quot; title=&quot;Builiding Images&quot;&gt;&lt;/a&gt;Builiding Images&lt;/h2&gt;&lt;p&gt;Options Include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;docker build&lt;/code&gt; then &lt;code&gt;kubectl run&lt;/code&gt; or &lt;code&gt;kubectl create -f deploy.yml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Jib - Maven/Gradle plugin by google&lt;/li&gt;
+&lt;li&gt;Shift maven plugin by Red hat&lt;/li&gt;
+&lt;li&gt;s2i - source to image&lt;/li&gt;
+&lt;li&gt;Tekton - pipeline-based image building&lt;/li&gt;
+&lt;li&gt;No docker: red hat’s podman, Google’s kaniko, Uber’s makisu&lt;/li&gt;
+&lt;li&gt;Buildpacks - similar to Heroku &amp;amp; Cloud Foundry&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Docker" scheme="http://liulixiang1988.github.io/tags/Docker/"/>
+    
+      <category term="Minikube" scheme="http://liulixiang1988.github.io/tags/Minikube/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kubernetes Environment</title>
+    <link href="http://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/"/>
+    <id>http://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/</id>
+    <published>2020-07-12T00:30:00.000Z</published>
+    <updated>2021-05-15T05:16:53.421Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Setup&quot;&gt;&lt;a href=&quot;#Setup&quot; class=&quot;headerlink&quot; title=&quot;Setup&quot;&gt;&lt;/a&gt;Setup&lt;/h2&gt;&lt;p&gt;OpenShift is Red Hat’s distribution of Kubernetes&lt;/p&gt;
+&lt;p&gt;minikube and minishift are essentially equivalent and will be used for the demonstrations/examples below.&lt;/p&gt;
+&lt;h3 id=&quot;Prerequisites&quot;&gt;&lt;a href=&quot;#Prerequisites&quot; class=&quot;headerlink&quot; title=&quot;Prerequisites&quot;&gt;&lt;/a&gt;Prerequisites&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Docker or&lt;/li&gt;
+&lt;li&gt;Podman&lt;/li&gt;
+&lt;li&gt;brew install kubectx&lt;/li&gt;
+&lt;li&gt;minikube&lt;/li&gt;
+&lt;li&gt;kubectl&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Downloads&quot;&gt;&lt;a href=&quot;#Downloads&quot; class=&quot;headerlink&quot; title=&quot;Downloads&quot;&gt;&lt;/a&gt;Downloads&lt;/h3&gt;&lt;p&gt;Downloads &amp;amp; Install Kubectl CLI&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# MacOS&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/darwin/amd64/kubectl&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ chmod +x kubectl&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# or&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ brew install kubernetes-cli&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;Linux &amp;amp; Windows instructions for finding and downloading the a kubectl &lt;a href=&quot;https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Download &amp;amp; Install Minikube Cluster&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/categories/Kubernetes/"/>
+    
+    
+      <category term="Kubernetes" scheme="http://liulixiang1988.github.io/tags/Kubernetes/"/>
+    
+      <category term="Docker" scheme="http://liulixiang1988.github.io/tags/Docker/"/>
+    
+      <category term="Minikube" scheme="http://liulixiang1988.github.io/tags/Minikube/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 学习笔记</title>
+    <link href="http://liulixiang1988.github.io/2017/09/09/Java-Spring%20Boot%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://liulixiang1988.github.io/2017/09/09/Java-Spring%20Boot%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <published>2017-09-09T13:53:00.000Z</published>
+    <updated>2021-05-15T05:16:53.419Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;示例代码地址：&lt;a href=&quot;https://github.com/liulixiang1988/javademo/tree/master/spring/%E6%B7%B1%E5%85%A5%E5%AE%9E%E8%B7%B5spring-boot&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-配置&quot;&gt;&lt;a href=&quot;#1-配置&quot; class=&quot;headerlink&quot; title=&quot;1. 配置&quot;&gt;&lt;/a&gt;1. 配置&lt;/h2&gt;&lt;h3 id=&quot;1-1-基本配置&quot;&gt;&lt;a href=&quot;#1-1-基本配置&quot; class=&quot;headerlink&quot; title=&quot;1.1 基本配置&quot;&gt;&lt;/a&gt;1.1 基本配置&lt;/h3&gt;&lt;h4 id=&quot;1-1-1-POM&quot;&gt;&lt;a href=&quot;#1-1-1-POM&quot; class=&quot;headerlink&quot; title=&quot;1.1.1 POM&quot;&gt;&lt;/a&gt;1.1.1 POM&lt;/h4&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;xmlns&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;xmlns:xsi&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;	&lt;span class=&quot;attr&quot;&gt;xsi:schemaLocation&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;modelVersion&lt;/span&gt;&amp;gt;&lt;/span&gt;4.0.0&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;modelVersion&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;lx&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;deep-into-spring-boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;0.0.1-SNAPSHOT&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;packaging&lt;/span&gt;&amp;gt;&lt;/span&gt;jar&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;packaging&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;deep-into-spring-boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;深入实践spring boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;parent&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;spring-boot-starter-parent&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;1.5.6.RELEASE&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;relativePath&lt;/span&gt;/&amp;gt;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 从仓库中查找parent --&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;parent&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;properties&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;project.build.sourceEncoding&lt;/span&gt;&amp;gt;&lt;/span&gt;UTF-8&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;project.build.sourceEncoding&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;project.reporting.outputEncoding&lt;/span&gt;&amp;gt;&lt;/span&gt;UTF-8&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;project.reporting.outputEncoding&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;java.version&lt;/span&gt;&amp;gt;&lt;/span&gt;1.8&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;java.version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;properties&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependencies&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;spring-boot-starter-test&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;scope&lt;/span&gt;&amp;gt;&lt;/span&gt;test&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;scope&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependencies&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;build&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;plugins&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;plugin&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;spring-boot-maven-plugin&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;plugin&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;plugins&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;build&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;project&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+
+&lt;h4 id=&quot;1-1-2-application-yml&quot;&gt;&lt;a href=&quot;#1-1-2-application-yml&quot; class=&quot;headerlink&quot; title=&quot;1.1.2 application.yml&quot;&gt;&lt;/a&gt;1.1.2 application.yml&lt;/h4&gt;&lt;p&gt;将端口设置为8080（默认就是的，并且设置tomcat的字符集为UTF-8&lt;/p&gt;
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;server:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;port:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;tomcat:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;uri-encoding:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;UTF-8&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;spring boot更多预置参数请参考：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://liulixiang1988.github.io/categories/Java/"/>
+    
+    
+      <category term="Spring" scheme="http://liulixiang1988.github.io/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言学习</title>
+    <link href="http://liulixiang1988.github.io/2017/08/29/Go-1-Go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://liulixiang1988.github.io/2017/08/29/Go-1-Go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/</id>
+    <published>2017-08-29T14:23:00.000Z</published>
+    <updated>2021-05-15T05:16:53.408Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-环境变量&quot;&gt;&lt;a href=&quot;#1-环境变量&quot; class=&quot;headerlink&quot; title=&quot;1. 环境变量&quot;&gt;&lt;/a&gt;1. 环境变量&lt;/h2&gt;&lt;h3 id=&quot;1-1-GOROOT&quot;&gt;&lt;a href=&quot;#1-1-GOROOT&quot; class=&quot;headerlink&quot; title=&quot;1.1 GOROOT&quot;&gt;&lt;/a&gt;1.1 GOROOT&lt;/h3&gt;&lt;p&gt;GOROOT就是go的安装路径&lt;br&gt;在&lt;code&gt;~/.bash_profile&lt;/code&gt;中添加下面语句:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;GOROOT=/usr/&lt;span class=&quot;built_in&quot;&gt;local&lt;/span&gt;/go&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; GOROOT&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 添加到PATH&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; PATH=&lt;span class=&quot;variable&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;variable&quot;&gt;$GOROOT&lt;/span&gt;/bin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;1-2-GOPATH&quot;&gt;&lt;a href=&quot;#1-2-GOPATH&quot; class=&quot;headerlink&quot; title=&quot;1.2 GOPATH&quot;&gt;&lt;/a&gt;1.2 GOPATH&lt;/h3&gt;&lt;p&gt;&lt;code&gt;go install/get/run&lt;/code&gt;会用到的目录。它的下面有3个文件夹：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bin: golang编译可执行文件存放路径，可自动生成。通常把它也假如到PATH中，用来执行安装的第三方工具&lt;/li&gt;
+&lt;li&gt;pkg: golang编译的.a中间文件存放路径，可自动生成&lt;/li&gt;
+&lt;li&gt;src: 源码路径。按照golang默认约定，go run，go install等命令的当前工作路径（即在此路径下执行上述命令）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以设置多个子目录到GOPATH中&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;export GOPATH&amp;#x3D;~&amp;#x2F;golib:~&amp;#x2F;goproject&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;1-3-GOBIN&quot;&gt;&lt;a href=&quot;#1-3-GOBIN&quot; class=&quot;headerlink&quot; title=&quot;1.3 GOBIN&quot;&gt;&lt;/a&gt;1.3 GOBIN&lt;/h3&gt;
+    
+    </summary>
+    
+    
+      <category term="Go" scheme="http://liulixiang1988.github.io/categories/Go/"/>
+    
+    
+      <category term="Go" scheme="http://liulixiang1988.github.io/tags/Go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring笔记07-Hibernate JPA与Spring Data</title>
+    <link href="http://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/"/>
+    <id>http://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/</id>
+    <published>2016-08-24T10:51:00.000Z</published>
+    <updated>2021-05-15T05:16:53.427Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;7-1-映射JPA实体&quot;&gt;&lt;a href=&quot;#7-1-映射JPA实体&quot; class=&quot;headerlink&quot; title=&quot;7.1 映射JPA实体&quot;&gt;&lt;/a&gt;7.1 映射JPA实体&lt;/h2&gt;&lt;p&gt;JPA: Java Persistence API 它是从EJB3中抽取出来的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;EntityManagerFactory&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EntityManager&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;persistence.xml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Entity&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Column&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@Table&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要使用JPA，我们需要添加依赖：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;compile group: &amp;#39;javax&amp;#39;, name: &amp;#39;javaee-api&amp;#39;, version: &amp;#39;7.0&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;我们来新建数据：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@Entity&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class Account &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Id&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private Long id;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private BigDecimal balance;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &amp;#x2F;&amp;#x2F;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;然后配置数据源：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@Configuration&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@ComponentScan(basePackages &amp;#x3D; &amp;quot;lx.spring.core&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@PropertySource(&amp;quot;classpath:prod.properties&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@EnableTransactionManagement&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class AppConfig &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Autowired&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private Environment env;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Bean&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    public DataSource dataSource() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        BasicDataSource dataSource &amp;#x3D; new BasicDataSource();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setDriverClassName(env.getProperty(&amp;quot;db.driver&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUrl(env.getProperty(&amp;quot;db.url&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUsername(env.getProperty(&amp;quot;db.user&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setPassword(env.getProperty(&amp;quot;db.pass&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return dataSource;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;7-2-Entity-Manager和Vendor-Adapter&quot;&gt;&lt;a href=&quot;#7-2-Entity-Manager和Vendor-Adapter&quot; class=&quot;headerlink&quot; title=&quot;7.2 Entity Manager和Vendor Adapter&quot;&gt;&lt;/a&gt;7.2 Entity Manager和Vendor Adapter&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://liulixiang1988.github.io/categories/Java/"/>
+    
+    
+      <category term="Java, Spring" scheme="http://liulixiang1988.github.io/tags/Java-Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring笔记06-使用JdbcTemplate进行数据访问</title>
+    <link href="http://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"/>
+    <id>http://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/</id>
+    <published>2016-08-23T13:22:00.000Z</published>
+    <updated>2021-05-15T05:16:53.426Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;6-1-实例化和配置&quot;&gt;&lt;a href=&quot;#6-1-实例化和配置&quot; class=&quot;headerlink&quot; title=&quot;6.1 实例化和配置&quot;&gt;&lt;/a&gt;6.1 实例化和配置&lt;/h2&gt;&lt;p&gt;没有Spring的情况下，JDBC非常难用；有了Spring，JDBC就变得比较靠谱可用了。&lt;/p&gt;
+&lt;p&gt;这里我们在Bean中使用&lt;code&gt;DataSource&lt;/code&gt;对&lt;code&gt;JdbcTemplate&lt;/code&gt;进行初始化。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@Repository&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@Profile(&amp;quot;test&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class JdbcAccountRepository implements AccountRepository &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private JdbcTemplate template;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private static long nextId &amp;#x3D; 4;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Autowired&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    public JdbcAccountRepository(DataSource dataSource) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        template &amp;#x3D; new JdbcTemplate(dataSource);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;后面我们看如何配置多个&lt;code&gt;DataSource&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;6-2-定义数据源Data-Source&quot;&gt;&lt;a href=&quot;#6-2-定义数据源Data-Source&quot; class=&quot;headerlink&quot; title=&quot;6.2 定义数据源Data Source&quot;&gt;&lt;/a&gt;6.2 定义数据源Data Source&lt;/h2&gt;&lt;p&gt;之前我们已经讲了&lt;code&gt;@Component&lt;/code&gt;，但是在实际中我们更多的遇到的是&lt;code&gt;@Service&lt;/code&gt;和&lt;code&gt;@Repository&lt;/code&gt;，&lt;code&gt;@Controller&lt;/code&gt;，这些其实也是&lt;code&gt;@Component&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;首先我们来添加一些依赖：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dependencies &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.apache.commons&amp;#39;, name: &amp;#39;commons-dbcp2&amp;#39;, version: &amp;#39;2.1.1&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.springframework&amp;#39;, name: &amp;#39;spring-test&amp;#39;, version: &amp;#39;4.3.2.RELEASE&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.hamcrest&amp;#39;, name: &amp;#39;hamcrest-library&amp;#39;, version: &amp;#39;1.3&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#x2F;&amp;#x2F;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return&amp;#39;com.h2database:h2:1.4.192&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;注意这里我们用了返回，这是因为需要对应的驱动&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://liulixiang1988.github.io/categories/Java/"/>
+    
+    
+      <category term="Java, Spring" scheme="http://liulixiang1988.github.io/tags/Java-Spring/"/>
+    
+  </entry>
+  
+</feed>

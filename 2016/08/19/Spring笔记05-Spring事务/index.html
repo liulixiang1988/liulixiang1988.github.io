@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liulixiang1988.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="5.1 声明事务管理ACID 属性: Atomic原子：All or Nothing Consistent一致性: DB integrity constraints never violated Isolated: How transactions see work done by others Durable: Committed changes are permanent 我们一般是在Serv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring笔记05-Spring事务">
+<meta property="og:url" content="http://liulixiang1988.github.io/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="5.1 声明事务管理ACID 属性: Atomic原子：All or Nothing Consistent一致性: DB integrity constraints never violated Isolated: How transactions see work done by others Durable: Committed changes are permanent 我们一般是在Serv">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-08-19T10:20:00.000Z">
+<meta property="article:modified_time" content="2021-05-15T05:16:53.425Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Spring">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liulixiang1988.github.io/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Spring笔记05-Spring事务 | 一步一步</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b957d06ffb0f1adb33d042abed4121cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">一步一步</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://liulixiang1988.github.io/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring笔记05-Spring事务
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-08-19 18:20:00" itemprop="dateCreated datePublished" datetime="2016-08-19T18:20:00+08:00">2016-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-15 13:16:53" itemprop="dateModified" datetime="2021-05-15T13:16:53+08:00">2021-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/19/Spring笔记05-Spring事务/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="5-1-声明事务管理"><a href="#5-1-声明事务管理" class="headerlink" title="5.1 声明事务管理"></a>5.1 声明事务管理</h2><p>ACID 属性:</p>
+<p>Atomic原子：All or Nothing</p>
+<p>Consistent一致性: DB integrity constraints never violated</p>
+<p>Isolated: How transactions see work done by others</p>
+<p>Durable: Committed changes are permanent</p>
+<p>我们一般是在Service层声明事务。</p>
+<h3 id="5-1-1-Transactional注解"><a href="#5-1-1-Transactional注解" class="headerlink" title="5.1.1 @Transactional注解"></a>5.1.1 @Transactional注解</h3><p><code>@Transactional</code>注解允许我们管理一个事务管理器。Spring不直接提供事务管理器，它提供一个hook连接到已经存在的事务管理器，比如我们使用关系数据库，那Spring就是使用关系数据库的事务管理器。Spring的Bean和Entity允许我们请求事务管理器，设置属性（比如超时、只读等）。</p>
+<p>应用Spring的事务需要两步：</p>
+<ol>
+<li>应用<code>Transactional</code>注解<br> a. XML格式<br> b. 写代码的方式</li>
+<li>声明Platform Transaction Manager bean</li>
+<li><code>@EnableTransactionManagement</code></li>
+</ol>
+<p><code>@Transactional</code>注解可以用于方法或者类。如果应用于一个类，那么这个类中的所有方法都应用了了这个注解，对于应用了类的注解，我们对单独的类重新使用<code>@Transactional</code>方法来覆盖。</p>
+<p><code>@Transactional</code>方法提供了一些参数让我们来指定一些配置。</p>
+<h3 id="5-1-2-PlatformTransactionManager接口"><a href="#5-1-2-PlatformTransactionManager接口" class="headerlink" title="5.1.2 PlatformTransactionManager接口"></a>5.1.2 PlatformTransactionManager接口</h3><p><code>PlatformTransactionManager</code>用来代表依赖平台的事务管理器。它的实现类有Hibernate, JPA等事务管理器。</p>
+<h3 id="5-1-3-案例：账户应用"><a href="#5-1-3-案例：账户应用" class="headerlink" title="5.1.3 案例：账户应用"></a>5.1.3 案例：账户应用</h3><p>首先，我们定义entity:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package lx.spring.core.entities;</span><br><span class="line"></span><br><span class="line">import java.math.BigDecimal;</span><br><span class="line"></span><br><span class="line">public class Account &#123;</span><br><span class="line">    private Long id;</span><br><span class="line">    private BigDecimal balance;</span><br><span class="line"></span><br><span class="line">    public Account() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Account(Long id, BigDecimal balance) &#123;</span><br><span class="line">        this.id &#x3D; id;</span><br><span class="line">        this.balance &#x3D; balance;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; getter setter toString equals hashCode等</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们使用<code>BigDecimal</code>类型来表示余额。</p>
+<p>然后我们创建一个Repository，用来表示数据库的操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package lx.spring.core.repositories;</span><br><span class="line">import lx.spring.core.entities.Account;</span><br><span class="line">import java.math.BigDecimal;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface AccountRepository &#123;</span><br><span class="line">    List&lt;Account&gt; getAccounts();</span><br><span class="line">    Account getAccount(Long id);</span><br><span class="line">    int getNumberOfCounts();</span><br><span class="line">    Long createAccount(BigDecimal initialBalance);</span><br><span class="line">    int deleteAccount(Long id);</span><br><span class="line">    void updateAccount(Account account);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后面我们将看到如何用Spring Data来处理数据。</p>
+<p>第一步，我们用<code>@Transactional</code> 实体。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Service @Transactional</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public class AccountService &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountRepository repository;</span><br><span class="line"></span><br><span class="line">    public BigDecimal getBalance(Long id) &#123;</span><br><span class="line">        return repository.getAccount(id).getBalance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BigDecimal deposit(Long id, BigDecimal amount) &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(id);</span><br><span class="line">        BigDecimal newBalance &#x3D; account.getBalance().add(amount);</span><br><span class="line">        account.setBalance(newBalance);</span><br><span class="line">        repository.updateAccount(account);</span><br><span class="line">        return newBalance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BigDecimal withdraw(Long id, BigDecimal amount) &#123;</span><br><span class="line">        return deposit(id, amount.negate());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二步是声明Bean来适应事务，我们打开<code>AppConfig</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableTransactionManagement</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;transactionManager&quot;)</span><br><span class="line">    @Profile(&quot;test&quot;)</span><br><span class="line">    public PlatformTransactionManager transactionManagerForTest() &#123;</span><br><span class="line">        return new DataSourceTransactionManager(dataSourceForTest());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;dataSource&quot;)</span><br><span class="line">    @Profile(&quot;test&quot;)</span><br><span class="line">    public DataSource dataSourceForTest() &#123;</span><br><span class="line">        DataSource dataSource &#x3D; new BasicDataSource();</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里的<code>transactionManagerForTest()</code>是返回事务管理器的，同时，我们用<code>EnableTransactionManagement</code>来指明我们的容器用了事务管理。</p>
+<h2 id="5-2-Isolation-levels-隔离层级"><a href="#5-2-Isolation-levels-隔离层级" class="headerlink" title="5.2 Isolation levels 隔离层级"></a>5.2 Isolation levels 隔离层级</h2><p><code>@Transactional</code>有一个属性是<code>Isolation</code>的，它是一个枚举，它有一下几个值：</p>
+<ul>
+<li><code>DEFAULT</code> 使用底层数据存储所用的隔离层级</li>
+<li><code>READ_COMMITTED</code> dirty reads are prevented; non-repeatable reads and phantom reads can occur.只有在其他事务提交时在一个事务里才能看到改变后的数据。如果事务需要很久，那就一直锁定直到事务完成。</li>
+<li><code>READ_UNCOMMITTED</code> dirty reads, non-repeatable reads and phantom reads can occur. 两个事务同时对于一行操作。如果一个事务读取了行，然后又修改了数据，那另一个事务可以看到其他事务修改后的数据。这个好处是速度非常快，你没有锁定行，问题是它有一定风险，比如你根据没有提交的数据做了一些动作，但是这些改变又回滚了。所以，使用时需要分析一下。<code>READ_UNCOMMITTED</code>是最高效但不是最优的选择。</li>
+<li><code>REPEATABLE_READ</code> dirty reads and non-repeatable reads are prevented; phantom reads can occur.如果数据修改后发生了回滚，则回滚前后我们看到的数据都是一样的</li>
+<li><code>SERIALIZABLE</code> dirty reads, non-repeatable reads and phantom reads are prevented 当我们查询或修改时，别的事务不能增加或修改表（整表锁定）</li>
+</ul>
+<p>一般情况下我们不会修改这个属性。</p>
+<h2 id="5-3-Propagation-传播"><a href="#5-3-Propagation-传播" class="headerlink" title="5.3 Propagation 传播"></a>5.3 Propagation 传播</h2><p>Propagation说的是当事务执行时，我们的方法是否也是执行的。我们再回到<code>@Transactional</code>注解上来，它有一个属性是<code>Propagation</code>枚举。它有以下值：</p>
+<ul>
+<li><code>MANDATORY</code>:  1. tx-&gt;join tx; 2. no-&gt;throw a TransactionRequiredException</li>
+<li><code>NESTED</code>: </li>
+<li><code>NEVER</code>: 1. tx-&gt; throw an exception; 2. no-&gt;nothing</li>
+<li><code>NOT_SUPPORTED</code>: 1. tx-&gt;suspend tx; run outside tx; resume tx; 2. no-&gt;nothing</li>
+<li><code>REQUIRED</code>：最常用，如果一个事务发生，那么我们加入，这是默认的；如果没有，我们创建一个事务。</li>
+<li><code>REQUIRES_NEW</code>：1. tx1-&gt; suspend tx1; create and run tx2; resume tx1; 2. no-&gt;create and run tx</li>
+<li><code>SUPPORTS</code>: 1. tx-&gt;join tx; 2. no-&gt;nothing</li>
+</ul>
+<p>除了<code>NESTED</code>,其它的都是来自于J2EE。</p>
+<h2 id="5-4-高效事务管理"><a href="#5-4-高效事务管理" class="headerlink" title="5.4 高效事务管理"></a>5.4 高效事务管理</h2><p>Spring提供了两种高效高效管理事务的方法：</p>
+<ul>
+<li>使用<code>TransactionTemplate</code></li>
+<li>使用<code>PlatfromTransactionManager</code>实现</li>
+</ul>
+<h3 id="5-4-1-TransactionTemplate"><a href="#5-4-1-TransactionTemplate" class="headerlink" title="5.4.1 TransactionTemplate"></a>5.4.1 TransactionTemplate</h3><p><code>TransactionTemplate</code>非常有用。我们在<code>Service</code>的构造方法里有提供<code>PlatformTransactionManager</code>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.transaction.PlatformTransactionManager;</span><br><span class="line">import org.springframework.transaction.TransactionStatus;</span><br><span class="line">import org.springframework.transaction.support.TransactionTemplate;</span><br><span class="line">import org.springframework.util.Assert;</span><br><span class="line"></span><br><span class="line">public class SimpleService &#123;</span><br><span class="line">    private final TransactionTemplate transactionTemplate;</span><br><span class="line"></span><br><span class="line">    public SimpleService(PlatformTransactionManager transactionManager) &#123;</span><br><span class="line">        Assert.notNull(transactionManager, &quot;The &#39;transactionManager&#39; argument must not be null&quot;);</span><br><span class="line">        this.transactionTemplate &#x3D; new TransactionTemplate(transactionManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object someServiceMethod() &#123;</span><br><span class="line">        return transactionTemplate.execute((TransactionStatus status) -&gt; &#123;</span><br><span class="line">            System.out.println(&quot;hello&quot;);</span><br><span class="line">            return &quot;aaa&quot;;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void someServiceMethodWithouResult() &#123;</span><br><span class="line">        transactionTemplate.execute(new TransactionCallbackWithoutResult() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected void doInTransactionWithoutResult(TransactionStatus status) &#123;</span><br><span class="line">                System.out.println(status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数<code>TransactionStatus</code>有<code>setRollbackOnly()</code>方法，用于回滚事务。</p>
+<p>我们可以在构造方法中设置事务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public SimpleService(PlatformTransactionManager transactionManager) &#123;</span><br><span class="line">    Assert.notNull(transactionManager, &quot;The &#39;transactionManager&#39; argument must not be null&quot;);</span><br><span class="line">    this.transactionTemplate &#x3D; new TransactionTemplate(transactionManager);</span><br><span class="line">    &#x2F;&#x2F;这里我们可以设置会话</span><br><span class="line">    this.transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITTED);</span><br><span class="line">    this.transactionTemplate.setTimeout(30); &#x2F;&#x2F;30秒</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-2-PlatformTransactionManager"><a href="#5-4-2-PlatformTransactionManager" class="headerlink" title="5.4.2 PlatformTransactionManager"></a>5.4.2 PlatformTransactionManager</h3><p>我们也可以使用<code>org.springframework.transaction.PlatformTransactionManager</code>直接管理会话。将<code>PlatformTransactionManager</code>直接传给bean，然后可以使用<code>TransactionDefinistion</code>和<code>TransactionStatus</code>来初始化会话、回滚、提交等。</p>
+<p>在<code>TransactionTemplate</code>和<code>PlatformTransactionManager</code>之间有限推荐第一个。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你的赞赏是我继续的动力～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>刘理想
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://liulixiang1988.github.io/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/" title="Spring笔记05-Spring事务">http://liulixiang1988.github.io/2016/08/19/Spring笔记05-Spring事务/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java-Spring/" rel="tag"># Java, Spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/08/12/Spring%E7%AC%94%E8%AE%B004-%E4%BD%BF%E7%94%A8Spring%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95/" rel="prev" title="Spring笔记04-使用Spring进行测试">
+      <i class="fa fa-chevron-left"></i> Spring笔记04-使用Spring进行测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/" rel="next" title="Spring笔记06-使用JdbcTemplate进行数据访问">
+      Spring笔记06-使用JdbcTemplate进行数据访问 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-声明事务管理"><span class="nav-number">1.</span> <span class="nav-text">5.1 声明事务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-Transactional注解"><span class="nav-number">1.1.</span> <span class="nav-text">5.1.1 @Transactional注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-PlatformTransactionManager接口"><span class="nav-number">1.2.</span> <span class="nav-text">5.1.2 PlatformTransactionManager接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-案例：账户应用"><span class="nav-number">1.3.</span> <span class="nav-text">5.1.3 案例：账户应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-Isolation-levels-隔离层级"><span class="nav-number">2.</span> <span class="nav-text">5.2 Isolation levels 隔离层级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-Propagation-传播"><span class="nav-number">3.</span> <span class="nav-text">5.3 Propagation 传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-高效事务管理"><span class="nav-number">4.</span> <span class="nav-text">5.4 高效事务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-TransactionTemplate"><span class="nav-number">4.1.</span> <span class="nav-text">5.4.1 TransactionTemplate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-PlatformTransactionManager"><span class="nav-number">4.2.</span> <span class="nav-text">5.4.2 PlatformTransactionManager</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://liulixiang1988github.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://liulixiang1988.github.io/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/";
+    this.page.identifier = "2016/08/19/Spring笔记05-Spring事务/";
+    this.page.title = "Spring笔记05-Spring事务";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://liulixiang1988github.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
