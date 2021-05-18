@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liulixiang1988.github.io/"/>
-  <updated>2021-05-18T15:48:07.949Z</updated>
+  <updated>2021-05-18T16:59:57.386Z</updated>
   <id>http://liulixiang1988.github.io/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>YARN学习笔记</title>
+    <link href="http://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/"/>
+    <id>http://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/</id>
+    <published>2021-05-18T22:30:00.000Z</published>
+    <updated>2021-05-18T16:59:57.386Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-YARN产生背景&quot;&gt;&lt;a href=&quot;#1-YARN产生背景&quot; class=&quot;headerlink&quot; title=&quot;1. YARN产生背景&quot;&gt;&lt;/a&gt;1. YARN产生背景&lt;/h2&gt;&lt;h3 id=&quot;1-1-Hadoop-1-x中MapReduce存在的问题&quot;&gt;&lt;a href=&quot;#1-1-Hadoop-1-x中MapReduce存在的问题&quot; class=&quot;headerlink&quot; title=&quot;1.1 Hadoop 1.x中MapReduce存在的问题&quot;&gt;&lt;/a&gt;1.1 Hadoop 1.x中MapReduce存在的问题&lt;/h3&gt;&lt;p&gt;Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master/Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JobTracker主要的功能是资源的管理与作业的调度。&lt;/li&gt;
+&lt;li&gt;TaskTracker&lt;ul&gt;
+&lt;li&gt;定期（通过心跳）向JobTracker汇报本节点的健康状况、资源使用情况、作业执行情况。&lt;/li&gt;
+&lt;li&gt;接收来自JobTracker的命令：启动任务、杀死任务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png&quot; alt=&quot;map-reduce&quot;&gt;&lt;/p&gt;
+&lt;p&gt;存在采用的Master的问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;单点故障：整个集群只有1个JobTracker。&lt;/li&gt;
+&lt;li&gt;JobTracker要接受各个TaskTracker与client的通信请求，节点压力大。&lt;/li&gt;
+&lt;li&gt;JobTracker承担了多种职责，且只能接受MapReduce的作业，不易扩展。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;1-2-提高资源利用率和降低运维成本的诉求&quot;&gt;&lt;a href=&quot;#1-2-提高资源利用率和降低运维成本的诉求&quot; class=&quot;headerlink&quot; title=&quot;1.2 提高资源利用率和降低运维成本的诉求&quot;&gt;&lt;/a&gt;1.2 提高资源利用率和降低运维成本的诉求&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-05-19-yarn-1.png&quot; alt=&quot;resource usage&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/categories/Big-Data/"/>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/tags/Big-Data/"/>
+    
+      <category term="YARN" scheme="http://liulixiang1988.github.io/tags/YARN/"/>
+    
+  </entry>
   
   <entry>
     <title>HDFS学习笔记</title>
@@ -90,35 +130,6 @@
   </entry>
   
   <entry>
-    <title>技术人的思维修炼</title>
-    <link href="http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/"/>
-    <id>http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/</id>
-    <published>2021-03-14T13:00:00.000Z</published>
-    <updated>2021-05-15T05:16:53.403Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;[toc]&lt;/p&gt;
-&lt;h2 id=&quot;德雷福斯模型&quot;&gt;&lt;a href=&quot;#德雷福斯模型&quot; class=&quot;headerlink&quot; title=&quot;德雷福斯模型&quot;&gt;&lt;/a&gt;德雷福斯模型&lt;/h2&gt;&lt;p&gt;德雷福斯是一个专业人员能力成长模型，这个模型认为所有专业人员都需要经历 5 个成长阶段，不管是医生还是律师，或者是软件开发，任何专业技能的从业者都需要经历新手、高级新手、胜任者、精通者、专家 5 个阶段。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-03-14-deleifusi.png&quot; alt=&quot;link&quot;&gt;&lt;/p&gt;
-&lt;p&gt;通常一个人进入专业的技能领域，即使在学校已经系统学习过这个专业的相关知识，但依然无法独立完成工作，必须在有经验的同事指导下，学习相关的技能。这里主要学习的是有关工作的规则和套路。比如用什么工具、什么框架，如何开发程序，如何开会、写周报，如何和同事合作，业务领域的名词术语是什么意思等等这些各种各样和工作有关的大小事情。这个阶段叫做&lt;strong&gt;新手&lt;/strong&gt;阶段。&lt;/p&gt;
-&lt;p&gt;通常说来，一个人大约工作两三年后，就差不多掌握了工作的各种套路，可以摆脱新手阶段，独立完成一些基本的工作了。通过新手阶段的人，少部分会直接进入胜任者阶段，而大多数则进入&lt;strong&gt;高级新手&lt;/strong&gt;阶段。&lt;/p&gt;
-&lt;p&gt;高级新手其实是新手的自然延续，他不需要别人指导工作，也不需要学习工作的规则和套路，因为高级新手已经在新手阶段掌握了这些套路，他可以熟练应用这些规则套路完成他的工作。但是高级新手的能力也仅限于此，他不明白这些规则是如何制定出来的，为什么使用这个框架开发而不是另一个框架，也不明白这个框架是如何开发出来的。&lt;/p&gt;
-&lt;p&gt;一个悲观的事实是，新手会自然进入高级新手阶段，而高级新手却无法自然进入其后的其他等级阶段。实际上，&lt;strong&gt;在各个专业领域中，超过半数的人终其一生都停留在高级新手阶段&lt;/strong&gt;，也就是说，大多数人一生的工作就是基于其专业领域的规则在进行重复性的劳动。他们不了解这些规则背后的原理，也无法在面对新的问题时，开创出新的方法和规则。那些简历上十多年如一日使用相同的技术方案、开发类似软件项目的资深工程师大部分都是高级新手。&lt;/p&gt;
-&lt;p&gt;导致一个人终身停留在高级新手阶段的原因有很多，其中一个重要的原因是：&lt;strong&gt;高级新手不知道自己是高级新手&lt;/strong&gt;。高级新手觉得自己在这个专业领域混得很不错，做事熟练，经验丰富。&lt;/p&gt;
-&lt;p&gt;事实上，这种熟练只是对既有规则的熟练，如果岁月静好，一切都循规蹈矩，也没什么问题。而一旦行业出现技术变革或者工作出现新情况，高级新手就会遇到巨大的工作困难。事实上，各行各业都存在大量的高级新手，只是软件开发领域的技术变革更加频繁，问题变化也更加快速，使高级新手问题更加突出。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="编程随想" scheme="http://liulixiang1988.github.io/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
-    
-    
-      <category term="编程随想" scheme="http://liulixiang1988.github.io/tags/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
     <title>软件设计文档示例模板</title>
     <link href="http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/"/>
     <id>http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/</id>
@@ -145,6 +156,35 @@
     
     
       <category term="System Design" scheme="http://liulixiang1988.github.io/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术人的思维修炼</title>
+    <link href="http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/"/>
+    <id>http://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/</id>
+    <published>2021-03-14T13:00:00.000Z</published>
+    <updated>2021-05-15T05:16:53.403Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[toc]&lt;/p&gt;
+&lt;h2 id=&quot;德雷福斯模型&quot;&gt;&lt;a href=&quot;#德雷福斯模型&quot; class=&quot;headerlink&quot; title=&quot;德雷福斯模型&quot;&gt;&lt;/a&gt;德雷福斯模型&lt;/h2&gt;&lt;p&gt;德雷福斯是一个专业人员能力成长模型，这个模型认为所有专业人员都需要经历 5 个成长阶段，不管是医生还是律师，或者是软件开发，任何专业技能的从业者都需要经历新手、高级新手、胜任者、精通者、专家 5 个阶段。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://liulixiang1988.github.io/images/2021-03-14-deleifusi.png&quot; alt=&quot;link&quot;&gt;&lt;/p&gt;
+&lt;p&gt;通常一个人进入专业的技能领域，即使在学校已经系统学习过这个专业的相关知识，但依然无法独立完成工作，必须在有经验的同事指导下，学习相关的技能。这里主要学习的是有关工作的规则和套路。比如用什么工具、什么框架，如何开发程序，如何开会、写周报，如何和同事合作，业务领域的名词术语是什么意思等等这些各种各样和工作有关的大小事情。这个阶段叫做&lt;strong&gt;新手&lt;/strong&gt;阶段。&lt;/p&gt;
+&lt;p&gt;通常说来，一个人大约工作两三年后，就差不多掌握了工作的各种套路，可以摆脱新手阶段，独立完成一些基本的工作了。通过新手阶段的人，少部分会直接进入胜任者阶段，而大多数则进入&lt;strong&gt;高级新手&lt;/strong&gt;阶段。&lt;/p&gt;
+&lt;p&gt;高级新手其实是新手的自然延续，他不需要别人指导工作，也不需要学习工作的规则和套路，因为高级新手已经在新手阶段掌握了这些套路，他可以熟练应用这些规则套路完成他的工作。但是高级新手的能力也仅限于此，他不明白这些规则是如何制定出来的，为什么使用这个框架开发而不是另一个框架，也不明白这个框架是如何开发出来的。&lt;/p&gt;
+&lt;p&gt;一个悲观的事实是，新手会自然进入高级新手阶段，而高级新手却无法自然进入其后的其他等级阶段。实际上，&lt;strong&gt;在各个专业领域中，超过半数的人终其一生都停留在高级新手阶段&lt;/strong&gt;，也就是说，大多数人一生的工作就是基于其专业领域的规则在进行重复性的劳动。他们不了解这些规则背后的原理，也无法在面对新的问题时，开创出新的方法和规则。那些简历上十多年如一日使用相同的技术方案、开发类似软件项目的资深工程师大部分都是高级新手。&lt;/p&gt;
+&lt;p&gt;导致一个人终身停留在高级新手阶段的原因有很多，其中一个重要的原因是：&lt;strong&gt;高级新手不知道自己是高级新手&lt;/strong&gt;。高级新手觉得自己在这个专业领域混得很不错，做事熟练，经验丰富。&lt;/p&gt;
+&lt;p&gt;事实上，这种熟练只是对既有规则的熟练，如果岁月静好，一切都循规蹈矩，也没什么问题。而一旦行业出现技术变革或者工作出现新情况，高级新手就会遇到巨大的工作困难。事实上，各行各业都存在大量的高级新手，只是软件开发领域的技术变革更加频繁，问题变化也更加快速，使高级新手问题更加突出。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="编程随想" scheme="http://liulixiang1988.github.io/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
+    
+    
+      <category term="编程随想" scheme="http://liulixiang1988.github.io/tags/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/"/>
     
   </entry>
   
@@ -654,36 +694,6 @@
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@Configuration&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@ComponentScan(basePackages &amp;#x3D; &amp;quot;lx.spring.core&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@PropertySource(&amp;quot;classpath:prod.properties&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@EnableTransactionManagement&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class AppConfig &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Autowired&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private Environment env;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Bean&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    public DataSource dataSource() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        BasicDataSource dataSource &amp;#x3D; new BasicDataSource();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setDriverClassName(env.getProperty(&amp;quot;db.driver&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUrl(env.getProperty(&amp;quot;db.url&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUsername(env.getProperty(&amp;quot;db.user&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setPassword(env.getProperty(&amp;quot;db.pass&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return dataSource;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;7-2-Entity-Manager和Vendor-Adapter&quot;&gt;&lt;a href=&quot;#7-2-Entity-Manager和Vendor-Adapter&quot; class=&quot;headerlink&quot; title=&quot;7.2 Entity Manager和Vendor Adapter&quot;&gt;&lt;/a&gt;7.2 Entity Manager和Vendor Adapter&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://liulixiang1988.github.io/categories/Java/"/>
-    
-    
-      <category term="Java, Spring" scheme="http://liulixiang1988.github.io/tags/Java-Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring笔记06-使用JdbcTemplate进行数据访问</title>
-    <link href="http://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"/>
-    <id>http://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/</id>
-    <published>2016-08-23T13:22:00.000Z</published>
-    <updated>2021-05-15T05:16:53.426Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;6-1-实例化和配置&quot;&gt;&lt;a href=&quot;#6-1-实例化和配置&quot; class=&quot;headerlink&quot; title=&quot;6.1 实例化和配置&quot;&gt;&lt;/a&gt;6.1 实例化和配置&lt;/h2&gt;&lt;p&gt;没有Spring的情况下，JDBC非常难用；有了Spring，JDBC就变得比较靠谱可用了。&lt;/p&gt;
-&lt;p&gt;这里我们在Bean中使用&lt;code&gt;DataSource&lt;/code&gt;对&lt;code&gt;JdbcTemplate&lt;/code&gt;进行初始化。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@Repository&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@Profile(&amp;quot;test&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class JdbcAccountRepository implements AccountRepository &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private JdbcTemplate template;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private static long nextId &amp;#x3D; 4;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Autowired&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    public JdbcAccountRepository(DataSource dataSource) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        template &amp;#x3D; new JdbcTemplate(dataSource);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;后面我们看如何配置多个&lt;code&gt;DataSource&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;6-2-定义数据源Data-Source&quot;&gt;&lt;a href=&quot;#6-2-定义数据源Data-Source&quot; class=&quot;headerlink&quot; title=&quot;6.2 定义数据源Data Source&quot;&gt;&lt;/a&gt;6.2 定义数据源Data Source&lt;/h2&gt;&lt;p&gt;之前我们已经讲了&lt;code&gt;@Component&lt;/code&gt;，但是在实际中我们更多的遇到的是&lt;code&gt;@Service&lt;/code&gt;和&lt;code&gt;@Repository&lt;/code&gt;，&lt;code&gt;@Controller&lt;/code&gt;，这些其实也是&lt;code&gt;@Component&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;首先我们来添加一些依赖：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dependencies &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.apache.commons&amp;#39;, name: &amp;#39;commons-dbcp2&amp;#39;, version: &amp;#39;2.1.1&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.springframework&amp;#39;, name: &amp;#39;spring-test&amp;#39;, version: &amp;#39;4.3.2.RELEASE&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    compile group: &amp;#39;org.hamcrest&amp;#39;, name: &amp;#39;hamcrest-library&amp;#39;, version: &amp;#39;1.3&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#x2F;&amp;#x2F;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return&amp;#39;com.h2database:h2:1.4.192&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;注意这里我们用了返回，这是因为需要对应的驱动&lt;/p&gt;
     
     </summary>
     
