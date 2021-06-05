@@ -4312,7 +4312,46 @@ DATABASES = {
 <h3 id="1-3-YARN的诞生"><a href="#1-3-YARN的诞生" class="headerlink" title="1.3 YARN的诞生"></a>1.3 YARN的诞生</h3><p>基于上述两节，催生了YARN。可以在YARN上运行多种不同的计算框架。不同计算框架可以共享同一个HDFS集群上的数据，享受整体的资源调度。</p>
 <p>所谓的多种框架运行在YARN，就是常说的xxx on YARN，比如Spark/MapReduce/Flink on YARN. xxx on YARN的好处：与其他计算框架共享集群资源，按资源需要分配，进而提高集群资源的利用率。</p>
 <p><img src="http://liulixiang1988.github.io/images/2021-05-19-yarn-2.png" alt="resource usage"></p>
-<h2 id="2-YARN概述"><a href="#2-YARN概述" class="headerlink" title="2. YARN概述"></a>2. YARN概述</h2><h2 id="3-YARN架构"><a href="#3-YARN架构" class="headerlink" title="3. YARN架构"></a>3. YARN架构</h2><h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2>]]></content>
+<h2 id="2-YARN概述"><a href="#2-YARN概述" class="headerlink" title="2. YARN概述"></a>2. YARN概述</h2><p>官网地址：<a href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html</a></p>
+<ol>
+<li>YARN的名称其实是Yet Another Resource Negoitiator的首字母缩写；</li>
+<li>YARN是一个<strong>通用</strong>的资源管理系统；</li>
+<li>为上层的应用提供统一的资源管理和调度能力</li>
+<li>监控Node Manager，一旦某个Node Manager，那么该Node Manager上运行的任务，那么该Node Manager上运行的任务需要高速我们的Application Master</li>
+</ol>
+<h2 id="3-YARN架构"><a href="#3-YARN架构" class="headerlink" title="3. YARN架构"></a>3. YARN架构</h2><p><img src="http://liulixiang1988.github.io/images/yarn_architecture.gif" alt="yarn architecture"></p>
+<p><strong>Resource Manager:</strong></p>
+<ol>
+<li>同一时间，整个集群提供服务的Resource Manager只有一个，负责集群资源的统一管理与调度；</li>
+<li>处理客户端的请求：提交一个作业、杀死一个作业；</li>
+<li>监控Node Manager，一旦某个Node Master挂了，那么该Node Manager上运行的任务需要高速我们的Application Master如何进行重启。</li>
+</ol>
+<p><strong>Node Manager:</strong></p>
+<ol>
+<li>整个集群有多个，负责自己本身节点资源管理和使用；</li>
+<li>定时向Resource Manager本节点资源使用情况；</li>
+<li>接收并处理来自Resource Manager的各种命令：启动container；</li>
+<li>处理来自Application Master的命令；</li>
+<li>单个节点的资源管理。</li>
+</ol>
+<p><strong>Application Master:</strong></p>
+<ol>
+<li>每个应用程序对应一个：MapReduce、Spark，负责应用程序的管理；</li>
+<li>为应用程序向Resource Manager申请资源(core、memory)，分配给内部task；</li>
+<li>需要与Node Manager通信：启动/停止task，task是运行在container里面，Application Master也运行在container里面。</li>
+</ol>
+<p><strong>Container:</strong></p>
+<ol>
+<li>封装了CPU、Memory等资源的一个容器</li>
+<li>是一个任务运行环境的抽象</li>
+</ol>
+<p><strong>Client:</strong></p>
+<ol>
+<li>提交作业</li>
+<li>查询作业的运行进度</li>
+<li>杀死作业</li>
+</ol>
+<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2>]]></content>
       <categories>
         <category>Big Data</category>
       </categories>
