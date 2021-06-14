@@ -4351,7 +4351,36 @@ DATABASES = {
 <li>查询作业的运行进度</li>
 <li>杀死作业</li>
 </ol>
-<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2>]]></content>
+<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><p><img src="http://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png" alt="yarn architecture"></p>
+<ol>
+<li>用户向YARN提交作业；</li>
+<li>Resource Manager为第一个container分配节点，这个container用来启动application master;</li>
+<li>Node Manager为application master启动container;</li>
+<li>Application Master向Resource Manager进行注册。此时Client就可以通过Resource Manager查询任务的运行情况了。同时，Application Master为作业申请作业所需的资源；</li>
+<li>Application Master申请到资源之后向Node Manager申请运行任务所需要的资源；</li>
+<li>Node Manager为Application Master创建任务对应的container。</li>
+</ol>
+<p>上述流程是一个通用YARN任务流程，只需要按照YARN接口实现不同的Application Master，比如实现Map Reduce Application Master，或者Spark Application Master。</p>
+<h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><p><a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#YARN_on_a_Single_Node" target="_blank" rel="noopener">官方参考</a></p>
+<h3 id="5-1-配置YARN"><a href="#5-1-配置YARN" class="headerlink" title="5.1 配置YARN"></a>5.1 配置YARN</h3><p><code>etc/hadoop/mapred-site.xml</code>: 指定map reduce跑在yarn之上。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>etc/hadoop/yarn-site.xml</code> </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-启动Resource-Manager与Node-Manager"><a href="#5-2-启动Resource-Manager与Node-Manager" class="headerlink" title="5.2 启动Resource Manager与Node Manager"></a>5.2 启动Resource Manager与Node Manager</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-验证"><a href="#5-3-验证" class="headerlink" title="5.3 验证"></a>5.3 验证</h3><p>方法1：jps:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">liulixiang@DESKTOP-34LMJFE:/mnt/d/app/hadoop-2.10.1/sbin$ jps -l</span><br><span class="line">1597 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">1759 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br></pre></td></tr></table></figure>
+
+<p>方法2：访问：ResourceManager - <a href="http://localhost:8088/" target="_blank" rel="noopener">http://localhost:8088/</a></p>
+<h3 id="5-4-停止"><a href="#5-4-停止" class="headerlink" title="5.4 停止"></a>5.4 停止</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./stop-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar</span><br></pre></td></tr></table></figure>
+
+<p>hadoop提供了一个命令提交作业：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar pi 2 3</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>Big Data</category>
       </categories>

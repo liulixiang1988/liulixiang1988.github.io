@@ -33,8 +33,9 @@
 <meta property="og:image" content="http://liulixiang1988.github.io/images/2021-05-19-yarn-1.png">
 <meta property="og:image" content="http://liulixiang1988.github.io/images/2021-05-19-yarn-2.png">
 <meta property="og:image" content="http://liulixiang1988.github.io/images/yarn_architecture.gif">
+<meta property="og:image" content="http://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png">
 <meta property="article:published_time" content="2021-05-18T22:30:00.000Z">
-<meta property="article:modified_time" content="2021-06-05T00:00:48.616Z">
+<meta property="article:modified_time" content="2021-06-14T07:51:07.423Z">
 <meta property="article:author" content="Liu Lixiang">
 <meta property="article:tag" content="Big Data">
 <meta property="article:tag" content="YARN">
@@ -219,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-06-05 08:00:48" itemprop="dateModified" datetime="2021-06-05T08:00:48+08:00">2021-06-05</time>
+                <time title="Modified: 2021-06-14 15:51:07" itemprop="dateModified" datetime="2021-06-14T15:51:07+08:00">2021-06-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,7 +319,36 @@
 <li>查询作业的运行进度</li>
 <li>杀死作业</li>
 </ol>
-<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2>
+<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><p><img src="http://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png" alt="yarn architecture"></p>
+<ol>
+<li>用户向YARN提交作业；</li>
+<li>Resource Manager为第一个container分配节点，这个container用来启动application master;</li>
+<li>Node Manager为application master启动container;</li>
+<li>Application Master向Resource Manager进行注册。此时Client就可以通过Resource Manager查询任务的运行情况了。同时，Application Master为作业申请作业所需的资源；</li>
+<li>Application Master申请到资源之后向Node Manager申请运行任务所需要的资源；</li>
+<li>Node Manager为Application Master创建任务对应的container。</li>
+</ol>
+<p>上述流程是一个通用YARN任务流程，只需要按照YARN接口实现不同的Application Master，比如实现Map Reduce Application Master，或者Spark Application Master。</p>
+<h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><p><a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#YARN_on_a_Single_Node" target="_blank" rel="noopener">官方参考</a></p>
+<h3 id="5-1-配置YARN"><a href="#5-1-配置YARN" class="headerlink" title="5.1 配置YARN"></a>5.1 配置YARN</h3><p><code>etc/hadoop/mapred-site.xml</code>: 指定map reduce跑在yarn之上。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>etc/hadoop/yarn-site.xml</code> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-启动Resource-Manager与Node-Manager"><a href="#5-2-启动Resource-Manager与Node-Manager" class="headerlink" title="5.2 启动Resource Manager与Node Manager"></a>5.2 启动Resource Manager与Node Manager</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-验证"><a href="#5-3-验证" class="headerlink" title="5.3 验证"></a>5.3 验证</h3><p>方法1：jps:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liulixiang@DESKTOP-34LMJFE:/mnt/d/app/hadoop-2.10.1/sbin$ jps -l</span><br><span class="line">1597 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">1759 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br></pre></td></tr></table></figure>
+
+<p>方法2：访问：ResourceManager - <a href="http://localhost:8088/" target="_blank" rel="noopener">http://localhost:8088/</a></p>
+<h3 id="5-4-停止"><a href="#5-4-停止" class="headerlink" title="5.4 停止"></a>5.4 停止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./stop-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar</span><br></pre></td></tr></table></figure>
+
+<p>hadoop提供了一个命令提交作业：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar pi 2 3</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -438,7 +468,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-YARN产生背景"><span class="nav-number">1.</span> <span class="nav-text">1. YARN产生背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Hadoop-1-x中MapReduce存在的问题"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Hadoop 1.x中MapReduce存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-提高资源利用率和降低运维成本的诉求"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 提高资源利用率和降低运维成本的诉求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-YARN的诞生"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 YARN的诞生</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-YARN概述"><span class="nav-number">2.</span> <span class="nav-text">2. YARN概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-YARN架构"><span class="nav-number">3.</span> <span class="nav-text">3. YARN架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-YARN执行流程"><span class="nav-number">4.</span> <span class="nav-text">4. YARN执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-YARN环境搭建"><span class="nav-number">5.</span> <span class="nav-text">5. YARN环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-提交作业到YARN上执行"><span class="nav-number">6.</span> <span class="nav-text">6. 提交作业到YARN上执行</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-YARN产生背景"><span class="nav-number">1.</span> <span class="nav-text">1. YARN产生背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Hadoop-1-x中MapReduce存在的问题"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Hadoop 1.x中MapReduce存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-提高资源利用率和降低运维成本的诉求"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 提高资源利用率和降低运维成本的诉求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-YARN的诞生"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 YARN的诞生</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-YARN概述"><span class="nav-number">2.</span> <span class="nav-text">2. YARN概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-YARN架构"><span class="nav-number">3.</span> <span class="nav-text">3. YARN架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-YARN执行流程"><span class="nav-number">4.</span> <span class="nav-text">4. YARN执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-YARN环境搭建"><span class="nav-number">5.</span> <span class="nav-text">5. YARN环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-配置YARN"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 配置YARN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-启动Resource-Manager与Node-Manager"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 启动Resource Manager与Node Manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-验证"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-停止"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 停止</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-提交作业到YARN上执行"><span class="nav-number">6.</span> <span class="nav-text">6. 提交作业到YARN上执行</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
