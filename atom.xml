@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liulixiang1988.github.io/"/>
-  <updated>2021-06-14T07:51:07.423Z</updated>
+  <updated>2021-06-14T14:26:20.856Z</updated>
   <id>http://liulixiang1988.github.io/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MapReduce学习笔记</title>
+    <link href="http://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/"/>
+    <id>http://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/</id>
+    <published>2021-06-14T13:16:00.000Z</published>
+    <updated>2021-06-14T14:26:20.856Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-MapReduce概述&quot;&gt;&lt;a href=&quot;#1-MapReduce概述&quot; class=&quot;headerlink&quot; title=&quot;1. MapReduce概述&quot;&gt;&lt;/a&gt;1. MapReduce概述&lt;/h2&gt;&lt;p&gt;源自于google的&lt;a href=&quot;http://liulixiang1988.github.io/images/mapreduce.pdf&quot;&gt;MapReduce论文&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Hadoop MapReduce是Google MapReduce的开源版本。&lt;/p&gt;
+&lt;p&gt;MapReduce优点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;海量数据离线处理&lt;/li&gt;
+&lt;li&gt;易开发&lt;/li&gt;
+&lt;li&gt;易运行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;MapReduce缺点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;实时流式计算&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hadoop MapReduce is a software framework for easily writing applications which process vast amounts of data (multi-terabyte data-sets) in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/categories/Big-Data/"/>
+    
+    
+      <category term="Big Data" scheme="http://liulixiang1988.github.io/tags/Big-Data/"/>
+    
+      <category term="Map Reduce" scheme="http://liulixiang1988.github.io/tags/Map-Reduce/"/>
+    
+  </entry>
   
   <entry>
     <title>YARN学习笔记</title>
@@ -663,45 +702,6 @@
     
     
       <category term="Go" scheme="http://liulixiang1988.github.io/tags/Go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring笔记07-Hibernate JPA与Spring Data</title>
-    <link href="http://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/"/>
-    <id>http://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/</id>
-    <published>2016-08-24T10:51:00.000Z</published>
-    <updated>2021-05-15T05:16:53.427Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;7-1-映射JPA实体&quot;&gt;&lt;a href=&quot;#7-1-映射JPA实体&quot; class=&quot;headerlink&quot; title=&quot;7.1 映射JPA实体&quot;&gt;&lt;/a&gt;7.1 映射JPA实体&lt;/h2&gt;&lt;p&gt;JPA: Java Persistence API 它是从EJB3中抽取出来的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;EntityManagerFactory&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;EntityManager&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;persistence.xml&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;@Entity&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;@Column&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;@Table&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;要使用JPA，我们需要添加依赖：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;compile group: &amp;#39;javax&amp;#39;, name: &amp;#39;javaee-api&amp;#39;, version: &amp;#39;7.0&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;我们来新建数据：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@Entity&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class Account &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Id&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private Long id;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private BigDecimal balance;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &amp;#x2F;&amp;#x2F;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;然后配置数据源：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@Configuration&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@ComponentScan(basePackages &amp;#x3D; &amp;quot;lx.spring.core&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@PropertySource(&amp;quot;classpath:prod.properties&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@EnableTransactionManagement&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public class AppConfig &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Autowired&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    private Environment env;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    @Bean&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    public DataSource dataSource() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        BasicDataSource dataSource &amp;#x3D; new BasicDataSource();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setDriverClassName(env.getProperty(&amp;quot;db.driver&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUrl(env.getProperty(&amp;quot;db.url&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setUsername(env.getProperty(&amp;quot;db.user&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        dataSource.setPassword(env.getProperty(&amp;quot;db.pass&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return dataSource;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;7-2-Entity-Manager和Vendor-Adapter&quot;&gt;&lt;a href=&quot;#7-2-Entity-Manager和Vendor-Adapter&quot; class=&quot;headerlink&quot; title=&quot;7.2 Entity Manager和Vendor Adapter&quot;&gt;&lt;/a&gt;7.2 Entity Manager和Vendor Adapter&lt;/h2&gt;
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://liulixiang1988.github.io/categories/Java/"/>
-    
-    
-      <category term="Java, Spring" scheme="http://liulixiang1988.github.io/tags/Java-Spring/"/>
     
   </entry>
   

@@ -4806,4 +4806,70 @@ DATABASES = {
         <tag>System Design</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MapReduce学习笔记</title>
+    <url>/2021/06/14/2021-06-14-MapReduce/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h2 id="1-MapReduce概述"><a href="#1-MapReduce概述" class="headerlink" title="1. MapReduce概述"></a>1. MapReduce概述</h2><p>源自于google的<a href="http://liulixiang1988.github.io/images/mapreduce.pdf">MapReduce论文</a>.</p>
+<p>Hadoop MapReduce是Google MapReduce的开源版本。</p>
+<p>MapReduce优点：</p>
+<ol>
+<li>海量数据离线处理</li>
+<li>易开发</li>
+<li>易运行</li>
+</ol>
+<p>MapReduce缺点：</p>
+<ol>
+<li>实时流式计算</li>
+</ol>
+<p><a href="https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html" target="_blank" rel="noopener">官网</a></p>
+<blockquote>
+<p>Hadoop MapReduce is a software framework for easily writing applications which process vast amounts of data (multi-terabyte data-sets) in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner.</p>
+</blockquote>
+<h2 id="2-MapReduce编程模型"><a href="#2-MapReduce编程模型" class="headerlink" title="2. MapReduce编程模型"></a>2. MapReduce编程模型</h2><h3 id="2-1-WordCount"><a href="#2-1-WordCount" class="headerlink" title="2.1 WordCount"></a>2.1 WordCount</h3><p>统计文件中每个单词出现的次数。</p>
+<p><img src="http://liulixiang1988.github.io/images/2021-06-14-word-count.png" alt="word count"></p>
+<blockquote>
+<p>A MapReduce job usually splits the input data-set into independent chunks which are processed by the map tasks in a completely parallel manner. The framework sorts the outputs of the maps, which are then input to the reduce tasks. Typically both the input and the output of the job are stored in a file-system. The framework takes care of scheduling tasks, monitoring them and re-executes the failed tasks.</p>
+</blockquote>
+<h3 id="2-2-Map与Reduce阶段"><a href="#2-2-Map与Reduce阶段" class="headerlink" title="2.2 Map与Reduce阶段"></a>2.2 Map与Reduce阶段</h3><ol>
+<li>作业拆分成Map阶段和Reduce阶段</li>
+<li>Map阶段：Map Tasks</li>
+<li>Reduce阶段：Reduce Tasks</li>
+</ol>
+<p>MapReduce执行步骤：</p>
+<ol>
+<li>逐步map处理的输入数据</li>
+<li>Mapper处理</li>
+<li>Shuffle</li>
+<li>Reduce处理</li>
+<li>结果输出</li>
+</ol>
+<blockquote>
+<p>The MapReduce framework operates exclusively on &lt;key, value&gt; pairs, that is, the framework views the input to the job as a set of &lt;key, value&gt; pairs and produces a set of &lt;key, value&gt; pairs as the output of the job, conceivably of different types.</p>
+</blockquote>
+<blockquote>
+<p>The key and value classes have to be serializable by the framework and hence need to implement the <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/Writable.html" target="_blank" rel="noopener"><code>Writable</code></a> interface. Additionally, the key classes have to implement the <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/io/WritableComparable.html" target="_blank" rel="noopener"><code>WritableComparable</code></a> interface to facilitate sorting by the framework.</p>
+</blockquote>
+<p><img src="http://liulixiang1988.github.io/images/2021-06-14-mr-workflow.png" alt="map reduce workflow"></p>
+<h3 id="2-3-MapReduce核心概念"><a href="#2-3-MapReduce核心概念" class="headerlink" title="2.3 MapReduce核心概念"></a>2.3 MapReduce核心概念</h3><p>1.Split：</p>
+<p>交由MapReduce作业来处理的数据块，是MapReduce中最小的计算单元。HDFS中的blocksize是HDFS中最小的存储单元（默认128M）。默认情况下，<code>Split</code>与<code>Blocksize</code>是一一对应的，也可以手工设置它们之间的关系（不建议）。</p>
+<p>2.InputFormat:</p>
+<ul>
+<li>将文件的输入数据分片(split): <code>InputSplit[] getSplits(JobConf job, int numSplits) throws IOException</code></li>
+<li><code>TextInputFormat</code></li>
+</ul>
+<p>3.OutputFormat:</p>
+<p>4.Combiner:</p>
+<p>5.Partitioner:</p>
+<p><img src="http://liulixiang1988.github.io/images/2021-06-14-mr-workflow2.png" alt="map reduce workflow"></p>
+<h2 id="3-MapReduce架构"><a href="#3-MapReduce架构" class="headerlink" title="3. MapReduce架构"></a>3. MapReduce架构</h2><h3 id="3-1-MapReduce-1-x架构"><a href="#3-1-MapReduce-1-x架构" class="headerlink" title="3.1 MapReduce 1.x架构"></a>3.1 MapReduce 1.x架构</h3><p><img src="http://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png" alt="map-reduce"></p>
+<h2 id="4-MapReduce编程"><a href="#4-MapReduce编程" class="headerlink" title="4. MapReduce编程"></a>4. MapReduce编程</h2>]]></content>
+      <categories>
+        <category>Big Data</category>
+      </categories>
+      <tags>
+        <tag>Big Data</tag>
+        <tag>Map Reduce</tag>
+      </tags>
+  </entry>
 </search>
