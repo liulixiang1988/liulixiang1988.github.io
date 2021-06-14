@@ -442,6 +442,7 @@ font:
   posts:
     external: true
     family:
+    size: 12px
 
   # Font settings for <code> and code blocks.
   codes:
