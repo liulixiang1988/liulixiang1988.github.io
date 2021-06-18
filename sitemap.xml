@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://liulixiang1988.github.io/about/index.html</loc>
+    
+    <lastmod>2021-06-18T15:08:34.832Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/</loc>
     
     <lastmod>2021-06-14T14:26:20.856Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://liulixiang1988.github.io/categories/index.html</loc>
     
     <lastmod>2021-05-15T05:16:53.432Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liulixiang1988.github.io/about/index.html</loc>
-    
-    <lastmod>2021-05-15T05:16:53.431Z</lastmod>
     
   </url>
   
