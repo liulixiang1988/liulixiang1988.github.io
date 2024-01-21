@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Use Service’s DiscoverySay you have a service mynode in yourspace and a service myapp in myspace. If the myapp wants to access the mynode servcie, the url is: 1mynode.yourspace.svc.cluster.local:8000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Craft your Apps for Kubernetes">
+<meta property="og:url" content="https://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="Use Service’s DiscoverySay you have a service mynode in yourspace and a service myapp in myspace. If the myapp wants to access the mynode servcie, the url is: 1mynode.yourspace.svc.cluster.local:8000">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-12T15:15:00.000Z">
+<meta property="article:modified_time" content="2020-07-15T23:13:23.998Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Minikube">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/","path":"2020/07/12/kubernetes-Craft-Apps-in-K8s/","title":"Craft your Apps for Kubernetes"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Craft your Apps for Kubernetes | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-Service%E2%80%99s-Discovery"><span class="nav-number">1.</span> <span class="nav-text">Use Service’s Discovery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-Liveness-and-Readiness-Probes"><span class="nav-number">2.</span> <span class="nav-text">Configure Liveness and Readiness Probes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deploy-Blue-Green"><span class="nav-number">3.</span> <span class="nav-text">Deploy Blue&#x2F;Green</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Built-In-Canary"><span class="nav-number">3.1.</span> <span class="nav-text">Built-In Canary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-Canary-with-multiple-Deployments"><span class="nav-number">3.2.</span> <span class="nav-text">Manual Canary with multiple Deployments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio-Cometh"><span class="nav-number">3.3.</span> <span class="nav-text">Istio Cometh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Store-data-with-PersistentVolume-and-PersistentVolumeClaim"><span class="nav-number">4.</span> <span class="nav-text">Store data with PersistentVolume and PersistentVolumeClaim</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2020/07/12/kubernetes-Craft-Apps-in-K8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Craft your Apps for Kubernetes | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Craft your Apps for Kubernetes
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-12 23:15:00" itemprop="dateCreated datePublished" datetime="2020-07-12T23:15:00+08:00">2020-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-07-16 07:13:23" itemprop="dateModified" datetime="2020-07-16T07:13:23+08:00">2020-07-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Use-Service’s-Discovery"><a href="#Use-Service’s-Discovery" class="headerlink" title="Use Service’s Discovery"></a>Use Service’s Discovery</h2><p>Say you have a service <code>mynode</code> in <code>yourspace</code> and a service <code>myapp</code> in <code>myspace</code>. If the <code>myapp</code> wants to access the <code>mynode</code> servcie, the url is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mynode.yourspace.svc.cluster.local:8000 # 8000 is the service port, not the node port.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Configure-Liveness-and-Readiness-Probes"><a href="#Configure-Liveness-and-Readiness-Probes" class="headerlink" title="Configure Liveness and Readiness Probes"></a>Configure Liveness and Readiness Probes</h2><p><code>kubectl scale --replicas=3 deployment xxx</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StrategyType: RollingUpdate</span><br><span class="line">RollingUpdateStrategy: 1max unavailable, 1max surge</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">template:</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">myboot</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myboot</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myboot:v1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">    <span class="attr">livenessProbe:</span></span><br><span class="line">        <span class="attr">httpGet:</span></span><br><span class="line">            <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">        <span class="attr">initialDelaySeconds:</span> <span class="number">10</span></span><br><span class="line">        <span class="attr">periodSeconds:</span> <span class="number">5</span></span><br><span class="line">        <span class="attr">timeoutSeconds:</span> <span class="number">2</span>          </span><br><span class="line">    <span class="attr">readinessProbe:</span></span><br><span class="line">        <span class="attr">httpGet:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/health</span></span><br><span class="line">        <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">        <span class="attr">initialDelaySeconds:</span> <span class="number">10</span></span><br><span class="line">        <span class="attr">periodSeconds:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+
+<p>Once you understand the basics then you can try the advanced demonstration.  Where a stateful shopping cart is preserved across a rolling update based on leveraging the readiness probe.</p>
+<p><a href="https://github.com/redhat-developer-demos/popular-movie-store" target="_blank" rel="noopener">https://github.com/redhat-developer-demos/popular-movie-store</a></p>
+<p>More information on Live &amp; Ready<br><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/</a></p>
+<h2 id="Deploy-Blue-Green"><a href="#Deploy-Blue-Green" class="headerlink" title="Deploy Blue/Green"></a>Deploy Blue/Green</h2><p><a href="https://martinfowler.com/bliki/BlueGreenDeployment.html" target="_blank" rel="noopener">Description of Blue/Green Deployment</a></p>
+<p>You have the new pod as well as the old ones</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">get</span> <span class="string">pods</span></span><br><span class="line"><span class="string">NAME</span>                         <span class="string">READY</span>     <span class="string">STATUS</span>    <span class="string">RESTARTS</span>   <span class="string">AGE</span></span><br><span class="line"><span class="string">mynode-68b9b9ffcc-jv4fd</span>      <span class="number">1</span><span class="string">/1</span>       <span class="string">Running</span>   <span class="number">0</span>          <span class="string">23m</span></span><br><span class="line"><span class="string">mynode-68b9b9ffcc-vq9k5</span>      <span class="number">1</span><span class="string">/1</span>       <span class="string">Running</span>   <span class="number">0</span>          <span class="string">23m</span></span><br><span class="line"><span class="string">mynodenew-5fc946f544-q9ch2</span>   <span class="number">1</span><span class="string">/1</span>       <span class="string">Running</span>   <span class="number">0</span>          <span class="string">25s</span></span><br><span class="line"><span class="string">mynodenew-6bddcb55b5-wctmd</span>   <span class="number">1</span><span class="string">/1</span>       <span class="string">Running</span>   <span class="number">0</span>          <span class="string">25s</span></span><br></pre></td></tr></table></figure>
+
+<p>your client/user is still seeing the old one only</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  curl $(minikube ip):$(kubectl get service/mynode -o jsonpath=<span class="string">"&#123;.spec.ports[*].nodePort&#125;"</span>)</span><br><span class="line">Node Hello on mynode-668959c78d-j66hl 102</span><br></pre></td></tr></table></figure>
+
+<p>Now update the single Service to point to the new pod and go GREEN</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl patch svc/mynode -p <span class="string">'&#123;"spec":&#123;"selector":&#123;"app":"mynodenew"&#125;&#125;&#125;'</span></span><br></pre></td></tr></table></figure>
+
+<p>Note: Our deployment yaml did not have a live &amp; ready probe, things worked out OK here because we waited until long after mynodenew was up and running before flipping the service selector.</p>
+<h3 id="Built-In-Canary"><a href="#Built-In-Canary" class="headerlink" title="Built-In Canary"></a>Built-In Canary</h3><p><a href="https://martinfowler.com/bliki/CanaryRelease.html" target="_blank" rel="noopener">Description of Canary</a></p>
+<p>There are at least two types of deployments that some folks consider “canary deployments” in Kubernetes.  The first is simply the rolling update strategy with the health check (liveness probe), if the liveness check fails, it knows to undo the deployment.</p>
+<p>Switching back to focusing on myboot and myspace</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config set-context --current --namespace&#x3D;myspace</span><br><span class="line">$ kubectl get pods</span><br><span class="line">kubectl get pods</span><br><span class="line">NAME                      READY     STATUS        RESTARTS   AGE</span><br><span class="line">myboot-859cbbfb98-4rvl8   1&#x2F;1       Running       0          55m</span><br><span class="line">myboot-859cbbfb98-rwgp5   1&#x2F;1       Running       0          55m</span><br></pre></td></tr></table></figure>
+
+<p>Make sure myboot has 2 replicas</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale deployment&#x2F;myboot --replicas&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<p>and let’s attempt to put some really bad code into production</p>
+<p>Go into hello/springboot/MyRESTController.java and add a System.exit(1) into the /health logic</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(method = RequestMethod.GET, value = <span class="string">"/health"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> ResponseEntity&lt;String&gt; <span class="title">health</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     System.exit(<span class="number">1</span>);</span><br><span class="line">     <span class="keyword">return</span> ResponseEntity.status(HttpStatus.OK)</span><br><span class="line">         .body(<span class="string">"I am fine, thank you\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Obviously this sort of thing would never pass through your robust code reviews and automated QA but let’s assume it does.</p>
+<p>Build the code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mvn clean package</span><br></pre></td></tr></table></figure>
+
+<p>Build the docker image for v3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t 9stepsawesome&#x2F;myboot:v3 .</span><br></pre></td></tr></table></figure>
+
+<p>Terminal 1: Start a poller</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  curl $(minikube -p 9steps ip):$(kubectl get service/myboot -o jsonpath=<span class="string">"&#123;.spec.ports[*].nodePort&#125;"</span> -n myspace)</span><br><span class="line">  sleep .3;</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>Terminal 2: Watch pods</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -w</span><br></pre></td></tr></table></figure>
+
+<p>Terminal 3: Watch events</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get events --sort-by&#x3D;.metadata.creationTimestamp</span><br></pre></td></tr></table></figure>
+
+<p>Terminal 4: rollout the v3 update</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployment&#x2F;myboot myboot&#x3D;9stepsawesome&#x2F;myboot:v3</span><br></pre></td></tr></table></figure>
+
+<p>and watch the fireworks</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -w</span><br><span class="line">myboot-5d7fb559dd-qh6fl   0&#x2F;1       Error     1         11m</span><br><span class="line">myboot-859cbbfb98-rwgp5   0&#x2F;1       Terminating   0         6h</span><br><span class="line">myboot-859cbbfb98-rwgp5   0&#x2F;1       Terminating   0         6h</span><br><span class="line">myboot-5d7fb559dd-qh6fl   0&#x2F;1       CrashLoopBackOff   1         11m</span><br><span class="line">myboot-859cbbfb98-rwgp5   0&#x2F;1       Terminating   0         6h</span><br></pre></td></tr></table></figure>
+
+<p>Look at your Events</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get events -w</span><br><span class="line">6s          Warning   Unhealthy           pod&#x2F;myboot-64db5994f6-s24j5    Readiness probe failed: Get http:&#x2F;&#x2F;172.17.0.6:8080&#x2F;health: net&#x2F;http: request canceled (Client.Timeout exceeded while awaiting headers)</span><br><span class="line">6s          Warning   Unhealthy           pod&#x2F;myboot-64db5994f6-h8g2t    Readiness probe failed: Get http:&#x2F;&#x2F;172.17.0.7:8080&#x2F;health: net&#x2F;http: request canceled (Client.Timeout exceeded while awaiting headers)</span><br><span class="line">5s          Warning   Unhealthy</span><br></pre></td></tr></table></figure>
+
+<p>And yet your polling client, stays with the old code &amp; old pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Aloha from Spring Boot! 133 on myboot-859cbbfb98-4rvl8</span><br><span class="line">Aloha from Spring Boot! 134 on myboot-859cbbfb98-4rvl8</span><br></pre></td></tr></table></figure>
+
+<p>If you watch a while, the CrashLoopBackOff will continue and the restart count will increment.</p>
+<p>Now, go fix the MyRESTController and also change from Hello to Aloha</p>
+<p>No more System.exit()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(method &#x3D; RequestMethod.GET, value &#x3D; &quot;&#x2F;health&quot;)</span><br><span class="line">public ResponseEntity&lt;String&gt; health() &#123;        </span><br><span class="line">     return ResponseEntity.status(HttpStatus.OK)</span><br><span class="line">         .body(&quot;I am fine, thank you\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>And change the greeting response to something you recognize.</p>
+<p>Save</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mvn clean package</span><br><span class="line"></span><br><span class="line">$ docker build -t 9stepsawesome&#x2F;myboot:v3 .</span><br></pre></td></tr></table></figure>
+
+<p>and now just wait for the “control loop” to self-correct</p>
+<h3 id="Manual-Canary-with-multiple-Deployments"><a href="#Manual-Canary-with-multiple-Deployments" class="headerlink" title="Manual Canary with multiple Deployments"></a>Manual Canary with multiple Deployments</h3><p>Go back to v1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployment&#x2F;myboot myboot&#x3D;9stepsawesome&#x2F;myboot:v1</span><br></pre></td></tr></table></figure>
+
+<p>Next, we will use a 2nd Deployment like we did with Blue/Green.  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create -f kubefiles&#x2F;myboot-deployment-canary.yml</span><br></pre></td></tr></table></figure>
+
+<p>And you can see a new pod being born</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>And this is the v3 one</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l app&#x3D;mybootcanary</span><br><span class="line">$ kubectl exec -it mybootcanary-6ddc5d8d48-ptdjv curl localhost:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>Now we add a label to both v1 and v3 Deployments PodTemplate, causing new pods to be born</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl patch deployment&#x2F;myboot -p &#39;&#123;&quot;spec&quot;:&#123;&quot;template&quot;:&#123;&quot;metadata&quot;:&#123;&quot;labels&quot;:&#123;&quot;newstuff&quot;:&quot;withCanary&quot;&#125;&#125;&#125;&#125;&#125;&#39;</span><br><span class="line">$ kubectl patch deployment&#x2F;mybootcanary -p &#39;&#123;&quot;spec&quot;:&#123;&quot;template&quot;:&#123;&quot;metadata&quot;:&#123;&quot;labels&quot;:&#123;&quot;newstuff&quot;:&quot;withCanary&quot;&#125;&#125;&#125;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>Tweak the Service selector for this new label</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl patch service&#x2F;myboot -p &#39;&#123;&quot;spec&quot;:&#123;&quot;selector&quot;:&#123;&quot;newstuff&quot;:&quot;withCanary&quot;,&quot;app&quot;: null&#125;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>You should see approximately 30% canary mixed in with previous deployment</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hello from Spring Boot! 23 on myboot-d6c8464-ncpn8</span><br><span class="line">Hello from Spring Boot! 22 on myboot-d6c8464-qnxd8</span><br><span class="line">Aloha from Spring Boot! 83 on mybootcanary-74d99754f4-tx6pj</span><br><span class="line">Hello from Spring Boot! 24 on myboot-d6c8464-ncpn8</span><br></pre></td></tr></table></figure>
+
+<p>You can then manipulate the percentages via the replicas associated with each deployment<br>20% Aloha (Canary)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale deployment&#x2F;myboot --replicas&#x3D;4</span><br><span class="line">$ kubectl scale deployment&#x2F;mybootcanary --replicas&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p>The challenge with this model is that you have to have the right pod count to get the right mix. If you want a 1% canary, you need 99 of the non-canary pods.</p>
+<h3 id="Istio-Cometh"><a href="#Istio-Cometh" class="headerlink" title="Istio Cometh"></a>Istio Cometh</h3><p>The concept of the Canary rollout gets a lot smarter and more interesting with Istio.  You also get the concept of dark launches which allows you to push a change into the production environment, send traffic to the new pod(s) yet no responses are actual sent back to the end-user/client.</p>
+<p>See <a href="https://bit.ly/istio-tutorial" target="_blank" rel="noopener">bit.ly/istio-tutorial</a></p>
+<h2 id="Store-data-with-PersistentVolume-and-PersistentVolumeClaim"><a href="#Store-data-with-PersistentVolume-and-PersistentVolumeClaim" class="headerlink" title="Store data with PersistentVolume and PersistentVolumeClaim"></a>Store data with PersistentVolume and PersistentVolumeClaim</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolume</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">postgres-pv</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">local</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">mystorage</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">capacity:</span></span><br><span class="line">    <span class="attr">storage:</span> <span class="string">2Gi</span></span><br><span class="line">  <span class="attr">hostPath:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">"/data/mypostgresdata/"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolumeClaim</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">postgres-pvc</span></span><br><span class="line">  <span class="attr">labels:</span> </span><br><span class="line">   <span class="attr">app:</span> <span class="string">postgres</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">mystorage</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">    <span class="attr">requests:</span></span><br><span class="line">      <span class="attr">storage:</span> <span class="string">1Gi</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">postgres</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">postgres</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">postgres</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">postgres:10.5</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">"IfNotPresent"</span></span><br><span class="line">        <span class="attr">env:</span> </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">POSTGRES_DB</span> </span><br><span class="line">          <span class="attr">value:</span> <span class="string">postgresdb</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">POSTGRES_USER</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">admin</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">POSTGRES_PASSWORD</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">adminS3cret</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">5432</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">postgres</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">          <span class="comment"># mountPath within the container</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">postgres-pvc</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">"/var/lib/postgresql/data/:Z"</span>          </span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">          <span class="comment"># mapped to the PVC</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">postgres-pvc</span></span><br><span class="line">          <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">            <span class="attr">claimName:</span> <span class="string">postgres-pvc</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span> </span><br><span class="line">  <span class="attr">name:</span> <span class="string">postgres</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">postgres</span></span><br><span class="line">    <span class="attr">visualize:</span> <span class="string">"true"</span></span><br><span class="line"><span class="attr">spec:</span> </span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="comment"># the port that this service should serve on</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">5432</span>  </span><br><span class="line">  <span class="attr">selector:</span> </span><br><span class="line">    <span class="attr">app:</span> <span class="string">postgres</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Minikube/" rel="tag"># Minikube</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/12/kubernetes-logs/" rel="prev" title="Kubernetes Logs, Exec, Resource Constraint, ConfigMap, Secret">
+                  <i class="fa fa-angle-left"></i> Kubernetes Logs, Exec, Resource Constraint, ConfigMap, Secret
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/16/kubernetes-Entend-Your-K8s/" rel="next" title="Extend Your Kubernetes">
+                  Extend Your Kubernetes <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

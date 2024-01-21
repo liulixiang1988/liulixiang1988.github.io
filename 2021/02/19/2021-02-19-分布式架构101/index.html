@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 分布式架构 缓存架构：如何减少不必要的计算?缓存分为通读缓存与旁路缓存。 通读缓存通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式架构101">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[TOC] 分布式架构 缓存架构：如何减少不必要的计算?缓存分为通读缓存与旁路缓存。 通读缓存通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-arch-01.jpeg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-cache-read-through.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-cdn.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-reproxy.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-cache-aside.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-ps.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-ps2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-httpproxy.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-dns-lb.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-reproxy-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-ip-lb.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-19-dl-lb.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-ms.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-mm.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-slice-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-slice-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-mix-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-mix-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-db-nosql.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-search-engine.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-search-engine-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-search-engine-3.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-21-search-engine-4.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-soa.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-dubbo.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-micro-svc.jpg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-perf-benchmark.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-ha.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-rongyu.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-fail-isolation.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-word-count.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-map-reduce.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-hive.jpg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-hive-arch.jpg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-spark.jpg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-spark-stream.jpg">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-big-data-arch.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-recommend.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-recommend2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-recommend3.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-recommend4.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-aiot.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-block-chain.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-block-chain2.jpeg">
+<meta property="article:published_time" content="2021-02-19T02:35:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.050Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Distributed System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-02-19-arch-01.jpeg">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/","path":"2021/02/19/2021-02-19-分布式架构101/","title":"分布式架构101"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式架构101 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">分布式架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">缓存架构：如何减少不必要的计算?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%AF%BB%E7%BC%93%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">通读缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%81%E8%B7%AF%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">旁路缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%84%8F%E8%AF%BB"><span class="nav-number">2.3.</span> <span class="nav-text">缓存脏读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9"><span class="nav-number">2.4.</span> <span class="nav-text">缓存集群扩容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E4%BA%92%E7%9B%B8%E4%BE%9D%E8%B5%96%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%97%B4%E8%80%A6%E5%90%88%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">异步架构：如何避免互相依赖的系统间耦合？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%BC%82%E6%AD%A5%E6%9E%B6%E6%9E%84%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">3.1.</span> <span class="nav-text">消息队列异步架构的好处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%A6%82%E4%BD%95%E7%94%A810%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">负载均衡架构：如何用10行代码实现一个负载均衡服务？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-%E9%87%8D%E5%AE%9A%E5%90%91%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.1.</span> <span class="nav-text">HTTP 重定向负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.2.</span> <span class="nav-text">DNS 负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.3.</span> <span class="nav-text">反向代理负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.4.</span> <span class="nav-text">IP 负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">4.5.</span> <span class="nav-text">数据链路层负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AE%97%E6%B3%95"><span class="nav-number">4.6.</span> <span class="nav-text">负载均衡算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%A6%82%E4%BD%95%E6%94%B9%E5%96%84%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E8%83%BD%E5%8A%9B%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">数据存储架构：如何改善系统的数据存储能力？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E4%B8%8E%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="nav-number">5.1.</span> <span class="nav-text">数据库主从复制与主主复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E7%89%87"><span class="nav-number">5.2.</span> <span class="nav-text">数据库分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B7%B7%E5%90%88%E9%83%A8%E7%BD%B2"><span class="nav-number">5.3.</span> <span class="nav-text">关系数据库的混合部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.4.</span> <span class="nav-text">NoSQL数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9%E9%97%AE%E9%A2%98"><span class="nav-number">5.5.</span> <span class="nav-text">数据库集群扩容问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%A6%82%E4%BD%95%E7%9E%AC%E9%97%B4%E5%AE%8C%E6%88%90%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E6%A3%80%E7%B4%A2%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">搜索引擎架构：如何瞬间完成海量数据检索？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-number">6.1.</span> <span class="nav-text">倒排索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="nav-number">6.2.</span> <span class="nav-text">搜索引擎结果排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%A9%B6%E7%AB%9F%E6%98%AF%E7%81%B5%E4%B8%B9%E8%BF%98%E6%98%AF%E6%AF%92%E8%8D%AF%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">微服务架构：微服务究竟是灵丹还是毒药？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BD%93%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9B%B0%E9%9A%BE%E4%B8%8E%E6%8C%91%E6%88%98"><span class="nav-number">7.1.</span> <span class="nav-text">单体架构的困难与挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86"><span class="nav-number">7.2.</span> <span class="nav-text">微服务框架原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.3.</span> <span class="nav-text">微服务架构的落地实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84%EF%BC%9A%E9%99%A4%E4%BA%86%E4%BB%A3%E7%A0%81%EF%BC%8C%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E4%BC%98%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">高性能架构：除了代码，还可以在哪些地方优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">8.1.</span> <span class="nav-text">性能指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">8.2.</span> <span class="nav-text">性能测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">8.3.</span> <span class="nav-text">性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84"><span class="nav-number">9.</span> <span class="nav-text">高可用架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%97%E4%BD%99%E5%A4%87%E4%BB%BD"><span class="nav-number">9.1.</span> <span class="nav-text">冗余备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B1%E8%B4%A5%E9%9A%94%E7%A6%BB"><span class="nav-number">9.2.</span> <span class="nav-text">失败隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E9%99%8D%E7%BA%A7"><span class="nav-number">9.3.</span> <span class="nav-text">限流降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%9C%B0%E5%A4%9A%E6%B4%BB"><span class="nav-number">9.4.</span> <span class="nav-text">异地多活</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E6%B3%84%E6%BC%8F%E6%98%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%94%85"><span class="nav-number">10.</span> <span class="nav-text">安全性架构：为什么说用户密码泄漏是程序员的锅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84"><span class="nav-number">11.</span> <span class="nav-text">大数据架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8HDFS%E6%9E%B6%E6%9E%84"><span class="nav-number">11.1.</span> <span class="nav-text">分布式文件存储HDFS架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%A1%E7%AE%97MapReduce"><span class="nav-number">11.2.</span> <span class="nav-text">大数据计算MapReduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93-Hive-%E6%9E%B6%E6%9E%84"><span class="nav-number">11.3.</span> <span class="nav-text">大数据仓库 Hive 架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%A1%E7%AE%97Spark%E6%9E%B6%E6%9E%84"><span class="nav-number">11.4.</span> <span class="nav-text">快速大数据计算Spark架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%B5%81%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84"><span class="nav-number">11.5.</span> <span class="nav-text">大数据流计算架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">11.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E4%B8%8E%E7%89%A9%E8%81%94%E7%BD%91%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%BB%8E%E6%99%BA%E8%83%BD%E5%BC%95%E6%93%8E%E5%88%B0%E7%89%A9%E8%81%94%E7%BD%91%E5%B9%B3%E5%8F%B0"><span class="nav-number">12.</span> <span class="nav-text">AI与物联网架构：从智能引擎到物联网平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84"><span class="nav-number">12.1.</span> <span class="nav-text">大数据平台架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">12.2.</span> <span class="nav-text">智能推荐算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">12.3.</span> <span class="nav-text">物联网大数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E5%88%B0%E5%BA%95%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">13.</span> <span class="nav-text">区块链技术架构：区块链到底能做什么？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式架构101 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式架构101
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-19 10:35:00" itemprop="dateCreated datePublished" datetime="2021-02-19T10:35:00+08:00">2021-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Distributed-System/" itemprop="url" rel="index"><span itemprop="name">Distributed System</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
+<h2 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h2><p><img src="https://liulixiang1988.github.io/images/2021-02-19-arch-01.jpeg" alt="arch"></p>
+<h2 id="缓存架构：如何减少不必要的计算"><a href="#缓存架构：如何减少不必要的计算" class="headerlink" title="缓存架构：如何减少不必要的计算?"></a>缓存架构：如何减少不必要的计算?</h2><p>缓存分为<strong>通读缓存</strong>与<strong>旁路缓存</strong>。</p>
+<h3 id="通读缓存"><a href="#通读缓存" class="headerlink" title="通读缓存"></a>通读缓存</h3><p>通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-cache-read-through.png" alt="read-through"></p>
+<p>互联网应用中主要使用的通读缓存是 CDN 和反向代理缓存。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-cdn.png" alt="cdn"></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-reproxy.png" alt="reversed proxy"></p>
+<h3 id="旁路缓存"><a href="#旁路缓存" class="headerlink" title="旁路缓存"></a>旁路缓存</h3><p>旁路（cache-aside）缓存，应用程序访问旁路缓存获取数据的时候，如果旁路缓存中有应用程序需要的数据，那么就返回这个数据；如果没有，就返回空（null）。应用程序需要自己从数据源读取数据，然后将这个数据写入到旁路缓存中。这样，下次应用程序需要数据的时候，就可以通过旁路缓存直接获得数据了。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-cache-aside.png" alt="cache-aside"></p>
+<p>CDN 和反向代理缓存通常会作为系统架构的一部分，很多时候对应用程序是透明的。而应用程序在代码中主要使用的是对象缓存，<strong>对象缓存是一种旁路缓存</strong>。</p>
+<h3 id="缓存脏读"><a href="#缓存脏读" class="headerlink" title="缓存脏读"></a>缓存脏读</h3><p>数据脏读的问题，缓存的数据来自数据源，如果数据源中的数据被修改了，那么缓存中的数据就变成脏数据了。</p>
+<p>解决方法有两个：</p>
+<ol>
+<li><strong>过期失效</strong>：每次写入缓存中的数据都标记其失效时间，在读取缓存的时候，检查数据是否已经过期失效，如果失效，就重新从数据源获取数据。缓存失效依然可能会在未失效时间内读到脏数据，但是一般的应用都可以容忍较短时间的数据不一致，比如淘宝卖家更新了商品信息，那么几分钟数据没有更新到缓存，买家看到的还是旧数据，这种情况通常是可以接受的，这时候，就可以设置缓存失效时间为几分钟。</li>
+<li><strong>失效通知</strong>，应用程序更新数据源的数据，同时发送通知，将该数据从缓存中清除。失效通知看起来数据更新更加及时，但是实践中，更多使用的还是过期失效。</li>
+</ol>
+<h3 id="缓存集群扩容"><a href="#缓存集群扩容" class="headerlink" title="缓存集群扩容"></a>缓存集群扩容</h3><p>集群扩容使用一致性hash算法。</p>
+<h2 id="异步架构：如何避免互相依赖的系统间耦合？"><a href="#异步架构：如何避免互相依赖的系统间耦合？" class="headerlink" title="异步架构：如何避免互相依赖的系统间耦合？"></a>异步架构：如何避免互相依赖的系统间耦合？</h2><p>缓存只能改善系统的读操作性能，对于写操作，缓存是无能为力的。主要手段就是使用消息队列的异步架构，有时候也被称为事件驱动架构。</p>
+<p>同步架构：当应用程序调用服务的时候，当前程序需要阻塞等待服务完成，返回服务结果后才能继续向下执行。</p>
+<p>典型的消息队列异步架构如下：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-ps.png" alt="msg-queue"></p>
+<p>根据消息消费方式又分为<strong>点对点模式</strong>和<strong>发布订阅模式</strong>两种。</p>
+<p>在<strong>点对点模式</strong>中，多个消息生产者向消息队列发送消息，多个消息消费者消费消息，每个消息只会被一个消息消费者消费。</p>
+<p>在<strong>发布订阅模式</strong>中，开发者可以在消息队列中设置主题，消息生产者的消息按照主题进行发送，多个消息消费者可以订阅同一个主题，每个消费者都可以收到这个主题的消息拷贝，然后按照自己的业务逻辑分别进行处理计算。发布订阅模式下，一个主题可以被重复订阅，所以如果需要扩展功能，可以在对当前的生产者和消费者都没有影响的前提下，增加新的消费者订阅同一个主题即可。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-ps2.png" alt="product-consumer"></p>
+<h3 id="消息队列异步架构的好处"><a href="#消息队列异步架构的好处" class="headerlink" title="消息队列异步架构的好处"></a>消息队列异步架构的好处</h3><ol>
+<li>改善写操作请求的响应时间</li>
+<li>更容易进行伸缩：应用程序也可以通过负载均衡实现集群伸缩，但是这种集群伸缩是以整个应用服务器为单位的。如果只是其中某些功能有负载压力，那么就可以单独针对消费者集群进行伸缩。</li>
+<li>削峰填谷</li>
+<li>隔离失败</li>
+<li>降低耦合</li>
+</ol>
+<h2 id="负载均衡架构：如何用10行代码实现一个负载均衡服务？"><a href="#负载均衡架构：如何用10行代码实现一个负载均衡服务？" class="headerlink" title="负载均衡架构：如何用10行代码实现一个负载均衡服务？"></a>负载均衡架构：如何用10行代码实现一个负载均衡服务？</h2><p>负载均衡硬件：F5</p>
+<h3 id="HTTP-重定向负载均衡"><a href="#HTTP-重定向负载均衡" class="headerlink" title="HTTP 重定向负载均衡"></a>HTTP 重定向负载均衡</h3><p>302跳转。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-httpproxy.png" alt="http lb"></p>
+<p>HTTP 重定向负载均衡的优点是设计比较简单，但是它的缺点也比较明显，一方面用户完成一次访问，就需要请求两次数据中心，一次请求负载均衡服务器，一次是请求应用服务器，请求处理性能会受很大的影响。另一个问题是因为响应要重定向到真正的应用服务器，所以需要把应用服务器的 IP 地址暴露给外部用户，这样可能会带来安全性的问题。</p>
+<h3 id="DNS-负载均衡"><a href="#DNS-负载均衡" class="headerlink" title="DNS 负载均衡"></a>DNS 负载均衡</h3><p><img src="https://liulixiang1988.github.io/images/2021-02-19-dns-lb.png" alt="dns lb"></p>
+<p>和 HTTP 重定向不同，用户不需要每次请求都进行 DNS 域名解析，第一次解析后，域名缓存在本机，后面较长一段时间都不会再进行域名解析了，因此性能方面不会是问题。</p>
+<p>如果如图中所示，域名解析直接得到应用服务器的 IP 地址，确实会存在安全性问题。但是大型互联网应用通常并不直接通过 DNS 解析得到应用服务器 IP 地址，而是解析得到负载均衡服务器的 IP 地址。</p>
+<h3 id="反向代理负载均衡"><a href="#反向代理负载均衡" class="headerlink" title="反向代理负载均衡"></a>反向代理负载均衡</h3><p>反向代理服务器查找本机是否有请求的资源，如果有就直接返回资源数据，如果没有，就将请求发送给后面的应用服务器继续处理。</p>
+<p>反向代理服务器是工作在 HTTP 协议层之上的，所以它代理的也是 HTTP 的请求和响应。作为互联网应用层的一个协议，HTTP 协议相对说来比较重，效率比较低，所以反向代理负载均衡通常用在小规模的互联网系统上，只有几台或者十几台服务器的规模。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-reproxy-2.png" alt="reversed proxy"></p>
+<h3 id="IP-负载均衡"><a href="#IP-负载均衡" class="headerlink" title="IP 负载均衡"></a>IP 负载均衡</h3><p>反向代理负载均衡是工作在应用层网络协议上的负载均衡，因此也叫应用层负载均衡。应用层负载均衡之下的负载均衡方法是在 TCP/IP 协议的 IP 层进行负载均衡，IP 层是网络通讯协议的网络层，所以有时候叫网络层负载均衡。它的主要工作原理是当用户的请求到达负载均衡服务器以后，负载均衡服务器会对网络层的数据包的 IP 地址进行转换，修改 IP 地址，将其修改为应用服务器的 IP 地址，然后把数据包重新发送出去，请求数据就会到达应用服务器。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-ip-lb.png" alt="ip lb"></p>
+<p>IP 负载均衡不需要在 HTTP 协议层工作，可以在操作系统内核直接修改 IP 数据包的地址，因此，效率比应用层的反向代理负载均衡高得多。但是它依然有一个缺陷，不管是请求还是响应的数据包，都要通过负载均衡服务器进行 IP 地址转换，才能够正确地把请求数据分发到应用服务器，或者正确地将响应数据包发送到用户端程序。请求的数据通常比较小，一个 URL 或者是一个简单的表单，但是响应的数据不管是 HTML 还是图片，或者是 JS、CSS 这样的资源文件通常都会比较大，因此负载均衡服务器会成为响应数据的流量瓶颈。</p>
+<h3 id="数据链路层负载均衡"><a href="#数据链路层负载均衡" class="headerlink" title="数据链路层负载均衡"></a>数据链路层负载均衡</h3><p>数据链路层负载均衡可以解决响应数据量大而导致的负载均衡服务器输出带宽不足的问题。也就是说，负载均衡服务器并不修改数据包的 IP 地址，而是修改数据链路层里的网卡 mac 地址，在数据链路层实现负载均衡。而应用服务器和负载均衡服务器都使用相同的虚拟 IP 地址，这样 IP 路由就不会受到影响，但是网卡会根据自己的 mac 地址，选择负载均衡服务器发送到自己网卡的数据包，交给对应的应用程序去处理，处理结束以后，当把响应的数据包发送到网络上的时候，因为 IP 地址没有修改过，所以这个响应会直接到达用户的浏览器，而不会再经过负载均衡服务器。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-19-dl-lb.png" alt="dl lb"></p>
+<p>链路层负载均衡避免响应数据再经过负载均衡服务器，因而可以承受较大的数据传输压力，所以，目前大型互联网应用基本都使用链路层负载均衡。</p>
+<p>Linux 上实现 IP 负载均衡和链路层负载均衡的技术是 LVS，目前 LVS 的功能已经集成到 Linux 中了，通过 Linux 可以直接配置实现这两种负载均衡。</p>
+<h3 id="负载均衡算法"><a href="#负载均衡算法" class="headerlink" title="负载均衡算法"></a>负载均衡算法</h3><p>目前主要的负载均衡算法有轮询、随机、最少连接几种。</p>
+<ol>
+<li>轮询就是将请求轮流发给应用服务器</li>
+<li>随机就是将请求随机发送给任一台应用服务器</li>
+<li>最少连接则是根据应用服务器当前正在处理的连接数，将请求分发给最少连接的服务器。</li>
+</ol>
+<h2 id="数据存储架构：如何改善系统的数据存储能力？"><a href="#数据存储架构：如何改善系统的数据存储能力？" class="headerlink" title="数据存储架构：如何改善系统的数据存储能力？"></a>数据存储架构：如何改善系统的数据存储能力？</h2><p>改善数据库存储的主要手段有：数据库主从复制、数据库分片与NoSQL数据库。</p>
+<h3 id="数据库主从复制与主主复制"><a href="#数据库主从复制与主主复制" class="headerlink" title="数据库主从复制与主主复制"></a>数据库主从复制与主主复制</h3><p>主从复制的原理：</p>
+<p>主要的复制原理是，当应用程序客户端发送一条更新命令到主服务器数据库的时候，数据库会把这条更新命令同步记录到 Binlog 中，然后由另外一个线程从 Binlog 中读取这条日志，通过远程通讯的方式将它复制到从服务器上面去。</p>
+<p>从服务器获得这条更新日志后，将其加入到自己的 Relay Log 中，然后由另外一个 SQL 执行线程从 Relay log 中读取这条新的日志，并把它在本地的数据库中重新执行一遍，这样当客户端应用程序执行一个 update 命令的时候，这个命令会同时在主数据库和从数据库上执行，从而实现了主数据库向从数据库的复制，让从数据库和主数据库保持一样的数据。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-ms.png" alt="database master slave"></p>
+<p>通过数据库主从复制的方式，我们可以实现数据库读写分离。现实中多用一主多从的数据复制方案。从数据库分担读的压力，承担不同的角色，比如有的从数据库用来做实时数据分析，有的从数据库用来做批任务报表计算，有的单纯做数据备份。</p>
+<p>主主复制：两台服务器互相备份，任何一台服务器都会将自己的 Binlog 复制到另一台机器的 Relay Log 中，以保持两台服务器的数据一致。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-mm.png" alt="database master-master"></p>
+<p>使用主主复制需要注意的是，主主复制仅仅用来提升数据写操作的可用性，并不能用来提高写操作的性能。任何时候，系统中都只能有一个数据库作为主数据库，也就是说，所有的应用程序都必须连接到同一个主数据库进行写操作。只有当该数据库宕机失效的时候，才会将写操作切换到另一台主数据库上。这样才能够保证数据库数据的一致性，不会出现数据冲突。</p>
+<p>不管是主从复制还是主主复制，都无法提升数据库的存储能力，也就是说，不管增加多少服务器，这些服务器存储的数据都是一样的。如果数据量太大，数据库无法存下这么多的数据，通过数据库复制是无法解决问题的。</p>
+<h3 id="数据库分片"><a href="#数据库分片" class="headerlink" title="数据库分片"></a>数据库分片</h3><p>将一张表的数据分成若干片，每一片都包含了数据表中一部分的行记录，然后每一片存储在不同的服务器上，这样一张表就存储在多台服务器上了。</p>
+<p>最简单的数据库分片存储可以采用硬编码的方式，但是硬编码方式的缺点比较明显。首先，如果要增加服务器，那么就必须修改分片逻辑代码，这样程序代码就会因为非业务需求产生不必要的变更；其次，分片逻辑耦合在处理业务逻辑的程序代码中，修改分片逻辑或者修改业务逻辑都可能使另一部分代码因为不小心的改动而出现 Bug。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-slice-1.png" alt="database slice with hard code"></p>
+<p>可以通过使用分布式关系数据库中间件解决这个问题，将数据的分片逻辑在中间件中完成，对应用程序透明，如MyCAT。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-slice-2.png" alt="database slice with MyCAT"></p>
+<p>实践中，更常见的数据库分片算法是我们所熟悉的余数 Hash 算法，根据主键 ID 和服务器的数目进行取模计算，根据余数连接相对应的服务器。</p>
+<h3 id="关系数据库的混合部署"><a href="#关系数据库的混合部署" class="headerlink" title="关系数据库的混合部署"></a>关系数据库的混合部署</h3><p>随着业务复杂以及数据存储和访问压力的增加，这时候可以选择业务分库。将不同业务相关的数据库表，部署在不同的服务器上，比如类目数据和用户数据相对关联关系不大，服务的应用也不一样，那么就可以将这两类数据库部署在不同的服务器上。而每一类数据库还可以继续选择使用主从复制，或者主主复制。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-mix-1.png" alt="database mix"></p>
+<p>不同的业务数据库，其数据库存储的数据和访问压力也是不同的，比如用户数据库的数据量和访问量就可能是类目数据库的几十倍，甚至上百倍。那么这时候就可以针对用户数据库进行数据分片，而每个分片数据库还可以继续进行主从复制或者主主复制。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-mix-2.png" alt="database mix"></p>
+<h3 id="NoSQL数据库"><a href="#NoSQL数据库" class="headerlink" title="NoSQL数据库"></a>NoSQL数据库</h3><p>NoSQL 数据库面临的挑战之一是数据一致性问题。</p>
+<p>关于分布式存储系统有一个著名的 CAP 原理，CAP 原理说：一个提供数据服务的分布式系统无法同时满足数据一致性（Consistency）、可用性（Availability）和分区耐受性（Partition Tolerance）这三个条件。</p>
+<p>一致性是说，每次读取的数据都应该是最近写入的数据或者返回一个错误，而不是过期数据，也就是说，数据是一致的。</p>
+<p>可用性是说，每次请求都应该得到一个响应，而不是返回一个错误或者失去响应，不过这个响应不需要保证数据是最近写入的。也就是说，系统需要一直都是可以正常使用的，不会引起调用者的异常，但是并不保证响应的数据是最新的。</p>
+<p>分区耐受性说，即使因为网络原因，网络分区失效的时候，部分服务器节点之间消息丢失或者延迟了，系统依然应该是可以操作的。</p>
+<p>CAP 原理是说，当网络分区失效发生的时候，我们要么取消操作，保证数据就是一致的，但是系统却不可用；要么继续写入数据，但是数据的一致性就得不到保证了。</p>
+<p>对于一个分布式系统而言，网络失效一定会发生，也就是说，分区耐受性是必须要保证的，而对于互联网应用来说，可用性也是需要保证的，分布式存储系统通常需要在一致性上做一些妥协和增强。</p>
+<p>Apache Cassandra 解决数据一致性的方案是，在用户写入数据的时候，将一个数据写入集群中的三个服务器节点，等待至少两个节点响应写入成功。用户读取数据的时候，从三个节点尝试读取数据，至少等到两个节点返回数据，并根据返回数据的时间戳，选取最新版本的数据。这样，即使服务器中的数据不一致，但是最终用户还是能得到一个一致的数据，这种方案也被称为<strong>最终一致性</strong>。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-db-nosql.png" alt="nosql"></p>
+<p><strong>NoSQL为什么比RMDB性能高？</strong></p>
+<p>主要区别可用RDBMS的ACID和NoSQL的BASE概括。</p>
+<h3 id="数据库集群扩容问题"><a href="#数据库集群扩容问题" class="headerlink" title="数据库集群扩容问题"></a>数据库集群扩容问题</h3><p>分布式架构的一个最大特点是可以动态伸缩，可以随着需求变化，动态增加或者减少服务器。对于支持分片的分布式关系数据库而言，比如我们使用 MYCAT 进行数据分片，那么随着数据量逐渐增大，如何增加服务器以存储更多的数据呢？如果增加一台服务器，如何调整数据库分片，使部分数据迁移到新的服务器上？如何保证整个迁移过程快速、安全？</p>
+<p>1、创建远超实际节点数的分区，每个节点分配多个分区。当集群增加新节点时，该新节点从现有的节点中匀走几个分区，直到达到全局平衡。请求到来时 、由于分区总数不变，所以不会改变关键词到分区的映射关系，唯一调整的是分区与节点的对应关系。这种策略目前在ElasticSearch等系统使用<br>2、动态分区策略。当分区数据增长超过阈值（如Hbase 为10G），那么拆分为两个分区，每个承担一半的数据量，数据转移到其他节点。如Hbase借助了 HDFS 实现分区文件的传输<br>3、分区数与节点数成正比。当加入新的节点时，分区数增加。如Cassandra 采用了这样的方式。</p>
+<h2 id="搜索引擎架构：如何瞬间完成海量数据检索？"><a href="#搜索引擎架构：如何瞬间完成海量数据检索？" class="headerlink" title="搜索引擎架构：如何瞬间完成海量数据检索？"></a>搜索引擎架构：如何瞬间完成海量数据检索？</h2><h3 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h3><p>首先选择一些种子 URL，然后通过爬虫将这些 URL 对应的页面爬下来。其实，所谓的爬虫，就是发送 URL 请求，下载相应的 HTML 页面，然后将这些 Web 页面存储在自己的服务器上，并解析这些页面的 HTML 内容，当解析到网页里超链接 URL 的时候，再检查这个超链接是否已经在前面爬取过了，如果没有，就把这个超链接放到一个队列中，后面会请求这个 URL，得到对应的 HTML 页面并解析其包含的超链接……如此不断重复，就可以将全世界的 Web 页面存储到自己的服务器中。</p>
+<p>爬虫系统架构如下：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-search-engine.png" alt="scrawler"></p>
+<p>得到了全部网页以后，需要对每个网页进行编号，得到全部网页的文档集合。然后再解析每个页面，提取文档里的每个单词，如果是英文，那么每个单词都用空格分隔，比较容易；如果是中文，需要使用中文分词器才能提取到每个单词，比如“后端技术”，使用中文分词器得到的就是“后端”、“技术”两个词。</p>
+<p>然后考察每个词在哪些文档中出现，比如“后端”在文档 2、4、5、7 中出现，“技术”在文档 1、2、4 中出现，这样我们就可以得到一个单词、文档矩阵：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-search-engine-2.png" alt="index"></p>
+<p>把这个单词、文档矩阵按照单词→文档列表的方式组织起来，就是倒排索引了：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-search-engine-3.png" alt="index"></p>
+<p>搜索单词的时候，我们可以将所有单词构成一个 Hash 表，根据搜索词直接查找 Hash 表，就可以得到单词了。</p>
+<h3 id="搜索引擎结果排序"><a href="#搜索引擎结果排序" class="headerlink" title="搜索引擎结果排序"></a>搜索引擎结果排序</h3><p>PageRank 算法认为，如果一个网页里包含了某个网页的超链接，那么就表示该网页认可某个网页，或者说，该网页给某个网页投了一票。如下 A、B、C、D 四个网页，箭头指向的方向就是表示超链接的方向，B 的箭头指向 A，表示 B 网页包含 A 网页的超链接，也就是 B 网页给 A 网页投了一票。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-21-search-engine-4.png" alt="link"></p>
+<p>开始的时候，所有网页都初始化权重值为 1，然后根据超链接关系计算新的权重。比如 B 页面包含了 A 和 D 两个页面的超链接，那么自己的权重 1 就被分成两个 1/2 分别投给 A 和 D。而 A 页面的超链接包含在 B、C、D 三个页面中，那么 A 页面新的权重值就是这个三个页面投给它的权重值之和：1/2 + 1/3 + 1 = 11/6。经过一轮 PageRank 计算后，每个页面都有了新的权重，然后基于这个新的权重再继续一轮计算，直到所有的网页权重稳定下来，就得到最终所有网页的权重，即最终的 PageRank 值。</p>
+<p>PageRank 算法对于互联网网页排序效果很好，但是，对于那些用户生成内容（UGC）的网站而言，比如豆瓣、知乎，或者我们的InfoQ，如果想在这些网站内部进行搜索，PageRank 算法就没什么效果了。因为豆瓣的影评，知乎的回答，InfoQ 的技术文章之间很少通过超链接进行推荐。这种可以用点赞数排序。</p>
+<p>还有一种是分词，计算词频进行排序。</p>
+<h2 id="微服务架构：微服务究竟是灵丹还是毒药？"><a href="#微服务架构：微服务究竟是灵丹还是毒药？" class="headerlink" title="微服务架构：微服务究竟是灵丹还是毒药？"></a>微服务架构：微服务究竟是灵丹还是毒药？</h2><h3 id="单体架构的困难与挑战"><a href="#单体架构的困难与挑战" class="headerlink" title="单体架构的困难与挑战"></a>单体架构的困难与挑战</h3><ul>
+<li>编译、部署困难</li>
+<li>代码分支管理困难</li>
+<li>数据库连接耗尽</li>
+<li>新增业务困难</li>
+<li>发布困难</li>
+</ul>
+<h3 id="微服务框架原理"><a href="#微服务框架原理" class="headerlink" title="微服务框架原理"></a>微服务框架原理</h3><p>SOA架构方案，即面向服务的体系架构：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-soa.png" alt="link"></p>
+<p>Dubbo：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-dubbo.png" alt="link"></p>
+<h3 id="微服务架构的落地实践"><a href="#微服务架构的落地实践" class="headerlink" title="微服务架构的落地实践"></a>微服务架构的落地实践</h3><p>事实微服务的关注点应遵循以下一个倒三角模型：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-micro-svc.jpg" alt="link"></p>
+<h2 id="高性能架构：除了代码，还可以在哪些地方优化"><a href="#高性能架构：除了代码，还可以在哪些地方优化" class="headerlink" title="高性能架构：除了代码，还可以在哪些地方优化"></a>高性能架构：除了代码，还可以在哪些地方优化</h2><p>进行性能优化的前提：先知道系统当前的性能情况</p>
+<h3 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h3><p>响应时间：从发出请求开始到最后响应数据所需要的时间。</p>
+<p>并发数：系统同时处理的请求数，体现的是系统的负载压力情况。</p>
+<p>吞吐量：单位时间内系统处理请求的数量，体现的是系统的处理能力。</p>
+<p>吞吐量、响应时间和并发数三者之间是有关联性的。并发数不变，响应时间越快，单位时间的吞吐量越高。</p>
+<p>性能计数器：指的是服务器或者操作系统性能的一些指标数据，包括系统负载 System Load、对象和线程数、内存使用、CPU 使用、磁盘和网络 I/O 使用等指标，这些指标是系统监控的重要参数，反映系统负载和处理能力的一些关键指标，通常这些指标和性能是强相关的。这些指标很高，成为瓶颈，通常也预示着性能可能会出现问题。</p>
+<h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><p><strong>性能测试</strong>是指以系统设计初期规划的性能指标为预期目标，对系统不断地施加压力，验证系统在资源可接受的范围内是否达到了性能的预期目标。这个过程中，随着并发数的增加，吞入量也在增加，但是响应时间变化不大。系统正常情况下的并发访问压力应该都在这个范围内。</p>
+<p><strong>负载测试</strong>则是对系统不断地施加并发请求，增加系统的压力，直到系统的某项或多项指标达到安全临界值。这个过程中，随着并发数的增加，吞吐量只有小幅的增加，达到最大值后，吞吐量还会下降，而响应时间则会不断增加。</p>
+<p><strong>压力测试</strong>是指在超过安全负载的情况下，增加并发请求数，对系统继续施加压力，直到系统崩溃，或者不再处理任何请求，此时的并发数就是系统的最大压力承受能力。这个过程中，吞吐量迅速下降，响应时间迅速增加，到了系统崩溃点，吞吐量为 0，响应时间无穷大。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-perf-benchmark.png" alt="link"></p>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p><strong>用户体验优化：</strong>这是一种主观性优化，比如显示进度条。</p>
+<p><strong>客观优化</strong>有下面几个：</p>
+<ol>
+<li>数据中心优化：就近部署，在多个区域部署自己的数据中心。</li>
+<li>硬件优化：如优化网卡从1G到10G</li>
+<li>操作系统优化：比如在某些Linux中，transparent huge page 这个参数是默认打开的，导致系统占用 CPU 过高。关闭这个参数后，系统 CPU 占用下降，整个计算时间也大幅缩短了</li>
+<li>虚拟机优化：JVM优化</li>
+<li>基础组件优化，如Web容器、数据库连接池、MVC框架等</li>
+<li>架构优化<ul>
+<li>缓存</li>
+<li>消息队列</li>
+<li>集群</li>
+</ul>
+</li>
+<li>代码优化</li>
+</ol>
+<h2 id="高可用架构"><a href="#高可用架构" class="headerlink" title="高可用架构"></a>高可用架构</h2><p>高可用的度量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可用性&#x3D;(1-年度不可用时间&#x2F;年度总时间)*100%</span><br></pre></td></tr></table></figure>
+
+<p>一般说来，两个 9 表示系统基本可用，年度不可用时间小于 88 小时；3 个 9 是较高可用，年度不可用时间小于 9 个小时；4 个 9 是具有自动恢复能力的高可用，年度不可用时间小于 53 分钟；5 个 9 指极高的可用性，年度不可用时间小于 5 分钟。我们熟悉的互联网产品的可用性大多是 4 个 9。淘宝、百度、微信，差不多都是这样。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-ha.png" alt="link"></p>
+<h3 id="冗余备份"><a href="#冗余备份" class="headerlink" title="冗余备份"></a>冗余备份</h3><p>负载均衡还可以实现系统的高可用。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-rongyu.png" alt="link"></p>
+<p>数据库主主复制，也是一种冗余备份。</p>
+<h3 id="失败隔离"><a href="#失败隔离" class="headerlink" title="失败隔离"></a>失败隔离</h3><p>失败隔离的主要架构技术是消息队列。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-fail-isolation.png" alt="link"></p>
+<p>消息队列还使得程序解耦，将程序的调用和依赖隔离开来。</p>
+<h3 id="限流降级"><a href="#限流降级" class="headerlink" title="限流降级"></a>限流降级</h3><p>限流是指对进入系统的用户请求进行流量限制，如果访问量超过了系统的最大处理能力，就会丢弃一部分的用户请求，保证整个系统可用，保证大部分用户是可以访问系统的。</p>
+<p>降级是保护系统的另一种手段。有一些系统功能是非核心的，但是它也给系统产生了非常大的压力，比如说在电商系统中有确认收货这个功能，即便我们不去确认收货，系统也会超时自动确认收货。</p>
+<h3 id="异地多活"><a href="#异地多活" class="headerlink" title="异地多活"></a>异地多活</h3><p>将数据中心分布在多个不同地点的机房里，这些机房都可以对外提供服务，用户可以连接任何一个机房进行访问，这样每个机房都可以提供完整的系统服务，即使某一个机房不可使用，系统也不会宕机，依然保持可用。</p>
+<p>异地多活的架构考虑的重点就是，用户请求如何分发到不同的机房去。这个主要可以在域名解析的时候完成，也就是用户进行域名解析的时候，会根据就近原则或者其他一些策略，完成用户请求的分发。另一个至关重要的技术点是，因为是多个机房都可以独立对外提供服务，所以也就意味着每个机房都要有完整的数据记录。用户在任何一个机房完成的数据操作，都必须同步传输给其他的机房，进行数据实时同步。</p>
+<p>数据库实时同步最需要关注的就是数据冲突问题。同一条数据，同时在两个数据中心被修改了，该如何解决？为了解决这种数据冲突的问题，某些容易引起数据冲突的服务采用类似 MySQL 的主主模式，也就是说多个机房在某个时刻是有一个主机房的，某些请求只能到达主机房才能被处理，其他的机房不处理这一类请求，以此来避免关键数据的冲突。</p>
+<h2 id="安全性架构：为什么说用户密码泄漏是程序员的锅"><a href="#安全性架构：为什么说用户密码泄漏是程序员的锅" class="headerlink" title="安全性架构：为什么说用户密码泄漏是程序员的锅"></a>安全性架构：为什么说用户密码泄漏是程序员的锅</h2><ul>
+<li>数据加解密：单向散列加密</li>
+<li>对称加密</li>
+<li>非对称加密</li>
+<li>xss</li>
+<li>SQL注入</li>
+</ul>
+<h2 id="大数据架构"><a href="#大数据架构" class="headerlink" title="大数据架构"></a>大数据架构</h2><h3 id="分布式文件存储HDFS架构"><a href="#分布式文件存储HDFS架构" class="headerlink" title="分布式文件存储HDFS架构"></a>分布式文件存储HDFS架构</h3><p>HDFS 可以将数千台服务器组成一个统一的文件存储系统，其中 NameNode 服务器充当文件控制块的角色，进行文件元数据管理，即记录文件名、访问权限、数据存储地址等信息，而真正的文件数据则存储在 DataNode 服务器上。</p>
+<p>DataNode 以块为单位存储数据，所有的块信息，比如块 ID、块所在的服务器 IP 地址等，都记录在 NameNode，而具体的块数据则存储在 DataNode 上。</p>
+<p>HDFS 为了保证不会因为硬盘或者服务器损坏而导致文件损坏，还会对数据块进行复制，每个数据块都会存储在多台服务器上，甚至多个机架上。</p>
+<h3 id="大数据计算MapReduce"><a href="#大数据计算MapReduce" class="headerlink" title="大数据计算MapReduce"></a>大数据计算MapReduce</h3><p>大数据处理的经典计算框架是 MapReduce。MapReduce 的核心思想是对数据进行分片计算。</p>
+<p>MapReduce 将计算过程分成两个部分，一个是 map 过程，每个服务器上会启动多个 map 进程，map 优先读取本地数据进行计算，计算后输出一个<br><code>&lt;key, value&gt;</code> 集合。另一个是 reduce 过程，MapReduce 在每个服务器上都启动多个 reduce 进程，然后对所有 map 输出的 <code>&lt;key, value&gt;</code> 集合进行 shuffle 操作。所谓 shuffle 就是将相同的 key 发送到同一个 reduce 进程，在 reduce 中完成数据关联计算。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-word-count.png" alt="link"></p>
+<p>word count: 假设原始数据有两个数据块，MapReduce 框架启动两个 map 进程进行处理，分别读入数据。map 函数对输入数据进行分词处理，然后针对每个单词输出 <code>&lt; 单词, 1&gt;</code> 这样的 <code>&lt;key, value&gt;</code> 结果。然后，MapReduce 框架进行 shuffle 操作，相同的 key 发送给同一个 reduce 进程，reduce 的输入就是 <code>&lt;key, value 列表 &gt;</code> 这样的结构，即相同 key 的 value 合并成一个 value 列表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenizerMapper</span></span></span><br><span class="line"><span class="class">       <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Object</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> IntWritable one = <span class="keyword">new</span> IntWritable(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">private</span> Text word = <span class="keyword">new</span> Text();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">map</span><span class="params">(Object key, Text value, Context context</span></span></span><br><span class="line"><span class="function"><span class="params">                    )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">      StringTokenizer itr = <span class="keyword">new</span> StringTokenizer(value.toString());</span><br><span class="line">      <span class="keyword">while</span> (itr.hasMoreTokens()) &#123;</span><br><span class="line">        word.set(itr.nextToken());</span><br><span class="line">        context.write(word, one);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntSumReducer</span></span></span><br><span class="line"><span class="class">       <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>,<span class="title">IntWritable</span>,<span class="title">Text</span>,<span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> IntWritable result = <span class="keyword">new</span> IntWritable();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                       Context context</span></span></span><br><span class="line"><span class="function"><span class="params">                       )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (IntWritable val : values) &#123;</span><br><span class="line">        sum += val.get();</span><br><span class="line">      &#125;</span><br><span class="line">      result.set(sum);</span><br><span class="line">      context.write(key, result);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些进程是如何在分布式的服务器集群上启动的呢？数据是如何流动，最终完成计算的呢？</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-map-reduce.png" alt="link"></p>
+<p>MapReduce1 主要有 JobTracker 和 TaskTracker 两种进程角色，JobTracker 在 MapReduce 集群中只有一个，而 TaskTracker 则和 DataNode 一起，启动在集群的所有服务器上。</p>
+<p>MapReduce 应用程序 JobClient 启动后，会向 JobTracker 提交作业，JobTracker 根据作业中输入文件路径分析，需要在哪些服务器上启动 map 进程，然后就向这些服务器上的 TaskTracker 发送任务命令。</p>
+<p>TaskTracker 收到任务后，启动一个 TaskRunner 进程下载任务对应的程序，然后反射加载程序中的 map 函数，读取任务中分配的数据块，进行 map 计算。map 计算结束后，TaskTracker 会对 map 输出进行 shuffle 操作，然后 TaskRunner 加载 reduce 函数进行后续计算。HDFS 和 MapReduce 都是 Hadoop 的组成部分。</p>
+<p>HDFS 和 MapReduce 都是 Hadoop 的组成部分。</p>
+<h3 id="大数据仓库-Hive-架构"><a href="#大数据仓库-Hive-架构" class="headerlink" title="大数据仓库 Hive 架构"></a>大数据仓库 Hive 架构</h3><p>MapReduce写起来较为复杂，Hive是一个根据SQL生成MapReduce的工具：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pageid, age, <span class="keyword">count</span>(<span class="number">1</span>) <span class="keyword">FROM</span> pv_users <span class="keyword">GROUP</span> <span class="keyword">BY</span> pageid, age;</span><br></pre></td></tr></table></figure>
+
+<p> Hive 要做的就是将 SQL 翻译成 MapReduce 程序代码，实际上，Hive 内置了很多 Operator，每个 Operator 完成一个特定的计算过程，Hive 将这些 Operator 构造成一个有向无环图 DAG，然后根据这些 Operator 之间是否存在 shuffle 将其封装到 map 或者 reduce 函数，就可以提交给 MapReduce 执行了。Operator 组成的 DAG 图示例如下，这是一个包含 where 查询条件的 SQL，where 查询条件对应一个 FilterOperator。<br><img src="https://liulixiang1988.github.io/images/2021-03-15-hive.jpg" alt="link"></p>
+<p>Hive 整体架构如下，Hive 的表数据存储在 HDFS。表的结构，比如表名、字段名、字段之间的分隔符等存储在 Metastore。用户通过 Client 提交 SQL 到 Driver，Driver 请求 Compiler 将 SQL 编译成如上示例的 DAG 执行计划，然后交给 Hadoop 执行。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-hive-arch.jpg" alt="link"></p>
+<h3 id="快速大数据计算Spark架构"><a href="#快速大数据计算Spark架构" class="headerlink" title="快速大数据计算Spark架构"></a>快速大数据计算Spark架构</h3><p>MapReduce 主要使用硬盘存储计算过程中的数据，这样虽然可靠性比较高，但是性能其实比较差。</p>
+<p>Spark 在 MapReduce 基础上进行改进，主要使用内存进行中间计算数据存储，加快了计算执行时间，在某些情况下，性能可以提升上百倍。</p>
+<p>Spark 的主要编程模型是 RDD，弹性数据集。在 RDD 上定义了许多常见的大数据计算函数，利用这些函数，可以用极少的代码完成较为复杂的大数据计算。前面举例的 WorkCount，如果用 Spark 编程，只需要三行代码：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> textFile = sc.textFile(<span class="string">"hdfs://..."</span>)</span><br><span class="line"><span class="keyword">val</span> counts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>))</span><br><span class="line">                 .map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line">                 .reduceByKey(_ + _)</span><br><span class="line">counts.saveAsTextFile(<span class="string">"hdfs://..."</span>)</span><br></pre></td></tr></table></figure>
+
+<p>首先，从 HDFS 读取数据，构建出一个 RDD textFile。然后，在这个 RDD 上执行三个操作：将输入数据的每一行文本用空格拆分成单词；将每个单词进行转换，word→(word, 1)，生成 <code>&lt;Key, Value&gt;</code> 的结构；相同的 Key 进行统计，统计方式是对 Value 求和。最后，将 RDD counts 写入到 HDFS，完成结果输出。</p>
+<p>Spark DAG 示例如下：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-spark.jpg" alt="link"></p>
+<p>如上所示，A、C 和 E 是从 HDFS 上加载的 RDD，A 经过 groupBy 分组统计转换函数后得到 RDD B，C 经过 map 转换函数后得到 RDD D，D 和 E 经过 union 合并转换函数后得到 RDD F，B 和 F 经过 join 连接转换函数后得到最终结果 RDD G。</p>
+<h3 id="大数据流计算架构"><a href="#大数据流计算架构" class="headerlink" title="大数据流计算架构"></a>大数据流计算架构</h3><p>Spark 虽然比 MapReduce 快很多，但是大多数场景下，计算耗时依然是分钟级别的，这种计算一般被称为大数据批处理计算。</p>
+<p>Spark Streaming 的架构原理是将实时流入的数据切分成小的一批一批的数据，然后将这些小的一批数据交给 Spark 执行。由于数据量比较小，Spark Streaming 又常驻系统，不需要重新启动，因此可以毫秒级完成计算，看起来像是实时计算一样。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-spark-stream.jpg" alt="link"></p>
+<p>最近几年比较流行的大数据引擎 Flink 其架构原理其实和 Spark Streaming 很相似，随着数据源的不同，根据数据量和计算场景的要求，可以灵活适应流计算和批处理计算。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>大数据技术可以说是分布式技术的一个分支，都是面临大量的计算压力，采用分布式服务器集群的方案解决问题。差别是大数据技术要处理的数据具有关联性，所以需要有个中心服务器进行管理，NameNode、JobTracker 都是这样的中心服务器。</p>
+<h2 id="AI与物联网架构：从智能引擎到物联网平台"><a href="#AI与物联网架构：从智能引擎到物联网平台" class="headerlink" title="AI与物联网架构：从智能引擎到物联网平台"></a>AI与物联网架构：从智能引擎到物联网平台</h2><h3 id="大数据平台架构"><a href="#大数据平台架构" class="headerlink" title="大数据平台架构"></a>大数据平台架构</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-15-big-data-arch.png" alt="link"></p>
+<p>数据同步系统实际上承担的是传统数据仓库 ETL 的职责，即数据的抽取（Extract）、转换（Transform）、载入（Load）.</p>
+<h3 id="智能推荐算法"><a href="#智能推荐算法" class="headerlink" title="智能推荐算法"></a>智能推荐算法</h3><p>基于人口统计的推荐:</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-recommend.png" alt="link"></p>
+<p>基于商品属性的推荐:</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-recommend2.png" alt="link"></p>
+<p>基于用户的协同过滤推荐:</p>
+<p>用户 A 和用户 C 都喜欢商品 A 和商品 B，根据他们的喜好可以分为同类。然后用户 A 还喜欢商品 D，那么将商品 D 推荐给用户 C，他可能也会喜欢。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-recommend3.png" alt="link"></p>
+<p>基于商品的协同过滤推荐</p>
+<p>根据用户的喜好对商品进行分类，然后根据商品分类进行推荐。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-recommend4.png" alt="link"></p>
+<h3 id="物联网大数据"><a href="#物联网大数据" class="headerlink" title="物联网大数据"></a>物联网大数据</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-15-aiot.png" alt="link"></p>
+<h2 id="区块链技术架构：区块链到底能做什么？"><a href="#区块链技术架构：区块链到底能做什么？" class="headerlink" title="区块链技术架构：区块链到底能做什么？"></a>区块链技术架构：区块链到底能做什么？</h2><p><img src="https://liulixiang1988.github.io/images/2021-03-15-block-chain.png" alt="link"></p>
+<p>联盟链</p>
+<p>Hyperledger Fabric</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-03-15-block-chain2.jpeg" alt="link"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/" rel="prev" title="软件设计原理3-设计模式">
+                  <i class="fa fa-angle-left"></i> 软件设计原理3-设计模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/" rel="next" title="软件设计文档示例模板">
+                  软件设计文档示例模板 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

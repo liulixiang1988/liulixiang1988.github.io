@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Nancy框架一、创建第一个Nancy应用 安装Nancy项目模板 创建Nancy Empty Web Application with ASP.NET Hosting 添加Nancy module,它是一个标准C#类，通过添加下面几行代码定义了web应用的路由处理方法。 编译并运行。  1234567public class HelloModule : NancyModule&#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nancy Web框架">
+<meta property="og:url" content="https://liulixiang1988.github.io/2014/09/12/Nancy%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="Nancy框架一、创建第一个Nancy应用 安装Nancy项目模板 创建Nancy Empty Web Application with ASP.NET Hosting 添加Nancy module,它是一个标准C#类，通过添加下面几行代码定义了web应用的路由处理方法。 编译并运行。  1234567public class HelloModule : NancyModule&#123;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-09-12T15:39:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:17:12.266Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Nancy, C#, .NET, web">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2014/09/12/Nancy%E6%A1%86%E6%9E%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2014/09/12/Nancy%E6%A1%86%E6%9E%B6/","path":"2014/09/12/Nancy框架/","title":"Nancy Web框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nancy Web框架 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nancy%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">Nancy框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AANancy%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">一、创建第一个Nancy应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%8E%A2%E7%B4%A2Nancy%E7%9A%84module"><span class="nav-number">1.2.</span> <span class="nav-text">二、探索Nancy的module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A8%A1%E5%9D%97%E8%83%BD%E5%A4%9F%E5%9C%A8%E5%85%A8%E5%B1%80%E8%A2%AB%E5%8F%91%E7%8E%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 模块能够在全局被发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%9D%97%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%A0%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 使用模块为路由创建一个根</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1"><span class="nav-number">1.3.</span> <span class="nav-text">三、定义路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 模式的优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8A%A8%E4%BD%9C"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.5.</span> <span class="nav-text">5. 条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%B7%AF%E7%94%B1%E7%89%87%E6%AE%B5%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.3.6.</span> <span class="nav-text">6. 路由片段约束</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">6.1 自定义约束</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">1.3.6.1.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E9%80%89%E6%8B%A9%E5%8E%BB%E8%B0%83%E7%94%A8%E8%B7%AF%E7%94%B1%E7%9A%84%E7%A7%98%E8%AF%80"><span class="nav-number">1.3.7.</span> <span class="nav-text">7. 选择去调用路由的秘诀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E7%96%AF%E7%8B%82%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.3.8.</span> <span class="nav-text">8. 疯狂的路由</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1"><span class="nav-number">1.4.</span> <span class="nav-text">四、自定义路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%BC%82%E6%AD%A5"><span class="nav-number">1.5.</span> <span class="nav-text">五、异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AF%AD%E6%B3%95%E4%BE%8B%E5%AD%90"><span class="nav-number">1.5.2.</span> <span class="nav-text">2 语法例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%9F%A5%E7%9C%8BDynamicDictionary"><span class="nav-number">1.6.</span> <span class="nav-text">六、查看DynamicDictionary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81module%E7%9A%84before-after%E9%92%A9%E5%AD%90"><span class="nav-number">1.7.</span> <span class="nav-text">七、module的before&#x2F;after钩子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8%E8%B7%AF%E7%94%B1%E8%A2%AB%E8%B0%83%E7%94%A8%E5%89%8D%E6%8B%A6%E6%88%AA%E8%AF%B7%E6%B1%82"><span class="nav-number">1.7.1.</span> <span class="nav-text">1. 在路由被调用前拦截请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-After%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">1.7.2.</span> <span class="nav-text">2. After拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81Application%E7%9A%84Before-After%E5%92%8COnError%E7%AE%A1%E9%81%93"><span class="nav-number">1.8.</span> <span class="nav-text">八、Application的Before,After和OnError管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Before%E6%8B%A6%E6%88%AA"><span class="nav-number">1.8.1.</span> <span class="nav-text">1.Before拦截</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-After%E6%8B%A6%E6%88%AA"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. After拦截</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%94%99%E8%AF%AF%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 错误拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%92%A9%E5%AD%90"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 构建自己的钩子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%A8%A1%E5%9E%8B%E7%BB%91%E5%AE%9A"><span class="nav-number">1.9.</span> <span class="nav-text">九、模型绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B1%8F%E8%94%BD%E4%B8%8D%E6%83%B3%E8%A6%81%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.9.1.</span> <span class="nav-text">1. 屏蔽不想要的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%91%E5%AE%9A%E9%85%8D%E7%BD%AE"><span class="nav-number">1.9.2.</span> <span class="nav-text">2. 绑定配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96rich-request-body-payloads-%E8%B4%9F%E8%BD%BD"><span class="nav-number">1.9.3.</span> <span class="nav-text">3. 反序列化rich request body payloads(负载)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A8%A1%E5%9E%8B%E7%BB%91%E5%AE%9ACheckbox"><span class="nav-number">1.9.4.</span> <span class="nav-text">4. 模型绑定Checkbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BB%91%E5%AE%9A%E5%88%B0list"><span class="nav-number">1.9.5.</span> <span class="nav-text">5. 绑定到list</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E7%BB%91%E5%AE%9Aarrary%E5%88%B0%E5%8D%95%E7%8B%AC%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.9.5.1.</span> <span class="nav-text">5.1 绑定arrary到单独的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E7%BB%91%E5%AE%9A%E5%88%B0%E5%AF%B9%E8%B1%A1%E7%9A%84list"><span class="nav-number">1.9.5.2.</span> <span class="nav-text">5.2 绑定到对象的list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-HTML-form%E4%B8%AD%E7%9A%84List%E5%88%86%E9%9A%94%E7%AC%A6"><span class="nav-number">1.9.5.3.</span> <span class="nav-text">5.3 HTML form中的List分隔符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81Bootstrapper"><span class="nav-number">1.10.</span> <span class="nav-text">十、Bootstrapper</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BF%AE%E6%94%B9bootstrapper"><span class="nav-number">1.10.1.</span> <span class="nav-text">1. 简单的修改bootstrapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%BE%E5%88%B0%E5%90%88%E9%80%82%E7%9A%84bootstrapper"><span class="nav-number">1.10.2.</span> <span class="nav-text">2. 找到合适的bootstrapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C"><span class="nav-number">1.10.3.</span> <span class="nav-text">3. 使用自动注册</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%A7%86%E5%9B%BE%E5%BC%95%E6%93%8E"><span class="nav-number">1.11.</span> <span class="nav-text">十一、视图引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8%E8%B7%AF%E7%94%B1%E4%B8%AD%E6%B8%B2%E6%9F%93%E8%A7%86%E5%9B%BE"><span class="nav-number">1.11.1.</span> <span class="nav-text">1. 在路由中渲染视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E4%B8%AD%E8%A7%A3%E6%9E%90%E8%A7%86%E5%9B%BE%E7%9A%84%E5%90%8D%E7%A7%B0"><span class="nav-number">1.11.2.</span> <span class="nav-text">2.从模型中解析视图的名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E8%B6%85%E7%AE%80%E5%8D%95%E8%A7%86%E5%9B%BE%E5%BC%95%E6%93%8E"><span class="nav-number">1.12.</span> <span class="nav-text">十二、超简单视图引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%87%E5%87%86%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.12.1.</span> <span class="nav-text">1. 标准变量替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.12.2.</span> <span class="nav-text">2. 循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.12.3.</span> <span class="nav-text">3. 条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%9A%90%E5%BC%8F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.12.4.</span> <span class="nav-text">4. 隐式条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-HTML%E7%BC%96%E7%A0%81"><span class="nav-number">1.12.5.</span> <span class="nav-text">5. HTML编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E9%83%A8%E5%88%86Patials"><span class="nav-number">1.12.6.</span> <span class="nav-text">6. 部分Patials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Master%E9%A1%B5%E5%92%8Csection"><span class="nav-number">1.12.7.</span> <span class="nav-text">7. Master页和section</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E9%98%B2%E6%AD%A2%E4%BC%AA%E9%80%A0token"><span class="nav-number">1.12.8.</span> <span class="nav-text">8. 防止伪造token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E8%B7%AF%E5%BE%84%E6%89%A9%E5%B1%95"><span class="nav-number">1.12.9.</span> <span class="nav-text">9. 路径扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E6%89%A9%E5%B1%95SSVE"><span class="nav-number">1.12.10.</span> <span class="nav-text">10. 扩展SSVE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81Razor%E5%BC%95%E6%93%8E"><span class="nav-number">1.13.</span> <span class="nav-text">十二、Razor引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85Razor"><span class="nav-number">1.13.1.</span> <span class="nav-text">1. 安装Razor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AERazor"><span class="nav-number">1.13.2.</span> <span class="nav-text">2. 配置Razor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%86%E5%9B%BE%E5%BC%95%E6%93%8E%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.14.</span> <span class="nav-text">十三、实现自己的视图引擎需要注意的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E8%A7%86%E5%9B%BE%E4%BD%8D%E7%BD%AE%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.</span> <span class="nav-text">十四、视图位置约定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%A5%E7%9C%8B%E9%BB%98%E8%AE%A4%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.</span> <span class="nav-text">1. 查看默认约定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E6%A0%B9%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.1.</span> <span class="nav-text">1.1 根约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E8%A7%86%E5%9B%BE%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.2.</span> <span class="nav-text">1.2 视图文件夹约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E8%A7%86%E5%9B%BE%E5%92%8C%E6%A8%A1%E5%9D%97%E8%B7%AF%E5%BE%84%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.3.</span> <span class="nav-text">1.3 视图和模块路径约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E6%A8%A1%E5%9D%97%E8%B7%AF%E5%BE%84%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.4.</span> <span class="nav-text">1.4 模块路径约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.5.</span> <span class="nav-text">1.5 模块名称约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-%E8%A7%86%E5%9B%BE%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.1.6.</span> <span class="nav-text">1.6 视图模块名称约定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E6%98%AF%E9%80%80%E5%90%8D"><span class="nav-number">1.15.2.</span> <span class="nav-text">2. 从模型类型推断是退名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.3.</span> <span class="nav-text">3. 自定义约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8IConventions%E5%AE%9A%E4%B9%89%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.15.4.</span> <span class="nav-text">3. 使用IConventions定义自己的约定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E5%8C%96"><span class="nav-number">1.16.</span> <span class="nav-text">十五、本地化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E6%B5%8B%E8%AF%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.17.</span> <span class="nav-text">十六、测试应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E6%A0%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">1.18.</span> <span class="nav-text">十七、根路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%94%B9%E5%8F%98%E8%B7%9F%E8%B7%AF%E5%BE%84"><span class="nav-number">1.18.1.</span> <span class="nav-text">1. 改变跟路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">1.18.2.</span> <span class="nav-text">2. 上传文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E5%85%AB%E3%80%81%E7%AE%A1%E7%90%86%E9%9D%99%E6%80%81%E5%86%85%E5%AE%B9"><span class="nav-number">1.19.</span> <span class="nav-text">十八、管理静态内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B9%9D%E3%80%81%E8%AF%8A%E6%96%AD"><span class="nav-number">1.20.</span> <span class="nav-text">十九、诊断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE%E5%88%B0dashboard%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">1.20.1.</span> <span class="nav-text">1. 配置到dashboard的访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8E%BB%E9%99%A4%E8%AF%8A%E6%96%AD"><span class="nav-number">1.20.2.</span> <span class="nav-text">2. 去除诊断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B7%A5%E5%85%B7%E5%91%A2%EF%BC%9F"><span class="nav-number">1.20.3.</span> <span class="nav-text">3. 有哪些工具呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.20.3.1.</span> <span class="nav-text">3.1 信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.20.3.2.</span> <span class="nav-text">3.2 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E8%AF%B7%E6%B1%82%E8%B7%9F%E8%B8%AA"><span class="nav-number">1.20.3.3.</span> <span class="nav-text">3.3 请求跟踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E4%BA%A4%E4%BA%92%E5%BC%8F%E7%9A%84%E8%AF%8A%E6%96%AD"><span class="nav-number">1.20.3.4.</span> <span class="nav-text">3.4 交互式的诊断</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%881%EF%BC%89IDiagnosticsProvider%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.20.3.4.1.</span> <span class="nav-text">（1）IDiagnosticsProvider接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%8F%AF%E8%AF%8A%E6%96%AD%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.20.3.4.2.</span> <span class="nav-text">（2）可诊断的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E6%8F%90%E4%BE%9B%E6%8F%8F%E8%BF%B0%E7%BB%99%E6%96%B9%E6%B3%95"><span class="nav-number">1.20.3.4.3.</span> <span class="nav-text">（3）提供描述给方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA"><span class="nav-number">1.20.3.4.4.</span> <span class="nav-text">（4）自定义模板输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%88%9B%E5%BB%BA%E8%AF%8A%E6%96%AD%E6%8F%90%E4%BE%9B%E8%80%85"><span class="nav-number">1.20.3.4.5.</span> <span class="nav-text">（5）创建诊断提供者</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E3%80%81%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84favicon"><span class="nav-number">1.21.</span> <span class="nav-text">二十、添加自己的favicon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9B%BF%E6%8D%A2%E9%BB%98%E8%AE%A4%E7%9A%84FavIcon"><span class="nav-number">1.21.1.</span> <span class="nav-text">1. 替换默认的FavIcon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%86%85%E5%B5%8Cicon"><span class="nav-number">1.21.2.</span> <span class="nav-text">2. 使用内嵌icon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A7%BB%E9%99%A4ICON"><span class="nav-number">1.21.3.</span> <span class="nav-text">3. 移除ICON</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.22.</span> <span class="nav-text">二十一、添加自定义的错误页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81%E5%8A%A0%E5%AF%86%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95"><span class="nav-number">1.23.</span> <span class="nav-text">二十二、加密帮助方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-IEncryptionProvider-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.23.1.</span> <span class="nav-text">1. IEncryptionProvider 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-IHmacProvider-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.23.2.</span> <span class="nav-text">2. IHmacProvider 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-IKeyGenerator-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.23.3.</span> <span class="nav-text">3. IKeyGenerator 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8A%A0%E5%AF%86%E9%85%8D%E7%BD%AE%E7%B1%BB%E5%9E%8BCryptographyConfiguration"><span class="nav-number">1.23.4.</span> <span class="nav-text">4. 加密配置类型CryptographyConfiguration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81Content-negotiation-%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86"><span class="nav-number">1.24.</span> <span class="nav-text">二十三、Content negotiation(内容协商)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%8C%B9%E9%85%8D%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.24.0.1.</span> <span class="nav-text">1.1 匹配优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E9%BB%98%E8%AE%A4%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">1.24.0.2.</span> <span class="nav-text">1.2 默认响应处理器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8E%A7%E5%88%B6%E5%8D%8F%E5%95%86"><span class="nav-number">1.24.1.</span> <span class="nav-text">2. 控制协商</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%94%AF%E6%8C%81%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D"><span class="nav-number">1.24.2.</span> <span class="nav-text">3. 支持文件扩展名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%BC%BA%E5%88%B6%E5%8F%AF%E6%8E%A5%E5%8F%97%E7%9A%84%E5%A4%B4-Accept-Header"><span class="nav-number">1.24.3.</span> <span class="nav-text">4. 强制可接受的头(Accept Header)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8IConventions%E6%9D%A5%E5%AE%9A%E4%B9%89%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.24.4.</span> <span class="nav-text">5. 使用IConventions来定义自己的约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%87%AA%E5%8A%A8%E5%8D%8F%E5%95%86%E5%A4%B4"><span class="nav-number">1.24.5.</span> <span class="nav-text">6. 自动协商头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF"><span class="nav-number">1.24.6.</span> <span class="nav-text">7. 更多信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8%E8%BD%AC%E6%8D%A2%E5%99%A8%E6%9D%A5%E6%89%A9%E5%B1%95%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.25.</span> <span class="nav-text">二十四、使用转换器来扩展序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81%E6%8E%88%E6%9D%83"><span class="nav-number">1.26.</span> <span class="nav-text">二十五、授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%86%E8%A7%A3%E7%94%A8%E6%88%B7"><span class="nav-number">1.26.1.</span> <span class="nav-text">1. 了解用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BF%9D%E6%8A%A4%E4%BD%A0%E7%9A%84%E8%B5%84%E6%BA%90"><span class="nav-number">1.26.2.</span> <span class="nav-text">2. 保护你的资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%9B%E9%80%A0%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%89%E5%85%A8%E6%89%A9%E5%B1%95"><span class="nav-number">1.26.3.</span> <span class="nav-text">3. 创造你自己的安全扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%AA%8C%E8%AF%81provider"><span class="nav-number">1.26.4.</span> <span class="nav-text">4. 实现自己的验证provider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%97%A0%E7%8A%B6%E6%80%81%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.5.</span> <span class="nav-text">5. 无状态认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%BC%80%E5%90%AF%E6%97%A0%E7%8A%B6%E6%80%81%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.5.1.</span> <span class="nav-text">5.1 配置并开启无状态认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE"><span class="nav-number">1.26.5.2.</span> <span class="nav-text">5.2 简单配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Form%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.6.</span> <span class="nav-text">6. Form认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-User-mapper"><span class="nav-number">1.26.6.1.</span> <span class="nav-text">6.1 User mapper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%EF%BC%8C%E5%A4%84%E7%90%86form%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.6.2.</span> <span class="nav-text">6.2 修改应用，处理form认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-%E5%90%AF%E7%94%A8form%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.6.3.</span> <span class="nav-text">6.3 启用form认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4-%E5%85%B3%E4%BA%8E%E5%8A%A0%E5%AF%86%EF%BC%8C%E8%BF%98%E6%9C%89%E4%B8%80%E4%BA%9B%E8%AF%9D"><span class="nav-number">1.26.6.4.</span> <span class="nav-text">6.4 关于加密，还有一些话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-%E8%B7%9F%E5%A4%9A"><span class="nav-number">1.26.6.5.</span> <span class="nav-text">6.5 跟多</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E4%BB%A4%E7%89%8C%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.7.</span> <span class="nav-text">7. 令牌认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-%E8%AE%A4%E8%AF%86Nancy%E7%9A%84%E4%BB%A4%E7%89%8C%E8%AE%A4%E8%AF%81"><span class="nav-number">1.26.7.1.</span> <span class="nav-text">7.1 认识Nancy的令牌认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.26.7.2.</span> <span class="nav-text">7.2 基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.26.7.3.</span> <span class="nav-text">7.3 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-3-1-Nancy%E9%85%8D%E7%BD%AE"><span class="nav-number">1.26.7.3.1.</span> <span class="nav-text">7.3.1 Nancy配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-3-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.26.7.3.2.</span> <span class="nav-text">7.3.2 客户端配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E5%B9%95%E5%90%8E%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.26.7.4.</span> <span class="nav-text">8. 幕后的工作</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/09/12/Nancy%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nancy Web框架 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nancy Web框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-09-12 23:39:00" itemprop="dateCreated datePublished" datetime="2014-09-12T23:39:00+08:00">2014-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:17:12" itemprop="dateModified" datetime="2020-06-27T23:17:12+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/DotNET/" itemprop="url" rel="index"><span itemprop="name">DotNET</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Nancy框架"><a href="#Nancy框架" class="headerlink" title="Nancy框架"></a>Nancy框架</h1><h2 id="一、创建第一个Nancy应用"><a href="#一、创建第一个Nancy应用" class="headerlink" title="一、创建第一个Nancy应用"></a>一、创建第一个Nancy应用</h2><ol>
+<li>安装<a href="http://visualstudiogallery.msdn.microsoft.com/f1e29f61-4dff-4b1e-a14b-6bd0d307611a" target="_blank" rel="noopener">Nancy项目模板</a></li>
+<li>创建<code>Nancy Empty Web Application with ASP.NET Hosting</code></li>
+<li>添加<code>Nancy module</code>,它是一个标准C#类，通过添加下面几行代码定义了web应用的路由处理方法。</li>
+<li>编译并运行。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class HelloModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public HelloModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Get[&quot;&#x2F;&quot;] &#x3D; parameters &#x3D;&gt; &quot;Hello World&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、探索Nancy的module"><a href="#二、探索Nancy的module" class="headerlink" title="二、探索Nancy的module"></a>二、探索Nancy的module</h2><p>Module继承自<code>NancyModule</code>类。Module是必不可少的.它不仅定义了路由，还提供了许多其他信息，比如请求、上下文、构造响应的辅助方法、视图渲染等等。</p>
+<h3 id="1-模块能够在全局被发现"><a href="#1-模块能够在全局被发现" class="headerlink" title="1. 模块能够在全局被发现"></a>1. 模块能够在全局被发现</h3><p>可以在任意地方定义module，比如外部的dll等，这为代码的复用带来很大的方便。不用担心效率问题，扫描module只在程序启动时发生。</p>
+<h3 id="2-使用模块为路由创建一个根"><a href="#2-使用模块为路由创建一个根" class="headerlink" title="2. 使用模块为路由创建一个根"></a>2. 使用模块为路由创建一个根</h3><p>类似命名空间的概念，在创建构造方法时传给base一个名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class ResourceModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public ResourceModule() : base(&quot;&#x2F;products&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; would capture routes to &#x2F;products&#x2F;list sent as a GET request</span><br><span class="line">        Get[&quot;&#x2F;list&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">            return &quot;The list of products&quot;;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、定义路由"><a href="#三、定义路由" class="headerlink" title="三、定义路由"></a>三、定义路由</h2><p>路由是在module的构造方法中定义的。为了定义一个路由，你需要声明<code>方法</code>+<code>模式</code>+<code>动作</code>+(可选)<code>条件</code></p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class ProductsModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public ProductsModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Get[&quot;&#x2F;products&#x2F;&#123;id&#125;&quot;] &#x3D; _ &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F;do something</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者异步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class ProductsModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public ProductsModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Get[&quot;&#x2F;products&#x2F;&#123;id&#125;&quot;, runAsync: true] &#x3D; async (_, token) &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F;do something long and tedious</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-方法"><a href="#1-方法" class="headerlink" title="1. 方法"></a>1. 方法</h3><p>支持HTTP常见方法：<code>DELETE</code>, <code>GET</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code></p>
+<h3 id="2-模式"><a href="#2-模式" class="headerlink" title="2. 模式"></a>2. 模式</h3><p>模式能够自定义，Nancy提供了一些常用的：</p>
+<ol>
+<li>字面量 - <code>/some/literal/segments</code></li>
+<li>捕获片段 - <code>/{name}</code>，获取URL的片段，并传给路由的Action</li>
+<li>捕获可选片段 - <code>/{name?}</code>，添加了一个问号，片段就是可选的了</li>
+<li>捕获可选/默认片段 - <code>/{name?default}</code></li>
+<li>正则片段 - <code>/(?&lt;age&gt;[\d]{1,2})</code>，使用命名捕获组来捕获片段，如果不需要捕获，使用非捕获组，比如<code>(?:regex-goes-here)</code></li>
+<li>贪心片段 - <code>/{name*}</code>，从/处开始捕获</li>
+<li>贪心正则捕获 - <code>^(?&lt;name&gt;[a-z]{3, 10}(?:/{1})(?&lt;action&gt;[a-z]{5, 10}))$</code></li>
+<li>多个捕获片段 - <code>/{file}.{extension}</code>或者<code>/{file}.ext</code></li>
+</ol>
+<h3 id="3-模式的优先级"><a href="#3-模式的优先级" class="headerlink" title="3. 模式的优先级"></a>3. 模式的优先级</h3><h3 id="4-动作"><a href="#4-动作" class="headerlink" title="4. 动作"></a>4. 动作</h3><p>动作时一个lambda表达式<code>Func&lt;dynamic, dynamic&gt;</code>，输入时<code>DynamicDictionary</code>，详见<a href="https://github.com/NancyFx/Nancy/wiki/Taking-a-look-at-the-DynamicDictionary" target="_blank" rel="noopener">此处</a>.</p>
+<p>响应可以使任意的model，最终的结果会被<a href="https://github.com/NancyFx/Nancy/wiki/Content-Negotiation" target="_blank" rel="noopener">Content Negotiation</a>处理。但是如果返回值是<code>Response</code>类型，则原样返回。</p>
+<p><code>Response</code>对象有几个隐形转换操作：</p>
+<ol>
+<li><code>int</code>变为Http的状态</li>
+<li><code>HttpStatusCode</code>枚举值</li>
+<li><code>string</code>直接是相应的body</li>
+<li><code>Action&lt;Stream&gt;</code>则写道response stream中</li>
+</ol>
+<h3 id="5-条件"><a href="#5-条件" class="headerlink" title="5. 条件"></a>5. 条件</h3><p>路由条件用来过滤（比如登录非登录）。使用<code>Func&lt;NancyContext, bool&gt;</code>的lambda表达式定义.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Post[&quot;&#x2F;login&quot;, (ctx) &#x3D;&gt; ctx.Request.Form.remember] &#x3D; _ &#x3D;&gt; </span><br><span class="line">&#123;</span><br><span class="line">     return &quot;Handling code when remember is true!&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Post[&quot;&#x2F;login&quot;, (ctx) &#x3D;&gt; !ctx.Request.Form.remember] &#x3D; _ &#x3D;&gt; </span><br><span class="line">&#123;</span><br><span class="line">     return &quot;Handling code when remember is false!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-路由片段约束"><a href="#6-路由片段约束" class="headerlink" title="6. 路由片段约束"></a>6. 路由片段约束</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;intConstraint&#x2F;&#123;value:int&#125;&quot;] &#x3D; _ &#x3D;&gt; &quot;Value &quot; + _.value + &quot; is an integer.&quot;;</span><br></pre></td></tr></table></figure>
+<p>只有为int的才会匹配。</p>
+<p>约束：</p>
+<ul>
+<li><code>int</code></li>
+<li><code>decimal</code></li>
+<li><code>guid</code></li>
+<li><code>bool</code></li>
+<li><code>alpha</code></li>
+<li><code>datetime</code></li>
+<li><code>datetime(format)</code></li>
+<li><code>min(minimum)</code></li>
+<li><code>max(maximum)</code></li>
+<li><code>range(minimum, maximum)</code></li>
+<li><code>minlength(length)</code></li>
+<li><code>maxlength(length)</code></li>
+<li><code>length(minimum, maximum)</code></li>
+</ul>
+<h4 id="6-1-自定义约束"><a href="#6-1-自定义约束" class="headerlink" title="6.1 自定义约束"></a>6.1 自定义约束</h4><p>实现<code>IRouteSegmentConstraint</code>接口，或者继承自</p>
+<ul>
+<li><code>RouteSegmentConstraintBase&lt;T&gt;</code> - Base class for a named constraint.</li>
+<li><code>ParameterizedRouteSegmentConstraintBase&lt;T&gt;</code> - Base class for a named constraint that accepts arguments.</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p>一个email约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class EmailRouteSegmentConstraint : RouteSegmentConstraintBase&lt;string&gt;</span><br><span class="line">&#123;</span><br><span class="line">    public override string Name</span><br><span class="line">    &#123;</span><br><span class="line">        get &#123; return &quot;email&quot;; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected override bool TryMatch(string constraint, string segment, out string matchedValue)</span><br><span class="line">    &#123;</span><br><span class="line">        if (segment.Contains(&quot;@&quot;))</span><br><span class="line">        &#123;</span><br><span class="line">            matchedValue &#x3D; segment;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        matchedValue &#x3D; null;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;profile&#x2F;&#123;value:email&#125;&quot;] &#x3D; _ &#x3D;&gt; &quot;Value &quot; + _.value + &quot; is an e-mail address.&quot;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-选择去调用路由的秘诀"><a href="#7-选择去调用路由的秘诀" class="headerlink" title="7. 选择去调用路由的秘诀"></a>7. 选择去调用路由的秘诀</h3><p>一个请求有时符合多个模式，此时记住：</p>
+<ol>
+<li>module的顺序在启动时不定</li>
+<li>同一module中的路由是按顺序来的</li>
+<li>多个匹配中，得分最高的匹配</li>
+<li>得分相同的匹配按照启动时的顺序匹配</li>
+</ol>
+<h3 id="8-疯狂的路由"><a href="#8-疯狂的路由" class="headerlink" title="8. 疯狂的路由"></a>8. 疯狂的路由</h3><p>一些可能的用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; would capture routes like &#x2F;hello&#x2F;nancy sent as a GET request</span><br><span class="line">Get[&quot;&#x2F;hello&#x2F;&#123;name&#125;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return &quot;Hello &quot; + parameters.name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; would capture routes like &#x2F;favoriteNumber&#x2F;1234, but not &#x2F;favoriteNumber&#x2F;asdf as a GET request</span><br><span class="line">Get[&quot;&#x2F;favoriteNumber&#x2F;&#123;value:int&#125;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return &quot;So your favorite number is &quot; + parameters.value + &quot;?&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; would capture routes like &#x2F;products&#x2F;1034 sent as a DELETE request</span><br><span class="line">Delete[@&quot;&#x2F;products&#x2F;(?&lt;id&gt;[\d]&#123;1,7&#125;)&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return 200;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; would capture routes like &#x2F;users&#x2F;192&#x2F;add&#x2F;moderator sent as a POST request</span><br><span class="line">Post[&quot;&#x2F;users&#x2F;&#123;id&#125;&#x2F;add&#x2F;&#123;category&#125;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return HttpStatusCode.OK;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、自定义路由"><a href="#四、自定义路由" class="headerlink" title="四、自定义路由"></a>四、自定义路由</h2><p><a href="http://www.philliphaydon.com/2013/04/nancyfx-implementing-your-own-routing/" target="_blank" rel="noopener">http://www.philliphaydon.com/2013/04/nancyfx-implementing-your-own-routing/</a></p>
+<h2 id="五、异步"><a href="#五、异步" class="headerlink" title="五、异步"></a>五、异步</h2><h3 id="1-语法"><a href="#1-语法" class="headerlink" title="1. 语法"></a>1. 语法</h3><p>Before/After管道、主路由委托都可以使用async.语法绝大部分与同步代码一致，但需要注意下面的变化：</p>
+<ul>
+<li>before/after钩子接受两个参数，context和cancellation token(取消令牌)，而不仅仅是context</li>
+<li>路由定义有一个附加的bool参数，并且委托接受两个参数，一个捕获的参数，另一个cancellation token.</li>
+</ul>
+<h3 id="2-语法例子"><a href="#2-语法例子" class="headerlink" title="2 语法例子"></a>2 语法例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public MainModule()</span><br><span class="line">&#123;</span><br><span class="line">    Before +&#x3D; async (ctx, ct) &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            this.AddToLog(&quot;Before Hook Delay\n&quot;);</span><br><span class="line">            await Task.Delay(5000);</span><br><span class="line"></span><br><span class="line">            return null;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    After +&#x3D; async (ctx, ct) &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            this.AddToLog(&quot;After Hook Delay\n&quot;);</span><br><span class="line">            await Task.Delay(5000);</span><br><span class="line">            this.AddToLog(&quot;After Hook Complete\n&quot;);</span><br><span class="line"></span><br><span class="line">            ctx.Response &#x3D; this.GetLog();</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    Get[&quot;&#x2F;&quot;, true] &#x3D; async (x, ct) &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            this.AddToLog(&quot;Delay 1\n&quot;);</span><br><span class="line">            await Task.Delay(1000);</span><br><span class="line"></span><br><span class="line">            this.AddToLog(&quot;Delay 2\n&quot;);</span><br><span class="line">            await Task.Delay(1000);</span><br><span class="line"></span><br><span class="line">            this.AddToLog(&quot;Executing async http client\n&quot;);</span><br><span class="line">            var client &#x3D; new HttpClient();</span><br><span class="line">            var res &#x3D; await client.GetAsync(&quot;http:&#x2F;&#x2F;nancyfx.org&quot;);</span><br><span class="line">            var content &#x3D; await res.Content.ReadAsStringAsync();</span><br><span class="line"></span><br><span class="line">            this.AddToLog(&quot;Response: &quot; + content.Split(&#39;\n&#39;)[0] + &quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">            return (Response)this.GetLog();</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、查看DynamicDictionary"><a href="#六、查看DynamicDictionary" class="headerlink" title="六、查看DynamicDictionary"></a>六、查看DynamicDictionary</h2><p><code>DynamicDictionary</code>类似字典，但功能更多.从请求中获取的值都保存到它里面。可以使用属性或者index来使用捕获的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;hello&#x2F;&#123;name&#125;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return &quot;Hello &quot; + parameters.name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Get[&quot;&#x2F;goodbye&#x2F;&#123;name&#125;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return &quot;Goodbye &quot; + parameters[&quot;name&quot;];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>存储的值可以显示或者隐式的转换为基础类型或者特殊属性.使用<code>HasValue</code>决定是否被赋值。值已经实现了<code>IEquatable&lt;&gt;</code>和<code>IConvertible</code>接口。</p>
+<h2 id="七、module的before-after钩子"><a href="#七、module的before-after钩子" class="headerlink" title="七、module的before/after钩子"></a>七、module的before/after钩子</h2><p>除了为特定的路由定义处理程序,module还可以拦截匹配某个路由的请求,请求前后都能做到。重要的是要理解,只有传入的请求匹配模块的路由之一，这些拦截器才会被调用。</p>
+<h3 id="1-在路由被调用前拦截请求"><a href="#1-在路由被调用前拦截请求" class="headerlink" title="1. 在路由被调用前拦截请求"></a>1. 在路由被调用前拦截请求</h3><p>Before拦截器能让你修改请求，甚至可以通过返回一个response来放弃请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Before +&#x3D; ctx &#x3D;&gt; &#123;</span><br><span class="line">    return &lt;null or a Response object&gt;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>定义Before拦截器的语法与定义路由有些不同。因为它是定义在module上，被所有路由调用，所以不需要匹配模式。</p>
+<p>传给拦截器的是当前请求的NancyContext实例。</p>
+<p>最后的不同就是拦截器的返回值，如果返回<code>null</code>，拦截器将主动权转给路由；如果返回<code>Response</code>对象，则路由不起作用。</p>
+<h3 id="2-After拦截器"><a href="#2-After拦截器" class="headerlink" title="2. After拦截器"></a>2. After拦截器</h3><p>与定义Before烂机器相同，但是没有返回值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">After +&#x3D; ctx &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; Modify ctx.Response</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Before拦截器可以修改Request，相应的，After拦截器可以修改Response。</p>
+<h2 id="八、Application的Before-After和OnError管道"><a href="#八、Application的Before-After和OnError管道" class="headerlink" title="八、Application的Before,After和OnError管道"></a>八、Application的Before,After和OnError管道</h2><p>应用管道能在所有的路由上执行，是全局性的。</p>
+<h3 id="1-Before拦截"><a href="#1-Before拦截" class="headerlink" title="1.Before拦截"></a>1.Before拦截</h3><p>应用级的<code>Before</code>钩子通过<code>Func&lt;NancyContext, Response&gt;</code>函数定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipelines.BeforeRequest +&#x3D; (ctx) &#x3D;&gt; &#123;</span><br><span class="line">    return &lt;null or a Response object&gt;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>异步版本的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipelines.BeforeRequest +&#x3D; async (ctx, token) &#x3D;&gt; &#123;</span><br><span class="line">    return &lt;null or a Response object&gt;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-After拦截"><a href="#2-After拦截" class="headerlink" title="2. After拦截"></a>2. After拦截</h3><p>After拦截器通过`Action<NancyContext>定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipelines.AfterRequest +&#x3D; (ctx) &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; Modify ctx.Response</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-错误拦截器"><a href="#3-错误拦截器" class="headerlink" title="3. 错误拦截器"></a>3. 错误拦截器</h3><p><code>OnError</code>拦截器用来拦截路由发生的错误。通过它可以获取<code>NancyContext</code>和发生的异常。</p>
+<p><code>OnError</code>拦截器通过<code>Func&lt;NancyContext, Exception, Response&gt;</code>函数定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipelines.OnError +&#x3D; (ctx, ex) &#x3D;&gt; &#123;</span><br><span class="line">    return null;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>System.AggregateExceptions在OnError管道中的注意事项：</strong></p>
+<p>路由是通过许多嵌套的Task(<code>System.Threading.Tasks.Task</code>)来执行的。如果那个任务出现了问题，异常会被包装到<code>System.AggregateException</code>。<code>System.AggregateException</code>可以持有任意个异常。</p>
+<p>如果只有一个异常，Nancy会解包异常并且交给<code>OnError</code>管道。如果发生多个异常，Nancy会使用<code>System.AggregateException</code>，以避免吞异常。</p>
+<h3 id="4-构建自己的钩子"><a href="#4-构建自己的钩子" class="headerlink" title="4. 构建自己的钩子"></a>4. 构建自己的钩子</h3><p>在<a href="https://github.com/NancyFx/Nancy/wiki/Bootstrapper" target="_blank" rel="noopener">Bootstrapper</a>中创建系统级的钩子.可以在<code>ApplicationStartup</code>或者<code>RequestStartup</code>方法中定义它们。这是因为也许你需要在钩子中使用容器中的一些东西。两个方法的不同之处在于范围不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected override void RequestStartup(TinyIoCContainer requestContainer, IPipelines pipelines, NancyContext context)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过使用<code>pipelines</code>中适当的属性来创建钩子。它允许你获取<code>BeforeRequest</code>, <code>AfterRequest</code>和<code>OnError</code>属性。</p>
+<h2 id="九、模型绑定"><a href="#九、模型绑定" class="headerlink" title="九、模型绑定"></a>九、模型绑定</h2><p>发送数据给Nancy可以有多种方法，比如Query String, 路由捕获参数、请求体request body。手工处理这些不同的方法也可以，但是还有一种方法就是统一处理，绑定到<code>model</code>。</p>
+<p>Nancy只用一行代码就能处理上述的所有情况，并且能接受<code>JSON</code>和<code>XML</code>形式的请求。</p>
+<p>也可以扩展Nancy的模型绑定。</p>
+<p>Nancy的模型绑定在<code>NancyModule</code>中被定义为一个单独的扩展方法。该扩展在<code>Nancy.ModelBinding</code>命名空间里，并且添加了Bind()和BindTo()方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Foo f &#x3D; this.Bind();</span><br><span class="line"></span><br><span class="line">var f &#x3D; this.Bind&lt;Foo&gt;();</span><br><span class="line"></span><br><span class="line">var f &#x3D; this.BindTo(instance);</span><br></pre></td></tr></table></figure>
+
+<p>上面3个有着相同的功能，他们提供了做同一事物的不同方法。前两个使用Bind()重载来创建<code>Foo</code>类型的实例，并且绑定；BindTo()则绑定到现有实例。</p>
+<h3 id="1-屏蔽不想要的信息"><a href="#1-屏蔽不想要的信息" class="headerlink" title="1. 屏蔽不想要的信息"></a>1. 屏蔽不想要的信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var f &#x3D; this.Bind&lt;Foo&gt;(f &#x3D;&gt; f.id, f &#x3D;&gt; f.creator, f &#x3D;&gt; f.createddate);</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var f &#x3D; this.Bind&lt;Foo&gt;(&quot;id&quot;, &quot;creator&quot;, &quot;createddate&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>当绑定到到arrary, list或者ienumerable时，屏蔽的是序列中的元素。</p>
+<h3 id="2-绑定配置"><a href="#2-绑定配置" class="headerlink" title="2. 绑定配置"></a>2. 绑定配置</h3><p>使用<code>BindingConfig</code>实例来修改model binder的默认行为。</p>
+<p>下面是<code>BindingConfig</code>提供的一些配置项：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+<th>默认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BodyOnly</td>
+<td>是否只绑定request body。这种情况下，request和context参数都不会被绑定。如果没有body并且没有选项，那么绑定就不会放生</td>
+<td>false</td>
+</tr>
+<tr>
+<td>IgnoreErrors</td>
+<td>是否忽略绑定错误并且继续下一个属性</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Overwrite</td>
+<td>丙丁是否可以覆盖没有默认值的属性</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p>不准Overwrite还有一个快捷方法：<code>BindingConfig.NoOverwrite</code></p>
+<h3 id="3-反序列化rich-request-body-payloads-负载"><a href="#3-反序列化rich-request-body-payloads-负载" class="headerlink" title="3. 反序列化rich request body payloads(负载)"></a>3. 反序列化rich request body payloads(负载)</h3><p>有时你像在请求中发送结构化的数据，比如<code>JSON</code>或者<code>XML</code>，并且绑定到模型。模型绑定器支持这种反序列化。</p>
+<p>Nancy支持两种反序列化：JSON和XML。绑定器根据Http的<code>Content-type</code>头来决定使用哪一种反序列化。</p>
+<p>默认使用JSON反序列化来处理<code>application/json</code>, <code>text/json</code>和<code>application/vnd....+json</code>。同样的使用XML反序列化来处理<code>application/xml</code>, <code>text/xml</code>和<code>application/vnd....+xml</code></p>
+<p>对于其他模型绑定器，你可以使用自己的反序列化，并且Nancy会自动检测他们，任何用户定义的绑定器的优先级都高于内建的。<br><strong>注意：</strong>如果你使用Nancy.Json.JsonSetting.MaxJsonLength Exceeded错误，那是因为你的payloads太高了，在Bootstrapper中更改限制：<code>ApplicationStartup</code>中设置<code>Nancy.Json.JsonSettings.MaxJsonLength=int.MaxValue</code></p>
+<h3 id="4-模型绑定Checkbox"><a href="#4-模型绑定Checkbox" class="headerlink" title="4. 模型绑定Checkbox"></a>4. 模型绑定Checkbox</h3><p>要绑定复选框到bool值，确定设置<code>value=true</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"rememberMe"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class LoginModel</span><br><span class="line">&#123;</span><br><span class="line">    public bool RememberMe &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-绑定到list"><a href="#5-绑定到list" class="headerlink" title="5. 绑定到list"></a>5. 绑定到list</h3><h4 id="5-1-绑定arrary到单独的对象"><a href="#5-1-绑定arrary到单独的对象" class="headerlink" title="5.1 绑定arrary到单独的对象"></a>5.1 绑定arrary到单独的对象</h4><p>如果有一个form:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/ArrayOnObject"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Tags"</span> <span class="attr">value</span>=<span class="string">"Tag1,Tag2,Tag3"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Ints"</span> <span class="attr">value</span>=<span class="string">"1,2,3,4,4,5,6,3,2,21,1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>而且有一个类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Posts</span><br><span class="line">&#123;</span><br><span class="line">  public string[] Tags &#123; get; set; &#125;</span><br><span class="line">  public int[] Ints &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用一个简单的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var listOfPosts &#x3D; this.Bind&lt;Posts&gt;();</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-绑定到对象的list"><a href="#5-2-绑定到对象的list" class="headerlink" title="5.2 绑定到对象的list"></a>5.2 绑定到对象的list</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/SimpleListDemo"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">      User 1:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Name[0]"</span> <span class="attr">value</span>=<span class="string">"thecodejunkie"</span> /&gt;</span> </span><br><span class="line">      Commits <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Commits[0]"</span> <span class="attr">value</span>=<span class="string">"1068"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">      User 2:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Name[1]"</span> <span class="attr">value</span>=<span class="string">"grumpydev"</span> /&gt;</span>  </span><br><span class="line">      Commits <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Commits[1]"</span> <span class="attr">value</span>=<span class="string">"1049"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">      User 3:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Name[2]"</span> <span class="attr">value</span>=<span class="string">"jchannon"</span> /&gt;</span>  </span><br><span class="line">      Commits <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Commits[2]"</span> <span class="attr">value</span>=<span class="string">"109"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">      User 4:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Name[3]"</span> <span class="attr">value</span>=<span class="string">"prabirshrestha"</span> /&gt;</span>  </span><br><span class="line">      Commits <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Commits[3]"</span> <span class="attr">value</span>=<span class="string">"75"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">      User 5:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Name[4]"</span> <span class="attr">value</span>=<span class="string">"phillip-haydon"</span> /&gt;</span>  </span><br><span class="line">      Commits <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"Commits[4]"</span> <span class="attr">value</span>=<span class="string">"40"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Test the binding thingy"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用<code>this.Bind&lt;List&lt;User&gt;&gt;();</code>来绑定对象列表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class User</span><br><span class="line">&#123;</span><br><span class="line">   public string Name &#123; get; set; &#125;</span><br><span class="line">   public int Commits &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-HTML-form中的List分隔符"><a href="#5-3-HTML-form中的List分隔符" class="headerlink" title="5.3 HTML form中的List分隔符"></a>5.3 HTML form中的List分隔符</h4><p>两种分隔符</p>
+<ul>
+<li>下划线(<code>Name_1</code>, <code>Name_2</code>等)</li>
+<li>括号(<code>Name[1]</code>, <code>Name[2]</code>等)</li>
+</ul>
+<h2 id="十、Bootstrapper"><a href="#十、Bootstrapper" class="headerlink" title="十、Bootstrapper"></a>十、Bootstrapper</h2><p>bootstrapper负责自动发现模型、自定义模型绑定、依赖等等。可以被替换掉。</p>
+<h3 id="1-简单的修改bootstrapper"><a href="#1-简单的修改bootstrapper" class="headerlink" title="1. 简单的修改bootstrapper"></a>1. 简单的修改bootstrapper</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)</span><br><span class="line">    &#123;</span><br><span class="line">         &#x2F;&#x2F; your customization goes here</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-找到合适的bootstrapper"><a href="#2-找到合适的bootstrapper" class="headerlink" title="2. 找到合适的bootstrapper"></a>2. 找到合适的bootstrapper</h3><p>应用启动时，它会寻找自定义的bootstrap，如果没有找到，则使用<code>DefaultNancyBootstrap</code>。每个应用只能有<strong>一个</strong>bootstrapper. 如果有多个，则Nancy寻找最底层的bootstrapper。</p>
+<h3 id="3-使用自动注册"><a href="#3-使用自动注册" class="headerlink" title="3. 使用自动注册"></a>3. 使用自动注册</h3><p>注入自己的依赖到NancyModule中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Home : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public Home(IMessageService service)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;If there is only one implementation of IMessageService in the application,</span><br><span class="line">        &#x2F;&#x2F; TinyIoC will resolve the dependency on its own and inject it in the module.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="十一、视图引擎"><a href="#十一、视图引擎" class="headerlink" title="十一、视图引擎"></a>十一、视图引擎</h2><p>视图引擎就是输入“模板”和“模型”，输出HTML（大部分情况下）到浏览器。</p>
+<p>Nancy默认使用<a href="https://github.com/grumpydev/SuperSimpleViewEngine" target="_blank" rel="noopener"><code>SuperSimpleViewEngine</code></a>。它支持一些必要的功能：layout布局、partials部分、models模型、conditions条件和iterations循环。你可以使用这个而不无需其他依赖。它支持<code>.html</code>和<code>.sshtml</code>文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Master['MasterPage']</span><br><span class="line"></span><br><span class="line">@Section['Content']</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This content from the index page<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Partials<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Login box below rendered via a partial view with no model.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"login"</span>&gt;</span></span><br><span class="line">        @Partial['login'];</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Box below is rendered via a partial with a sub-model passed in.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>The submodel is a list which the partial iterates over with Each<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"users"</span>&gt;</span></span><br><span class="line">        @Partial['user', Model.Users];</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Model output can also be encoded:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>@!Model.NaughtyStuff<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">@EndSection</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，Nancy还支持Razor, Spark, NDjango和dotLiquid引擎。通过添加引用，Nancy会自动的根据文件后缀名调用对应的引擎。</p>
+<h3 id="1-在路由中渲染视图"><a href="#1-在路由中渲染视图" class="headerlink" title="1. 在路由中渲染视图"></a>1. 在路由中渲染视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;products&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return View[&quot;products.html&quot;, someModel];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>模板说明：</p>
+<ol>
+<li>视图文件名: “products.html”</li>
+<li>如果没有后缀，而且有多个同名模板，则会收到<code>AmbigiousViewsException</code>错误。</li>
+<li>一个相对于跟的路径(比如：<code>products/products.html</code>)</li>
+</ol>
+<p>更多参见<a href="https://github.com/NancyFx/Nancy/wiki/View-location-conventions" target="_blank" rel="noopener">视图位置约定</a></p>
+<h3 id="2-从模型中解析视图的名称"><a href="#2-从模型中解析视图的名称" class="headerlink" title="2.从模型中解析视图的名称"></a>2.从模型中解析视图的名称</h3><p>如果值传递给View一个模型，Nancy会用模型名（去掉”Model”后缀）作为视图名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;products&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return View[new ProductsModel()];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果找不到，就会报406 Not Acceptable.</p>
+<h2 id="十二、超简单视图引擎"><a href="#十二、超简单视图引擎" class="headerlink" title="十二、超简单视图引擎"></a>十二、超简单视图引擎</h2><p>SSVE基于正则，支持<code>sshtml</code>, <code>html</code>, <code>html</code>文件后缀。</p>
+<p>模型可以是标准类型，或者<code>ExpandoObjects</code>（或者实现了<code>IDynamicMetaObjectProvider</code> 实现了<code>IDictionary&lt;string, object&gt;</code>的对象）。</p>
+<p>所有的命令都可以有分号，但不是必须的。<code>[.Parameters]</code>这样的参数可以使任意层级的，比如<code>This.Property.That.Property</code>。</p>
+<p>注意：所有引号都是<em>单引号</em>.</p>
+<h3 id="1-标准变量替换"><a href="#1-标准变量替换" class="headerlink" title="1. 标准变量替换"></a>1. 标准变量替换</h3><p>如果变量不能替换，则使用<code>[Err!]</code>替换。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Model[.Parameters]</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello @Model.Name, your age is @Model.User.Age</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-循环"><a href="#2-循环" class="headerlink" title="2. 循环"></a>2. 循环</h3><p>循环不能嵌套</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Each[.Parameters]</span><br><span class="line">   [@Current[.Parameters]]</span><br><span class="line">@EndEach</span><br></pre></td></tr></table></figure>
+
+<p><code>@Each</code>表示循环；<code>@Current</code>表示当前变量，使用方法同<code>@Model</code>。</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Each.Users</span><br><span class="line">   Hello @Current.Name!</span><br><span class="line">@EndEach</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-条件"><a href="#3-条件" class="headerlink" title="3. 条件"></a>3. 条件</h3><p>参数必须是bool，或能隐式转化。嵌套的@If @IfNot不支持。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@If[Not].Parameters</span><br><span class="line">   [contents]</span><br><span class="line">@EndIf</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@IfNot.HasUsers</span><br><span class="line">   No users found!</span><br><span class="line">@EndIf</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-隐式条件"><a href="#4-隐式条件" class="headerlink" title="4. 隐式条件"></a>4. 隐式条件</h3><p>如果module实现了<code>ICollection</code>，那你就能使用隐式转换。使用<code>Has</code>前缀。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Has[CollectionPropertyName]</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@If.HasUsers</span><br><span class="line">   Users found!</span><br><span class="line">@EndIf</span><br></pre></td></tr></table></figure>
+<h3 id="5-HTML编码"><a href="#5-HTML编码" class="headerlink" title="5. HTML编码"></a>5. HTML编码</h3><p><code>@Model</code>和<code>@Current</code>都可以有一个<code>!</code>，用来编码HTML：</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@!Model[.Parameter]</span><br><span class="line">@!Current[.Parameter]</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@!Model.Test</span><br><span class="line"></span><br><span class="line">@Each</span><br><span class="line">   @!Current.Test</span><br><span class="line">@EndEach</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-部分Patials"><a href="#6-部分Patials" class="headerlink" title="6. 部分Patials"></a>6. 部分Patials</h3><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Partial[&#39;&lt;view name&gt;&#39;[, Model.Property]]</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Renders the partial view with the same model as the parent</span><br><span class="line">@Partial[&#39;subview.sshtml&#39;];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Renders the partial view using the User as the model</span><br><span class="line">@Partial[&#39;subview.sshtml&#39;, Model.User];</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Master页和section"><a href="#7-Master页和section" class="headerlink" title="7. Master页和section"></a>7. Master页和section</h3><p>可以声明master页和节。不必为每个节提供内容。Master能用<code>@Module</code>，并且扩展名可以省略。</p>
+<p>可以多次使用<code>@Section</code></p>
+<p>语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Master[&#39;&lt;name&gt;&#39;]</span><br><span class="line"></span><br><span class="line">@Section[&#39;&lt;name&gt;&#39;]</span><br><span class="line">@EndSection</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; master.sshtml</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">@Section[&#39;Content&#39;];</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.sshtml</span><br><span class="line">@Master[&#39;master.sshtml&#39;]</span><br><span class="line"></span><br><span class="line">@Section[&#39;Content&#39;]</span><br><span class="line">   This is content on the index page</span><br><span class="line">@EndSection</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-防止伪造token"><a href="#8-防止伪造token" class="headerlink" title="8. 防止伪造token"></a>8. 防止伪造token</h3><p>防止CSRF</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@AntiForgeryToken</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@AntiForgeryToken</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-路径扩展"><a href="#9-路径扩展" class="headerlink" title="9. 路径扩展"></a>9. 路径扩展</h3><p>扩展相对路径为整体路径。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Path[&#39;&lt;relative-path&gt;&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Path[&#39;~&#x2F;relative&#x2F;url&#x2F;image.png&#39;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-扩展SSVE"><a href="#10-扩展SSVE" class="headerlink" title="10. 扩展SSVE"></a>10. 扩展SSVE</h3><h2 id="十二、Razor引擎"><a href="#十二、Razor引擎" class="headerlink" title="十二、Razor引擎"></a>十二、Razor引擎</h2><p>这个Razor引擎跟ASP.NET MVC的有点不一样。</p>
+<p>注意，Nancy仍然绑定模型到<code>@Model</code>，而不是ASP.NET中的<code>@model</code></p>
+<h3 id="1-安装Razor"><a href="#1-安装Razor" class="headerlink" title="1. 安装Razor"></a>1. 安装Razor</h3><p>只需要添加<code>Nancy.ViewEngines.Razor.dll</code>（使用nuget安装<code>Nancy.ViewEngines.Razor</code>）。然后试图模板以<code>cshtml</code>或<code>vbhtml</code>结尾即可。</p>
+<h3 id="2-配置Razor"><a href="#2-配置Razor" class="headerlink" title="2. 配置Razor"></a>2. 配置Razor</h3><h2 id="十三、实现自己的视图引擎需要注意的地方"><a href="#十三、实现自己的视图引擎需要注意的地方" class="headerlink" title="十三、实现自己的视图引擎需要注意的地方"></a>十三、实现自己的视图引擎需要注意的地方</h2><h2 id="十四、视图位置约定"><a href="#十四、视图位置约定" class="headerlink" title="十四、视图位置约定"></a>十四、视图位置约定</h2><h3 id="1-查看默认约定"><a href="#1-查看默认约定" class="headerlink" title="1. 查看默认约定"></a>1. 查看默认约定</h3><p>视图位置的约定通过<code>Func&lt;string, dynamic, ViewLocationContext, string&gt;</code>方法以及下面的一些默认约定来定义。</p>
+<h4 id="1-1-根约定"><a href="#1-1-根约定" class="headerlink" title="1.1 根约定"></a>1.1 根约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return viewName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个约定会在根目录里寻找视图。但是如果视图包含一个相对路径，视图名称执行对应于根路径的路径。比如，视图<code>admin/index</code>会在<code>admin/index</code>目下寻找视图。</p>
+<h4 id="1-2-视图文件夹约定"><a href="#1-2-视图文件夹约定" class="headerlink" title="1.2 视图文件夹约定"></a>1.2 视图文件夹约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return string.Concat(&quot;views&#x2F;&quot;, viewName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很简单，视图<code>admin/index</code>会在<code>views/admin/index</code>下查找对应的视图。</p>
+<h4 id="1-3-视图和模块路径约定"><a href="#1-3-视图和模块路径约定" class="headerlink" title="1.3 视图和模块路径约定"></a>1.3 视图和模块路径约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return string.Concat(&quot;views&#x2F;&quot;, viewLocationContext.ModulePath, &quot;&#x2F;&quot;, viewName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于模块products的视图<code>admin/index</code>，会在<code>views/products/admin/index</code>中查找视图。</p>
+<h4 id="1-4-模块路径约定"><a href="#1-4-模块路径约定" class="headerlink" title="1.4 模块路径约定"></a>1.4 模块路径约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return string.Concat(viewLocationContext.ModulePath, &quot;&#x2F;&quot;, viewName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个约定会在与模块名相同的文件夹中查找视图。</p>
+<h4 id="1-5-模块名称约定"><a href="#1-5-模块名称约定" class="headerlink" title="1.5 模块名称约定"></a>1.5 模块名称约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return string.Concat(viewLocationContext.ModuleName, &quot;&#x2F;&quot;, viewName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查找以模块名为前缀的对应视图。</p>
+<h4 id="1-6-视图模块名称约定"><a href="#1-6-视图模块名称约定" class="headerlink" title="1.6 视图模块名称约定"></a>1.6 视图模块名称约定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(viewName, model, viewLocationContext) &#x3D;&gt; &#123;</span><br><span class="line">    return string.Concat(&quot;views&#x2F;&quot;, viewLocationContext.ModuleName, &quot;&#x2F;&quot;, viewName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查找views文件夹下以模块名为前缀的对应视图。</p>
+<h3 id="2-从模型类型推断是退名"><a href="#2-从模型类型推断是退名" class="headerlink" title="2. 从模型类型推断是退名"></a>2. 从模型类型推断是退名</h3><p>如果没有提供视图名而只提供了视图，那么：</p>
+<ul>
+<li><code>Customer</code>类型的模型-&gt;<code>Customer</code>视图名</li>
+<li><code>CustomerModel</code>类型的模型-&gt; <code>Customer</code>视图名</li>
+</ul>
+<h3 id="3-自定义约定"><a href="#3-自定义约定" class="headerlink" title="3. 自定义约定"></a>3. 自定义约定</h3><p>自定义一个bootstrapper，然后添加约定到<code>Conventions.ViewLocationConventions</code>集合。</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class CustomConventionsBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void ApplicationStartup(TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)</span><br><span class="line">    &#123;</span><br><span class="line">        this.Conventions.ViewLocationConventions.Add((viewName, model, context) &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            return string.Concat(&quot;custom&#x2F;&quot;, viewName);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如这个会查找custom文件夹下的视图名称。</p>
+<p><code>ViewLocationConventions</code>是一个标准的列表，可以进行修改。</p>
+<h3 id="3-使用IConventions定义自己的约定"><a href="#3-使用IConventions定义自己的约定" class="headerlink" title="3. 使用IConventions定义自己的约定"></a>3. 使用IConventions定义自己的约定</h3><p>你也可以实现<code>IConvention</code>接口，并在<code>Initialise</code>方法中添加约定到<code>ViewLocationConventions</code>属性中。</p>
+<p>Nancy会定位所有接口的实现，并且执行约定，这些发生在他们被传递给bootstrapper的<code>ConfigureConventions</code>方法之前。</p>
+<h2 id="十五、本地化"><a href="#十五、本地化" class="headerlink" title="十五、本地化"></a>十五、本地化</h2><p>Nancy内建了本地化。有一系列的<a href="https://github.com/NancyFx/Nancy/blob/master/src/Nancy/Conventions/DefaultCultureConventions.cs" target="_blank" rel="noopener">约定</a>描述了如何决定当前文化，还有一些根据文化选择视图的<a href="https://github.com/NancyFx/Nancy/blob/master/src/Nancy/Conventions/DefaultViewLocationConventions.cs" target="_blank" rel="noopener">约定</a>。</p>
+<p>所以，对于<code>de-DE</code>的文化他会寻找<code>Home-de-DE</code>的视图。</p>
+<p>不仅如此，还会有rese文件，比如<code>Text.resx</code>， <code>Text.de-DE.resx</code>（可以被<a href="https://github.com/NancyFx/Nancy/blob/master/src/Nancy/Localization/ResourceBasedTextResource.cs" target="_blank" rel="noopener">重写</a>).</p>
+<p>Razor本地化的<a href="https://github.com/NancyFx/Nancy/tree/master/src/Nancy.Demo.Razor.Localization" target="_blank" rel="noopener">例子</a></p>
+<h2 id="十六、测试应用"><a href="#十六、测试应用" class="headerlink" title="十六、测试应用"></a>十六、测试应用</h2><p>使用<a href="http://nuget.org/" target="_blank" rel="noopener">NuGet</a>来安装<code>Nancy.Testing</code>。</p>
+<p>测试应当与主应用分开。</p>
+<p>为了测试路由，使用helper类<code>Browser</code>。使用bootstrap实例化Browser。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[Fact]</span><br><span class="line">public void Should_return_status_ok_when_route_exists()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; Given</span><br><span class="line">    var bootstrapper &#x3D; new DefaultNancyBootstrapper();</span><br><span class="line">    var browser &#x3D; new Browser(bootstrapper);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; When</span><br><span class="line">    var result &#x3D; browser.Get(&quot;&#x2F;&quot;, with &#x3D;&gt; &#123;</span><br><span class="line">        with.HttpRequest();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Then</span><br><span class="line">    Assert.Equal(HttpStatusCode.OK, result.StatusCode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十七、根路径"><a href="#十七、根路径" class="headerlink" title="十七、根路径"></a>十七、根路径</h2><p>Nancy通过<code>IRootPathProvider</code>接口的唯一方法<code>GetRootPath</code>来确定根路径。</p>
+<h3 id="1-改变跟路径"><a href="#1-改变跟路径" class="headerlink" title="1. 改变跟路径"></a>1. 改变跟路径</h3><p>改变根路径需要做两件事：</p>
+<p>首先，自定义一个类实现<code>IRootPathProvider</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomRootPathProvider : IRootPathProvider</span><br><span class="line">&#123;</span><br><span class="line">    public string GetRootPath()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;What ever path you want to use as your application root&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，根路径是绝对路径。</p>
+<p>其次，在自定义的Bootstrapper中重写<code>RootPathProvider</code>属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override IRootPathProvider RootPathProvider</span><br><span class="line">    &#123;</span><br><span class="line">        get &#123; return new CustomRootPathProvider(); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-上传文件"><a href="#2-上传文件" class="headerlink" title="2. 上传文件"></a>2. 上传文件</h3><p>在Nancy中要上传文件，你需要接受上传文件的content stream, 在磁盘上创建文件，并将stream写入到磁盘。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var uploadDirectory &#x3D;  Path.Combine(pathProvider.GetRootPath(), &quot;Content&quot;, &quot;uploads&quot;);</span><br><span class="line"></span><br><span class="line">if (!Directory.Exists(uploadDirectory))</span><br><span class="line">&#123;</span><br><span class="line">    Directory.CreateDirectory(uploadDirectory);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foreach (var file in Request.Files)</span><br><span class="line">&#123;</span><br><span class="line">    var filename &#x3D; Path.Combine(uploadDirectory, file.Name);</span><br><span class="line">    using (FileStream fileStream &#x3D; new FileStream(filename, FileMode.Create))</span><br><span class="line">    &#123;</span><br><span class="line">        file.Value.CopyTo(fileStream);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上例中的<code>pathProvider</code>是在模块的构造函数中传递进来的，通过它的<code>GetRootPath()</code>来获取跟路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public HomeModule(IRootPathProvider pathProvider)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十八、管理静态内容"><a href="#十八、管理静态内容" class="headerlink" title="十八、管理静态内容"></a>十八、管理静态内容</h2><p><strong>简而言之：把东西都放到<code>/Content</code>文件夹内，仅此而已</strong></p>
+<h2 id="十九、诊断"><a href="#十九、诊断" class="headerlink" title="十九、诊断"></a>十九、诊断</h2><p>Nancy自带诊断功能：<code>http://&lt;address-of-your-application&gt;/_Nancy/</code></p>
+<h3 id="1-配置到dashboard的访问"><a href="#1-配置到dashboard的访问" class="headerlink" title="1. 配置到dashboard的访问"></a>1. 配置到dashboard的访问</h3><p>添加密码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override DiagnosticsConfiguration DiagnosticsConfiguration</span><br><span class="line">    &#123;</span><br><span class="line">        get &#123; return new DiagnosticsConfiguration &#123; Password &#x3D; @&quot;A2\6mVtH&#x2F;XRT\p,B&quot;&#125;; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-去除诊断"><a href="#2-去除诊断" class="headerlink" title="2. 去除诊断"></a>2. 去除诊断</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void ApplicationStartup(TinyIoc.TinyIoCContainer container, IPipelines pipelines)</span><br><span class="line">    &#123;</span><br><span class="line">        DiagnosticsHook.Disable(pipelines);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-有哪些工具呢？"><a href="#3-有哪些工具呢？" class="headerlink" title="3. 有哪些工具呢？"></a>3. 有哪些工具呢？</h3><p><code>Information</code>, <code>Interactive Diagnostics</code>, <code>Request Tracing</code>, <code>Configuration</code></p>
+<h4 id="3-1-信息"><a href="#3-1-信息" class="headerlink" title="3.1 信息"></a>3.1 信息</h4><h4 id="3-2-配置"><a href="#3-2-配置" class="headerlink" title="3.2 配置"></a>3.2 配置</h4><p>Nancy中<code>StaticConfiguration</code>可以用来配置程序的行为，配置页面提供了配置方法。</p>
+<p>注意，系统重启后配置页面的内容失效。</p>
+<p>要想永久保存配置，请在bootstrapper的<code>ApplicationStartup</code>中设置。</p>
+<h4 id="3-3-请求跟踪"><a href="#3-3-请求跟踪" class="headerlink" title="3.3 请求跟踪"></a>3.3 请求跟踪</h4><p>请求跟踪因为性能原因默认关闭，可以再<code>Configuration</code>页开启，也可以这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CustomBootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void ApplicationStartup(TinyIoC.TinyIoCContainer container, IPipelines pipelines)</span><br><span class="line">    &#123;</span><br><span class="line">        StaticConfiguration.EnableRequestTracing &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟踪日志可以通过<code>NancyContext</code>中得到。和容易添加自己的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class HomeModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public HomeModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Get[&quot;&#x2F;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">            this.Context.Trace.TraceLog.WriteLog(s &#x3D;&gt; s.AppendLine(&quot;Root path was called&quot;));</span><br><span class="line">            return HttpStatusCode.Ok;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>WriteLog</code>方法是用一个接受<code>StringBuilder</code>的函数是为了调试关闭时直接不调用函数，从而避免性能损耗。</p>
+<h4 id="3-4-交互式的诊断"><a href="#3-4-交互式的诊断" class="headerlink" title="3.4 交互式的诊断"></a>3.4 交互式的诊断</h4><p>只要实现了<code>IDiagnosticsProvider</code>接口，Nancy诊断会自动发现它，并且把它暴露给交互工具。</p>
+<h5 id="（1）IDiagnosticsProvider接口"><a href="#（1）IDiagnosticsProvider接口" class="headerlink" title="（1）IDiagnosticsProvider接口"></a>（1）IDiagnosticsProvider接口</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Defines the functionality a diagnostics provider.</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public interface IDiagnosticsProvider</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets the name of the provider.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;value&gt;A &lt;see cref&#x3D;&quot;string&quot;&#x2F;&gt; containing the name of the provider.&lt;&#x2F;value&gt;</span><br><span class="line">   string Name &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">   &#x2F;&#x2F;&#x2F; Gets the description of the provider.</span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;value&gt;A &lt;see cref&#x3D;&quot;string&quot;&#x2F;&gt; containing the description of the provider.&lt;&#x2F;value&gt;</span><br><span class="line">   string Description &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">   &#x2F;&#x2F;&#x2F; Gets the object that contains the interactive diagnostics methods.</span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">   &#x2F;&#x2F;&#x2F; &lt;value&gt;An instance of the interactive diagnostics object.&lt;&#x2F;value&gt;</span><br><span class="line">   object DiagnosticObject &#123; get; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="（2）可诊断的对象"><a href="#（2）可诊断的对象" class="headerlink" title="（2）可诊断的对象"></a>（2）可诊断的对象</h5><p>任何公共方法都会暴露给交互诊断面板。方法可以是能被JSON序列化的任意类型。类型的返回值会被返回成<a href="http://www.servicestack.net/docs/framework/json-report-format" target="_blank" rel="noopener">JSON Report Format</a></p>
+<h5 id="（3）提供描述给方法"><a href="#（3）提供描述给方法" class="headerlink" title="（3）提供描述给方法"></a>（3）提供描述给方法</h5><p>两种方法：<br>1、使用attribute: <code>Nancy.Diagnostics.DescriptionAttribute</code></p>
+<p>2、使用property：使用与方法同名但添加了<code>Description</code>后缀的属性，比如<code>NameOfYourMethodDescription</code>描述了<code>NameOfYourMethod</code>方法。</p>
+<h5 id="（4）自定义模板输出"><a href="#（4）自定义模板输出" class="headerlink" title="（4）自定义模板输出"></a>（4）自定义模板输出</h5><h5 id="（5）创建诊断提供者"><a href="#（5）创建诊断提供者" class="headerlink" title="（5）创建诊断提供者"></a>（5）创建诊断提供者</h5><h2 id="二十、添加自己的favicon"><a href="#二十、添加自己的favicon" class="headerlink" title="二十、添加自己的favicon"></a>二十、添加自己的favicon</h2><h3 id="1-替换默认的FavIcon"><a href="#1-替换默认的FavIcon" class="headerlink" title="1. 替换默认的FavIcon"></a>1. 替换默认的FavIcon</h3><p>在应用中防止一个_favicon_的文件，名称以<code>.icon</code>或<code>.png</code>结尾即可。</p>
+<h3 id="2-使用内嵌icon"><a href="#2-使用内嵌icon" class="headerlink" title="2. 使用内嵌icon"></a>2. 使用内嵌icon</h3><p>在Bootstrapper中重写<code>FavIcon</code>属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class Bootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    private byte[] favicon;</span><br><span class="line"></span><br><span class="line">    protected override byte[] FavIcon</span><br><span class="line">    &#123;</span><br><span class="line">        get &#123; return this.favicon?? (this.favicon&#x3D; LoadFavIcon()); &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private byte[] LoadFavIcon()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;TODO: remember to replace &#39;AssemblyName&#39; with the prefix of the resource</span><br><span class="line">        using (var resourceStream &#x3D; GetType().Assembly.GetManifestResourceStream(&quot;AssemblyName.favicon.ico&quot;))</span><br><span class="line">        &#123;</span><br><span class="line">            var tempFavicon &#x3D; new byte[resourceStream.Length];</span><br><span class="line">            resourceStream.Read(tempFavicon, 0, (int)resourceStream.Length);</span><br><span class="line">            return tempFavicon;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-移除ICON"><a href="#3-移除ICON" class="headerlink" title="3. 移除ICON"></a>3. 移除ICON</h3><p>设置Bootstrapper的<code>FavIcon</code>属性为<code>null</code>。</p>
+<h2 id="二十一、添加自定义的错误页面"><a href="#二十一、添加自定义的错误页面" class="headerlink" title="二十一、添加自定义的错误页面"></a>二十一、添加自定义的错误页面</h2><p>第一篇:<a href="http://mike-ward.net/blog/post/00824/custom-error-pages-in-nancyfx" target="_blank" rel="noopener">http://mike-ward.net/blog/post/00824/custom-error-pages-in-nancyfx</a></p>
+<p>第二篇：<a href="https://blog.tommyparnell.com/custom-error-pages-in-nancy/" target="_blank" rel="noopener">https://blog.tommyparnell.com/custom-error-pages-in-nancy/</a></p>
+<h2 id="二十二、加密帮助方法"><a href="#二十二、加密帮助方法" class="headerlink" title="二十二、加密帮助方法"></a>二十二、加密帮助方法</h2><p>命名空间:<code>Nancy.Cryptography</code></p>
+<h3 id="1-IEncryptionProvider-接口"><a href="#1-IEncryptionProvider-接口" class="headerlink" title="1. IEncryptionProvider 接口"></a>1. IEncryptionProvider 接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Provides symmetrical encryption support</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public interface IEncryptionProvider</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Encrypt and base64 encode the string</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;data&quot;&gt;Data to encrypt&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Encrypted string&lt;&#x2F;returns&gt;</span><br><span class="line">    string Encrypt(string data);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Decrypt string</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;data&quot;&gt;Data to decrypt&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Decrypted string&lt;&#x2F;returns&gt;</span><br><span class="line">    string Decrypt(string data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nancy提供了两个默认实现</p>
+<ul>
+<li><code>NoEncryptionProvider</code>:没有加密，仅仅是base64</li>
+<li><code>RijndaelEncryptionProvider</code>: 使用Rijndael算法，使用256位的key和128为的初始向量，加密base64字符串。</li>
+</ul>
+<h3 id="2-IHmacProvider-接口"><a href="#2-IHmacProvider-接口" class="headerlink" title="2. IHmacProvider 接口"></a>2. IHmacProvider 接口</h3><p>用来签名，防止篡改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Creates Hash-based Message Authentication Codes (HMACs)</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public interface IHmacProvider</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets the length of the HMAC signature in bytes</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    int HmacLength &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Create a hmac from the given data</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;data&quot;&gt;Data to create hmac from&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Hmac bytes&lt;&#x2F;returns&gt;</span><br><span class="line">    byte[] GenerateHmac(string data);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Create a hmac from the given data</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;data&quot;&gt;Data to create hmac from&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Hmac bytes&lt;&#x2F;returns&gt;</span><br><span class="line">    byte[] GenerateHmac(byte[] data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nancy也提供了一个默认实现：<code>DefaultHmacProvider</code>，使用<code>IKeyGenerator</code>来产生一个key来用SHA-256来进行hash。</p>
+<h3 id="3-IKeyGenerator-接口"><a href="#3-IKeyGenerator-接口" class="headerlink" title="3. IKeyGenerator 接口"></a>3. IKeyGenerator 接口</h3><p>用来产生key来加密和数字签名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Provides key byte generation</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">public interface IKeyGenerator</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Generate a sequence of bytes</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;count&quot;&gt;Number of bytes to return&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Array &lt;see cref&#x3D;&quot;count&quot;&#x2F;&gt; bytes&lt;&#x2F;returns&gt;</span><br><span class="line">    byte[] GetBytes(int count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nancy提供了两个默认实现。</p>
+<ul>
+<li><p><code>RandomKeyGenerator</code>使用<code>RNGCryptoServiceProvider</code>产生了一个随机定长的key</p>
+</li>
+<li><p><code>PassphraseKeyGenerator</code>使用密码、静态盐以及可选循环数字，以及<code>Rfc2898DeriveBytes</code>来产生一个key</p>
+</li>
+</ul>
+<p><strong>注意</strong>，如果使用<code>PassphraseKeyGenerator</code>，它的初始化应当在应用启动时使用，因为它太慢了。这意味着盐是静态的，因此密码一定要足够长和复杂。</p>
+<h3 id="4-加密配置类型CryptographyConfiguration"><a href="#4-加密配置类型CryptographyConfiguration" class="headerlink" title="4. 加密配置类型CryptographyConfiguration"></a>4. 加密配置类型CryptographyConfiguration</h3><p>这是一个存储<code>IEncryptionProvider</code>和<code>IHmacProvider</code>的简便方法。它有两个静态属性：</p>
+<ul>
+<li><code>Default</code>使用<code>RijndaelEncryptionProvider</code>和<code>DefaultHmacProvider</code>，两个都使用<code>RandomKeyGenerator</code>。</li>
+<li><code>NoEncryption</code>使用<code>NoEncryption</code>和<code>DefaultHmacProvider</code>，两个也都使用<code>RandomKeyGenerator</code>.</li>
+</ul>
+<p>可以单独使用<code>CryptographyConfiguration</code>，也可以在bootstrapper中配置一个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; Gets the cryptography configuration</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">protected virtual CryptographyConfiguration CryptographyConfiguration</span><br><span class="line">&#123;</span><br><span class="line">    get &#123; return CryptographyConfiguration.Default; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二十三、Content-negotiation-内容协商"><a href="#二十三、Content-negotiation-内容协商" class="headerlink" title="二十三、Content negotiation(内容协商)"></a>二十三、Content negotiation(内容协商)</h2><p>当返回不是<code>Response</code>类型时，使用response processor来根据请求的<code>Accept</code>来处理。</p>
+<p>###1. Response Processor</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public interface IResponseProcessor</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets a set of mappings that map a given extension (such as .json)</span><br><span class="line">    &#x2F;&#x2F;&#x2F; to a media range that can be sent to the client in a vary header.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    IEnumerable&lt;Tuple&lt;string, MediaRange&gt;&gt; ExtensionMappings &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Determines whether the the processor can handle a given content type and model.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    ProcessorMatch CanProcess(MediaRange requestedMediaRange, dynamic model, NancyContext context);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Process the response.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    Response Process(MediaRange requestedMediaRange, dynamic model, NancyContext context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Response Processor是自发现的，也可以在Bootstrap中配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Bootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override NancyInternalConfiguration InternalConfiguration</span><br><span class="line">    &#123;</span><br><span class="line">        get</span><br><span class="line">        &#123;</span><br><span class="line">            var processors &#x3D; new[]</span><br><span class="line">            &#123;</span><br><span class="line">                typeof(SomeProcessor),</span><br><span class="line">                typeof(AnotherProcessor)</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            return NancyInternalConfiguration.WithOverrides(x &#x3D;&gt; x.ResponseProcessors &#x3D; processors);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-匹配优先级"><a href="#1-1-匹配优先级" class="headerlink" title="1.1 匹配优先级"></a>1.1 匹配优先级</h4><p>当相应准备转化请求媒体的格式时，Nancy会查询所有的processor的<code>CanProcess</code>方法，并且会聚合<code>ProcessorMatch</code>的返回值。</p>
+<p><code>ProcessorMatch</code>类型确保每个processor让Nancy知道它们对媒体类型的支持程度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class ProcessorMatch</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets or sets the match result based on the content type</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    public MatchResult RequestedContentTypeResult &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets or sets the match result based on the model</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    public MatchResult ModelResult &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>MatchResult</code>枚举了匹配程度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public enum MatchResult</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; No match, nothing to see here, move along</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    NoMatch,</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Will accept anything</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    DontCare,</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Matched, but in a non-specific way such as a wildcard match or fallback</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    NonExactMatch,</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Exact specific match</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    ExactMatch</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的<code>ProcessorMatch</code>会按照Match程度降序排列，最匹配的被执行。如果有两个匹配程度相同，Nancy会选择其中一个。</p>
+<h4 id="1-2-默认响应处理器"><a href="#1-2-默认响应处理器" class="headerlink" title="1.2 默认响应处理器"></a>1.2 默认响应处理器</h4><p>Nancy提供了一些默认响应处理器</p>
+<ul>
+<li><code>JsonProcessor</code> - 当请求类型为<code>application/json</code>或者<code>application/vnd.foobar+json</code>时，转化返回值为json；</li>
+<li><code>ViewProcessor</code> - 当请求类型为<code>text/html</code>时，使用返回值作为model，返回视图。视图使用<a href="https://github.com/NancyFx/Nancy/wiki/View-location-conventions" target="_blank" rel="noopener">视图位置约定</a>；</li>
+<li><code>XmlProcessor</code> - 当请求为<code>application/xml</code>或者为<code>application/vnd.foobar+xml</code>时，返回xml。</li>
+</ul>
+<h3 id="2-控制协商"><a href="#2-控制协商" class="headerlink" title="2. 控制协商"></a>2. 控制协商</h3><p><code>Nancy.Responses.Negotiation</code>命名空间中的<code>Negotiator</code>用来控制协商。<code>Negotiator</code>有一个属性：<code>NegotiationContext</code>. <code>NegotiationContext</code>可以用来控制响应的协商。</p>
+<p>但是一般不会直接使用<code>Negotiator</code>和<code>NegotiationContext</code>，因为<code>NancyModule</code>包含了一个帮助方法<code>Negotiate</code>，用来更好的创造<code>Negotiator</code>实例。</p>
+<p>在路由中使用<code>Negotiator</code>的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return Negotiate</span><br><span class="line">        .WithModel(new RatPack &#123;FirstName &#x3D; &quot;Nancy &quot;&#125;)</span><br><span class="line">        .WithMediaRangeModel(&quot;text&#x2F;html&quot;, new RatPack &#123;FirstName &#x3D; &quot;Nancy fancy pants&quot;&#125;)</span><br><span class="line">        .WithView(&quot;negotiatedview&quot;)</span><br><span class="line">        .WithHeader(&quot;X-Custom&quot;, &quot;SomeValue&quot;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>Negotiator</code>包含了用来配置返回<code>Negotiator</code>实例的一些方法。</p>
+<ul>
+<li><code>WithHeader</code> - 添加一个Http头；</li>
+<li><code>WithHeaders</code> - 添加一个Http的头集合；</li>
+<li><code>WithView</code> - 使用视图；</li>
+<li><code>WithModel</code> - 使用模型；</li>
+<li><code>WithMediaRangeModel</code> - 使用特定的媒体类型和模型，如果失败了，就使用<code>WithModel</code>指定的模型；</li>
+<li><code>WithFullNegotiation</code> - 设置允许媒体类型为<code>*/*</code>的帮助方法；</li>
+<li><code>WithAllowedMediaRange</code> - 指定允许的媒体范围。默认是”/“,但是一旦指定一个特定的内容类型，通配符就会被移走。</li>
+<li><code>WithStatusCode</code> - 状态码</li>
+</ul>
+<h3 id="3-支持文件扩展名"><a href="#3-支持文件扩展名" class="headerlink" title="3. 支持文件扩展名"></a>3. 支持文件扩展名</h3><p>Nancy支持基于扩展名来设置协商的处理，此时传递正常的可接受的头。</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get[&quot;&#x2F;ratpack&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">    return new RatPack &#123;FirstName &#x3D; &quot;Nancy &quot;&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>它既可以通过<code>/ratpack</code>和设置的<code>application/json</code>头来调用，也可以使用<code>/ratpack.json</code>并且不设置<code>application/json</code>来调用，两个结果一样。</p>
+<p>内部Nancy是通过检测扩展名，并查询可用的响应处理器的<code>ExtensionMappings</code>属性来查看是否有支持的扩展。如果有，就调用并且设置对应的头信息，但是如果有更优先的处理器，则用更优先的处理器，除非更优先的处理器失败了，才会使用扩展。</p>
+<h3 id="4-强制可接受的头-Accept-Header"><a href="#4-强制可接受的头-Accept-Header" class="headerlink" title="4. 强制可接受的头(Accept Header)"></a>4. 强制可接受的头(Accept Header)</h3><p>约定的格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;</span><br><span class="line">   IEnumerable&lt;Tuple&lt;string, decimal&gt;&gt;,</span><br><span class="line">   NancyContext,</span><br><span class="line">   IEnumerable&lt;Tuple&lt;string, decimal&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数接受<code>NancyContext</code>和当前头，并且期望你返回修改后的可接受头列表。</p>
+<p>默认情况下，Nancy在<code>Nancy.Conventions.BuiltInAcceptHeaderCoercions class</code>中提供了如下约定，其中加*的表示是默认默认被转换的：</p>
+<ul>
+<li><code>BoostHtml</code>(*) - 如果text/html的优先级低于其他内容类型，则提高优先级；</li>
+<li><code>CoerceBlankAcceptHeader</code>(*) - 如果没有指定请求头，就分配一个默认的；</li>
+<li><code>CoerceStupidBrowsers</code> - 对于老浏览器，替换请求头，即使它们说是请求xml还是返回html。</li>
+</ul>
+<p>更改哪一个强制起作用时在bootstrapper中的<code>ConfigureConventions</code>来设置的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Bootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void ConfigureConventions(NancyConventions nancyConventions)</span><br><span class="line">    &#123;</span><br><span class="line">        base.ConfigureConventions(nancyConventions);</span><br><span class="line"></span><br><span class="line">        this.Conventions.AcceptHeaderCoercionConventions.Add((acceptHeaders, ctx) &#x3D;&gt; &#123;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; Modify the acceptHeaders by adding, removing or updating the current</span><br><span class="line">            &#x2F;&#x2F; values.</span><br><span class="line"></span><br><span class="line">            return acceptHeaders;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然你也可以继承你自己的bootstrapper。</p>
+<h3 id="5-使用IConventions来定义自己的约定"><a href="#5-使用IConventions来定义自己的约定" class="headerlink" title="5. 使用IConventions来定义自己的约定"></a>5. 使用IConventions来定义自己的约定</h3><p>可以通过实现<code>IConventions</code>接口来创造一个类，并在它的<code>Initialise</code>方法中添加自己的约定到传递进来的参数的<code>AcceptHeaderCoercionConventions</code>属性中。</p>
+<p>在所有的接口被传递给bootstrapper的<code>ConfigureConventions</code>的方法之前，Nancy会定位所有的接口实现，并且激发这些约定。</p>
+<h3 id="6-自动协商头"><a href="#6-自动协商头" class="headerlink" title="6. 自动协商头"></a>6. 自动协商头</h3><p>Nancy会自动添加链接和各种各样的头到协商响应中。链接头链接。连接头会连接到根据文件扩展来的其他代表中。</p>
+<h3 id="7-更多信息"><a href="#7-更多信息" class="headerlink" title="7. 更多信息"></a>7. 更多信息</h3><ul>
+<li><a href="http://www.philliphaydon.com/2012/11/nancy-and-content-negotiation/" target="_blank" rel="noopener">Nancy and Content Negotiation</a></li>
+<li><a href="http://www.philliphaydon.com/2013/04/nancyfx-revisiting-content-negotiation-and-apis-part-1/" target="_blank" rel="noopener">Revisting Content Negotiation and APIs part 1</a></li>
+<li><a href="http://www.philliphaydon.com/2013/05/nancyfx-revisiting-content-negotiation-and-apis-part-2/" target="_blank" rel="noopener">Revisting Content Negotiation and APIs part 2</a></li>
+<li><a href="http://www.philliphaydon.com/2013/05/nancyfx-revisiting-content-negotiation-and-apis-part-3/" target="_blank" rel="noopener">Revisting Content Negotiation and APIs part 3</a></li>
+</ul>
+<h2 id="二十四、使用转换器来扩展序列化"><a href="#二十四、使用转换器来扩展序列化" class="headerlink" title="二十四、使用转换器来扩展序列化"></a>二十四、使用转换器来扩展序列化</h2><h2 id="二十五、授权"><a href="#二十五、授权" class="headerlink" title="二十五、授权"></a>二十五、授权</h2><p>Nancy中的验证使用扩展点：比如应用管道、模块管道、<code>NancyContext</code>和其他的一些扩展方法。所以你可以写自己的验证来替换默认提供的验证。</p>
+<p>Nancy提供了以下几种验证，通过Nuget安装：</p>
+<ul>
+<li>表单(<code>Nancy.Authentication.Forms</code>)</li>
+<li>基本(<code>Nancy.Authentication.Basic</code>)</li>
+<li>无状态(<code>Nancy.Authentication.Stateless</code>)</li>
+</ul>
+<h3 id="1-了解用户"><a href="#1-了解用户" class="headerlink" title="1. 了解用户"></a>1. 了解用户</h3><p>Nancy中用户使用<code>IUserIdentity</code>接口代表，它提供了一些用户的基本信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface IUserIdentity</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets or sets the name of the current user.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    string UserName &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Gets or set the claims of the current user.</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    IEnumerable&lt;string&gt; Claims &#123; get; set; &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你应当提供基于自己应用需求的类来实现自己的用户接口。</p>
+<p>要获得当前用户，只需要获取<code>NancyContext</code>的<code>CurrentUser</code>属性。返回<code>null</code>值表明当前请求未认证，其他的则表示已认证。</p>
+<p>context在Nancy的大部分地方都能获取，所以不必担心能否获取当前请求的用户身份。</p>
+<h3 id="2-保护你的资源"><a href="#2-保护你的资源" class="headerlink" title="2. 保护你的资源"></a>2. 保护你的资源</h3><p>可以在模块级和应用级来保护资源，方法是检测<code>NancyContext.CurrentUser</code>属性不为null。</p>
+<p>这个任务可以通过在<a href="https://github.com/NancyFx/Nancy/wiki/The%20before%20and%20after%20module%20hooks" target="_blank" rel="noopener">模块管道</a>的<code>Before</code>中实现。这个钩子允许我们终结当前请求的执行，返回其它资源，比如当未验证用户视图访问安全资源时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class SecureModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public SecureModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Before +&#x3D; ctx &#x3D;&gt; &#123;</span><br><span class="line">            return (this.Context.CurrentUser &#x3D;&#x3D; null) ? new HtmlResponse(HttpStatusCode.Unauthorized) : null;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Your routes here</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在每个模块上添加安全代码违反了DRY原则，更是一个无聊的任务。使用扩展方法！</p>
+<p>Nancy有一些扩展方法包装了这些任务，彻底的减少了要写的代码量。</p>
+<p>下面是一些可用的扩展方法：</p>
+<ul>
+<li><code>RequiresAuthentication</code> - 确保验证用户是可用的，或者返回<code>HttpStatusCode.Unauthorized</code>. 对于认证的用户，<code>CurrentUser</code>不能为<code>null</code>，而且<code>UserName</code>不能为空；</li>
+<li><code>RequiresClaims</code> - 用户必须满足声明列表中所有的条件才能获取资源；</li>
+<li><code>RequiresAnyClaim</code> - 见上一条，但是只需满足任意一条；</li>
+<li><code>RequiresValidatedClaims</code> - 通过自定义函数，来全部自我掌控验证流程，函数格式<code>Func&lt;IEnumerable&lt;string&gt;, bool&gt;</code>；</li>
+<li><code>RequiresHttps</code> - 只允许https访问；</li>
+</ul>
+<p>这些都是<code>NancyModule</code>类的扩展方法，要使用它们需要添加<code>Nancy.Security</code>命名空间。</p>
+<p>使用扩展方法，前面的例子可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class SecureModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public SecureModule()</span><br><span class="line">    &#123;</span><br><span class="line">        this.RequiresAuthentication();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Your routes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然还可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class SecureModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public SecureModule()</span><br><span class="line">    &#123;</span><br><span class="line">        this.RequiresHttps();</span><br><span class="line">        this.RequiresAuthentication();</span><br><span class="line">        this.RequiresClaims(new [] &#123; &quot;Admin&quot; &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Your routes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用户必须通过https，被授权，而且拥有Admin claim才能访问上面的路由。</p>
+<h3 id="3-创造你自己的安全扩展"><a href="#3-创造你自己的安全扩展" class="headerlink" title="3. 创造你自己的安全扩展"></a>3. 创造你自己的安全扩展</h3><p>为了创造自己的安全扩展，你只需要添加扩展方法到<code>NancyModule</code>，并且绑定到<code>Before</code>管道，并检查证书。</p>
+<p>比如，下面说明了<code>RequiresAuthentication</code>如何工作的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public static class ModuleSecurity</span><br><span class="line">&#123;</span><br><span class="line">    public static void RequiresAuthentication(this NancyModule module)</span><br><span class="line">    &#123;</span><br><span class="line">        module.Before.AddItemToEndOfPipeline(RequiresAuthentication);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static Response RequiresAuthentication(NancyContext context)</span><br><span class="line">    &#123;</span><br><span class="line">        Response response &#x3D; null;</span><br><span class="line">        if ((context.CurrentUser &#x3D;&#x3D; null) ||</span><br><span class="line">            String.IsNullOrWhiteSpace(context.CurrentUser.UserName))</span><br><span class="line">        &#123;</span><br><span class="line">            response &#x3D; new Response &#123; StatusCode &#x3D; HttpStatusCode.Unauthorized &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-实现自己的验证provider"><a href="#4-实现自己的验证provider" class="headerlink" title="4. 实现自己的验证provider"></a>4. 实现自己的验证provider</h3><p>实际的验证provider实现根据不同的需求变化很大，但是基本模式如下：</p>
+<ol>
+<li><a href="https://github.com/NancyFx/Nancy/wiki/The%20Application%20Before,%20After%20and%20OnError%20pipelines" target="_blank" rel="noopener">应用管道</a>的<code>Before</code>钩子用来检查请求的证书（比如cookie, headers等等）。如果发现证书，则验证用户并授权给<code>NancyContext</code>的<code>CurrentUser</code>属性。</li>
+<li><a href="https://github.com/NancyFx/Nancy/wiki/The%20before%20and%20after%20module%20hooks" target="_blank" rel="noopener">模块管道</a>的<code>Before</code>钩子用来确认当前的请求是被认证的用户执行，如果不是，则拒绝并返回<code>HttpStatusCode.Unauthorized</code></li>
+<li><a href="https://github.com/NancyFx/Nancy/wiki/The%20Application%20Before,%20After%20and%20OnError%20pipelines" target="_blank" rel="noopener">应用管道</a>的<code>After</code>钩子用来检查请求是否因为认证失败而被丢弃，比如检查<code>HttpStatusCode.Unauthorized</code>(401)状态码。如果检测到了就帮助用户去认证，比如重定向到login表单或者使用header的帮助通知客户端。</li>
+</ol>
+<h3 id="5-无状态认证"><a href="#5-无状态认证" class="headerlink" title="5. 无状态认证"></a>5. 无状态认证</h3><p>无状态认证就是在每个请求中进行检查，根据请求的一些信息，来决定是否应该被确认为一个已认证的请求。</p>
+<p>比如你检查请求来确认查询字符串的参数是否传递了api key，或者是否包含某些head， 有或者请求是否来自某些特定的ip。</p>
+<p>使用无状态认证需要做下面几件事：</p>
+<ol>
+<li>安装<code>Nancy.Authentication.Stateless</code>包</li>
+<li>配置并开启无状态认证</li>
+<li><a href="https://github.com/NancyFx/Nancy/wiki/Authentication-overview" target="_blank" rel="noopener">保护资源</a></li>
+</ol>
+<h4 id="5-1-配置并开启无状态认证"><a href="#5-1-配置并开启无状态认证" class="headerlink" title="5.1 配置并开启无状态认证"></a>5.1 配置并开启无状态认证</h4><p>在bootstrapper中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatelessAuthentication.Enable(pipelines, statelessAuthConfiguration);</span><br></pre></td></tr></table></figure>
+
+<p>被传递到<code>StatelessAuthentication.Enable</code>方法中的<code>statelessAuthConfiguration</code>变量，是一个<code>StatelessAuthenticationConfiguration</code>类型的实例，它能够让你自定义无状态认证提供者的行为。</p>
+<p>定义<code>StatelessAuthenticationConfiguration</code>类型实例的时候，需要有一个<code>Func&lt;NancyContext, IUserIdentity&gt;</code>类型的参数。这个函数用来检查请求或者context中的其他相关内容，并且在请求未通过验证时返回<code>null</code>，否则返回合适的<a href="https://github.com/NancyFx/Nancy/wiki/Authentication-overview" target="_blank" rel="noopener"><code>IUserIdentity</code></a>.</p>
+<h4 id="5-2-简单配置"><a href="#5-2-简单配置" class="headerlink" title="5.2 简单配置"></a>5.2 简单配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var configuration &#x3D;</span><br><span class="line">    new StatelessAuthenticationConfiguration(ctx &#x3D;&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        if (!ctx.Request.Query.apikey.HasValue)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; This would where you authenticated the request. IUserApiMapper is</span><br><span class="line">        &#x2F;&#x2F; not a Nancy type.</span><br><span class="line">        var userValidator &#x3D; </span><br><span class="line">            container.Resolve&lt;IUserApiMapper&gt;();</span><br><span class="line"></span><br><span class="line">        return userValidator.GetUserFromAccessToken(ctx.Request.Query.apikey);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-Form认证"><a href="#6-Form认证" class="headerlink" title="6. Form认证"></a>6. Form认证</h3><p>详细例子见Nancy解决方案中<code>Nancy.Demo.Authentication.Forms</code>例子</p>
+<p>为了开启form认证，需要完成：</p>
+<ol>
+<li>安装<code>Nancy.Authentication.Forms</code>包</li>
+<li>实现<code>IUserMapper</code></li>
+<li>实现路由来处理login和logout</li>
+<li>配置并开启Form认证</li>
+</ol>
+<h4 id="6-1-User-mapper"><a href="#6-1-User-mapper" class="headerlink" title="6.1 User mapper"></a>6.1 User mapper</h4><p>User mapper用来负责从标示符identifier映射到用户。标示符是一个令牌，被存储在认证cookie中，用来代表执行请求的用户身份，避免每次请求时输入证书。</p>
+<p>使用GUID来做标示符，如果用username来做标示符容易被嗅探并攻击。GUID还很难读取，而且每个GUID都不一样，增加了嗅探的难度。</p>
+<p>注意，需要知道标示符对每个用户来说都是永久的并且是唯一的。</p>
+<p><code>IUserMapper</code>接口的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public interface IUserMapper</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; Get the real username from an identifier</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;identifier&quot;&gt;User identifier&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;context&quot;&gt;The current NancyFx context&lt;&#x2F;param&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;returns&gt;Matching populated IUserIdentity object, or empty&lt;&#x2F;returns&gt;</span><br><span class="line">    IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-2-修改应用，处理form认证"><a href="#6-2-修改应用，处理form认证" class="headerlink" title="6.2 修改应用，处理form认证"></a>6.2 修改应用，处理form认证</h4><p>有了<code>IUserMapper</code>后，下一步就是在不需要认证的地方添加login和logout了。</p>
+<p>下面是一个模块的基础框架。请注意资源的路径和模块的名称可以使任意的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class LoginModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public LoginModule()</span><br><span class="line">    &#123;</span><br><span class="line">        Get[&quot;&#x2F;login&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; Called when the user visits the login page or is redirected here because</span><br><span class="line">            &#x2F;&#x2F; an attempt was made to access a restricted resource. It should return</span><br><span class="line">            &#x2F;&#x2F; the view that contains the login form</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Get[&quot;&#x2F;logout&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; Called when the user clicks the sign out button in the application. Should</span><br><span class="line">            &#x2F;&#x2F; perform one of the Logout actions (see below)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Post[&quot;&#x2F;login&quot;] &#x3D; parameters &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; Called when the user submits the contents of the login form. Should</span><br><span class="line">            &#x2F;&#x2F; validate the user based on the posted form data, and perform one of the</span><br><span class="line">            &#x2F;&#x2F; Login actions (see below)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Nancy.Authentication.Forms</code>命名空间中有一些扩展方法可供使用：</p>
+<ul>
+<li><code>LoginAndRedirect</code> - 登录用户并重定向用户到他们来时的url。或者也可以提供一个预留的url，用来在没有重定向url时使用。如果使用form提交，注意使用action=””，因为它会保留returnUrl原封不动。</li>
+<li><code>LoginWithoutRedirect</code> - 登录用户，并且返回响应和状态码200(ok)</li>
+<li><code>Login</code>会调用当前请求的<code>IsAjaxRequest</code>的扩展方法，并且如果不是Ajax调用，则执行<code>LoginAndRedirect</code>方法，否则执行<code>LoginWithoutRedirect</code>方法</li>
+<li><code>LogoutAndRedirect</code> - 登出用户，并提供重定向</li>
+<li><code>LogoutWithoutRedirect</code> - 登出用户并返回状态码为200(OK)的响应</li>
+<li><code>Logout</code>会调用当前请求的<code>IsAjaxRequest</code>方法，如果不是ajax请求，则执行<code>LogoutAndRedirect</code>，否则执行<code>LogoutWithoutRedirect</code></li>
+</ul>
+<p><strong>注意1：</strong> <code>Nancy.Extensions.RequestExtensions</code>中的<code>IsAjaxRequest</code>扩展方法会检查<code>X-Requested-With</code>头，并且在其包含值<code>XMLHttpRequest</code>时返回true</p>
+<p><strong>注意2：</strong> 请确认路径的定义login和logout的页面没有要求使用登录。</p>
+<h4 id="6-3-启用form认证"><a href="#6-3-启用form认证" class="headerlink" title="6.3 启用form认证"></a>6.3 启用form认证</h4><p>在bootstrapper中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FormsAuthentication.Enable(pipelines, formsAuthConfiguration);</span><br></pre></td></tr></table></figure>
+
+<p>既可以在<code>ApplicationStartup</code>中又可以在<code>RequestStartup</code>中添加。到底在何处加，取决于<code>IUserMapper</code>，即user mapper到底是有应用级的生命周期还是请求级的生命周期。</p>
+<p>传递给<code>FormsAuthentication.Enable</code>方法的<code>formsAuthConfiguration</code>变量是<code>FormsAuthenticationConfiguration</code>类型，它能让你自定义form认证提供者的行为。</p>
+<p>比如，下面是一个基本的认证配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var formsAuthConfiguration &#x3D;</span><br><span class="line">new FormsAuthenticationConfiguration()</span><br><span class="line">&#123;</span><br><span class="line">    RedirectUrl &#x3D; &quot;~&#x2F;login&quot;,</span><br><span class="line">    UserMapper &#x3D; container.Resolve&lt;IUserMapper&gt;(),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>下面是一些配置项：</p>
+<ul>
+<li><code>RedirectingQuerystringKey</code>：默认名是<code>returnUrl</code></li>
+<li><code>RedirectingUrl</code>：未认证的用户应当被重定向的url，一般是登录页面<code>~/login</code></li>
+<li><code>UserMapper</code>: <code>IUserMapper</code>在认证时应该被使用</li>
+<li><code>RequiresSSL</code>: SSL</li>
+<li><code>DisableRedirect</code>: 遇到未认证时，是否重定向到登陆页</li>
+<li><code>CryptographyConfiguration</code>: <code>CryptographyConfiguration.Default</code>与form认证cookie配合使用。<code>CryptographyConfiguration.Default</code>是默认的。</li>
+</ul>
+<h4 id="6-4-关于加密，还有一些话"><a href="#6-4-关于加密，还有一些话" class="headerlink" title="6.4 关于加密，还有一些话"></a>6.4 关于加密，还有一些话</h4><p>默认使用<code>RandomKeyGenerator</code>，这意味着每次程序启动时会产生一个新的秘钥，那么应用重启回到这认证cookie失效，在多台机器负载均衡时也会出现这种问题，别怕，看看<a href="https://github.com/NancyFx/Nancy/wiki/The%20cryptography%20helpers" target="_blank" rel="noopener">加密配置</a></p>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var cryptographyConfiguration &#x3D; new CryptographyConfiguration(</span><br><span class="line">    new RijndaelEncryptionProvider(new PassphraseKeyGenerator(&quot;SuperSecretPass&quot;, new byte[] &#123; 1, 2, 3, 4, 5, 6, 7, 8 &#125;)),</span><br><span class="line">    new DefaultHmacProvider(new PassphraseKeyGenerator(&quot;UberSuperSecure&quot;, new byte[] &#123; 1, 2, 3, 4, 5, 6, 7, 8 &#125;)));</span><br><span class="line"></span><br><span class="line">var config &#x3D; </span><br><span class="line">    new FormsAuthenticationConfiguration()</span><br><span class="line">    &#123;</span><br><span class="line">        CryptographyConfiguration &#x3D; cryptographyConfiguration,</span><br><span class="line">        RedirectUrl &#x3D; &quot;&#x2F;login&quot;,</span><br><span class="line">        UserMapper &#x3D; container.Resolve&lt;IUserMapper&gt;(),</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-5-跟多"><a href="#6-5-跟多" class="headerlink" title="6.5 跟多"></a>6.5 跟多</h4><ul>
+<li><p><a href="http://www.philliphaydon.com/2012/12/forms-authentication-with-nancyfx/" target="_blank" rel="noopener">Forms authentication with nancyfx</a></p>
+</li>
+<li><p><a href="http://www.philliphaydon.com/2012/12/configuring-multiple-forms-authentication-sections-with-nancyfx/" target="_blank" rel="noopener">Multiple forms authentication sections</a></p>
+</li>
+</ul>
+<h3 id="7-令牌认证"><a href="#7-令牌认证" class="headerlink" title="7. 令牌认证"></a>7. 令牌认证</h3><p>详细例子在Nancy解决方案中的<code>Nancy.Demo.Authentication.Token</code>中。</p>
+<h4 id="7-1-认识Nancy的令牌认证"><a href="#7-1-认识Nancy的令牌认证" class="headerlink" title="7.1 认识Nancy的令牌认证"></a>7.1 认识Nancy的令牌认证</h4><p>Nancy令牌认证工程是为了多种客户端(iOS, Android, Angular SPA等等)能与统一后台Nancy应用而创建的。</p>
+<h4 id="7-2-基本原理"><a href="#7-2-基本原理" class="headerlink" title="7.2 基本原理"></a>7.2 基本原理</h4><p>令牌认证与授权在下面这些需求下应运而生：</p>
+<ul>
+<li>没有cookie（不适所有的客户端都是浏览器）</li>
+<li>避免一旦用户被认证/授权后，从后端数据存储中取回用户和权限信息</li>
+<li>允许客户端应用在第一次授权后保存令牌，以便为后续请求使用</li>
+<li>通过单向加密算法确保令牌没有被篡改，阻止嗅探冒充令牌攻击</li>
+<li>使用有期限的可配置的key来进行令牌生成</li>
+<li>使用server端的文件系统来存储私钥，这样即使应用重启也能恢复。注意：可以使用内存存储作为测试。</li>
+</ul>
+<h4 id="7-3-使用"><a href="#7-3-使用" class="headerlink" title="7.3 使用"></a>7.3 使用</h4><h5 id="7-3-1-Nancy配置"><a href="#7-3-1-Nancy配置" class="headerlink" title="7.3.1 Nancy配置"></a>7.3.1 Nancy配置</h5><p>令牌认证可以像form认证那样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Bootstrapper : DefaultNancyBootstrapper</span><br><span class="line">&#123;</span><br><span class="line">    protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)</span><br><span class="line">    &#123;</span><br><span class="line">        TokenAuthentication.Enable(pipelines, new TokenAuthenticationConfiguration(container.Resolve&lt;ITokenizer&gt;()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>令牌从<code>IUserIdentity</code>和<code>NancyContext</code>中，通过实现<code>ITokenizer</code>接口产生。默认实现是<code>Tokenizer</code>，它提供了一些可配置的方法。默认情况下，它产生一个令牌包含下面部分：</p>
+<ul>
+<li>用户名</li>
+<li>Pipe separated list of user claims</li>
+<li>UTC当前时间</li>
+<li>客户端的”User-Agent”头（必须）</li>
+</ul>
+<p>建议配置Tokenizer，使用其他附加能代表用户唯一设备的信息。</p>
+<p>下面举例说明了如何初始化用户认证，并且返回生成的令牌给客户端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class AuthModule : NancyModule</span><br><span class="line">&#123;</span><br><span class="line">    public AuthModule(ITokenizer tokenizer)</span><br><span class="line">        : base(&quot;&#x2F;auth&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">        Post[&quot;&#x2F;&quot;] &#x3D; x &#x3D;&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                var userName &#x3D; (string)this.Request.Form.UserName;</span><br><span class="line">                var password &#x3D; (string)this.Request.Form.Password;</span><br><span class="line"></span><br><span class="line">                var userIdentity &#x3D; UserDatabase.ValidateUser(userName, password);</span><br><span class="line"></span><br><span class="line">                if (userIdentity &#x3D;&#x3D; null)</span><br><span class="line">                &#123;</span><br><span class="line">                    return HttpStatusCode.Unauthorized;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                var token &#x3D; tokenizer.Tokenize(userIdentity, Context);</span><br><span class="line"></span><br><span class="line">                return new</span><br><span class="line">                    &#123;</span><br><span class="line">                        Token &#x3D; token,</span><br><span class="line">                    &#125;;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">        Get[&quot;&#x2F;validation&quot;] &#x3D; _ &#x3D;&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                this.RequiresAuthentication();</span><br><span class="line">                return &quot;Yay! You are authenticated!&quot;;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">        Get[&quot;&#x2F;admin&quot;] &#x3D; _ &#x3D;&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            this.RequiresClaims(new[] &#123; &quot;admin&quot; &#125;);</span><br><span class="line">            return &quot;Yay! You are authorized!&quot;;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-3-2-客户端配置"><a href="#7-3-2-客户端配置" class="headerlink" title="7.3.2 客户端配置"></a>7.3.2 客户端配置</h5><p>一旦你的客户端接收到了token，那么你必须使用token来设置HTTP头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Token &#123;your-token-goes-here&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-幕后的工作"><a href="#8-幕后的工作" class="headerlink" title="8. 幕后的工作"></a>8. 幕后的工作</h4><p><a href="https://github.com/NancyFx/Nancy/commit/9ae0a5494bc335c3d940d730ae5d5f18c1018836" target="_blank" rel="noopener">https://github.com/NancyFx/Nancy/commit/9ae0a5494bc335c3d940d730ae5d5f18c1018836</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Nancy-C-NET-web/" rel="tag"># Nancy, C#, .NET, web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/" rel="prev" title="Django REST Framework笔记-01 介绍与安装">
+                  <i class="fa fa-angle-left"></i> Django REST Framework笔记-01 介绍与安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/09/26/Django%20SQL%20Server%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%EF%BC%8C%E5%8F%8D%E5%90%91%E7%94%9F%E6%88%90models%E4%BB%A5%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB/" rel="next" title="Django SQL Server数据库驱动,根据现有数据库生成models以及数据库迁移">
+                  Django SQL Server数据库驱动,根据现有数据库生成models以及数据库迁移 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

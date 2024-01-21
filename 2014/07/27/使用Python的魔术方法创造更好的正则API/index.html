@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="原文在此 我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。 首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子： &amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Python的魔术方法创造更好的正则API">
+<meta property="og:url" content="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="原文在此 我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。 首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子： &amp;gt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T13:48:23.007Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/","path":"2014/07/27/使用Python的魔术方法创造更好的正则API/","title":"使用Python的魔术方法创造更好的正则API"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用Python的魔术方法创造更好的正则API | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%96"><span class="nav-number">1.</span> <span class="nav-text">糖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E6%A5%BC"><span class="nav-number">3.1.</span> <span class="nav-text">1楼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E6%A5%BC"><span class="nav-number">3.2.</span> <span class="nav-text">2楼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E6%A5%BC"><span class="nav-number">3.3.</span> <span class="nav-text">3楼</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用Python的魔术方法创造更好的正则API | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Python的魔术方法创造更好的正则API
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-07-27 00:00:00" itemprop="dateCreated datePublished" datetime="2014-07-27T00:00:00+08:00">2014-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 21:48:23" itemprop="dateModified" datetime="2020-06-27T21:48:23+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>原文<a href="http://charlesleifer.com/blog/playing-with-python-magic-methods-to-make-a-nicer-regex-api/" target="_blank" rel="noopener">在此</a></p>
+<p>我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。</p>
+<p>首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子：</p>
+<pre><code>&gt;&gt;&gt; import re
+&gt;&gt;&gt; match_obj = re.match(&apos;([0-9]+)&apos;, &apos;123foo&apos;)
+&gt;&gt;&gt; match_obj  # What is `match_obj`?
+&lt;_sre.SRE_Match object at 0x7fd1bb000828&gt;
+&gt;&gt;&gt; match_obj.groups()(&apos;123&apos;,)
+&gt;&gt;&gt; match_obj = re.match(&apos;([0-9]+)&apos;, &apos;abc&apos;)
+&gt;&gt;&gt; match_objNone</code></pre><p>依我来看，如果能像下面这样就更好了：</p>
+<pre><code>&gt;&gt;&gt; re.get_matches(&apos;([0-9]+)&apos;, &apos;123foo&apos;)(&apos;123&apos;,)
+&gt;&gt;&gt; re.get_matches(&apos;([0-9]+)&apos;, &apos;abc&apos;)None</code></pre><p>另一个我常遇到的问题是弄混re.sub的参数，re.sub是用来查找和替换用的。所需要的参数按照顺序依次是模式(pattern)，替换(replacement)，还有字符串。由于更重各样的原因，对我来说search_string放在replacement前面看着更起来更直接。</p>
+<p>不幸的是，弄混这些参数将会导致看上去正确的结果。下面是个例子，为了把单词foo用bar来代替。</p>
+<pre><code>&gt;&gt;&gt; re.sub(&apos;foo&apos;, &apos;replace foo with bar&apos;, &apos;bar&apos;)
+&apos;bar&apos;
+&gt;&gt;&gt; re.sub(&apos;foo&apos;, &apos;bar&apos;, &apos;replace foo with bar&apos;)
+&apos;replace bar with bar&apos;</code></pre><p>在上面例子中，有时我们会推测输入的字符串仅仅是foo</p>
+<h2 id="糖"><a href="#糖" class="headerlink" title="糖"></a>糖</h2><p>为了有趣，我把加了一些语法糖的helper class和python的正则表达式放在了一起。我不是要每个人都这样做，我的目的是为了让它更有趣，能给你在改进其它库的语法时给你一些启发。</p>
+<p>在我展示具体实现之前，先说说我设计的几个API的例子。</p>
+<p>在一步操作中同事完成查找和匹配。</p>
+<pre><code>&gt;&gt;&gt; def has_lower(s):
+...     return bool(R/&apos;[a-z]+&apos;/s)
+
+&gt;&gt;&gt; has_lower(&apos;This contains lower-case&apos;)
+True
+&gt;&gt;&gt; has_lower(&apos;NO LOWER-CASE HERE!&apos;)
+False</code></pre><p>获取分组也很简单</p>
+<pre><code>&gt;&gt;&gt; list(R/&apos;([0-9]+)&apos;/&apos;extract 12 the 456 numbers&apos;)
+[&apos;12&apos;, &apos;456&apos;]</code></pre><p>最后，你可以适用字符串插入操作来执行替换。</p>
+<pre><code>&gt;&gt;&gt; R/&apos;(foo|bar)&apos;/&apos;replace foo and bar&apos; % &apos;Huey!&apos;
+&apos;replace Huey! and Huey!&apos;</code></pre><p>则么样，是不是很有意思？</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>具体的实现时非常直接的，并且依赖于Python的魔术方法来提供API。如果有一个简单的技巧，那就是使用元类(metaclass)来实现classmethod的操作符重载。</p>
+<pre><code>import re
+
+class _R(type):
+    def __div__(self, regex):
+        return R(regex)
+
+class R(object):
+    __metaclass__ = _R
+
+    def __init__(self, regex):
+        self._regex = re.compile(regex)
+
+    def __div__(self, s):
+        return RegexOperation(self._regex, s)
+
+class RegexOperation(object):
+    def __init__(self, regex, search):
+        self._regex = regex
+        self._search = search
+
+    def search(self):
+        match =  self._regex.search(self._search)
+        if match is not None:
+            return match.groups()
+
+    def __len__(self):
+        return self._regex.search(self._search) is not None
+
+    def __mod__(self, replacement):
+        return self._regex.sub(replacement, self._search)
+
+    def __iter__(self):
+        return iter(self._regex.findall(self._search))</code></pre><p>一步一步的分解操作，希望它能简化背后发生了什么。</p>
+<p>调用R/<something>将会调用_R类的<strong>div</strong>方法，它使一个工厂方法，用来生产R实例。</p>
+<pre><code>&gt;&gt;&gt; R/&apos;foo&apos;
+&lt;rx.R at 0x7f77c00831d0&gt;</code></pre><p>然后，通过调用R对象的<strong>div</strong>，我们获得一个RegexOperation实例，所以R.<strong>div</strong>是另一种工厂方法。</p>
+<pre><code>&gt;&gt;&gt; r_obj = R/&apos;foo&apos;
+&gt;&gt;&gt; r_obj / &apos;bar&apos;
+&lt;rx.RegexOperation at 0x7f77c00837d0&gt;</code></pre><p>最后一个对象，RegexOperation，实现了一些魔术方法来匹配、替换和测试匹配的存在性。</p>
+<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="1楼"><a href="#1楼" class="headerlink" title="1楼"></a>1楼</h3><p>很酷的运算符重载＋1 造轮子-1</p>
+<p>你的代码：<br>    &gt;&gt;&gt; list(R/‘([0-9]+)’/‘extract 12 the 456 numbers’)<br>    [‘12’, ‘456’]</p>
+<p>我认为比Python本身的要复杂：</p>
+<pre><code>&gt;&gt;&gt; re.findall(&apos;([0-9]+)&apos;, &apos;extract 12 the 456 numbers&apos;)
+[&apos;12&apos;, &apos;456&apos;]</code></pre><p>如果没有明显的分组，re.findall()将会返回一个group 0的匹配的list；如果定义了多个分组，re.findall()返回由每个分组组成的tuple构成的list：</p>
+<pre><code>&gt;&gt;&gt; re.findall(&apos;([A-Z])([0-9]+)&apos;, &apos;A133 B873 xxx yyy C946&apos;)
+[(&apos;A&apos;, &apos;133&apos;), (&apos;B&apos;, &apos;873&apos;), (&apos;C&apos;, &apos;946&apos;)]</code></pre><p>非常有趣的文章。我赞同你对re.sub参数列表顺序的看法。</p>
+<p>我想说re.findall()返回空列表，如果没有匹配就返回空列表。</p>
+<p>同样，re.finditer()提供了一个匹配对象的迭代器。</p>
+<h3 id="2楼"><a href="#2楼" class="headerlink" title="2楼"></a>2楼</h3><p>正则表达式高级教程：<br><a href="http://www.cofoh.com/advanced-regex-tutorial-python/traps" target="_blank" rel="noopener">http://www.cofoh.com/advanced-regex-tutorial-python/traps</a></p>
+<h3 id="3楼"><a href="#3楼" class="headerlink" title="3楼"></a>3楼</h3><p>使用parsely库可以用来写复杂的正则。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/04/19/2014-04-19/" rel="prev" title="醉笑陪公三万场">
+                  <i class="fa fa-angle-left"></i> 醉笑陪公三万场
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/" rel="next" title="Django REST Framework笔记-01 介绍与安装">
+                  Django REST Framework笔记-01 介绍与安装 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

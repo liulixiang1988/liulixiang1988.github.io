@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="End to End Find a base image: docker.io, quay.io, gcr.io, registry.redhat.io  Craft your Dockerfile  Configure docker: eval $(minikube --profile myprofile decoder-env)  Build your image: docker build">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Building Images &amp; Running Containers">
+<meta property="og:url" content="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="End to End Find a base image: docker.io, quay.io, gcr.io, registry.redhat.io  Craft your Dockerfile  Configure docker: eval $(minikube --profile myprofile decoder-env)  Build your image: docker build">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-12T01:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-12T05:19:55.341Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Minikube">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/","path":"2020/07/12/Kubernetes-Craft a Dockerfile/","title":"Building Images & Running Containers"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Building Images & Running Containers | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#End-to-End"><span class="nav-number">1.</span> <span class="nav-text">End to End</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-build"><span class="nav-number">2.</span> <span class="nav-text">docker build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Builiding-Images"><span class="nav-number">3.</span> <span class="nav-text">Builiding Images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Namespaces"><span class="nav-number">4.</span> <span class="nav-text">Namespaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pods"><span class="nav-number">5.</span> <span class="nav-text">Pods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReplicaSets"><span class="nav-number">6.</span> <span class="nav-text">ReplicaSets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployments"><span class="nav-number">7.</span> <span class="nav-text">Deployments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">8.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scale"><span class="nav-number">9.</span> <span class="nav-text">Scale</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update"><span class="nav-number">10.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JIB"><span class="nav-number">11.</span> <span class="nav-text">JIB</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Building Images & Running Containers | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Building Images & Running Containers
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-07-12 09:30:00 / Modified: 13:19:55" itemprop="dateCreated datePublished" datetime="2020-07-12T09:30:00+08:00">2020-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="End-to-End"><a href="#End-to-End" class="headerlink" title="End to End"></a>End to End</h2><ol>
+<li><p>Find a base image: docker.io, quay.io, gcr.io, registry.redhat.io</p>
+</li>
+<li><p>Craft your Dockerfile</p>
+</li>
+<li><p>Configure docker: <code>eval $(minikube --profile myprofile decoder-env)</code></p>
+</li>
+<li><p>Build your image: <code>docker build -t liulx/myimage:v1 .</code></p>
+<p>a. Test via:</p>
+<pre><code>- `docker run -it -p 8080:8080 --name myboot liulx/myimage:v1`
+- `docker run -d -p 8080:8080 --name my boot liulx/myboot:v1`
+- `curl $(minikube --profile myprofile ip):8080`</code></pre><p>b. If remote repo, do <code>docker tag</code> and <code>docker push</code></p>
+<p>c. <code>docker stop containername</code> to stop testing</p>
+</li>
+<li><p><code>kubectl apply -f myDeployment.yaml</code></p>
+</li>
+<li><p><code>kubectl apply -f myService.yaml</code></p>
+</li>
+<li><p>Expose a URL via your kubernetes distribution’s load-balancer</p>
+</li>
+</ol>
+<h2 id="docker-build"><a href="#docker-build" class="headerlink" title="docker build"></a>docker build</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t something/animagename:tag</span><br></pre></td></tr></table></figure>
+
+<p>The <code>.</code>indicates where to find the Dockerfile and assets to be included in the build process.</p>
+<p>You can alse explicitly identify the Dockerfile:</p>
+<ul>
+<li><code>docker build -t somestring/animagename:tag -f somedirectory/Dockerfile_Production .</code></li>
+<li><code>docker build -t somestring/animagename:tag -f somedirectory/Dockerfile_Testing .</code></li>
+<li><code>docker build -f src/main/docker/Dockerfile.native -t mystuff/myimage:v1 .</code></li>
+</ul>
+<h2 id="Builiding-Images"><a href="#Builiding-Images" class="headerlink" title="Builiding Images"></a>Builiding Images</h2><p>Options Include:</p>
+<ol>
+<li><code>docker build</code> then <code>kubectl run</code> or <code>kubectl create -f deploy.yml</code></li>
+<li>Jib - Maven/Gradle plugin by google</li>
+<li>Shift maven plugin by Red hat</li>
+<li>s2i - source to image</li>
+<li>Tekton - pipeline-based image building</li>
+<li>No docker: red hat’s podman, Google’s kaniko, Uber’s makisu</li>
+<li>Buildpacks - similar to Heroku &amp; Cloud Foundry</li>
+</ol>
+<h2 id="Namespaces"><a href="#Namespaces" class="headerlink" title="Namespaces"></a>Namespaces</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- &#96;kubectl create namespace demo&#96;</span><br><span class="line">- &#96;kubectl get namespace demo -o yaml&#96;</span><br><span class="line">- &#96;kubectl get namesapce demo --export -o yaml&#96;</span><br><span class="line">- &#96;kubectl delete namespace&#x2F;demo&#96;</span><br><span class="line">- &#96;kubectl config set-context --current --namespace&#x3D;myspace&#96;</span><br><span class="line">- &#96; kubectl config view --minify --template &#39;&#123;&#123; index .contexts 0 &quot;context&quot; &quot;namespace&quot; &#125;&#125;&#39;&#96; confirm your context</span><br></pre></td></tr></table></figure>
+
+<h2 id="Pods"><a href="#Pods" class="headerlink" title="Pods"></a>Pods</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">&lt;&lt;EOF</span> <span class="string">|</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="bullet">-</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">quarkus-demo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">quarkus-demo</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">quay.io/burrsutter/quarkus-demo:1.0.0</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ReplicaSets"><a href="#ReplicaSets" class="headerlink" title="ReplicaSets"></a>ReplicaSets</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">&lt;&lt;EOF</span> <span class="string">|</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="bullet">-</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">rs-quarkus-demo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">    <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">    <span class="attr">selector:</span></span><br><span class="line">       <span class="attr">matchLabels:</span></span><br><span class="line">          <span class="attr">app:</span> <span class="string">quarkus-demo</span></span><br><span class="line">    <span class="attr">template:</span></span><br><span class="line">       <span class="attr">metadata:</span></span><br><span class="line">          <span class="attr">labels:</span></span><br><span class="line">             <span class="attr">app:</span> <span class="string">quarkus-demo</span></span><br><span class="line">             <span class="attr">env:</span> <span class="string">dev</span></span><br><span class="line">       <span class="attr">spec:</span></span><br><span class="line">          <span class="attr">containers:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">quarkus-demo</span></span><br><span class="line">            <span class="attr">image:</span> <span class="string">quay.io/burrsutter/quarkus-demo:1.0.0</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>See what it produced:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods --show-labels</span><br><span class="line">NAME                    READY   STATUS    RESTARTS   AGE   LABELS</span><br><span class="line">rs-quarkus-demo-64dnl   1/1     Running   0          49s   app=quarkus-demo,env=dev</span><br><span class="line">rs-quarkus-demo-8pn8b   1/1     Running   0          29s   app=quarkus-demo,env=dev</span><br><span class="line">rs-quarkus-demo-ksm5f   1/1     Running   0          16s   app=quarkus-demo,env=dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="Deployments"><a href="#Deployments" class="headerlink" title="Deployments"></a>Deployments</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">&lt;&lt;EOF</span> <span class="string">|</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="bullet">-</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">quarkus-demo-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">quarkus-demo</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">quarkus-demo</span></span><br><span class="line">        <span class="attr">env:</span> <span class="string">dev</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">quarkus-demo</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">quay.io/burrsutter/quarkus-demo:1.0.0</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>Run curl inside Pod: <code>kubectl exec -it pod name -- curl localhost:8080</code></p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">&lt;&lt;EOF</span> <span class="string">|</span> <span class="string">kubectl</span> <span class="string">apply</span> <span class="string">-f</span> <span class="bullet">-</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">the-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">quarkus-demo</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">8080</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>curl those Endpoints behind that service:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ IP=$(minikube --profile 9steps ip)</span><br><span class="line">$ PORT=$(kubectl get service the-service -o jsonpath=<span class="string">"&#123;.spec.ports[*].nodePort&#125;"</span>)</span><br><span class="line">$ <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> curl <span class="variable">$IP</span>:<span class="variable">$PORT</span>; sleep .5; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Scale"><a href="#Scale" class="headerlink" title="Scale"></a>Scale</h2><p>Let’s scale up the application to 3 replicas, there are several possible ways to achieve this result.</p>
+<p>You can edit the myboot-deployment.yml, updating replicas to 3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl replace -f kubefiles&#x2F;myboot-deployment.yml</span><br></pre></td></tr></table></figure>
+
+<p>Or use the kubectl scale command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale --replicas&#x3D;3 deployment&#x2F;myboot</span><br></pre></td></tr></table></figure>
+
+<p>Or you might patch it</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl patch deployment&#x2F;myboot -p &#39;&#123;&quot;spec&quot;:&#123;&quot;replicas&quot;:3&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>Or use the kubectl edit command which essentially gives you “vi” for editing the deployment yaml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl edit deployment&#x2F;myboot</span><br><span class="line">&#x2F;replicas</span><br><span class="line">esc-w-q</span><br></pre></td></tr></table></figure>
+
+<p>Note: You can use VS Code as your editor with export KUBE_EDITOR=”code -w”</p>
+<p>You can then use “kubectl get pods” to see the pods that have been created</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>Note: 3 pods might push you out of your memory limits for your VM. Check your memory usage with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ minishift -p 9steps ssh</span><br><span class="line"># or</span><br><span class="line">$ minikube ssh</span><br><span class="line">$ free -m</span><br><span class="line">$ top -o %MEM</span><br></pre></td></tr></table></figure>
+
+<h2 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h2><p>Update MyRESTController.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">greeting &#x3D; environment.getProperty(&quot;GREETING&quot;,&quot;Bonjour&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>Compile &amp; Build the fat jar</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure>
+
+<p>You can test with “java -jar target/boot-demo-0.0.1.jar” and “curl localhost:8080”. Ideally, you would have unit tests executed with “mvn test” as well.</p>
+<p>Build the new docker image with a v2 tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t 9stepsawesome&#x2F;myboot:v2 .</span><br><span class="line">$ docker images | grep myboot</span><br></pre></td></tr></table></figure>
+
+<p>Rollout the update</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployment&#x2F;myboot myboot&#x3D;9stepsawesome&#x2F;myboot:v2</span><br><span class="line">OR</span><br><span class="line">$ kubectl set image deployment&#x2F;myboot myboot&#x3D;quay.io&#x2F;burrsutter&#x2F;myboot:v2</span><br></pre></td></tr></table></figure>
+
+<p>And if you were running your polling curl command, you might see</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Aloha from Spring Boot! 346 on myboot-79bfc988c8-ttz5r</span><br><span class="line">Aloha from Spring Boot! 270 on myboot-79bfc988c8-ntb8d</span><br><span class="line">Aloha from Spring Boot! 348 on myboot-79bfc988c8-ttz5r</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">curl: (7) Failed to connect to 192.168.99.105 port 31218: Connection refused</span><br><span class="line">Bonjour from Spring Boot! 0 on myboot-757658fc4c-qnvqx</span><br><span class="line">Bonjour from Spring Boot! 1 on myboot-5955897c9b-zthj9</span><br></pre></td></tr></table></figure>
+
+<p>We will be working on those errors when we address Liveness and Readiness probes in Step 7</p>
+<p>For now, undo the update, going back to v1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl rollout undo deployment&#x2F;myboot</span><br></pre></td></tr></table></figure>
+
+<p>Scale to 1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale --replicas&#x3D;1 deployment&#x2F;myboot</span><br></pre></td></tr></table></figure>
+
+<p>Hit the sysresources endpoint</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl $(minikube -p 9steps ip):$(kubectl get service&#x2F;myboot -o jsonpath&#x3D;&quot;&#123;.spec.ports[*].nodePort&#125;&quot;)&#x2F;sysresources</span><br><span class="line"> Memory: 1324 Cores: 2</span><br></pre></td></tr></table></figure>
+
+<p>Note: you can use echo to see what this URL really looks like on your machine</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo $(minikube -p 9steps ip):$(kubectl get service&#x2F;myboot -o jsonpath&#x3D;&quot;&#123;.spec.ports[*].nodePort&#125;&quot;)&#x2F;sysresources</span><br><span class="line">192.168.99.105:30479&#x2F;sysresources</span><br></pre></td></tr></table></figure>
+
+<p>The results of the “sysresources” call should be about 1/4 memory and all the cores that were configured for the VM. You can double check this with the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ minikube config view</span><br><span class="line">- cpus: 2</span><br><span class="line">- memory: 6144</span><br><span class="line">- vm-driver: virtualbox</span><br></pre></td></tr></table></figure>
+
+<p>Now, let’s apply resource contraints via Kubernetes &amp; deployment yaml. Look at myboot-deployment-resources.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl replace -f kubefiles&#x2F;myboot-deployment-resources.yml</span><br></pre></td></tr></table></figure>
+
+<p>Curl sysresources again</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl $(minikube -p 9steps ip):$(kubectl get service&#x2F;myboot -o jsonpath&#x3D;&quot;&#123;.spec.ports[*].nodePort&#125;&quot;)&#x2F;sysresources</span><br><span class="line">Memory: 1324 Cores: 2</span><br></pre></td></tr></table></figure>
+
+<p>In another terminal window, watch the pods</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -w</span><br></pre></td></tr></table></figure>
+
+<p>and now curl the consume endpoint</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl $(minikube -p 9steps ip):$(kubectl get service&#x2F;myboot -o jsonpath&#x3D;&quot;&#123;.spec.ports[*].nodePort&#125;&quot;)&#x2F;consume</span><br></pre></td></tr></table></figure>
+
+<p>and you should see a OOMKilled</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -w</span><br><span class="line">NAME                      READY     STATUS    RESTARTS   AGE</span><br><span class="line">myboot-68d666dd8d-m9m5r   1&#x2F;1       Running   0          1m</span><br><span class="line">myboot-68d666dd8d-m9m5r   0&#x2F;1       OOMKilled   0         2m</span><br><span class="line">myboot-68d666dd8d-m9m5r   1&#x2F;1       Running   1         2m</span><br></pre></td></tr></table></figure>
+
+<p>And you can also see the OOMKilled with the kubectl describe command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe pod -l app&#x3D;myboot</span><br><span class="line">...</span><br><span class="line">    Last State:     Terminated</span><br><span class="line">      Reason:       OOMKilled</span><br><span class="line">      Exit Code:    137</span><br><span class="line">      Started:      Tue, 31 Jul 2018 13:42:18 -0400</span><br><span class="line">      Finished:     Tue, 31 Jul 2018 13:44:24 -0400</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="JIB"><a href="#JIB" class="headerlink" title="JIB"></a>JIB</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Build Docker Image and run:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(minishift docker-env)</span><br><span class="line">mvn compile jib:dockerBuild -Dimage=9stepsawesome/myboot:v1</span><br><span class="line">docker run -it -p 8080:8080 9stepsawesome/myboot:v1</span><br><span class="line">curl $(minishift ip):8080</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Minikube/" rel="tag"># Minikube</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/12/Kubernetes-Install/" rel="prev" title="Kubernetes Environment">
+                  <i class="fa fa-angle-left"></i> Kubernetes Environment
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/12/kubernetes-logs/" rel="next" title="Kubernetes Logs, Exec, Resource Constraint, ConfigMap, Secret">
+                  Kubernetes Logs, Exec, Resource Constraint, ConfigMap, Secret <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

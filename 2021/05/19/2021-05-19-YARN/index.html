@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskTracke">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YARN学习笔记">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskTracke">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-19-yarn-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-19-yarn-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/yarn_architecture.gif">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png">
+<meta property="article:published_time" content="2021-05-18T22:30:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.051Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Big Data">
+<meta property="article:tag" content="YARN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/","path":"2021/05/19/2021-05-19-YARN/","title":"YARN学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>YARN学习笔记 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-YARN%E4%BA%A7%E7%94%9F%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">1. YARN产生背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Hadoop-1-x%E4%B8%ADMapReduce%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Hadoop 1.x中MapReduce存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%8F%90%E9%AB%98%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E5%92%8C%E9%99%8D%E4%BD%8E%E8%BF%90%E7%BB%B4%E6%88%90%E6%9C%AC%E7%9A%84%E8%AF%89%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 提高资源利用率和降低运维成本的诉求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-YARN%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 YARN的诞生</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-YARN%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">2. YARN概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-YARN%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3. YARN架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-YARN%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">4. YARN执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-YARN%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">5. YARN环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E9%85%8D%E7%BD%AEYARN"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 配置YARN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%90%AF%E5%8A%A8Resource-Manager%E4%B8%8ENode-Manager"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 启动Resource Manager与Node Manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E9%AA%8C%E8%AF%81"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E5%81%9C%E6%AD%A2"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 停止</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A%E5%88%B0YARN%E4%B8%8A%E6%89%A7%E8%A1%8C"><span class="nav-number">6.</span> <span class="nav-text">6. 提交作业到YARN上执行</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="YARN学习笔记 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          YARN学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-19 06:30:00" itemprop="dateCreated datePublished" datetime="2021-05-19T06:30:00+08:00">2021-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
+<h2 id="1-YARN产生背景"><a href="#1-YARN产生背景" class="headerlink" title="1. YARN产生背景"></a>1. YARN产生背景</h2><h3 id="1-1-Hadoop-1-x中MapReduce存在的问题"><a href="#1-1-Hadoop-1-x中MapReduce存在的问题" class="headerlink" title="1.1 Hadoop 1.x中MapReduce存在的问题"></a>1.1 Hadoop 1.x中MapReduce存在的问题</h3><p>Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master/Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。</p>
+<ul>
+<li>JobTracker主要的功能是资源的管理与作业的调度。</li>
+<li>TaskTracker<ul>
+<li>定期（通过心跳）向JobTracker汇报本节点的健康状况、资源使用情况、作业执行情况。</li>
+<li>接收来自JobTracker的命令：启动任务、杀死任务</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png" alt="map-reduce"></p>
+<p>存在采用的Master的问题：</p>
+<ol>
+<li>单点故障：整个集群只有1个JobTracker。</li>
+<li>JobTracker要接受各个TaskTracker与client的通信请求，节点压力大。</li>
+<li>JobTracker承担了多种职责，且只能接受MapReduce的作业，不易扩展。</li>
+</ol>
+<h3 id="1-2-提高资源利用率和降低运维成本的诉求"><a href="#1-2-提高资源利用率和降低运维成本的诉求" class="headerlink" title="1.2 提高资源利用率和降低运维成本的诉求"></a>1.2 提高资源利用率和降低运维成本的诉求</h3><p><img src="https://liulixiang1988.github.io/images/2021-05-19-yarn-1.png" alt="resource usage"></p>
+<p>我们如果不同的作业类型（Hadoop、Spark、MPI）如果使用不同的集群，会需要更多的资源，同时资源利用率也比较低、运维需要维护多个集群，还存在跨网络的问题。</p>
+<p>如何将多种作业类型放在同一个集群，共享数据、计算资源，成为日益迫切的诉求。</p>
+<h3 id="1-3-YARN的诞生"><a href="#1-3-YARN的诞生" class="headerlink" title="1.3 YARN的诞生"></a>1.3 YARN的诞生</h3><p>基于上述两节，催生了YARN。可以在YARN上运行多种不同的计算框架。不同计算框架可以共享同一个HDFS集群上的数据，享受整体的资源调度。</p>
+<p>所谓的多种框架运行在YARN，就是常说的xxx on YARN，比如Spark/MapReduce/Flink on YARN. xxx on YARN的好处：与其他计算框架共享集群资源，按资源需要分配，进而提高集群资源的利用率。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-19-yarn-2.png" alt="resource usage"></p>
+<h2 id="2-YARN概述"><a href="#2-YARN概述" class="headerlink" title="2. YARN概述"></a>2. YARN概述</h2><p>官网地址：<a href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html</a></p>
+<ol>
+<li>YARN的名称其实是Yet Another Resource Negoitiator的首字母缩写；</li>
+<li>YARN是一个<strong>通用</strong>的资源管理系统；</li>
+<li>为上层的应用提供统一的资源管理和调度能力</li>
+<li>监控Node Manager，一旦某个Node Manager，那么该Node Manager上运行的任务，那么该Node Manager上运行的任务需要高速我们的Application Master</li>
+</ol>
+<h2 id="3-YARN架构"><a href="#3-YARN架构" class="headerlink" title="3. YARN架构"></a>3. YARN架构</h2><p><img src="https://liulixiang1988.github.io/images/yarn_architecture.gif" alt="yarn architecture"></p>
+<p><strong>Resource Manager:</strong></p>
+<ol>
+<li>同一时间，整个集群提供服务的Resource Manager只有一个，负责集群资源的统一管理与调度；</li>
+<li>处理客户端的请求：提交一个作业、杀死一个作业；</li>
+<li>监控Node Manager，一旦某个Node Master挂了，那么该Node Manager上运行的任务需要高速我们的Application Master如何进行重启。</li>
+</ol>
+<p><strong>Node Manager:</strong></p>
+<ol>
+<li>整个集群有多个，负责自己本身节点资源管理和使用；</li>
+<li>定时向Resource Manager本节点资源使用情况；</li>
+<li>接收并处理来自Resource Manager的各种命令：启动container；</li>
+<li>处理来自Application Master的命令；</li>
+<li>单个节点的资源管理。</li>
+</ol>
+<p><strong>Application Master:</strong></p>
+<ol>
+<li>每个应用程序对应一个：MapReduce、Spark，负责应用程序的管理；</li>
+<li>为应用程序向Resource Manager申请资源(core、memory)，分配给内部task；</li>
+<li>需要与Node Manager通信：启动/停止task，task是运行在container里面，Application Master也运行在container里面。</li>
+</ol>
+<p><strong>Container:</strong></p>
+<ol>
+<li>封装了CPU、Memory等资源的一个容器</li>
+<li>是一个任务运行环境的抽象</li>
+</ol>
+<p><strong>Client:</strong></p>
+<ol>
+<li>提交作业</li>
+<li>查询作业的运行进度</li>
+<li>杀死作业</li>
+</ol>
+<h2 id="4-YARN执行流程"><a href="#4-YARN执行流程" class="headerlink" title="4. YARN执行流程"></a>4. YARN执行流程</h2><p><img src="https://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png" alt="yarn architecture"></p>
+<ol>
+<li>用户向YARN提交作业；</li>
+<li>Resource Manager为第一个container分配节点，这个container用来启动application master;</li>
+<li>Node Manager为application master启动container;</li>
+<li>Application Master向Resource Manager进行注册。此时Client就可以通过Resource Manager查询任务的运行情况了。同时，Application Master为作业申请作业所需的资源；</li>
+<li>Application Master申请到资源之后向Node Manager申请运行任务所需要的资源；</li>
+<li>Node Manager为Application Master创建任务对应的container。</li>
+</ol>
+<p>上述流程是一个通用YARN任务流程，只需要按照YARN接口实现不同的Application Master，比如实现Map Reduce Application Master，或者Spark Application Master。</p>
+<h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><p><a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#YARN_on_a_Single_Node" target="_blank" rel="noopener">官方参考</a></p>
+<h3 id="5-1-配置YARN"><a href="#5-1-配置YARN" class="headerlink" title="5.1 配置YARN"></a>5.1 配置YARN</h3><p><code>etc/hadoop/mapred-site.xml</code>: 指定map reduce跑在yarn之上。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>etc/hadoop/yarn-site.xml</code> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-启动Resource-Manager与Node-Manager"><a href="#5-2-启动Resource-Manager与Node-Manager" class="headerlink" title="5.2 启动Resource Manager与Node Manager"></a>5.2 启动Resource Manager与Node Manager</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-验证"><a href="#5-3-验证" class="headerlink" title="5.3 验证"></a>5.3 验证</h3><p>方法1：jps:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liulixiang@DESKTOP-34LMJFE:/mnt/d/app/hadoop-2.10.1/sbin$ jps -l</span><br><span class="line">1597 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">1759 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br></pre></td></tr></table></figure>
+
+<p>方法2：访问：ResourceManager - <a href="http://localhost:8088/" target="_blank" rel="noopener">http://localhost:8088/</a></p>
+<h3 id="5-4-停止"><a href="#5-4-停止" class="headerlink" title="5.4 停止"></a>5.4 停止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./stop-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar</span><br></pre></td></tr></table></figure>
+
+<p>hadoop提供了一个命令提交作业：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar pi 2 3</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Big-Data/" rel="tag"># Big Data</a>
+              <a href="/tags/YARN/" rel="tag"># YARN</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/15/2021-05-15-HDFS/" rel="prev" title="HDFS学习笔记">
+                  <i class="fa fa-angle-left"></i> HDFS学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/14/2021-06-14-MapReduce/" rel="next" title="MapReduce学习笔记">
+                  MapReduce学习笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1.1 一个Spring的简单Java应用1.1.1 创建应用这里，我们用Gradle创建Spring的应用。 12345678910111213141516group &#39;lx.spring.core&#39;version &#39;1.0-SNAPSHOT&#39;apply plugin: &#39;java&#39;sourceCompatibility &#x3D; 1.8rep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring笔记01-构建应用">
+<meta property="og:url" content="https://liulixiang1988.github.io/2016/08/10/Spring%E7%AC%94%E8%AE%B001-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1.1 一个Spring的简单Java应用1.1.1 创建应用这里，我们用Gradle创建Spring的应用。 12345678910111213141516group &#39;lx.spring.core&#39;version &#39;1.0-SNAPSHOT&#39;apply plugin: &#39;java&#39;sourceCompatibility &#x3D; 1.8rep">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-08-10T09:29:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:20:45.506Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2016/08/10/Spring%E7%AC%94%E8%AE%B001-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2016/08/10/Spring%E7%AC%94%E8%AE%B001-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/","path":"2016/08/10/Spring笔记01-构建应用/","title":"Spring笔记01-构建应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring笔记01-构建应用 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%B8%80%E4%B8%AASpring%E7%9A%84%E7%AE%80%E5%8D%95Java%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1.1 一个Spring的简单Java应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1.1.1 创建应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E5%AE%9A%E4%B9%89entity"><span class="nav-number">1.2.</span> <span class="nav-text">1.1.2 定义entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E4%BD%BF%E7%94%A8Java%E6%B3%A8%E8%A7%A3%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%B0%83%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">1.1.3 使用Java注解来进行调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-%E8%BF%90%E8%A1%8C%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">1.1.4 运行应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%9F%BA%E4%BA%8EJava%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">1.2 基于Java的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Configuration%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">1.2.1 @Configuration注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Import%E5%92%8C-ImportResource%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">1.2.2 @Import和@ImportResource注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">1.3 基于注解的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Autowired%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.1.</span> <span class="nav-text">1.3.1 @Autowired注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-ComponentScan-Component-%E4%BB%A5%E5%8F%8A-Qualifier%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.2.</span> <span class="nav-text">1.3.2 @ComponentScan,@Component 以及@Qualifier注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-Resource%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.3.</span> <span class="nav-text">1.3.3 @Resource注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%9F%BA%E4%BA%8EXML%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">1.4 基于XML的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-XML%E9%85%8D%E7%BD%AE%E5%A3%B0%E6%98%8E"><span class="nav-number">4.1.</span> <span class="nav-text">1.4.1 XML配置声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E5%8A%A0%E8%BD%BDXML%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">1.4.2 加载XML配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-3-%E5%9C%A8XML%E9%85%8D%E7%BD%AE%E4%B8%AD%E4%BD%BF%E7%94%A8Bean%E6%89%AB%E6%8F%8F"><span class="nav-number">4.3.</span> <span class="nav-text">1.4.3 在XML配置中使用Bean扫描</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/10/Spring%E7%AC%94%E8%AE%B001-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring笔记01-构建应用 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring笔记01-构建应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-10 17:29:00" itemprop="dateCreated datePublished" datetime="2016-08-10T17:29:00+08:00">2016-08-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:20:45" itemprop="dateModified" datetime="2020-06-27T23:20:45+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-1-一个Spring的简单Java应用"><a href="#1-1-一个Spring的简单Java应用" class="headerlink" title="1.1 一个Spring的简单Java应用"></a>1.1 一个Spring的简单Java应用</h2><h3 id="1-1-1-创建应用"><a href="#1-1-1-创建应用" class="headerlink" title="1.1.1 创建应用"></a>1.1.1 创建应用</h3><p>这里，我们用Gradle创建Spring的应用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">group &#39;lx.spring.core&#39;</span><br><span class="line">version &#39;1.0-SNAPSHOT&#39;</span><br><span class="line"></span><br><span class="line">apply plugin: &#39;java&#39;</span><br><span class="line"></span><br><span class="line">sourceCompatibility &#x3D; 1.8</span><br><span class="line"></span><br><span class="line">repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile group: &#39;org.springframework&#39;, name: &#39;spring-context&#39;, version: &#39;4.3.2.RELEASE&#39;</span><br><span class="line">    testCompile group: &#39;org.springframework&#39;, name: &#39;spring-test&#39;, version: &#39;4.3.2.RELEASE&#39;</span><br><span class="line">    testCompile group: &#39;junit&#39;, name: &#39;junit&#39;, version: &#39;4.11&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-定义entity"><a href="#1-1-2-定义entity" class="headerlink" title="1.1.2 定义entity"></a>1.1.2 定义entity</h3><p>spring希望我们尽可能的使用接口，因此，我们声明，<code>Team</code>, <code>Game</code>接口，然后创建对应的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interface Team &#123;</span><br><span class="line">    String getName();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface Game &#123;</span><br><span class="line">    void setHomeTeam(Team team);</span><br><span class="line">    Team getHomeTeam();</span><br><span class="line">    void setAwayTeam(Team team);</span><br><span class="line">    Team getAwayTeam();</span><br><span class="line">    String playGame();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的实现类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public class Cubs implements Team &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return &quot;Chicago Cubs&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RedSox implements Team &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return &quot;Bostom Red Sox&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Royals implements Team &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return &quot;Kansas City Royals&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BaseballGame implements Game &#123;</span><br><span class="line">    private Team homeTeam;</span><br><span class="line">    private Team awayTeam;</span><br><span class="line"></span><br><span class="line">    public BaseballGame() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BaseballGame(Team homeTeam, Team awayTeam) &#123;</span><br><span class="line">        this.homeTeam &#x3D; homeTeam;</span><br><span class="line">        this.awayTeam &#x3D; awayTeam;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Team getHomeTeam() &#123;</span><br><span class="line">        return homeTeam;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void setHomeTeam(Team homeTeam) &#123;</span><br><span class="line">        this.homeTeam &#x3D; homeTeam;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Team getAwayTeam() &#123;</span><br><span class="line">        return awayTeam;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void setAwayTeam(Team awayTeam) &#123;</span><br><span class="line">        this.awayTeam &#x3D; awayTeam;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String playGame() &#123;</span><br><span class="line">        return Math.random() &lt; 0.5 ? getHomeTeam().getName() :</span><br><span class="line">                getAwayTeam().getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-3-使用Java注解来进行调用"><a href="#1-1-3-使用Java注解来进行调用" class="headerlink" title="1.1.3 使用Java注解来进行调用"></a>1.1.3 使用Java注解来进行调用</h3><p>为了让我们的应用能够使用定义的entity，我们需要做配置，配置的方法多种多样，我们这里使用Java对象进行配置，创建一个配置类<code>AppConfig</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public Game game() &#123;</span><br><span class="line">        return new BaseballGame(redSox(), cubs());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Team redSox() &#123;</span><br><span class="line">        return new RedSox();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Team cubs() &#123;</span><br><span class="line">        return new Cubs();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里的<code>game()</code>方法中调用了<code>redSox()</code>和<code>cubs()</code>方法，后面我们会进行讲解。</p>
+<h3 id="1-1-4-运行应用"><a href="#1-1-4-运行应用" class="headerlink" title="1.1.4 运行应用"></a>1.1.4 运行应用</h3><p>现在有了bean和对应的config，我们可以对他们进行调用了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import lx.spring.core.entities.Game;</span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"></span><br><span class="line">public class RunDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context &#x3D; new AnnotationConfigApplicationContext(AppConfig.class);</span><br><span class="line"></span><br><span class="line">        Game game &#x3D; context.getBean(&quot;game&quot;, Game.class);</span><br><span class="line">        System.out.println(game.playGame());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由此可见Spring隐藏了细节，让代码变得简单。</p>
+<h2 id="1-2-基于Java的配置"><a href="#1-2-基于Java的配置" class="headerlink" title="1.2 基于Java的配置"></a>1.2 基于Java的配置</h2><p>基于Java的配置是目前Spring应用的推荐做法。之前有做法是基于XML进行配置的。</p>
+<p>为什么现在推荐用java进行配置呢？</p>
+<p>因为这样做能让配置集中，有时候一个java文件就能包含所有配置了。其次，能让IDE进行错误提示。最后，可以利用Java语言的强大功能做一些其他工作。</p>
+<p>使用Java进行配置的缺点是你要记住你的源码中有一些是既不属于业务，也不属于repository，而只是配置文件。</p>
+<p>我们来看看之前的注解。文档在<a href="http://docs.spring.io/spring/docs/current/javadoc-api/" target="_blank" rel="noopener">http://docs.spring.io/spring/docs/current/javadoc-api/</a> </p>
+<h3 id="1-2-1-Configuration注解"><a href="#1-2-1-Configuration注解" class="headerlink" title="1.2.1 @Configuration注解"></a>1.2.1 <code>@Configuration</code>注解</h3><p>文档中关于<code>@Cofiguration</code>注解内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Target(value&#x3D;TYPE)</span><br><span class="line"> @Retention(value&#x3D;RUNTIME)</span><br><span class="line"> @Documented</span><br><span class="line"> @Component</span><br><span class="line">public @interface Configuration</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Indicates that a class declares one or more @Bean methods and may be processed by the Spring container to generate bean definitions and service requests for those beans at runtime, for example:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">     @Bean</span><br><span class="line">     public MyBean myBean() &#123;</span><br><span class="line">         &#x2F;&#x2F; instantiate, configure and return bean ...</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于上面的<code>public MyBean myBean()</code>方法，在XML中<code>myBean</code>对应ID（每个Bean都有一个唯一的ID），<code>MyBean</code>则对应XML中的类型。也就是说我们有一个叫做<code>myBean</code>的Bean，类型是<code>MyBean</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public Game game() &#123;</span><br><span class="line">        return new BaseballGame(redSox(), cubs());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Team redSox() &#123;</span><br><span class="line">        return new RedSox();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Team cubs() &#123;</span><br><span class="line">        return new Cubs();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在我们的例子中，<code>game</code>这个Bean又调用了<code>redSox()</code>和<code>cubs()</code>，后面我们会详细解释Bean的范围。现在我们要知道一件事情就是，基本上，Spring会假设这些类都是单例的，也就是如果实例不存在，就实例化，然后放入Spring Context中，如果实例存在，就返回实例。</p>
+<p>要启动一个Spring容器，我们使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext context &#x3D; </span><br><span class="line">	new AnnotationConfigApplicationContext(AppConfig.class);</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，我们还可以从Context中获取其他信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;获取Bean的数量</span><br><span class="line">System.out.println(&quot;Bean的数量&quot; + context.getBeanDefinitionCount());</span><br><span class="line">&#x2F;&#x2F;获取Bean的名称</span><br><span class="line">for (String name :</span><br><span class="line">        context.getBeanDefinitionNames()) &#123;</span><br><span class="line">    System.out.println(name );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Bean的数量12</span><br><span class="line">org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">org.springframework.context.annotation.internalAutowiredAnnotationProcessor</span><br><span class="line">org.springframework.context.annotation.internalRequiredAnnotationProcessor</span><br><span class="line">org.springframework.context.annotation.internalCommonAnnotationProcessor</span><br><span class="line">org.springframework.context.event.internalEventListenerProcessor</span><br><span class="line">org.springframework.context.event.internalEventListenerFactory</span><br><span class="line">appConfig</span><br><span class="line">org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor</span><br><span class="line">org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor</span><br><span class="line">redSox</span><br><span class="line">cubs</span><br><span class="line">game</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，除了自己的Bean之外，还有一些其他的基础设施Bean，此外<code>appConfig</code>本身也是一个Bean.</p>
+<h3 id="1-2-2-Import和-ImportResource注解"><a href="#1-2-2-Import和-ImportResource注解" class="headerlink" title="1.2.2 @Import和@ImportResource注解"></a>1.2.2 <code>@Import</code>和<code>@ImportResource</code>注解</h3><p>与<code>@Cofiguration</code>能一起用的还有:</p>
+<ul>
+<li><code>@Import</code> 可以从别的Config中导入配置</li>
+<li><code>@ImportResource</code> 从非Java文件中导入配置，比如从XML文件中导入配置</li>
+</ul>
+<p>这些能够用于项目模块比较多的情况下。</p>
+<p>现在，我们新建一个类<code>InfrastructureConfig</code>，一般来说基础设置配置的是数据库连接池、或者其他数据源等。 但是现在我们需要修改<code>build.gradle</code>来添加<code>spring-jdbc</code>依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile group: &#39;org.springframework&#39;, name: &#39;spring-jdbc&#39;, version: &#39;4.3.2.RELEASE&#39;</span><br></pre></td></tr></table></figure>
+
+<p><code>InfrastructureConfig</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package lx.spring.core;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.jdbc.datasource.DriverManagerDataSource;</span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class InfrastructureConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public DataSource dataSource() &#123;</span><br><span class="line">        return new DriverManagerDataSource();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们可以在<code>AppConfig</code>中使用<code>InfrastructureConfig</code>了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@Import(InfrastructureConfig.class)</span><br><span class="line">public class AppConfig &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在假设我们的<code>BaseballGame</code>需要一个<code>DataSource</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class BaseballGame implements Game &#123;</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    public void setDataSource(DataSource dataSource) &#123;</span><br><span class="line">        this.dataSource &#x3D; dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们再修改<code>AppConfig</code>，让Bean自动配置<code>DataSource</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public Game game(DataSource dataSource) &#123;</span><br><span class="line">    BaseballGame game &#x3D; new BaseballGame(redSox(), cubs());</span><br><span class="line">    game.setDataSource(dataSource);</span><br><span class="line">    return game;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，我们给<code>game()</code>这个Bean添加了参数<code>DataSource</code>，Spring会自动根据参数来查找对应的Bean（这里这个Bean在<code>InfrastructureConfig</code>中），然后产生一个参数，来进行配置。</p>
+<p>以上就是用Java进行配置的方法，下面我们用基于注解的配置。</p>
+<h2 id="1-3-基于注解的配置"><a href="#1-3-基于注解的配置" class="headerlink" title="1.3 基于注解的配置"></a>1.3 基于注解的配置</h2><p>这一节我们需要接触两个概念：<code>Autowired</code>、<code>ComponentScan</code>和<code>Component</code>。</p>
+<h3 id="1-3-1-Autowired注解"><a href="#1-3-1-Autowired注解" class="headerlink" title="1.3.1 @Autowired注解"></a>1.3.1 <code>@Autowired</code>注解</h3><p>我们再来看看之前关于<code>game</code>的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@Import(InfrastructureConfig.class)</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public Game game(DataSource dataSource) &#123;</span><br><span class="line">        BaseballGame game &#x3D; new BaseballGame(redSox(), cubs());</span><br><span class="line">        game.setDataSource(dataSource);</span><br><span class="line">        return game;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，如果我们不知道<code>InfrastructureConfig</code>里的内容的话，<code>DataSouce</code>看起来有些奇怪，我们可以使用<code>Autowired</code>来寻找所有的Bean并且找到匹配的Bean:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">...</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired &#x2F;&#x2F;重点在这里</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line">    @Bean</span><br><span class="line">    public Game game() &#123; &#x2F;&#x2F;此处已经不需要参数了</span><br><span class="line">        BaseballGame game &#x3D; new BaseballGame(redSox(), cubs());</span><br><span class="line">        game.setDataSource(dataSource); &#x2F;&#x2F;直接引用</span><br><span class="line">        return game;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ol>
+<li><code>@Autowired</code>意味着自动按照<strong>类型</strong>触发，也就是<strong>只有一个</strong>这种<strong>类型</strong>的<strong>Bean</strong>时才起作用。</li>
+<li><code>@Autowired</code>对Bean的声明形式没有要求，可以是XML, Java或者使用<code>@Component</code>等声明。</li>
+</ol>
+<p>我们之前系统里只有一个<code>DataSource</code>，所以这么做没问题，但是如果我们将这种方法用到<code>BaseballGame</code>身上，就会有问题。下面我们来看看如何解决这个问题。</p>
+<h3 id="1-3-2-ComponentScan-Component-以及-Qualifier注解"><a href="#1-3-2-ComponentScan-Component-以及-Qualifier注解" class="headerlink" title="1.3.2 @ComponentScan,@Component 以及@Qualifier注解"></a>1.3.2 <code>@ComponentScan</code>,<code>@Component</code> 以及<code>@Qualifier</code>注解</h3><p><code>@ComponentScan</code>会扫描当前文件夹及其子文件夹下，但是最好指定<code>basePackages</code>参数，告诉它从哪里开始扫描。 </p>
+<p>现在我们再次修改<code>AppConfig</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages &#x3D; &quot;lx.spring.core&quot;)</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    @Autowired @Qualifier(&quot;redSox&quot;)</span><br><span class="line">    private Team home;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Autowired @Qualifier(&quot;cubs&quot;)</span><br><span class="line">    private Team away;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Game game() &#123;</span><br><span class="line">        BaseballGame game &#x3D; new BaseballGame(home, away);</span><br><span class="line">        game.setDataSource(dataSource);</span><br><span class="line">        return game;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里的<code>@Qualifier</code>就是前面说的如果存在多个相同类型的Bean时，如何让<code>@Autowired</code>能正常工作的解决方法。</p>
+<p>另外，我们还需要对<code>RedSox</code>和<code>Cubs</code>类添加<code>@Component</code>注解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class RedSox implements Team &#123;...&#125;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class Cubs implements Team &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用注解声明的优点：我们不需要单独写Bean的配置，只需要声明就可以了。但这也有一些潜在的缺点：Bean可能散布在整个项目中，那我们需要大量的扫描，但是在现实中，我们一般会把Bean放到一个特殊的包中。一般来说，主要有下面几种常用的包：</p>
+<ul>
+<li>repositories</li>
+<li>services</li>
+<li>controllers</li>
+</ul>
+<p><strong>注意</strong>，扫描只在应用启动时进行一次，运行的时候是不会再扫描的。</p>
+<h3 id="1-3-3-Resource注解"><a href="#1-3-3-Resource注解" class="headerlink" title="1.3.3 @Resource注解"></a>1.3.3 <code>@Resource</code>注解</h3><p>Java提供了一个标准的注解<code>@Resource</code>，也是用来自动触发，但与Spring的<code>Autowired</code>不同，它不是按照类型，而是<strong>按照名字</strong>触发。 </p>
+<p>下面的例子是就是Spring根据变量的名字去找对应的Bean.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import javax.annotation.Resource;</span><br><span class="line">...</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Resource</span><br><span class="line">    private Team redSox;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private Team cubs;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Game game() &#123;</span><br><span class="line">        BaseballGame game &#x3D; new BaseballGame(redSox, cubs);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但一般我们好少这么做，因为这样的话我们就没法改变量的名字了。</p>
+<p>现在我们学习了使用Java配置、使用注解配置，接下来我们来看看使用XML进行配置，有点丑，但之前一直这么用，所以还是了解一下比较好。</p>
+<h2 id="1-4-基于XML的配置"><a href="#1-4-基于XML的配置" class="headerlink" title="1.4 基于XML的配置"></a>1.4 基于XML的配置</h2><p>对于基于注解的配置，我们必须要有源码才行。对于基于Java的配置，则是有些库根本就不支持这样的做法。XML配置有时会提供一些比较简便的配置方法，因此我们最好还是了解一下。 </p>
+<h3 id="1-4-1-XML配置声明"><a href="#1-4-1-XML配置声明" class="headerlink" title="1.4.1 XML配置声明"></a>1.4.1 XML配置声明</h3><p>我们在<code>main/resources</code>下创建<code>applicationContext.xml</code>，注意，在IDEA中请用<code>new-&gt;XML Configuration File-&gt;Spring config</code>来新建。</p>
+<p>为了方便，现在，我们先把<code>AppConfig</code>中的内容注释掉，把<code>RunDemo</code>的调用容器的也注释掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;</span><br><span class="line">       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;</span><br><span class="line">       </span><br><span class="line">    &lt;bean id&#x3D;&quot;redSox&quot; class&#x3D;&quot;lx.spring.core.entities.RedSox&quot;&#x2F;&gt;</span><br><span class="line">    &lt;bean id&#x3D;&quot;cubs&quot; class&#x3D;&quot;lx.spring.core.entities.Cubs&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id&#x3D;&quot;game&quot; class&#x3D;&quot;lx.spring.core.entities.BaseballGame&quot;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;awayTeam&quot; ref&#x3D;&quot;redSox&quot; &#x2F;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;homeTeam&quot; ref&#x3D;&quot;cubs&quot; &#x2F;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id&#x3D;&quot;dataSource&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Bean由3部分组成，<code>id</code>, <code>class</code>和<code>property</code>。注意<code>property</code>可以使用<code>ref</code>来引用其他的Bean，也可以使用<code>value</code>来指定值。</p>
+<h3 id="1-4-2-加载XML配置"><a href="#1-4-2-加载XML配置" class="headerlink" title="1.4.2 加载XML配置"></a>1.4.2 加载XML配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>，此时输出的Bean的数量只有4个（也就是XML中声明的数量）。</p>
+<h3 id="1-4-3-在XML配置中使用Bean扫描"><a href="#1-4-3-在XML配置中使用Bean扫描" class="headerlink" title="1.4.3 在XML配置中使用Bean扫描"></a>1.4.3 在XML配置中使用Bean扫描</h3><p>我们要使用Bean扫描该怎么办呢？我们给XML添加命名空间就好了。</p>
+<pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/beans/spring-context.xsd&quot;&gt;
+
+    &lt;context:component-scan base-package=&quot;lx.spring.core&quot;/&gt;
+    ...</code></pre><p>这个时候除了<code>DataSource</code>需要声明外，其他的Bean不需要再XML文件中声明，只需要像之前那样使用注解声明就可以了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java-Spring/" rel="tag"># Java, Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/08/09/Netty%E7%AC%94%E8%AE%B003-Netty%E7%BB%84%E4%BB%B6%E5%92%8C%E8%AE%BE%E8%AE%A1/" rel="prev" title="Netty笔记03-Netty组件和设计">
+                  <i class="fa fa-angle-left"></i> Netty笔记03-Netty组件和设计
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/08/11/Spring%E7%AC%94%E8%AE%B002-%E9%85%8D%E7%BD%AEBean/" rel="next" title="Spring笔记02-配置Bean">
+                  Spring笔记02-配置Bean <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

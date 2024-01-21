@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 页面整体分析做一个网页或者网站，第一步就是先定义网页与网站的结构，这是所有任务的前提。  2 准备工作在这个案例中，我们将使用Gulp, SASS和Compass来创建。 2.1 安装GulpGulp是为了后期进行自动化工作而做的。  如果电脑没有安装node，那么第一步就是下载node，并且安装。 安装http-server来查看网页: npm install -g http-server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS3扁平化风格博客">
+<meta property="og:url" content="https://liulixiang1988.github.io/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1. 页面整体分析做一个网页或者网站，第一步就是先定义网页与网站的结构，这是所有任务的前提。  2 准备工作在这个案例中，我们将使用Gulp, SASS和Compass来创建。 2.1 安装GulpGulp是为了后期进行自动化工作而做的。  如果电脑没有安装node，那么第一步就是下载node，并且安装。 安装http-server来查看网页: npm install -g http-server">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-07-08T11:39:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T05:07:30.625Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="CSS3">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/","path":"2015/07/08/CSS3扁平化风格博客/","title":"CSS3扁平化风格博客"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CSS3扁平化风格博客 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A1%B5%E9%9D%A2%E6%95%B4%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">1. 页面整体分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">2 准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85Gulp"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装Gulp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%AE%89%E8%A3%85SASS%E4%B8%8ECompass"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 安装SASS与Compass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E4%BD%BF%E7%94%A8Compass%E9%85%8D%E7%BD%AESASS"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 使用Compass配置SASS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E9%85%8D%E7%BD%AEbower"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 配置bower</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E5%88%9B%E5%BB%BAgulp%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 创建gulp任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90%E4%B8%8E%E7%BB%86%E8%8A%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">3. 模块分析与细节实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%87%8D%E7%BD%AE%E6%A0%B7%E5%BC%8F%E4%B8%8E%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 重置样式与文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%A1%B5%E5%A4%B4%E3%80%81Banner%E3%80%81%E6%AD%A3%E6%96%87%E3%80%81%E9%A1%B5%E8%84%9A%E7%9A%84%E5%AE%8F%E8%A7%82%E5%B8%83%E5%B1%80"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 页头、Banner、正文、页脚的宏观布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%A1%B5%E5%A4%B4%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%B8%83%E5%B1%80"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 页头结构分析及布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%AD%A3%E6%96%87%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%B8%83%E5%B1%80"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 正文部分结构分析及布局</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CSS3扁平化风格博客 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSS3扁平化风格博客
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-07-08 19:39:00" itemprop="dateCreated datePublished" datetime="2015-07-08T19:39:00+08:00">2015-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 13:07:30" itemprop="dateModified" datetime="2020-06-27T13:07:30+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-页面整体分析"><a href="#1-页面整体分析" class="headerlink" title="1. 页面整体分析"></a>1. 页面整体分析</h2><p>做一个网页或者网站，第一步就是先定义网页与网站的结构，这是所有任务的前提。</p>
+<hr>
+<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2 准备工作"></a>2 准备工作</h2><p>在这个案例中，我们将使用Gulp, SASS和Compass来创建。</p>
+<h3 id="2-1-安装Gulp"><a href="#2-1-安装Gulp" class="headerlink" title="2.1 安装Gulp"></a>2.1 安装Gulp</h3><p>Gulp是为了后期进行自动化工作而做的。</p>
+<ul>
+<li>如果电脑没有安装node，那么第一步就是下载node，并且安装。</li>
+<li>安装http-server来查看网页: <code>npm install -g http-server</code> </li>
+<li>全局安装gulp: <code>sudo npm install -g gulp</code> </li>
+<li>初始化项目： <code>npm init</code> </li>
+<li>安装gulp及常用库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp --save-dev</span><br><span class="line">npm install gulp-concat --save-dev</span><br><span class="line">npm install gulp-uglify --save-dev</span><br><span class="line">npm install gulp-rename --save-dev</span><br><span class="line">npm install gulp-minify-css --save-dev</span><br><span class="line">npm install gulp-sass --save-dev</span><br><span class="line">npm install gulp-compass --save-dev</span><br><span class="line">npm install gulp-sourcemaps</span><br><span class="line">npm install del --save-dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-安装SASS与Compass"><a href="#2-2-安装SASS与Compass" class="headerlink" title="2.2 安装SASS与Compass"></a>2.2 安装SASS与Compass</h3><ul>
+<li>如果没有安装ruby，请先安装ruby</li>
+<li>配置ruby gem的source:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ gem sources --remove https:&#x2F;&#x2F;rubygems.org&#x2F;</span><br><span class="line">$ gem sources -a https:&#x2F;&#x2F;ruby.taobao.org&#x2F;</span><br><span class="line">$ gem sources -l</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line">https:&#x2F;&#x2F;ruby.taobao.org</span><br><span class="line"></span><br><span class="line"># 请确保只有 ruby.taobao.org</span><br><span class="line">$ gem install rails #安装</span><br><span class="line">$ gem update #更新</span><br><span class="line">$ gem install sass --version&#x3D;3.3</span><br><span class="line">$gem uninstall sass</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装SASS</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$gem install sass</span><br><span class="line">$gem install sass --version&#x3D;3.3</span><br><span class="line">$sass -v</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装Compass</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem isntall compass</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们来配置项目</p>
+<h3 id="2-3-使用Compass配置SASS"><a href="#2-3-使用Compass配置SASS" class="headerlink" title="2.3 使用Compass配置SASS"></a>2.3 使用Compass配置SASS</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compass create</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，我们使用 <code>compass create [项目名]</code> 来创建项目，但是我们在之前已经使用 <code>node init</code> 初始化过了，所以此处我们略去项目名。</p>
+<h3 id="2-4-配置bower"><a href="#2-4-配置bower" class="headerlink" title="2.4 配置bower"></a>2.4 配置bower</h3><p>创建 <code>.bowerrc</code> 文件，然后添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;directory&quot;: &quot;lib&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是指定bower安装的第三方库都在lib目录下。</p>
+<h3 id="2-5-创建gulp任务"><a href="#2-5-创建gulp任务" class="headerlink" title="2.5 创建gulp任务"></a>2.5 创建gulp任务</h3><p>在根目录下创建gulpfile.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">var gulp &#x3D; require(&#39;gulp&#39;),</span><br><span class="line">    concat &#x3D; require(&#39;gulp-concat&#39;),</span><br><span class="line">    uglify &#x3D; require(&#39;gulp-uglify&#39;),</span><br><span class="line">    rename &#x3D; require(&#39;gulp-rename&#39;),</span><br><span class="line">    compass &#x3D; require(&#39;gulp-compass&#39;),</span><br><span class="line">    minifyCss &#x3D; require(&#39;gulp-minify-css&#39;),</span><br><span class="line">    maps &#x3D; require(&#39;gulp-sourcemaps&#39;),</span><br><span class="line">    del &#x3D; require(&#39;del&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;编译JavaScript</span><br><span class="line">gulp.task(&#39;concatScripts&#39;, function() &#123;</span><br><span class="line">    return gulp.src([</span><br><span class="line">            &#39;js&#x2F;jquery.js&#39;,</span><br><span class="line">            &#39;js&#x2F;main.js&#39;</span><br><span class="line">        ])</span><br><span class="line">        .pipe(maps.init())</span><br><span class="line">        .pipe(concat(&quot;app.js&quot;))</span><br><span class="line">        .pipe(maps.write(&#39;.&#x2F;&#39;))</span><br><span class="line">        .pipe(gulp.dest(&#39;js&#39;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;压缩JavaScript</span><br><span class="line">gulp.task(&#39;minifyScripts&#39;, [&#39;concatScripts&#39;], function() &#123;</span><br><span class="line">    return gulp.src(&quot;js&#x2F;app.js&quot;)</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(rename(&#39;app.min.js&#39;))</span><br><span class="line">        .pipe(gulp.dest(&#39;js&#39;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;编译SASS</span><br><span class="line">gulp.task(&#39;compileSass&#39;, function() &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;scss&#x2F;*.scss&#39;)</span><br><span class="line">        .pipe(compass(&#123;</span><br><span class="line">            config_file: &#39;.&#x2F;config.rb&#39;,</span><br><span class="line">            css: &#39;css&#39;,</span><br><span class="line">            sass: &#39;scss&#39;,</span><br><span class="line">            sourcemap: true</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(&#39;css&#39;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;压缩CSS</span><br><span class="line">gulp.task(&#39;minifyCss&#39;, [&#39;compileSass&#39;], function()&#123;</span><br><span class="line">    return gulp.src(&quot;css&#x2F;application.css&quot;)</span><br><span class="line">        .pipe(minifyCss(&#123;compatibility: &#39;ie8&#39;&#125;))</span><br><span class="line">        .pipe(rename(&#39;application.min.css&#39;))</span><br><span class="line">        .pipe(gulp.dest(&#39;css&#39;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;监视</span><br><span class="line">gulp.task(&#39;watchFiles&#39;, function() &#123;</span><br><span class="line">    gulp.watch([&#39;scss&#x2F;**&#x2F;*.scss&#39;, &#39;scss&#x2F;*.scss&#39;], [&#39;compileSass&#39;]);</span><br><span class="line">    gulp.watch(&#39;js&#x2F;main.js&#39;, [&#39;concatScripts&#39;]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;清理</span><br><span class="line">gulp.task(&#39;clean&#39;, function() &#123;</span><br><span class="line">    del([&#39;dist&#39;, &#39;css&#x2F;application*.css*&#39;, &#39;js&#x2F;app*.js*&#39;]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;构建</span><br><span class="line">gulp.task(&#39;build&#39;, [&quot;minifyScripts&quot;, &quot;minifyCss&quot;], function() &#123;</span><br><span class="line">    gulp.src([&quot;css&#x2F;application.min.css&quot;,</span><br><span class="line">            &quot;js&#x2F;app.min.js&quot;,</span><br><span class="line">            &quot;index.html&quot;,</span><br><span class="line">            &quot;img&#x2F;**&quot;,</span><br><span class="line">            &quot;fonts&#x2F;**&quot;</span><br><span class="line">        ], &#123;</span><br><span class="line">            base: &#39;.&#x2F;&#39;</span><br><span class="line">        &#125;)</span><br><span class="line">        .pipe(gulp.dest(&#39;dist&#39;))</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;服务</span><br><span class="line">gulp.task(&#39;serve&#39;, [&#39;watchFiles&#39;]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;默认任务</span><br><span class="line">gulp.task(&#39;default&#39;, [&#39;clean&#39;], function() &#123;</span><br><span class="line">    gulp.start(&#39;build&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>目前为止我们的目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">├── config.rb</span><br><span class="line">├── css</span><br><span class="line">├── fonts</span><br><span class="line">├── gulpfile.js</span><br><span class="line">├── img</span><br><span class="line">│   ├── banner.jpg</span><br><span class="line">│   ├── pic01.jpg</span><br><span class="line">│   ├── pic02.jpg</span><br><span class="line">│   └── pic03.jpg</span><br><span class="line">├── index.html</span><br><span class="line">├── js</span><br><span class="line">│   ├── jquery.js</span><br><span class="line">│   └── main.js</span><br><span class="line">├── lib</span><br><span class="line">├── node_modules</span><br><span class="line">│   ├── del</span><br><span class="line">│   ├── gulp</span><br><span class="line">│   ├── gulp-compass</span><br><span class="line">│   ├── gulp-concat</span><br><span class="line">│   ├── gulp-rename</span><br><span class="line">│   ├── gulp-sass</span><br><span class="line">│   ├── gulp-sourcemaps</span><br><span class="line">│   └── gulp-uglify</span><br><span class="line">├── package.json</span><br><span class="line">└── scss</span><br><span class="line">    ├── application.scss</span><br><span class="line">    └── base</span><br><span class="line">        └── _normalize.scss</span><br></pre></td></tr></table></figure>
+
+<p>经过一番配置，后面我们只需要运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp serve</span><br></pre></td></tr></table></figure>
+
+<p>就可以监视文件的变化，并且自动进行编译了。</p>
+<hr>
+<h2 id="3-模块分析与细节实现"><a href="#3-模块分析与细节实现" class="headerlink" title="3. 模块分析与细节实现"></a>3. 模块分析与细节实现</h2><h3 id="3-1-重置样式与文件结构"><a href="#3-1-重置样式与文件结构" class="headerlink" title="3.1 重置样式与文件结构"></a>3.1 重置样式与文件结构</h3><p>我们使用normalize来对样式进行重置，normailze的SCSS版本在这里：<a href="https://github.com/JohnAlbin/normalize-scss" target="_blank" rel="noopener">https://github.com/JohnAlbin/normalize-scss</a> 下载到 <code>scss/base/_normalize.scss</code> 。</p>
+<p>然后打开 <code>application.scss</code> ，引入:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;base&#x2F;normalize&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>就完成对页面的重置了。<br>如果此时定义一个页面如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">      &lt;link href&#x3D;&quot;css&#x2F;application.css&quot; media&#x3D;&quot;screen, projection&quot; rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id&#x3D;&quot;div1&quot;&gt;</span><br><span class="line">            &lt;h1&gt;标题1&lt;&#x2F;h1&gt;</span><br><span class="line">            &lt;h2&gt;标题2&lt;&#x2F;h2&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;item 01&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;li&gt;item 02&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;li&gt;item 03&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;li&gt;item 04&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;li&gt;item 05&lt;&#x2F;li&gt;</span><br><span class="line">            &lt;&#x2F;ul&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时运行 <code>http-server</code> 可以再浏览器的 <code>localhost:8080</code> 中进行查看。</p>
+<h3 id="3-2-页头、Banner、正文、页脚的宏观布局"><a href="#3-2-页头、Banner、正文、页脚的宏观布局" class="headerlink" title="3.2 页头、Banner、正文、页脚的宏观布局"></a>3.2 页头、Banner、正文、页脚的宏观布局</h3><p>布局一直都是从大到小，因此刚开始不必对细节过分关注。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;理想的博客&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;link href&#x3D;&quot;css&#x2F;application.css&quot; media&#x3D;&quot;screen, projection&quot; rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;!-- 页头 --&gt;</span><br><span class="line">    &lt;header id&#x3D;&quot;header&quot; class&#x3D;&quot;&quot;&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">        &lt;&#x2F;nav&gt;</span><br><span class="line">        &lt;div id&#x3D;&quot;banner&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;header&gt;</span><br><span class="line">    &lt;!-- &#x2F;页头 --&gt;</span><br><span class="line">    &lt;!-- &#x2F;内容 --&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;content&quot;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;!-- &#x2F;内容 --&gt;</span><br><span class="line">    &lt;!-- 页脚 --&gt;</span><br><span class="line">    &lt;footer&gt;</span><br><span class="line">    &lt;&#x2F;footer&gt;</span><br><span class="line">    &lt;!-- &#x2F;页脚 --&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-页头结构分析及布局"><a href="#3-3-页头结构分析及布局" class="headerlink" title="3.3 页头结构分析及布局"></a>3.3 页头结构分析及布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;header id&#x3D;&quot;header&quot; class&#x3D;&quot;&quot;&gt;</span><br><span class="line">    &lt;nav&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;logo&quot;&gt;&lt;a href&#x3D;&quot;#&quot; &gt;理想&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li class&#x3D;&quot;active&quot;&gt;&lt;a href&#x3D;&quot;#&quot;&gt;首页&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;链接2&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;链接3&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href&#x3D;&quot;#&quot;&gt;链接4&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">        &lt;&#x2F;ul&gt;</span><br><span class="line">    &lt;&#x2F;nav&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;banner&quot;&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;inner&quot;&gt;</span><br><span class="line">            &lt;h1&gt;刘理想&lt;&#x2F;h1&gt;</span><br><span class="line">            &lt;p class&#x3D;&quot;sub-heading&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui cupiditate quia modi dignissimos .&lt;&#x2F;p&gt;</span><br><span class="line">            &lt;button&gt;了解我&lt;&#x2F;button&gt;</span><br><span class="line">            &lt;div class&#x3D;&quot;more&quot;&gt;更多&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;header&gt;</span><br></pre></td></tr></table></figure>
+
+<p>定义 <code>_header.scss</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">nav &#123;</span><br><span class="line">    background: $navbar-bgColor;</span><br><span class="line">    height: $navbar-height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">nav&#123;</span><br><span class="line">    ul&#123;</span><br><span class="line">        list-style: none;</span><br><span class="line">        margin:0;</span><br><span class="line">        float: $navbar-menu-float;</span><br><span class="line">        </span><br><span class="line">        li&#123;</span><br><span class="line">            display: inline;</span><br><span class="line">            line-height: $navbar-height;</span><br><span class="line">            margin-right: $navbar-menu-mright;</span><br><span class="line"></span><br><span class="line">            a&#123;</span><br><span class="line">                line-height: $navbar-height;</span><br><span class="line">                display: inline-block;</span><br><span class="line">                height: inherit;</span><br><span class="line">                text-decoration: none;</span><br><span class="line">                color: $navbar-menu-color;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义 <code>_logo.scss</code> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.logo&#123;</span><br><span class="line">    font-size: $logo-fontSize;</span><br><span class="line">    font-weight: $logo-fontWeight;</span><br><span class="line">    letter-spacing: $logo-letterSpacing;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    line-height: $logo-lineHeight;</span><br><span class="line">    float: $logo-float;</span><br><span class="line">    padding: $logo-padding;</span><br><span class="line"></span><br><span class="line">    a&#123;</span><br><span class="line">        color: $logo-color;</span><br><span class="line">        text-decoration: none;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义 <code>_banner.scss</code> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#banner&#123;</span><br><span class="line">    background: $banner-bgColor;</span><br><span class="line">    height: $banner-height;</span><br><span class="line"></span><br><span class="line">    .inner &#123;</span><br><span class="line">        max-width: $banner-inner-mxwidth;</span><br><span class="line">        text-align: center;</span><br><span class="line">        margin: 0 auto;</span><br><span class="line">        position: relative;</span><br><span class="line">        top: $banner-inner-top;</span><br><span class="line">        h1&#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .sub-heading&#123;</span><br><span class="line">            line-height: $banner-inner-subheading-lineHeight;</span><br><span class="line">            margin: $banner-inner-subheading-margin;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        button&#123;</span><br><span class="line">            padding: $banner-button-padding;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .more &#123;</span><br><span class="line">            margin-top: $banner-inner-more-mgTop;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义 <code>_buttons.scss</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">button&#123;</span><br><span class="line">    border: $button-border;</span><br><span class="line">    background-color: $button-bgColor;</span><br><span class="line">    color: $button-color;</span><br><span class="line">    padding: $button-padding;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中变量定义再 <code>_variables.scss</code> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$navbar-height : 50px;</span><br><span class="line">$navbar-bgColor: #ccc;</span><br><span class="line">$navbar-menu-float: right;</span><br><span class="line">$navbar-logo-float: left;</span><br><span class="line">&#x2F;&#x2F;菜单项右侧外边距</span><br><span class="line">$navbar-menu-mright: 20px;</span><br><span class="line">&#x2F;&#x2F;菜单项的颜色</span><br><span class="line">$navbar-menu-color : #fff;</span><br><span class="line"></span><br><span class="line">&#x2F;*banner*&#x2F;</span><br><span class="line">$banner-height : 700px;</span><br><span class="line">$banner-bgColor: #777;</span><br><span class="line">&#x2F;&#x2F;inner最大宽度</span><br><span class="line">$banner-inner-mxwidth: 300px;</span><br><span class="line">$banner-inner-top: 160px;</span><br><span class="line"></span><br><span class="line">$banner-inner-more-mgTop: 220px;</span><br><span class="line">$banner-inner-subheading-lineHeight: 30px;</span><br><span class="line">$banner-inner-subheading-margin: 30px;</span><br><span class="line">$banner-button-padding: 14px 60px;</span><br><span class="line">&#x2F;*components*&#x2F;</span><br><span class="line">&#x2F;&#x2F;button</span><br><span class="line">$button-border: none;</span><br><span class="line">$button-bgColor: #333;</span><br><span class="line">$button-color: #eee;</span><br><span class="line">$button-padding: 20px;</span><br><span class="line">&#x2F;&#x2F;logo</span><br><span class="line">$logo-fontSize: 20px;</span><br><span class="line">$logo-fontWeight: 700;</span><br><span class="line">$logo-letterSpacing: 1px;</span><br><span class="line">$logo-float: left;</span><br><span class="line">$logo-color: #fff;</span><br><span class="line">$logo-lineHeight: $navbar-height;</span><br><span class="line">$logo-padding: 0 0 0 10px;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-正文部分结构分析及布局"><a href="#3-3-正文部分结构分析及布局" class="headerlink" title="3.3 正文部分结构分析及布局"></a>3.3 正文部分结构分析及布局</h3><p>使用normalize之后，h1~6可能会造成margin collapse，解释在：<br><a href="http://stackoverflow.com/questions/7374657/normalize-css-top-header-gap" target="_blank" rel="noopener">http://stackoverflow.com/questions/7374657/normalize-css-top-header-gap</a></p>
+<blockquote>
+<p>When an element with a margin is inside an element without border or padding, the margin collapses with the margin of the parent element.</p>
+</blockquote>
+<p>It’s the margin of the h1 element that you see at the top. As none of the parents have border or padding, the margin collapses all the way out to the outermost container.<br><code>h1, h2, h3, h4, h5, h6{margin:0;padding:0}</code> solve the problem, for the moment.<br>Adding <code>overflow:auto</code> on the parent also keeps the margins from collapsing. </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/CSS3/" rel="tag"># CSS3</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/" rel="prev" title="Gulp笔记">
+                  <i class="fa fa-angle-left"></i> Gulp笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/Db-MySQL%E5%B8%B8%E7%94%A8/" rel="next" title="MySQL常用">
+                  MySQL常用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

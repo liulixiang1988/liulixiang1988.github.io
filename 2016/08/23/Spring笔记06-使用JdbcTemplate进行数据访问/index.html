@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="6.1 实例化和配置没有Spring的情况下，JDBC非常难用；有了Spring，JDBC就变得比较靠谱可用了。 这里我们在Bean中使用DataSource对JdbcTemplate进行初始化。 12345678910111213@Repository@Profile(&quot;test&quot;)public class JdbcAccountRepository implements A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring笔记06-使用JdbcTemplate进行数据访问">
+<meta property="og:url" content="https://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="6.1 实例化和配置没有Spring的情况下，JDBC非常难用；有了Spring，JDBC就变得比较靠谱可用了。 这里我们在Bean中使用DataSource对JdbcTemplate进行初始化。 12345678910111213@Repository@Profile(&quot;test&quot;)public class JdbcAccountRepository implements A">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-08-23T13:22:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:26:15.416Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/","path":"2016/08/23/Spring笔记06-使用JdbcTemplate进行数据访问/","title":"Spring笔记06-使用JdbcTemplate进行数据访问"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring笔记06-使用JdbcTemplate进行数据访问 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E5%AE%9E%E4%BE%8B%E5%8C%96%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">6.1 实例化和配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E6%BA%90Data-Source"><span class="nav-number">2.</span> <span class="nav-text">6.2 定义数据源Data Source</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-Profile%E6%B3%A8%E8%A7%A3%E5%92%8CEnvironment"><span class="nav-number">3.</span> <span class="nav-text">6.3 Profile注解和Environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-%E5%AE%9E%E7%8E%B0CRUD%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">6.4 实现CRUD方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-%E6%B5%8B%E8%AF%95Repository"><span class="nav-number">5.</span> <span class="nav-text">6.5 测试Repository</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring笔记06-使用JdbcTemplate进行数据访问 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring笔记06-使用JdbcTemplate进行数据访问
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-23 21:22:00" itemprop="dateCreated datePublished" datetime="2016-08-23T21:22:00+08:00">2016-08-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:26:15" itemprop="dateModified" datetime="2020-06-27T23:26:15+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="6-1-实例化和配置"><a href="#6-1-实例化和配置" class="headerlink" title="6.1 实例化和配置"></a>6.1 实例化和配置</h2><p>没有Spring的情况下，JDBC非常难用；有了Spring，JDBC就变得比较靠谱可用了。</p>
+<p>这里我们在Bean中使用<code>DataSource</code>对<code>JdbcTemplate</code>进行初始化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@Repository</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public class JdbcAccountRepository implements AccountRepository &#123;</span><br><span class="line"></span><br><span class="line">    private JdbcTemplate template;</span><br><span class="line">    private static long nextId &#x3D; 4;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public JdbcAccountRepository(DataSource dataSource) &#123;</span><br><span class="line">        template &#x3D; new JdbcTemplate(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后面我们看如何配置多个<code>DataSource</code>。</p>
+<h2 id="6-2-定义数据源Data-Source"><a href="#6-2-定义数据源Data-Source" class="headerlink" title="6.2 定义数据源Data Source"></a>6.2 定义数据源Data Source</h2><p>之前我们已经讲了<code>@Component</code>，但是在实际中我们更多的遇到的是<code>@Service</code>和<code>@Repository</code>，<code>@Controller</code>，这些其实也是<code>@Component</code>。</p>
+<p>首先我们来添加一些依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile group: &#39;org.apache.commons&#39;, name: &#39;commons-dbcp2&#39;, version: &#39;2.1.1&#39;</span><br><span class="line"></span><br><span class="line">    compile group: &#39;org.springframework&#39;, name: &#39;spring-test&#39;, version: &#39;4.3.2.RELEASE&#39;</span><br><span class="line">    compile group: &#39;org.hamcrest&#39;, name: &#39;hamcrest-library&#39;, version: &#39;1.3&#39;</span><br><span class="line">	&#x2F;&#x2F;...</span><br><span class="line"></span><br><span class="line">    return&#39;com.h2database:h2:1.4.192&#39;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里我们用了返回，这是因为需要对应的驱动</p>
+<p>我们修改<code>AppConfig.java</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Bean(name &#x3D; &quot;dataSource&quot;, destroyMethod &#x3D; &quot;shutdown&quot;)</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public DataSource dataSourceForTest() &#123;</span><br><span class="line">    return new EmbeddedDatabaseBuilder()</span><br><span class="line">            .generateUniqueName(true)</span><br><span class="line">            .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">            .setScriptEncoding(&quot;UTF-8&quot;)</span><br><span class="line">            .ignoreFailedDrops(true)</span><br><span class="line">            .addScript(&quot;schema.sql&quot;)</span><br><span class="line">            .addScripts(&quot;data.sql&quot;)</span><br><span class="line">            .build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Bean(name &#x3D; &quot;dataSource&quot;)</span><br><span class="line">@Profile(&quot;prod&quot;)</span><br><span class="line">public DataSource dataSourceForProd() &#123;</span><br><span class="line">    BasicDataSource dataSource &#x3D; new BasicDataSource();</span><br><span class="line">    dataSource.setDriverClassName(env.getProperty(&quot;db.driver&quot;));</span><br><span class="line">    dataSource.setUrl(env.getProperty(&quot;db.url&quot;));</span><br><span class="line">    dataSource.setUsername(env.getProperty(&quot;db.user&quot;));</span><br><span class="line">    dataSource.setPassword(env.getProperty(&quot;db.pass&quot;));</span><br><span class="line">    return dataSource;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="6-3-Profile注解和Environment"><a href="#6-3-Profile注解和Environment" class="headerlink" title="6.3 Profile注解和Environment"></a>6.3 Profile注解和Environment</h2><p>在项目中，我们需要多个环境（开发、测试、产品）等，每个环境对应的数据库也不同。Spring能通过<code>@Profile</code>来给不同的环境提供不同的配置Bean但是有相同的名称。</p>
+<p><code>@Profile</code>可以放在配置类上，也可以放在Bean的方法上，如果用在Bean方法上，需要给<code>@Bean</code>提供<code>name</code>属性，这样可以让不同的Bean有相同的名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages &#x3D; &quot;lx.spring.core&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:prod.properties&quot;)</span><br><span class="line">@EnableTransactionManagement</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private Environment env;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;dataSource&quot;, destroyMethod &#x3D; &quot;shutdown&quot;)</span><br><span class="line">    @Profile(&quot;test&quot;)</span><br><span class="line">    public DataSource dataSourceForTest() &#123;</span><br><span class="line">        return new EmbeddedDatabaseBuilder()</span><br><span class="line">                .generateUniqueName(true)</span><br><span class="line">                .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">                .setScriptEncoding(&quot;UTF-8&quot;)</span><br><span class="line">                .ignoreFailedDrops(true)</span><br><span class="line">                .addScript(&quot;schema.sql&quot;)</span><br><span class="line">                .addScript(&quot;data.sql&quot;)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;transactionManager&quot;)</span><br><span class="line">    @Profile(&quot;test&quot;)</span><br><span class="line">    public PlatformTransactionManager transactionManagerForTest() &#123;</span><br><span class="line">        return new DataSourceTransactionManager(dataSourceForTest());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;dataSource&quot;)</span><br><span class="line">    @Profile(&quot;prod&quot;)</span><br><span class="line">    public DataSource dataSourceForProd() &#123;</span><br><span class="line">        BasicDataSource dataSource &#x3D; new BasicDataSource();</span><br><span class="line">        dataSource.setDriverClassName(env.getProperty(&quot;db.driver&quot;));</span><br><span class="line">        dataSource.setUrl(env.getProperty(&quot;db.url&quot;));</span><br><span class="line">        dataSource.setUserName(env.getProperty(&quot;db.user&quot;));</span><br><span class="line">        dataSource.setPassword(env.getProperty(&quot;db.pass&quot;));</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name &#x3D; &quot;transactionManager&quot;)</span><br><span class="line">    @Profile(&quot;prod&quot;)</span><br><span class="line">    public PlatformTransactionManager transactionManagerForProd() &#123;</span><br><span class="line">        return new DataSourceTransactionManager(dataSourceForProd());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们看到<code>@Profile</code>提供了不同环境下的使用方式。同时需要注意一点是我们使用了<br><code>@PropertySource(&quot;classpath:prod.properties&quot;)</code>这样的注解，它会在<code>resources</code>下寻找<code>prod.properties</code>这个文件，然后使用了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">private Environment env;</span><br></pre></td></tr></table></figure>
+
+<p>接着就能读取变量了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env.getProperty(&quot;db.url&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-实现CRUD方法"><a href="#6-4-实现CRUD方法" class="headerlink" title="6.4 实现CRUD方法"></a>6.4 实现CRUD方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">@Repository</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public class JdbcAccountRepository implements AccountRepository &#123;</span><br><span class="line"></span><br><span class="line">    private JdbcTemplate template;</span><br><span class="line">    private static long nextId &#x3D; 4;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public JdbcAccountRepository(DataSource dataSource) &#123;</span><br><span class="line">        template &#x3D; new JdbcTemplate(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;Account&gt; getAccounts() &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;SELECT * FROM account&quot;;</span><br><span class="line">        return template.query(sqlText, new AccountMapper());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Account getAccount(Long id) &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;SELECT * FROM account WHERE id&#x3D;?&quot;;</span><br><span class="line">        return template.queryForObject(sqlText, new AccountMapper(), id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getNumberOfCounts() &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;SELECT count(*) FROM account&quot;;</span><br><span class="line">        return template.queryForObject(sqlText, Integer.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Long createAccount(BigDecimal initialBalance) &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;insert into account(id, balance) values(?, ?)&quot;;</span><br><span class="line">        long id &#x3D; nextId ++;</span><br><span class="line">        int uc &#x3D; template.update(sqlText, id, initialBalance);</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int deleteAccount(Long id) &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;delete from account where id&#x3D;?&quot;;</span><br><span class="line">        return template.update(sqlText, id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void updateAccount(Account account) &#123;</span><br><span class="line">        String sqlText &#x3D; &quot;update account set balance&#x3D;? where id &#x3D; ?&quot;;</span><br><span class="line">        template.update(sqlText, account.getBalance(), account.getId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private class AccountMapper implements RowMapper&lt;Account&gt;&#123;</span><br><span class="line">        @Override</span><br><span class="line">        public Account mapRow(ResultSet rs, int rowNum) throws SQLException &#123;</span><br><span class="line">            return new Account(rs.getLong(&quot;id&quot;), rs.getBigDecimal(&quot;balance&quot;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，我们需要提供实现<code>RowMapper</code>来返回对象类型。</p>
+<h2 id="6-5-测试Repository"><a href="#6-5-测试Repository" class="headerlink" title="6.5 测试Repository"></a>6.5 测试Repository</h2><p>IDEA的打开最近文件、窗口的快捷键：<code>Cmd+E</code>.</p>
+<p>我们创建<code>JdbcAccountRepositoryTest.java</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes &#x3D; AppConfig.class)</span><br><span class="line">@Transactional</span><br><span class="line">@ActiveProfiles(&quot;test&quot;)</span><br><span class="line">public class JdbcAccountRepositoryTest &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountRepository repository;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccounts() throws Exception &#123;</span><br><span class="line">        List&lt;Account&gt; accounts &#x3D; repository.getAccounts();</span><br><span class="line">        &#x2F;&#x2F;1. 比较</span><br><span class="line">        assertThat(accounts.size(), is(3));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(1L);</span><br><span class="line">        assertThat(account.getId(), is(1L));</span><br><span class="line">        &#x2F;&#x2F;2. 近似</span><br><span class="line">        assertThat(new BigDecimal(&quot;100.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void createAccount() throws Exception &#123;</span><br><span class="line">        Long id &#x3D; repository.createAccount(new BigDecimal(&quot;250.00&quot;));</span><br><span class="line">        &#x2F;&#x2F;3. 非空</span><br><span class="line">        assertThat(id, is(notNullValue()));</span><br><span class="line"></span><br><span class="line">        Account account &#x3D; repository.getAccount(id);</span><br><span class="line">        assertThat(account.getId(), is(id));</span><br><span class="line">        assertThat(new BigDecimal(&quot;250.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void updateAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(1L);</span><br><span class="line">        BigDecimal current &#x3D; account.getBalance();</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line">        account.setBalance(current.add(amount));</span><br><span class="line">        repository.updateAccount(account);</span><br><span class="line"></span><br><span class="line">        Account again &#x3D; repository.getAccount(1L);</span><br><span class="line">        assertThat(again.getBalance(), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void deleteAccount() throws Exception &#123;</span><br><span class="line">        for (Account account: repository.getAccounts()) &#123;</span><br><span class="line">            repository.deleteAccount(account.getId());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意里面的<code>assertThat</code>, <code>is</code>, <code>closeTo</code>等。</p>
+<p>现在我们再来看<code>AccountService</code>,它有事务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">@Service @Transactional</span><br><span class="line">@Profile(&quot;test&quot;)</span><br><span class="line">public class AccountService &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountRepository repository;</span><br><span class="line"></span><br><span class="line">    @Transactional(readOnly &#x3D; true, propagation &#x3D; Propagation.SUPPORTS)</span><br><span class="line">    public BigDecimal getBalance(Long id) &#123;</span><br><span class="line">        return repository.getAccount(id).getBalance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BigDecimal deposit(Long id, BigDecimal amount) &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(id);</span><br><span class="line">        BigDecimal newBalance &#x3D; account.getBalance().add(amount);</span><br><span class="line">        account.setBalance(newBalance);</span><br><span class="line">        repository.updateAccount(account);</span><br><span class="line">        return newBalance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BigDecimal withdraw(Long id, BigDecimal amount) &#123;</span><br><span class="line">        return deposit(id, amount.negate());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void transfer(Long fromId, Long toId, BigDecimal amount) &#123;</span><br><span class="line">        withdraw(fromId, amount);</span><br><span class="line">        deposit(toId, amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们看看对应的测试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes &#x3D; AppConfig.class)</span><br><span class="line">@Transactional</span><br><span class="line">@ActiveProfiles(&quot;test&quot;)</span><br><span class="line">public class AccountServiceTest &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountService service;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void deposit() throws Exception &#123;</span><br><span class="line">        BigDecimal start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line"></span><br><span class="line">        service.deposit(1L, amount);</span><br><span class="line">        BigDecimal finish &#x3D; start.add(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void withdraw() throws Exception &#123;</span><br><span class="line">        BigDecimal start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line"></span><br><span class="line">        service.withdraw(1L, amount);</span><br><span class="line">        BigDecimal finish &#x3D; start.subtract(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void transfer() throws Exception &#123;</span><br><span class="line">        BigDecimal acct1start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal acct2start &#x3D; service.getBalance(2L);</span><br><span class="line"></span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line">        service.transfer(1L, 2L, amount);</span><br><span class="line">        BigDecimal acct1finish &#x3D; acct1start.subtract(amount);</span><br><span class="line">        BigDecimal acct2finish &#x3D; acct2start.add(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(acct1finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">        assertThat(acct2finish, is(closeTo(service.getBalance(2L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里事务运行的没问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java-Spring/" rel="tag"># Java, Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/08/19/Spring%E7%AC%94%E8%AE%B005-Spring%E4%BA%8B%E5%8A%A1/" rel="prev" title="Spring笔记05-Spring事务">
+                  <i class="fa fa-angle-left"></i> Spring笔记05-Spring事务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/" rel="next" title="Spring笔记07-Hibernate JPA与Spring Data">
+                  Spring笔记07-Hibernate JPA与Spring Data <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

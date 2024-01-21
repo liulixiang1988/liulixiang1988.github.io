@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[toc]  本文源自对陈皓老师Distributed Lock Manager的分享。 Consistency比如对于一个订单，买家取消订单、商家发货这两个动作，先后顺序不一样，走的流程也不一致。  锁的类型 数据库锁(Database Lock) 应用Sharding(Shard Application) 中心分布式锁(Centralized Distributed Lock Manager)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Distributed Lock Manager笔记">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[toc]  本文源自对陈皓老师Distributed Lock Manager的分享。 Consistency比如对于一个订单，买家取消订单、商家发货这两个动作，先后顺序不一样，走的流程也不一致。  锁的类型 数据库锁(Database Lock) 应用Sharding(Shard Application) 中心分布式锁(Centralized Distributed Lock Manager)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-13-lock-consistency.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-13-lock-shard.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-13-lock-shard-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-13-lock-lock.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-lock-dlm.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-lock-redlock.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-lock-redlock-dangerous.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-unsafe-lock.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-fencing-tokens.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-lock-zk.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-14-lock-chubby.png">
+<meta property="article:published_time" content="2021-08-13T13:21:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.052Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="System Design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-08-13-lock-consistency.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/","path":"2021/08/13/2021-08-13-DistributedLockManager/","title":"Distributed Lock Manager笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Distributed Lock Manager笔记 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consistency"><span class="nav-number">1.</span> <span class="nav-text">Consistency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">锁的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DB-Lock"><span class="nav-number">2.1.</span> <span class="nav-text">DB Lock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shard%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Shard模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Distributed-Lock-Manager"><span class="nav-number">3.</span> <span class="nav-text">Distributed Lock Manager</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DLM-Lock-Modes"><span class="nav-number">3.1.</span> <span class="nav-text">DLM Lock Modes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redlock"><span class="nav-number">3.2.</span> <span class="nav-text">Redlock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeeper"><span class="nav-number">3.3.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chubby"><span class="nav-number">3.4.</span> <span class="nav-text">Google Chubby</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Distributed Lock Manager笔记 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Distributed Lock Manager笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-13 21:21:00" itemprop="dateCreated datePublished" datetime="2021-08-13T21:21:00+08:00">2021-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[toc]</p>
+<hr>
+<p>本文源自对<a href="https://www.youtube.com/watch?v=vFW1U1vimVs" target="_blank" rel="noopener">陈皓老师Distributed Lock Manager的分享</a>。</p>
+<h2 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h2><p>比如对于一个订单，买家取消订单、商家发货这两个动作，先后顺序不一样，走的流程也不一致。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-13-lock-consistency.png" alt="consistency"></p>
+<h2 id="锁的类型"><a href="#锁的类型" class="headerlink" title="锁的类型"></a>锁的类型</h2><ol>
+<li>数据库锁(Database Lock)</li>
+<li>应用Sharding(Shard Application)</li>
+<li>中心分布式锁(Centralized Distributed Lock Manager)</li>
+</ol>
+<h3 id="DB-Lock"><a href="#DB-Lock" class="headerlink" title="DB Lock"></a>DB Lock</h3><p>以MySQL InnoDB Lock举例：</p>
+<p><strong>共享锁(Shared Lock)</strong></p>
+<p>含义：我在写，别人可以读</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">LOCK</span> <span class="keyword">IN</span> <span class="keyword">SHARED</span> <span class="keyword">MODE</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>排他锁(Exclusive Lock)</strong></p>
+<p>含义： 我在写，别人不可以读。</p>
+<p>可能存在的坑：与Where条件强相关，如果where的结果是一个范围，可能会导致插入时也会失败，比如<code>where id &gt;= $ID</code>，当插入数据时，如果ID是自增的，此时插入不进去，因为此时ID在被锁的范围内。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">FOR</span> <span class="keyword">UPDATE</span></span><br></pre></td></tr></table></figure>
+
+<p>上面两种锁都是<strong>悲观锁</strong>，可能会<strong>导致死锁</strong>：跟锁的顺序有关，使用时一定要注意。</p>
+<p><strong>乐观锁(Versioning Optimistic Lock)</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1.</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, <span class="keyword">data</span>, <span class="keyword">version</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">table</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">id</span>=$<span class="keyword">ID</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. &#123;business code&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3.</span></span><br><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">table</span></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">data</span> = $<span class="keyword">data</span></span><br><span class="line">    <span class="keyword">version</span> = <span class="keyword">version</span> + <span class="number">1</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">id</span>=$<span class="keyword">ID</span> <span class="keyword">AND</span> <span class="keyword">version</span>=$VER</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 4.</span></span><br><span class="line"><span class="keyword">if</span> &#123;<span class="keyword">UPDATE</span>&#125; <span class="keyword">Failed</span>, <span class="keyword">go</span> <span class="keyword">to</span> step <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span> Done!</span><br></pre></td></tr></table></figure>
+
+<p>乐观锁性能高，但是失败时可能需要不停访问数据库。</p>
+<h3 id="Shard模式"><a href="#Shard模式" class="headerlink" title="Shard模式"></a>Shard模式</h3><p><img src="https://liulixiang1988.github.io/images/2021-08-13-lock-shard.png" alt="shard"></p>
+<p>流程：</p>
+<ol>
+<li>将数据分片到不同的节点。</li>
+<li>数据的索引交给索引服务器(indices)，索引服务器前面是两个Gateway。</li>
+<li>Gateway通过数据发现，对数据(Order A)全部转向同一个节点上。</li>
+<li>对同一个节点上的数据，可以使用多线程的一些方法(比如Mutex)来锁处理数据。</li>
+</ol>
+<p>当前方法的问题：</p>
+<ol>
+<li>存在热点数据</li>
+<li>扩节点时需要reshard所有数据</li>
+</ol>
+<p>由此，我们使用一致性哈希(Consistent Hash)。</p>
+<p>Uber Ringpop：通过gossip方式进行数据同步，但是当前Uber已经放弃了。<a href="https://eng.uber.com/ringpop-open-source-nodejs-library/" target="_blank" rel="noopener">https://eng.uber.com/ringpop-open-source-nodejs-library/</a></p>
+<p>Shard问题：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-13-lock-shard-2.png" alt="shard problem"></p>
+<ol>
+<li>热点数据</li>
+<li>多个数据的问题(Multiple Entities Transaction): 比如从A账户转账到B账户</li>
+<li>节点失效时的数据复制倒置的一致性问题：R+W&gt;N –&gt; CAP理论 (NRW: 读的节点与写的节点大于N节点：写过半时是强一致性的，如果写未过半，此时是AP系统，需要自己Merge)</li>
+</ol>
+<h2 id="Distributed-Lock-Manager"><a href="#Distributed-Lock-Manager" class="headerlink" title="Distributed Lock Manager"></a>Distributed Lock Manager</h2><p><img src="https://liulixiang1988.github.io/images/2021-08-13-lock-lock.png" alt="lock manager"></p>
+<p><a href="https://en.wikipedia.org/wiki/Distributed_lock_manager" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Distributed_lock_manager</a></p>
+<p>DLM：分布式锁管理器，由他统一管理锁。需要注意的是，DLM一定要能对锁进行持久化，否则容易造成数据丢失。</p>
+<ol>
+<li>要提供锁的租约机制：防止加锁后，持有锁的对象不释放锁。</li>
+<li>Lock Manager需要高可用，没有单点故障，锁状态可持久化。</li>
+<li>死锁检测：<ol>
+<li>锁过期(Lock expired)</li>
+<li>保活心跳(Keepalive heart beats)</li>
+</ol>
+</li>
+</ol>
+<h3 id="DLM-Lock-Modes"><a href="#DLM-Lock-Modes" class="headerlink" title="DLM Lock Modes"></a>DLM Lock Modes</h3><p><img src="https://liulixiang1988.github.io/images/2021-08-14-lock-dlm.png" alt="lock modes"></p>
+<p>上面是Wikipedia中的6种锁模型：</p>
+<ol>
+<li>无锁</li>
+<li>并发读</li>
+<li>并发写</li>
+<li>保护读</li>
+<li>保护写</li>
+<li>排他锁</li>
+</ol>
+<p>前三个没什么，主要是后面三个。</p>
+<h3 id="Redlock"><a href="#Redlock" class="headerlink" title="Redlock"></a>Redlock</h3><p><img src="https://liulixiang1988.github.io/images/2021-08-14-lock-redlock.png" alt="redlock"></p>
+<p><a href="https://redis.io/topics/distlock" target="_blank" rel="noopener">https://redis.io/topics/distlock</a></p>
+<p>算法：</p>
+<ol>
+<li>客户端获取当前时间（精确到毫秒）；</li>
+<li>客户端按照顺序请求N个实例的锁。对这N个实例上锁时使用相同的key名称与随机值，随机值需要是唯一的；</li>
+<li>当获得的锁节点的数量大于半数，且消耗的时间(elapsed time) &lt; 锁有效的时间(lock validity time)；</li>
+<li>锁实际有效时间=初始有效时间 - 消耗时间(Actual lock validity time = initial validity time - elapsed time)：这是为了让锁同时失效，而不是参差不齐的时间点失效；</li>
+<li>如果获取锁失败了，尝试释放掉所有实例。</li>
+</ol>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-14-lock-redlock-dangerous.png" alt="redlock dangerous"></p>
+<p>这个存在一些问题：</p>
+<ol>
+<li>时间跳变导致的锁失效；</li>
+<li>如果client 1获取C节点后hang住，在锁失效后又恢复了；</li>
+<li>client 1 与节点C之间通信有很大的网络延迟。</li>
+</ol>
+<p>Martin Kleppmann(写DDIA的老哥) 提出上面的挑战后，给了一个非常著名的结论：</p>
+<p><strong>the algorithm makes dangerous assumptions about timing and system clocks(算法依据时间和系统时钟不靠谱)</strong></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-14-unsafe-lock.png" alt="unsafe lock"></p>
+<p>于是老哥就给出了一个如何做分布式锁的文章：<a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" target="_blank" rel="noopener">How to do distributed locking</a>.</p>
+<p>老哥给出了使用fencing token的方案：</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-14-fencing-tokens.png" alt="fencing tokens"></p>
+<p>该方案需要锁服务与数据配合，锁服务提供token，数据对token进行单调性验证。本质上是一个乐观锁，而且需要数据存储侧配合，比较复杂。</p>
+<p>于是Redis作者Antirez做出了回应：</p>
+<p>TL;DR <a href="http://antirez.com/news/101" target="_blank" rel="noopener">http://antirez.com/news/101</a></p>
+<ul>
+<li>用这个方案还要分布式锁干啥，直接用乐观锁不就行了(Fencing is great, with this, no need distributed lock!)</li>
+<li>时钟跳变是个大问题，Redlock搞不定(Clock jump is a big problem, Redlock cannot work correctly)<br>under this problem.</li>
+<li>Redlock能搞定网络延时和hang住的问题(For network delay &amp; client hangs, they all will be fine.)</li>
+</ul>
+<p>Antirez最后说，分布式锁做的最好的是Zookeeper。</p>
+<h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p><a href="https://zookeeper.apache.org/doc/r3.1.2/recipes.html" target="_blank" rel="noopener">https://zookeeper.apache.org/doc/r3.1.2/recipes.html</a></p>
+<p>上面的连接给了几个比较厉害的Zookeeper用法，包含了分布式锁。</p>
+<ul>
+<li>在<code>_locknode/lock-</code>下创建顺序临时节点(Create <code>_locknode/lock-</code> with Sequence &amp; Ephemeral flag)</li>
+<li>这些节点看是不是节点下最小的(Get children to see to check if I am the lowest sequence number)<ul>
+<li>Yes. Get the Lock</li>
+<li>No. Set the watch</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-14-lock-zk.png" alt="zk lock"></p>
+<h3 id="Google-Chubby"><a href="#Google-Chubby" class="headerlink" title="Google Chubby"></a>Google Chubby</h3><p><img src="https://liulixiang1988.github.io/images/2021-08-14-lock-chubby.png" alt="chubby"></p>
+<ul>
+<li>两个组件：Master &amp; Client SDK</li>
+<li>集群：典型的5个节点</li>
+<li>副本：使用Paxos来选主与副本</li>
+<li>Failover：Master失败后，其他副本进行选举</li>
+<li>Session &amp; Keepalive<ul>
+<li>客户端请求或结束session</li>
+<li>租约间隔与租约释放</li>
+</ul>
+</li>
+<li>性能一般</li>
+</ul>
+<p>除了论文，还可看这个进行了解：<a href="https://www.slideshare.net/romain_jacotin/the-google-chubby-lock-service-for-looselycoupled-distributed-systems" target="_blank" rel="noopener">https://www.slideshare.net/romain_jacotin/the-google-chubby-lock-service-for-looselycoupled-distributed-systems</a></p>
+<p>需要说明，为了防止脑裂，每个master使用不同的周期。每次client连接新的master时，需要协商获取周期。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>Concurrent transaction need be synchronized<ul>
+<li>DB Lock is fine, but the Optimistic Lock is great.</li>
+<li>Sharding the data cannot solve the all of problem</li>
+</ul>
+</li>
+<li>Distributed Lock Service need the following features:<ul>
+<li>High Availability<ul>
+<li>Data Replicas - strong consistent protocol – Pasox, Raft, zab</li>
+<li>Master Failover – Leader election</li>
+</ul>
+</li>
+<li>Deadlock Detection<ul>
+<li>Keepalive &amp; Lease Timeout</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/System-Design/" rel="tag"># System Design</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/17/2021-07-17-grpc/" rel="prev" title="GRPC入门">
+                  <i class="fa fa-angle-left"></i> GRPC入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/" rel="next" title="理解分布式系统中的一些概念">
+                  理解分布式系统中的一些概念 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

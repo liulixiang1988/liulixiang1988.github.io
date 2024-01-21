@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Understand Microservices architecture requirements and challengesresource  API Discovery Invocation Elasticity Resillience Pipeline Authentication Logging Monitoring Tracing    The sidecar intercepts">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Extend The Istio Service Mesh">
+<meta property="og:url" content="https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="Understand Microservices architecture requirements and challengesresource  API Discovery Invocation Elasticity Resillience Pipeline Authentication Logging Monitoring Tracing    The sidecar intercepts">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/before-istio.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/after-istio.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/istio-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/istio-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/istio-3.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/istio-4.png">
+<meta property="article:published_time" content="2020-07-19T02:48:00.000Z">
+<meta property="article:modified_time" content="2020-08-09T09:34:01.902Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Istio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/before-istio.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/","path":"2020/07/19/kubernetes-istio/","title":"Extend The Istio Service Mesh"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Extend The Istio Service Mesh | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Understand-Microservices-architecture-requirements-and-challenges"><span class="nav-number">1.</span> <span class="nav-text">Understand Microservices architecture requirements and challenges</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-add-an-Istio-Proxy-sidecar"><span class="nav-number">1.1.</span> <span class="nav-text">How to add an Istio-Proxy(sidecar)?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Generation-Microservice-Service-Mesh"><span class="nav-number">1.2.</span> <span class="nav-text">Next Generation Microservice - Service Mesh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Istio"><span class="nav-number">2.</span> <span class="nav-text">Install Istio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deploy-with-Istio-Envoy-Sidecars"><span class="nav-number">3.</span> <span class="nav-text">Deploy with Istio&#x2F;Envoy Sidecars</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-inject"><span class="nav-number">3.1.</span> <span class="nav-text">Manual inject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatic-inject"><span class="nav-number">3.2.</span> <span class="nav-text">Automatic inject</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shift-traffic-with-VirtualService-and-DestinationRule"><span class="nav-number">4.</span> <span class="nav-text">Shift traffic with VirtualService and DestinationRule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perform-smarter-canery-deployments"><span class="nav-number">5.</span> <span class="nav-text">Perform smarter canery deployments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Practice-the-mirroring-and-the-dark-luanch"><span class="nav-number">6.</span> <span class="nav-text">Practice the mirroring and the dark luanch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-Balancer"><span class="nav-number">7.</span> <span class="nav-text">Load Balancer</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Extend The Istio Service Mesh | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Extend The Istio Service Mesh
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-19 10:48:00" itemprop="dateCreated datePublished" datetime="2020-07-19T10:48:00+08:00">2020-07-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-08-09 17:34:01" itemprop="dateModified" datetime="2020-08-09T17:34:01+08:00">2020-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Understand-Microservices-architecture-requirements-and-challenges"><a href="#Understand-Microservices-architecture-requirements-and-challenges" class="headerlink" title="Understand Microservices architecture requirements and challenges"></a>Understand Microservices architecture requirements and challenges</h2><p><a href="/images/Istio-on-Kubernetes.pdf">resource</a></p>
+<ul>
+<li>API</li>
+<li>Discovery</li>
+<li>Invocation</li>
+<li>Elasticity</li>
+<li>Resillience</li>
+<li>Pipeline</li>
+<li>Authentication</li>
+<li>Logging</li>
+<li>Monitoring</li>
+<li>Tracing</li>
+</ul>
+<p><img src="/images/before-istio.png" alt="before Istio"></p>
+<p><img src="/images/after-istio.png" alt="after Istio"></p>
+<p>The sidecar intercepts all network traffic.</p>
+<h3 id="How-to-add-an-Istio-Proxy-sidecar"><a href="#How-to-add-an-Istio-Proxy-sidecar" class="headerlink" title="How to add an Istio-Proxy(sidecar)?"></a>How to add an Istio-Proxy(sidecar)?</h3><p><code>istioctl kube-inject -f NormalDeployment.yaml</code></p>
+<p>or</p>
+<p><code>kubectl label namespace myspace istio-injection=enabled</code></p>
+<p>To “see” the sidecar:</p>
+<p><code>kubectl describe deployment customer</code></p>
+<p>Envoy is the current sidecar.</p>
+<h3 id="Next-Generation-Microservice-Service-Mesh"><a href="#Next-Generation-Microservice-Service-Mesh" class="headerlink" title="Next Generation Microservice - Service Mesh"></a>Next Generation Microservice - Service Mesh</h3><p><img src="/images/istio-1.png" alt="Istio"></p>
+<p><img src="/images/istio-2.png" alt="Istio-Gateway"></p>
+<p><img src="/images/istio-3.png" alt="Istio-Gateway"></p>
+<p><img src="/images/istio-4.png" alt="Istio-Resource"></p>
+<h2 id="Install-Istio"><a href="#Install-Istio" class="headerlink" title="Install Istio"></a>Install Istio</h2><p><a href="https://github.com/redhat-developer-demos/istio-tutorial" target="_blank" rel="noopener">https://github.com/redhat-developer-demos/istio-tutorial</a></p>
+<p><a href="https://github.com/burrsutter/scripts-istio" target="_blank" rel="noopener">https://github.com/burrsutter/scripts-istio</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> MINIKUBE_HOME=/Users/lixiangliu/Projects/k8s/minikube-istio</span><br><span class="line"><span class="comment"># this is where the minikube executable is</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$MINIKUBE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> KUBECONFIG=<span class="variable">$MINIKUBE_HOME</span>/.kube/config</span><br><span class="line"><span class="built_in">export</span> KUBE_EDITOR=<span class="string">"code -w"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> ISTIO_HOME=<span class="variable">$MINIKUBE_HOME</span>/istio-1.6.5</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ISTIO_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$MINIKUBE_HOME</span></span><br></pre></td></tr></table></figure>
+
+<p>Start:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% minikube start -p istio-mk --memory=8192 --cpus=3 \</span><br><span class="line"> --kubernetes-version=v1.18.3 \</span><br><span class="line"> --vm-driver=virtualbox \</span><br><span class="line"> --disk-size=30g</span><br></pre></td></tr></table></figure>
+
+<p>install istio</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">% curl -L https://github.com/istio/istio/releases/download/1.6.5/istio-1.6.5-osx.tar.gz | tar xz</span><br><span class="line">% <span class="built_in">cd</span> istio-1.6.5</span><br><span class="line">% <span class="built_in">export</span> PATH=<span class="variable">$ISTIO_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">% istioctl manifest apply --<span class="built_in">set</span> profile=demo --<span class="built_in">set</span> values.global.proxy.privileged=<span class="literal">true</span></span><br><span class="line">% kubectl config <span class="built_in">set</span>-context $(kubectl config current-context) --namespace=istio-system</span><br><span class="line">% kubectl get pods -w</span><br></pre></td></tr></table></figure>
+
+<p>the outputs is :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NAME                                    READY   STATUS    RESTARTS   AGE</span><br><span class="line">grafana-b54bb57b9-j6wc8                 1&#x2F;1     Running   0          9m49s</span><br><span class="line">istio-egressgateway-7486cf8c97-kdffx    1&#x2F;1     Running   0          9m50s</span><br><span class="line">istio-ingressgateway-6bcb9d7bbf-fdkv5   1&#x2F;1     Running   0          9m50s</span><br><span class="line">istio-tracing-9dd6c4f7c-wpshx           1&#x2F;1     Running   0          9m49s</span><br><span class="line">istiod-788f76c8fc-5smwm                 1&#x2F;1     Running   0          10m</span><br><span class="line">kiali-d45468dc4-p7tb9                   1&#x2F;1     Running   0          9m49s</span><br><span class="line">prometheus-6477cfb669-stbh8             2&#x2F;2     Running   0          9m49s</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">% kubectl get crds</span><br><span class="line">NAME                                       CREATED AT</span><br><span class="line">adapters.config.istio.io                   2020-07-22T23:25:58Z</span><br><span class="line">attributemanifests.config.istio.io         2020-07-22T23:25:58Z</span><br><span class="line">authorizationpolicies.security.istio.io    2020-07-22T23:25:58Z</span><br><span class="line">clusterrbacconfigs.rbac.istio.io           2020-07-22T23:25:58Z</span><br><span class="line">destinationrules.networking.istio.io       2020-07-22T23:25:58Z</span><br><span class="line">envoyfilters.networking.istio.io           2020-07-22T23:25:58Z</span><br><span class="line">gateways.networking.istio.io               2020-07-22T23:25:58Z</span><br><span class="line">handlers.config.istio.io                   2020-07-22T23:25:58Z</span><br><span class="line">httpapispecbindings.config.istio.io        2020-07-22T23:25:58Z</span><br><span class="line">httpapispecs.config.istio.io               2020-07-22T23:25:58Z</span><br><span class="line">instances.config.istio.io                  2020-07-22T23:25:58Z</span><br><span class="line">istiooperators.install.istio.io            2020-07-22T23:25:58Z</span><br><span class="line">peerauthentications.security.istio.io      2020-07-22T23:25:58Z</span><br><span class="line">quotaspecbindings.config.istio.io          2020-07-22T23:25:58Z</span><br><span class="line">quotaspecs.config.istio.io                 2020-07-22T23:25:58Z</span><br><span class="line">rbacconfigs.rbac.istio.io                  2020-07-22T23:25:58Z</span><br><span class="line">requestauthentications.security.istio.io   2020-07-22T23:25:58Z</span><br><span class="line">rules.config.istio.io                      2020-07-22T23:25:58Z</span><br><span class="line">serviceentries.networking.istio.io         2020-07-22T23:25:58Z</span><br><span class="line">servicerolebindings.rbac.istio.io          2020-07-22T23:25:58Z</span><br><span class="line">serviceroles.rbac.istio.io                 2020-07-22T23:25:58Z</span><br><span class="line">sidecars.networking.istio.io               2020-07-22T23:25:58Z</span><br><span class="line">templates.config.istio.io                  2020-07-22T23:25:58Z</span><br><span class="line">virtualservices.networking.istio.io        2020-07-22T23:25:58Z</span><br><span class="line">workloadentries.networking.istio.io        2020-07-22T23:25:58Z</span><br></pre></td></tr></table></figure>
+
+<h2 id="Deploy-with-Istio-Envoy-Sidecars"><a href="#Deploy-with-Istio-Envoy-Sidecars" class="headerlink" title="Deploy with Istio/Envoy Sidecars"></a>Deploy with Istio/Envoy Sidecars</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">% kubectl config current-context <span class="comment">#istio-mk</span></span><br><span class="line">% minikube --profile istio-mk ip  </span><br><span class="line">192.168.99.102</span><br><span class="line">% minikube --profile istio-mk status</span><br><span class="line">% kubectl create namespace istio-demo</span><br><span class="line">% kubectl config <span class="built_in">set</span>-context $(kubectl config current-context) --namespace=istio-demo</span><br><span class="line">% kubens</span><br><span class="line">default</span><br><span class="line">istio-demo</span><br><span class="line">istio-system</span><br><span class="line">kube-node-lease</span><br><span class="line">kube-public</span><br><span class="line">kube-system</span><br></pre></td></tr></table></figure>
+
+<p>Let’s clone <a href="https://github.com/redhat-developer-demos/istio-tutorial" target="_blank" rel="noopener">https://github.com/redhat-developer-demos/istio-tutorial</a></p>
+<h3 id="Manual-inject"><a href="#Manual-inject" class="headerlink" title="Manual inject"></a>Manual inject</h3><p>We have a <a href="/images/Deployment.yml">deployment file</a>.</p>
+<p>We use <code>istioctl</code> to inject sidecar:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">istioctl kube-inject -f customer&#x2F;kubernetes&#x2F;Deployment.yml</span><br></pre></td></tr></table></figure>
+
+<p>You can see some sidecar is injected.</p>
+<h3 id="Automatic-inject"><a href="#Automatic-inject" class="headerlink" title="Automatic inject"></a>Automatic inject</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">% kubectl get namespace --show-labels</span><br><span class="line">NAME              STATUS   AGE   LABELS</span><br><span class="line">default           Active   47h   &lt;none&gt;</span><br><span class="line">istio-demo        Active   15m   &lt;none&gt;</span><br><span class="line">istio-system      Active   47m   istio-injection&#x3D;disabled</span><br><span class="line">kube-node-lease   Active   47h   &lt;none&gt;</span><br><span class="line">kube-public       Active   47h   &lt;none&gt;</span><br><span class="line">kube-system       Active   47h   &lt;none&gt;</span><br><span class="line"></span><br><span class="line">% kubectl label namespace istio-demo istio-injection&#x3D;enabled</span><br><span class="line">% kubectl get namespace --show-labels</span><br><span class="line">NAME              STATUS   AGE   LABELS</span><br><span class="line">default           Active   47h   &lt;none&gt;</span><br><span class="line">istio-demo        Active   17m   istio-injection&#x3D;enabled</span><br><span class="line">istio-system      Active   48m   istio-injection&#x3D;disabled</span><br><span class="line">kube-node-lease   Active   47h   &lt;none&gt;</span><br><span class="line">kube-public       Active   47h   &lt;none&gt;</span><br><span class="line">kube-system       Active   47h   &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Alse, we notice the yaml has an annotation <code>sidecar.istio.io/inject: &quot;true&quot;</code>, that’s the different with the normal yaml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">customer</span></span><br><span class="line">    <span class="attr">version:</span> <span class="string">v1</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">customer</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">customer</span></span><br><span class="line">      <span class="attr">version:</span> <span class="string">v1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">customer</span></span><br><span class="line">        <span class="attr">version:</span> <span class="string">v1</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">sidecar.istio.io/inject:</span> <span class="string">"true"</span> <span class="comment">#here!</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">JAVA_OPTIONS</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">-Xms15m</span> <span class="string">-Xmx15m</span> <span class="string">-Xmn15m</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">customer</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">quay.io/rhdevelopers/istio-tutorial-customer:v1.1</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8778</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">jolokia</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9779</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">prometheus</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">requests:</span> </span><br><span class="line">            <span class="attr">memory:</span> <span class="string">"20Mi"</span> </span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">"200m"</span> <span class="comment"># 1/5 core</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">"40Mi"</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">"500m"</span> </span><br><span class="line">        <span class="attr">livenessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="attr">command:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">curl</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">localhost:8080/health/live</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">5</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">4</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">1</span></span><br><span class="line">        <span class="attr">readinessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="attr">command:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">curl</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">localhost:8080/health/ready</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">6</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">5</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">1</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">privileged:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">% kubectl apply -f customer&#x2F;kubernetes&#x2F;Deployment.yml </span><br><span class="line">deployment.apps&#x2F;customer created</span><br><span class="line">% kubectl get pods               </span><br><span class="line">NAME                        READY   STATUS            RESTARTS   AGE</span><br><span class="line">customer-76bddbf59c-7p6mr   0&#x2F;2     PodInitializing   0          11s</span><br></pre></td></tr></table></figure>
+
+<p>There are two containers in the pods.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% kubectl apply -f customer/kubernetes/Service.yml </span><br><span class="line">service/customer created</span><br></pre></td></tr></table></figure>
+
+<p>service.yaml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">customer</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">customer</span>    </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">customer</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">% kubectl apply -f customer/kubernetes/Gateway.yml </span><br><span class="line">gateway.networking.istio.io/customer-gateway created</span><br><span class="line">virtualservice.networking.istio.io/customer-gateway created</span><br><span class="line">% kubectl get vs</span><br><span class="line">NAME               GATEWAYS             HOSTS   AGE</span><br><span class="line">customer-gateway   [customer-gateway]   [*]     18s</span><br></pre></td></tr></table></figure>
+
+<p>Gateway.yaml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Gateway</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">customer-gateway</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">istio:</span> <span class="string">ingressgateway</span> <span class="comment"># use istio default controller</span></span><br><span class="line">  <span class="attr">servers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span></span><br><span class="line">      <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">      <span class="attr">protocol:</span> <span class="string">HTTP</span></span><br><span class="line">    <span class="attr">hosts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"*"</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">customer-gateway</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">"*"</span></span><br><span class="line">  <span class="attr">gateways:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">customer-gateway</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">uri:</span></span><br><span class="line">        <span class="attr">prefix:</span> <span class="string">/customer</span></span><br><span class="line">    <span class="attr">rewrite:</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">/</span></span><br><span class="line">    <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">customer</span></span><br><span class="line">        <span class="attr">port:</span></span><br><span class="line">          <span class="attr">number:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">% kubectl apply -f preference/kubernetes/Deployment.yml </span><br><span class="line">deployment.apps/preference-v1 created</span><br><span class="line">% kubectl apply -f preference/kubernetes/Service.yml   </span><br><span class="line">service/preference created</span><br><span class="line">% kubectl apply -f recommendation/kubernetes/Deployment.yml </span><br><span class="line">deployment.apps/recommendation-v1 created</span><br><span class="line">% kubectl apply -f recommendation/kubernetes/Service.yml   </span><br><span class="line">service/recommendation created</span><br><span class="line">% kubectl get services</span><br><span class="line">NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">customer         ClusterIP   10.98.110.140   &lt;none&gt;        8080/TCP   6m39s</span><br><span class="line">preference       ClusterIP   10.97.254.164   &lt;none&gt;        8080/TCP   32s</span><br><span class="line">recommendation   ClusterIP   10.108.35.221   &lt;none&gt;        8080/TCP   6s</span><br><span class="line">% kubectl get vs      </span><br><span class="line">NAME               GATEWAYS             HOSTS   AGE</span><br><span class="line">customer-gateway   [customer-gateway]   [*]     7m36s</span><br></pre></td></tr></table></figure>
+<p>call trace:<br>user-&gt;customer-&gt;preference-&gt;recommendation</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services -n istio-system</span><br><span class="line">NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                      AGE</span><br><span class="line">grafana                     ClusterIP      10.110.100.175   &lt;none&gt;        3000/TCP                                                                     70m</span><br><span class="line">istio-egressgateway         ClusterIP      10.111.112.128   &lt;none&gt;        80/TCP,443/TCP,15443/TCP                                                     70m</span><br><span class="line">istio-ingressgateway        LoadBalancer   10.108.217.161   &lt;pending&gt;     15020:30321/TCP,80:30350/TCP,443:30445/TCP,31400:31920/TCP,15443:31115/TCP   70m</span><br><span class="line">istiod                      ClusterIP      10.103.248.183   &lt;none&gt;        15010/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP                                70m</span><br><span class="line">jaeger-agent                ClusterIP      None             &lt;none&gt;        5775/UDP,6831/UDP,6832/UDP                                                   70m</span><br><span class="line">jaeger-collector            ClusterIP      10.103.241.201   &lt;none&gt;        14267/TCP,14268/TCP,14250/TCP                                                70m</span><br><span class="line">jaeger-collector-headless   ClusterIP      None             &lt;none&gt;        14250/TCP                                                                    70m</span><br><span class="line">jaeger-query                ClusterIP      10.101.27.250    &lt;none&gt;        16686/TCP                                                                    70m</span><br><span class="line">kiali                       ClusterIP      10.111.79.49     &lt;none&gt;        20001/TCP                                                                    70m</span><br><span class="line">prometheus                  ClusterIP      10.104.161.153   &lt;none&gt;        9090/TCP                                                                     70m</span><br><span class="line">tracing                     ClusterIP      10.106.110.151   &lt;none&gt;        80/TCP                                                                       70m</span><br><span class="line">zipkin                      ClusterIP      10.111.30.70     &lt;none&gt;        9411/TCP                                                                     70m</span><br></pre></td></tr></table></figure>
+
+<p>We can see the nodeport is 30350</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% minikube --profile istio-mk ip</span><br><span class="line">192.168.99.102</span><br><span class="line">% curl 192.168.99.102:30350&#x2F;customer</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shift-traffic-with-VirtualService-and-DestinationRule"><a href="#Shift-traffic-with-VirtualService-and-DestinationRule" class="headerlink" title="Shift traffic with VirtualService and DestinationRule"></a>Shift traffic with VirtualService and DestinationRule</h2><p>Let’s deploy recommendation v2:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">recommendation</span></span><br><span class="line">    <span class="attr">version:</span> <span class="string">v2</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation-v2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">recommendation</span></span><br><span class="line">      <span class="attr">version:</span> <span class="string">v2</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">version:</span> <span class="string">v2</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">sidecar.istio.io/inject:</span> <span class="string">"true"</span> <span class="comment">#add this for istio</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">JAVA_OPTIONS</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">-Xms15m</span> <span class="string">-Xmx15m</span> <span class="string">-Xmn15m</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">recommendation</span>          </span><br><span class="line">        <span class="attr">image:</span> <span class="string">quay.io/rhdevelopers/istio-tutorial-recommendation:v2.1</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8778</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">jolokia</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9779</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">prometheus</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">requests:</span> </span><br><span class="line">            <span class="attr">memory:</span> <span class="string">"40Mi"</span> </span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">"200m"</span> <span class="comment"># 1/5 core</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">"100Mi"</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">"500m"</span> </span><br><span class="line">        <span class="attr">livenessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="attr">command:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">curl</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">localhost:8080/health/live</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">5</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">4</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">1</span></span><br><span class="line">        <span class="attr">readinessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="attr">command:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">curl</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">localhost:8080/health/ready</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">6</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">5</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">1</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">privileged:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f recommendation/kubernetes/Deployment-v2.yml</span><br></pre></td></tr></table></figure>
+
+<p>Then watch the curl result:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span> curl 192.168.99.102:30350/customer</span><br><span class="line">sleep .3</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>The output is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 507</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 540</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 508</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 541</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 509</span><br></pre></td></tr></table></figure>
+
+<p>We scale the v2 to 2 replicas:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale replicas&#x3D;2 deployment&#x2F;recommendation-v2</span><br></pre></td></tr></table></figure>
+
+<p>The output is below. v1: v2 is 1:2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 561</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 530</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 10</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 562</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 531</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 11</span><br></pre></td></tr></table></figure>
+
+<p>Then set the v2 replicas to 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale replicas&#x3D;1 deployment&#x2F;recommendation-v2</span><br></pre></td></tr></table></figure>
+
+<p>Now let’s define the DestinationRule (destination-rule-recommendation-v1-v2.yml):</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">DestinationRule</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">subsets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">labels:</span></span><br><span class="line">      <span class="attr">version:</span> <span class="string">v1</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">version-v1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">labels:</span></span><br><span class="line">      <span class="attr">version:</span> <span class="string">v2</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">version-v2</span></span><br></pre></td></tr></table></figure>
+
+<p>And define the VirtualService (virtual-service-recommendation-v2.yml):</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v2</span></span><br><span class="line">      <span class="attr">weight:</span> <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% kubectl apply -f istiofiles/destination-rule-recommendation-v1-v2.yml</span><br><span class="line">destinationrule.networking.istio.io/recommendation created</span><br><span class="line">% kubectl apply -f istiofiles/virtual-service-recommendation-v2.yml</span><br><span class="line">virtualservice.networking.istio.io/recommendation created</span><br></pre></td></tr></table></figure>
+
+<p>Now the curl output is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 1298</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 1299</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 1300</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">% kubectl get virtualservices</span><br><span class="line">NAME               GATEWAYS             HOSTS              AGE</span><br><span class="line">customer-gateway   [customer-gateway]   [*]                10d</span><br><span class="line">recommendation                          [recommendation]   115s</span><br><span class="line">% kubectl get destinationrules</span><br><span class="line">NAME             HOST             AGE</span><br><span class="line">recommendation   recommendation   3m58s</span><br><span class="line">% kubectl describe vs recommendation</span><br><span class="line">Name:         recommendation</span><br><span class="line">Namespace:    istio-demo</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                &#123;<span class="string">"apiVersion"</span>:<span class="string">"networking.istio.io/v1alpha3"</span>,<span class="string">"kind"</span>:<span class="string">"VirtualService"</span>,<span class="string">"metadata"</span>:&#123;<span class="string">"annotations"</span>:&#123;&#125;,<span class="string">"name"</span>:<span class="string">"recommendation"</span>,<span class="string">"namespace"</span>:<span class="string">"ist...</span></span><br><span class="line"><span class="string">API Version:  networking.istio.io/v1beta1</span></span><br><span class="line"><span class="string">Kind:         VirtualService</span></span><br><span class="line"><span class="string">Metadata:</span></span><br><span class="line"><span class="string">  Creation Timestamp:  2020-08-02T03:35:26Z</span></span><br><span class="line"><span class="string">  Generation:          1</span></span><br><span class="line"><span class="string">  Managed Fields:</span></span><br><span class="line"><span class="string">    API Version:  networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="string">    Fields Type:  FieldsV1</span></span><br><span class="line"><span class="string">    fieldsV1:</span></span><br><span class="line"><span class="string">      f:metadata:</span></span><br><span class="line"><span class="string">        f:annotations:</span></span><br><span class="line"><span class="string">          .:</span></span><br><span class="line"><span class="string">          f:kubectl.kubernetes.io/last-applied-configuration:</span></span><br><span class="line"><span class="string">      f:spec:</span></span><br><span class="line"><span class="string">        .:</span></span><br><span class="line"><span class="string">        f:hosts:</span></span><br><span class="line"><span class="string">        f:http:</span></span><br><span class="line"><span class="string">    Manager:         kubectl</span></span><br><span class="line"><span class="string">    Operation:       Update</span></span><br><span class="line"><span class="string">    Time:            2020-08-02T03:35:26Z</span></span><br><span class="line"><span class="string">  Resource Version:  8166</span></span><br><span class="line"><span class="string">  Self Link:         /apis/networking.istio.io/v1beta1/namespaces/istio-demo/virtualservices/recommendation</span></span><br><span class="line"><span class="string">  UID:               e568bf42-8e1e-483e-aac9-102a63679547</span></span><br><span class="line"><span class="string">Spec:</span></span><br><span class="line"><span class="string">  Hosts:</span></span><br><span class="line"><span class="string">    recommendation</span></span><br><span class="line"><span class="string">  Http:</span></span><br><span class="line"><span class="string">    Route:</span></span><br><span class="line"><span class="string">      Destination:</span></span><br><span class="line"><span class="string">        Host:    recommendation</span></span><br><span class="line"><span class="string">        Subset:  version-v2</span></span><br><span class="line"><span class="string">      Weight:    100 #The weight</span></span><br><span class="line"><span class="string">Events:          &lt;none&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Let’s swift the route to v1.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">% kubectl edit vs/recommendation <span class="comment"># change subset from v2-&gt;v1</span></span><br></pre></td></tr></table></figure>
+
+<p>We alse can split the weight(virtual-service-recommendation-v1_and_v2.yml):</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v1</span></span><br><span class="line">      <span class="attr">weight:</span> <span class="number">90</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v2</span></span><br><span class="line">      <span class="attr">weight:</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 2535</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1246</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1247</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1248</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1249</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1250</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1251</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1252</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1253</span><br></pre></td></tr></table></figure>
+
+<p>If we delete the virtualservice and destinationRule, then the weight for v1 and v2 is 50%.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% kubectl delete vs recommendation</span><br><span class="line">virtualservice.networking.istio.io <span class="string">"recommendation"</span> deleted</span><br><span class="line">% kubectl delete dr recommendation</span><br><span class="line">destinationrule.networking.istio.io <span class="string">"recommendation"</span> deleted</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1736</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 2654</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v1 from &#39;f11b097f1dd0&#39;: 1737</span><br><span class="line">customer &#x3D;&gt; preference &#x3D;&gt; recommendation v2 from &#39;3cbba7a9cde5&#39;: 2655</span><br></pre></td></tr></table></figure>
+
+<h2 id="Perform-smarter-canery-deployments"><a href="#Perform-smarter-canery-deployments" class="headerlink" title="Perform smarter canery deployments"></a>Perform smarter canery deployments</h2><p>Smart routing based on user-agent header (Canary Deployment).</p>
+<p>Set recommendation for all v1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f istiofiles&#x2F;destination-rule-recommendation-v1-v2.yml</span><br><span class="line">kubectl create -f istiofiles&#x2F;virtual-service-recommendation-v1.yml</span><br></pre></td></tr></table></figure>
+
+<p>virtual-service-recommendation-v1.yml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v1</span></span><br><span class="line">      <span class="attr">weight:</span> <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>Set Safari users to v2 ()</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">kubectl</span> <span class="string">replace</span> <span class="string">-f</span> <span class="string">istiofiles/virtual-service-safari-recommendation-v2.yml</span> </span><br><span class="line"></span><br><span class="line"><span class="string">kubectl</span> <span class="string">get</span> <span class="string">virtualservice</span></span><br></pre></td></tr></table></figure>
+
+<p>virtual-service-safari-recommendation-v2.yml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">headers:</span></span><br><span class="line">        <span class="attr">baggage-user-agent:</span></span><br><span class="line">          <span class="attr">regex:</span> <span class="string">.*Safari.*</span></span><br><span class="line">    <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v2</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Practice-the-mirroring-and-the-dark-luanch"><a href="#Practice-the-mirroring-and-the-dark-luanch" class="headerlink" title="Practice the mirroring and the dark luanch"></a>Practice the mirroring and the dark luanch</h2><p>virtual-service-recommendation-v1-mirror-v2.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">VirtualService</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hosts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">http:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">route:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">destination:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">        <span class="attr">subset:</span> <span class="string">version-v1</span></span><br><span class="line">    <span class="attr">mirror:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">      <span class="attr">subset:</span> <span class="string">version-v2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs -f `kubectl get pods | grep recommendation-v2 | awk <span class="string">'&#123; print $1&#125;'</span>` -c recommendation</span><br></pre></td></tr></table></figure>
+
+<h2 id="Load-Balancer"><a href="#Load-Balancer" class="headerlink" title="Load Balancer"></a>Load Balancer</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.istio.io/v1alpha3</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">DestinationRule</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">recommendation</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">recommendation</span></span><br><span class="line">  <span class="attr">trafficPolicy:</span></span><br><span class="line">    <span class="attr">loadBalancer:</span></span><br><span class="line">      <span class="attr">simple:</span> <span class="string">RANDOM</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Istio/" rel="tag"># Istio</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/16/kubernetes-Entend-Your-K8s/" rel="prev" title="Extend Your Kubernetes">
+                  <i class="fa fa-angle-left"></i> Extend Your Kubernetes
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/08/09/kubernetes-istio2/" rel="next" title="Explore the Istio Service Mesh">
+                  Explore the Istio Service Mesh <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

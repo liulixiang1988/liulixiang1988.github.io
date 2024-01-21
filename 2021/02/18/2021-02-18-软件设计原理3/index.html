@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="设计模式基础设计模式的精髓是对多态的使用 装饰器模式装饰模式最大的特点是，通过类的构造函数传入一个同类对象，也就是每个类实现的接口和构造函数传入的对象是同一个接口。 1234567891011121314151617181920212223242526272829303132333435public interface AnyThing &#123;  void exe();&#125;publi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件设计原理3-设计模式">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="设计模式基础设计模式的精髓是对多态的使用 装饰器模式装饰模式最大的特点是，通过类的构造函数传入一个同类对象，也就是每个类实现的接口和构造函数传入的对象是同一个接口。 1234567891011121314151617181920212223242526272829303132333435public interface AnyThing &#123;  void exe();&#125;publi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-dp.png">
+<meta property="article:published_time" content="2021-02-18T13:30:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.050Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="System Design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-02-18-dp.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/","path":"2021/02/18/2021-02-18-软件设计原理3/","title":"软件设计原理3-设计模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件设计原理3-设计模式 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">设计模式基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">装饰器模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8%EF%BC%9A%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">设计模式应用：编程框架中的设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A1%86%E6%9E%B6"><span class="nav-number">2.1.</span> <span class="nav-text">什么是框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Web容器中的设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUnit%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">JUnit中的设计模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">组件的设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%86%85%E8%81%9A%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">组件内聚原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E8%80%A6%E5%90%88%E5%8E%9F%E5%88%99"><span class="nav-number">3.2.</span> <span class="nav-text">组件耦合原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A6%E7%B1%8D"><span class="nav-number">4.</span> <span class="nav-text">书籍</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件设计原理3-设计模式 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件设计原理3-设计模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-18 21:30:00" itemprop="dateCreated datePublished" datetime="2021-02-18T21:30:00+08:00">2021-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="设计模式基础"><a href="#设计模式基础" class="headerlink" title="设计模式基础"></a>设计模式基础</h2><p><strong>设计模式的精髓是对多态的使用</strong></p>
+<h3 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h3><p>装饰模式最大的特点是，通过类的构造函数传入一个同类对象，也就是每个类实现的接口和构造函数传入的对象是同一个接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnyThing</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">exe</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Moon</span> <span class="keyword">implements</span> <span class="title">AnyThing</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AnyThing a;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Moon</span><span class="params">(AnyThing a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.print(<span class="string">"明月装饰了"</span>);</span><br><span class="line">    a.exe();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dream</span> <span class="keyword">implements</span> <span class="title">AnyThing</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AnyThing a;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Dream</span><span class="params">(AnyThing a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a=a;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.print(<span class="string">"梦装饰了"</span>);</span><br><span class="line">    a.exe();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">You</span> <span class="keyword">implements</span> <span class="title">AnyThing</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AnyThing a;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">You</span><span class="params">(AnyThing a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.print(<span class="string">"你"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AnyThing t = <span class="keyword">new</span> Moon(<span class="keyword">new</span> Dream(<span class="keyword">new</span> You(<span class="keyword">null</span>)));</span><br><span class="line">t.exe();</span><br><span class="line"></span><br><span class="line">输出：明月装饰了梦装饰了你</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AnyThing t = <span class="keyword">new</span> Dream(<span class="keyword">new</span> Moon(<span class="keyword">new</span> You(<span class="keyword">null</span>)));</span><br><span class="line">t.exe();</span><br><span class="line"></span><br><span class="line">输出：梦装饰了明月装饰了你</span><br></pre></td></tr></table></figure>
+
+<p>面试官让你“聊聊设计模式”，也许你可以这样回答：“除了单例和工厂，我更喜欢适配器和观察者，还有，组合模式在处理树形结构的时候也非常有用。”</p>
+<p>组合模式遍历树：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultModule</span> <span class="keyword">implements</span> <span class="title">Module</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DefaultModule</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComponentModule</span> <span class="keyword">implements</span> <span class="title">Module</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module currentModule;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Module&gt; modules;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ComponentModule</span><span class="params">(Module currentModule, Module... modules)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.currentModule = currentModule;</span><br><span class="line">        <span class="keyword">this</span>.modules = Arrays.asList(modules);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.currentModule.print();</span><br><span class="line">        <span class="keyword">this</span>.modules.forEach(Module::print);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Module</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ComponentModule subModule31 = <span class="keyword">new</span> ComponentModule(</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"31"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"311"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"312"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"313"</span>)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        ComponentModule subModule3 = <span class="keyword">new</span> ComponentModule(</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"3"</span>),</span><br><span class="line">            subModule31,</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"32"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"33"</span>)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        ComponentModule <span class="keyword">module</span> = <span class="keyword">new</span> ComponentModule(</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"0"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"1"</span>),</span><br><span class="line">            <span class="keyword">new</span> DefaultModule(<span class="string">"2"</span>),</span><br><span class="line">            subModule3</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">module</span>.print();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="设计模式应用：编程框架中的设计模式"><a href="#设计模式应用：编程框架中的设计模式" class="headerlink" title="设计模式应用：编程框架中的设计模式"></a>设计模式应用：编程框架中的设计模式</h2><h3 id="什么是框架"><a href="#什么是框架" class="headerlink" title="什么是框架"></a>什么是框架</h3><p><strong>框架式对某一类架构方案可复用设计与实现</strong></p>
+<p>Tomcat是框架，它完成了Web应用请求响应的主体流程。框架应用满足依赖倒置原则.</p>
+<p>框架会调用我们编写的代码，而我们编写的代码则会调用工具完成某些特定的功能，比如输出日志，进行正则表达式匹配等.</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-dp.png" alt="dp"></p>
+<h3 id="Web容器中的设计模式"><a href="#Web容器中的设计模式" class="headerlink" title="Web容器中的设计模式"></a>Web容器中的设计模式</h3><p><strong>1.策略模式</strong></p>
+<ul>
+<li>策略接口：J2EE规范定义的Servlet接口</li>
+<li>策略实现：我们看开发的Servlet具体类</li>
+<li>Client程序：Tomcat</li>
+</ul>
+<p><strong>2.模板方法模式</strong></p>
+<ul>
+<li>父类中抽象方法定义计算的骨架和过程，抽象方法的实现留在子类。</li>
+<li><code>HttpServlet extends GenericServlet implements Servlert</code></li>
+<li>HttpServlet中的service方法 针对不同的HTTP请求类型调用相应的方法，service方法就是一个模板方法。</li>
+</ul>
+<h3 id="JUnit中的设计模式"><a href="#JUnit中的设计模式" class="headerlink" title="JUnit中的设计模式"></a>JUnit中的设计模式</h3><p><strong>1.模板方法模式</strong> 测试用例的方法执行顺序固定在模板方法TestCase.runBare</p>
+<p><strong>2.测试套件TestSuite 采用组合模式</strong></p>
+<ul>
+<li><code>TestSuite.addTest(TestCase test)</code></li>
+<li><code>TestSuite.addTest(TestSuite test)</code></li>
+</ul>
+<h2 id="组件的设计原则"><a href="#组件的设计原则" class="headerlink" title="组件的设计原则"></a>组件的设计原则</h2><p>软件设计的核心目标是<strong>高内聚、低耦合</strong>。从这两个角度思考组件的设计原则。</p>
+<h3 id="组件内聚原则"><a href="#组件内聚原则" class="headerlink" title="组件内聚原则"></a>组件内聚原则</h3><p>组件内聚原则主要讨论哪些类应该聚合在同一个组件中，以便组件既能提供相对完整的功能，又不至于太过庞大。</p>
+<ol>
+<li>复用发布等同原则：软件复用的最小粒度应该等同于其发布的最小粒度。</li>
+<li>共同封闭原则：我们应该将那些会同时修改，并且为了相同目的而修改的类放到同一个组件中。</li>
+<li>共同复用原则：不要强迫一个组件的用户依赖他们不需要的东西。</li>
+</ol>
+<h3 id="组件耦合原则"><a href="#组件耦合原则" class="headerlink" title="组件耦合原则"></a>组件耦合原则</h3><p>组件内聚原则讨论的是组件应该包含哪些功能和类，而组件耦合原则讨论组件之间的耦合关系应该如何设计。</p>
+<ol>
+<li>无循环依赖原则：组件依赖关系中不应该出现环。</li>
+<li>稳定依赖原则：组件依赖关系必须指向更稳定的方向。组件不应该依赖一个比自己还不稳定的组件。</li>
+<li>稳定抽象原则：一个组件的抽象化程度应该与其稳定性程度一致。也就是说，一个稳定的组件应该是抽象的，而不稳定的组件应该是具体的。如果你设计的组件是具体的、不稳定的，那么可以为这个组件对外提供服务的类设计一组接口，并把这组接口封装在一个专门的组件中，那么这个组件相对就比较抽象、稳定。如前面讲的依赖倒置原则 (DIP)。</li>
+</ol>
+<h2 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h2><ol>
+<li>UML精粹</li>
+<li>敏捷软件开发：原则、模式与实践</li>
+<li>架构整洁之道</li>
+<li>企业应用架构模式</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/System-Design/" rel="tag"># System Design</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/" rel="prev" title="软件设计原理2-SOLID原则">
+                  <i class="fa fa-angle-left"></i> 软件设计原理2-SOLID原则
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/" rel="next" title="分布式架构101">
+                  分布式架构101 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

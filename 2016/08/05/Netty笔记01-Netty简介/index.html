@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Netty(http:&#x2F;&#x2F;netty.io )是一个用来快速开发可维护高性能服务器和客户端应用的异步事件驱动网络应用框架。 高性能系统不仅需要我们有优秀的编码技巧，还需要对网络、多线程与并发有相关的经验。 1.1 Java网络早期版本Java的java.net支持本地系统的socket库提供的阻塞函数。   accept()一直阻塞直到ServerSocket简历了链接，它返回一个Socket对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty笔记01-Netty简介">
+<meta property="og:url" content="https://liulixiang1988.github.io/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="Netty(http:&#x2F;&#x2F;netty.io )是一个用来快速开发可维护高性能服务器和客户端应用的异步事件驱动网络应用框架。 高性能系统不仅需要我们有优秀的编码技巧，还需要对网络、多线程与并发有相关的经验。 1.1 Java网络早期版本Java的java.net支持本地系统的socket库提供的阻塞函数。   accept()一直阻塞直到ServerSocket简历了链接，它返回一个Socket对象">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470366209159.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470366696015.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470367325039.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470372863343.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470373573537.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470373831445.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/1470374636314.png">
+<meta property="article:published_time" content="2016-08-05T06:04:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:39:18.899Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/1470366209159.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/","path":"2016/08/05/Netty笔记01-Netty简介/","title":"Netty笔记01-Netty简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Netty笔记01-Netty简介 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Java%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">1.1 Java网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-Java-NIO"><span class="nav-number">1.1.</span> <span class="nav-text">1.1.1 Java NIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-Selector%EF%BC%88%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">1.1.2 Selector（选择器）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Netty%E6%A0%B8%E5%BF%83%E7%BB%84%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">1.2 Netty核心组建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Channel"><span class="nav-number">2.1.</span> <span class="nav-text">1.2.1 Channel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%9B%9E%E8%B0%83"><span class="nav-number">2.2.</span> <span class="nav-text">1.2.2 回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-Futures"><span class="nav-number">2.3.</span> <span class="nav-text">1.2.3 Futures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E4%BA%8B%E4%BB%B6%E5%92%8Chandler"><span class="nav-number">2.4.</span> <span class="nav-text">1.2.4 事件和handler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-5-%E5%90%88%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">2.5.</span> <span class="nav-text">1.2.5 合在一起</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Netty笔记01-Netty简介 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Netty笔记01-Netty简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-05 14:04:00" itemprop="dateCreated datePublished" datetime="2016-08-05T14:04:00+08:00">2016-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:39:18" itemprop="dateModified" datetime="2020-06-27T23:39:18+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Netty(<a href="http://netty.io" target="_blank" rel="noopener">http://netty.io</a> )是一个用来快速开发可维护高性能服务器和客户端应用的异步事件驱动网络应用框架。</p>
+<p>高性能系统不仅需要我们有优秀的编码技巧，还需要对网络、多线程与并发有相关的经验。</p>
+<h2 id="1-1-Java网络"><a href="#1-1-Java网络" class="headerlink" title="1.1 Java网络"></a>1.1 Java网络</h2><p>早期版本Java的<code>java.net</code>支持本地系统的socket库提供的阻塞函数。</p>
+<p><img src="/images/1470366209159.png" alt="Alt text"></p>
+<ul>
+<li><code>accept()</code>一直阻塞直到<code>ServerSocket</code>简历了链接，它返回一个<code>Socket</code>对象用来在客户端和服务器之间进行通信。</li>
+<li><code>BufferedRead</code>用来从<code>Socket</code>中读取文本；<code>PrintWriter</code>用来写入。</li>
+<li><code>readLine</code>阻塞直到发送了回车换行</li>
+</ul>
+<p>上面的代码每次只能处理一个链接。要管理多个并发的客户端，需要为每一个新的<code>Socket</code>来分配一个<code>Thread</code>,如图：<br><img src="/images/1470366696015.png" alt="Alt text"></p>
+<p>我们来思考一下这个方法：</p>
+<ul>
+<li>首先，很多时间线程处于等待状态，这是一种资源的浪费；</li>
+<li>每个线程需要在内存上分配64k到1M的空间；</li>
+<li>即使JVM支持大量的线程，但上下文之间的切换耗时。</li>
+</ul>
+<h3 id="1-1-1-Java-NIO"><a href="#1-1-1-Java-NIO" class="headerlink" title="1.1.1 Java NIO"></a>1.1.1 Java NIO</h3><p><code>setsockopt()</code>能够配置<code>sockets</code>，如果没有数据就立即返回。Java从1.4版开始支持<code>java.nio</code>。</p>
+<h3 id="1-1-2-Selector（选择器）"><a href="#1-1-2-Selector（选择器）" class="headerlink" title="1.1.2 Selector（选择器）"></a>1.1.2 Selector（选择器）</h3><p>下图展示了一个非阻塞的设计用来避免前面讲的缺点。<br><img src="/images/1470367325039.png" alt="Alt text"></p>
+<p>类<code>java.nio.channels.Selector</code>是Java非阻塞IO实现的关键。它使用事件通知API来指导<code>socket</code>集合。因为可以随时检查每个<code>socket</code>的读写完成状态，所以单个线程可以处理多并发连接。</p>
+<p>总而言之，这种模型提供了一个比阻塞IO模型更好的资源管理：</p>
+<ul>
+<li>使用更少的线程来处理多链接，内存和上下文切换开销都更小；</li>
+<li>当一个线程没有IO操作时可以被重新分配到其他任务上去。</li>
+</ul>
+<p>虽然很多应用都直接使用Java NIO API来创建，但要做到正确和安全还是很难。尤其是重负载的情况下处理和分发IO会很麻烦而且容易出错。这就有了高性能网络专家-Netty。</p>
+<h2 id="1-2-Netty核心组建"><a href="#1-2-Netty核心组建" class="headerlink" title="1.2 Netty核心组建"></a>1.2 Netty核心组建</h2><ul>
+<li><code>Channels</code></li>
+<li>回调</li>
+<li><code>Futures</code></li>
+<li>事件和handler</li>
+</ul>
+<p>这些构建块代表了不同的构造类型：资源、逻辑和通知。</p>
+<h3 id="1-2-1-Channel"><a href="#1-2-1-Channel" class="headerlink" title="1.2.1 Channel"></a>1.2.1 Channel</h3><p><code>Channel</code>是Java NIO的基本构造。</p>
+<blockquote>
+<p>an open connection to an entity such as a hardware device, a file, a network socket, or a program component that is capable of performing one or more distinct I/O operations, for example reading or writing</p>
+</blockquote>
+<p>可以认为<code>Channel</code>是一个用来传输数据的通道，可以被打开、关闭、链接的和断开的</p>
+<h3 id="1-2-2-回调"><a href="#1-2-2-回调" class="headerlink" title="1.2.2 回调"></a>1.2.2 回调</h3><p>Netty使用回调来处理事件。一个回调被触发后，时间可以使用<code>interface ChannelHandler</code>的实现来处理。下面的例子是党新链接简历时<code>ChannelHandler</code>的回调<code>channelActive</code>就会被调用并且打印一个消息。</p>
+<p><img src="/images/1470372863343.png" alt="Alt text"></p>
+<h3 id="1-2-3-Futures"><a href="#1-2-3-Futures" class="headerlink" title="1.2.3 Futures"></a>1.2.3 Futures</h3><p><code>Future</code>提供了另外一种方法用来在操作完成时通知应用。可以把它看成是异步操作返回结果的占位符，只有在将来的某个点完成并且提供结果的存取。</p>
+<p>JDK提供了<code>interface java.util.concurrent.Future</code>，但提供的实现只允许手工检查操作是否完成或者一直阻塞到完成为止。这种实现很笨拙，Netty提供了自己的实现<code>ChannelFuture</code>。</p>
+<p><code>ChannelFuture</code>提供了附加的方法，让我们注册一个或多个<code>ChannelFutureListener</code>实例。listener(监听器)的回调方法<code>operationComplete()</code>在操作完成后背调用。监听器此时可以决定操作是否完成还是有错误。如果是后者，我们能获得一个产生的<code>Throwable</code>。简而言之，通知机制通过<code>ChannelFutureListener</code>避免了对操作是否完成的手工检查。</p>
+<p>Netty的所有outbound IO操作都返回<code>ChannelFuture</code>，也就是所都是非阻塞的。</p>
+<p>下面展示了<code>ChannelFuture</code>    作为IO操作的一部分被返回，这里<code>connect()</code>用来直接非阻塞返回，并且将在后台完成。<br><img src="/images/1470373573537.png" alt="Alt text"></p>
+<p>下面展示了如何利用<code>ChannelFutureListener</code>.首先你链接到远程节点(remote peer)。然后对<code>ChannelFuture</code>（由<code>connect()</code>返回的）注册一个新的<code>ChannelFutureListener</code>。如果操作成功，就向<code>Channel</code>写数据，否则，会从<code>ChannelFuture</code>收到<code>Throwable</code>。</p>
+<p><img src="/images/1470373831445.png" alt="Alt text"></p>
+<p>如何进行错误的处理完全由你自己定，比如失败时去连接另一个同级节点。</p>
+<p>回调和<code>Future</code>是整个Netty的核心。</p>
+<h3 id="1-2-4-事件和handler"><a href="#1-2-4-事件和handler" class="headerlink" title="1.2.4 事件和handler"></a>1.2.4 事件和handler</h3><p>Netty使用不同的时间用来通知状态和操作的变化。它允许我们根据不同的事件触发不同的操作。这些动作包括：</p>
+<ul>
+<li>Logging日志</li>
+<li>Data transformation 数据转换</li>
+<li>流程控制Flow-control</li>
+<li>应用逻辑Application logic</li>
+</ul>
+<p>Netty是一个网络框架，因此它的事件被氛围inbound和outbound相关的数据流。</p>
+<p>被inbound数据或相关状态触发的事件有：</p>
+<ul>
+<li>Active或inactive connections</li>
+<li>读数据(Data read)</li>
+<li>用户事件(User events)</li>
+<li>错误事件(Error events)</li>
+</ul>
+<p>outbound事件是将来要触发动作的操作结果，可能是：</p>
+<ul>
+<li>打开或关闭远程peer</li>
+<li>写或flush数据到socket</li>
+</ul>
+<p>时间能够被分发到用户实现的handler类中的方法去。</p>
+<p><img src="/images/1470374636314.png" alt="Alt text"></p>
+<p>Netty的<code>ChannelHandler</code>提供上图中一些基本的抽象。目前为止，可以把每个handler实例看作是响应里用来处理具体事件的。</p>
+<h3 id="1-2-5-合在一起"><a href="#1-2-5-合在一起" class="headerlink" title="1.2.5 合在一起"></a>1.2.5 合在一起</h3><p>我们讨论了<code>Future</code>,回调和<code>handler</code>。Netty的异步编程模型建立在<code>Future</code>和回调的概念之上的。有了这个之后，我们的应用逻辑可以避免关心这些网络操作概念。这是Netty的设计目标。</p>
+<p>截取操作和转换inbound和outbound数据只需要我们提供回调或者利用返回的<code>Future</code>。这使得链式操作简单和搞笑，并且提倡书写可重用、泛型代码。</p>
+<p><code>Selectors</code>，<code>Events</code>和<code>Event loops</code></p>
+<p>Netty从应用中通过触发事件、消除所有硬编码分发代码来抽象<code>Selector</code>。在内部，<code>EventLoop</code>用来复制给每个<code>Channel</code>用来处理所有事件，包括：</p>
+<ul>
+<li>注册感兴趣的事件</li>
+<li>分发事件到<code>ChannelHandlers</code></li>
+<li>调度将来的动作</li>
+</ul>
+<p><code>EventLoop</code>自身是由单个线程来驱动的，并且在整个生命周期中都不会改变。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Netty/" rel="tag"># Netty</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/06/22/Java-Java8-parallel-stream/" rel="prev" title="Java8中的并行流">
+                  <i class="fa fa-angle-left"></i> Java8中的并行流
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/08/08/Netty%E7%AC%94%E8%AE%B002-%E7%AC%AC%E4%B8%80%E4%B8%AANetty%E5%BA%94%E7%94%A8/" rel="next" title="Netty笔记02-第一个Netty应用">
+                  Netty笔记02-第一个Netty应用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 1. HDFS 概述及设计目标Hadoop设计目标：  非常巨大的分布式文件系统 运行在普通廉价的硬件上 易扩展、为用户提供性能不错的文件存储服务  具体见：https:&#x2F;&#x2F;hadoop.apache.org&#x2F;docs&#x2F;stable&#x2F;hadoop-project-dist&#x2F;hadoop-hdfs&#x2F;HdfsDesign.html#Assumptions_and_Goals 2. HDFS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDFS学习笔记">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[TOC] 1. HDFS 概述及设计目标Hadoop设计目标：  非常巨大的分布式文件系统 运行在普通廉价的硬件上 易扩展、为用户提供性能不错的文件存储服务  具体见：https:&#x2F;&#x2F;hadoop.apache.org&#x2F;docs&#x2F;stable&#x2F;hadoop-project-dist&#x2F;hadoop-hdfs&#x2F;HdfsDesign.html#Assumptions_and_Goals 2. HDFS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png">
+<meta property="og:image" content="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-18-hdfs-1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-18-hdfs-2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-18-hdfs-3.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-18-hdfs-4.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-18-hdfs-5.png">
+<meta property="article:published_time" content="2021-05-15T12:37:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.051Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Big Data">
+<meta property="article:tag" content="HDFS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/","path":"2021/05/15/2021-05-15-HDFS/","title":"HDFS学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HDFS学习笔记 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HDFS-%E6%A6%82%E8%BF%B0%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">1. HDFS 概述及设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HDFS%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">2. HDFS架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-HDFS%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">3. HDFS副本机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-HDFS%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">4. HDFS环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85-Pseudo-Distributed-Operation"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Hadoop伪分布式安装(Pseudo-Distributed Operation)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-HDFS-Shell"><span class="nav-number">5.</span> <span class="nav-text">5. HDFS Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Java-API%E6%93%8D%E4%BD%9CHDFS"><span class="nav-number">6.</span> <span class="nav-text">6. Java API操作HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-HDFS%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">7. HDFS文件读写流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-HDFS%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">8.</span> <span class="nav-text">8. HDFS优缺点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HDFS学习笔记 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HDFS学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-15 20:37:00" itemprop="dateCreated datePublished" datetime="2021-05-15T20:37:00+08:00">2021-05-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
+<h2 id="1-HDFS-概述及设计目标"><a href="#1-HDFS-概述及设计目标" class="headerlink" title="1. HDFS 概述及设计目标"></a>1. HDFS 概述及设计目标</h2><p>Hadoop设计目标：</p>
+<ul>
+<li>非常巨大的分布式文件系统</li>
+<li>运行在普通廉价的硬件上</li>
+<li>易扩展、为用户提供性能不错的文件存储服务</li>
+</ul>
+<p>具体见：<a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals" target="_blank" rel="noopener">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals</a></p>
+<h2 id="2-HDFS架构"><a href="#2-HDFS架构" class="headerlink" title="2. HDFS架构"></a>2. HDFS架构</h2><p><a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html</a></p>
+<p><img src="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png" alt="img"></p>
+<p>HDFS采用1个Master(NameNode/NN) 带N个Slaves(DataNode/DN)架构。同时YARN、HBase也是一个Master带多个Slave。</p>
+<p>1个文件会被拆分成多个Block。(BlockSize默认是128M)。比如一个130M的文件会被分成128M和2M的Block。</p>
+<p>NameNode(NN):</p>
+<ol>
+<li>响应客户端请求</li>
+<li>负责元数据(文件名、副本系数、Block存放的DN)的管理</li>
+</ol>
+<p>DataNode(DN):</p>
+<ol>
+<li>储存用户的文件对应的数据块(Block)</li>
+<li>要定期向NN发送心跳信息，汇报本身及其所有的block信息，健康状况</li>
+</ol>
+<p>A typical deployment has a dedicated machine that runs only the NameNode software. Each of the other machines in the cluster runs one instance of the DataNode software. The architecture does not preclude running multiple DataNodes on the same machine but in a real deployment that is rarely the case.</p>
+<h2 id="3-HDFS副本机制"><a href="#3-HDFS副本机制" class="headerlink" title="3. HDFS副本机制"></a>3. HDFS副本机制</h2><p>All blocks in a file except the last block are the same size.</p>
+<p>An application can specify the number of replicas of a file. The replication factor can be specified at file creation time and can be changed later. Files in HDFS are write-once (except for appends and truncates) and have strictly one writer at any time.</p>
+<p><img src="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png" alt="hdfs"></p>
+<p>副本存放策略：副本放到不同机架(Rack)的不同节点上。</p>
+<h2 id="4-HDFS环境搭建"><a href="#4-HDFS环境搭建" class="headerlink" title="4. HDFS环境搭建"></a>4. HDFS环境搭建</h2><h3 id="4-1-Hadoop伪分布式安装-Pseudo-Distributed-Operation"><a href="#4-1-Hadoop伪分布式安装-Pseudo-Distributed-Operation" class="headerlink" title="4.1 Hadoop伪分布式安装(Pseudo-Distributed Operation)"></a>4.1 Hadoop伪分布式安装(Pseudo-Distributed Operation)</h3><p>环境准备：</p>
+<ol>
+<li>JDK安装，定义<code>JAVA_HOME</code>与<code>PATH=$JAVA_HOME/bin:$PATH</code></li>
+<li>安装SSH：<ol>
+<li><code>sudo yum install ssh</code></li>
+<li>配置免密登录（给DataNode与NN）<code>ssh-keygen -t rsa</code>, 生成了<code>.ssh</code>文件夹</li>
+<li><code>cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys</code></li>
+<li>测试连接：<ol>
+<li><code>ssh localhost</code>或<code>ssh hadoop000</code>(hadoop000是hostname)</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>下载解压Hadoop，修改配置文件:</p>
+<ol>
+<li>下载CDH: <code>hadoop-2.6.0-cdh5.7.0.tar.gz</code></li>
+<li><code>tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C /opt/</code></li>
+<li><code>cd hadoop-2.6.0-cdh5.7.0/</code></li>
+<li>查看目录：<ol>
+<li>bin：主要是客户端访问的脚本（包含windows下的访问脚本）</li>
+<li>etc: 配置文件，非常重要</li>
+<li>sbin: 启动集群</li>
+<li>share/hadoop/：样例包</li>
+</ol>
+</li>
+<li>修改<code>etc/hadoop-env.sh</code>，设置<code>JAVA_HOME</code></li>
+</ol>
+<p>etc/hadoop/core-site.xml（配置HDFS默认文件地址）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 文件路径HDFS，端口 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://hostname:8020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/hadoop/app/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>etc/hadoop/hdfs-site.xml（设置副本系数）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>etc/hadoop/slaves(配置master node对应的slave node hostname)</p>
+<p>配置后启动：</p>
+<ol>
+<li>格式化文件系统(仅第一次执行）：<code>bin/hdfs(or hadoop) namenode -format</code>(客户端操作)</li>
+<li>启动NameNode进程与DataNode进程：<code>sbin/start-dfs.sh</code> Hadoop daemon log会被写入<code>$HADOOP_LOG_DIR</code>文件夹，默认为<code>$HADOOP_HOME/logs</code></li>
+<li>验证是否启动成功<ol>
+<li><code>jps</code>，看到<code>DataNode</code>, <code>NameNode</code>与<code>SecondaryNameNode</code></li>
+<li><a href="http://hadoop000:50070" target="_blank" rel="noopener">http://hadoop000:50070</a></li>
+</ol>
+</li>
+</ol>
+<p>停止hdfs: <code>sbin/stop-dfs.sh</code></p>
+<h2 id="5-HDFS-Shell"><a href="#5-HDFS-Shell" class="headerlink" title="5. HDFS Shell"></a>5. HDFS Shell</h2><p>为了方便使用，配置环境变量：<code>HADOOP_HOME</code>, <code>PATH=$HADOOP_HOME/bin:$PATH</code></p>
+<p>hdfs是客户端。</p>
+<p><code>hadoop dfs</code> </p>
+<p><strong>ls</strong>: <code>hadoop fs -ls</code>, <code>hadoop fs -ls -R</code></p>
+<p><strong>mkdir</strong>: <code>hadoop fs -mkdir -p /a/test</code></p>
+<p><strong>put</strong>: <code>hadoop fs -put hello.txt /</code></p>
+<p><strong>get</strong>: <code>hadoop fs -get /a/test/a.txt</code></p>
+<p><strong>rm</strong>: <code>hadoop fs -rm /a/test</code></p>
+<p><strong>text</strong>: 查看，<code>hadoop fs -text /hello.txt</code></p>
+<p>也可以在浏览器菜单中<code>utilities</code>中查看文件</p>
+<h2 id="6-Java-API操作HDFS"><a href="#6-Java-API操作HDFS" class="headerlink" title="6. Java API操作HDFS"></a>6. Java API操作HDFS</h2><p><a href="https://github.com/liulixiang1988/javademo/blob/master/hadoop001/src/test/java/io/liulixiang/hadoop/hdfs/HDFSApp.java" target="_blank" rel="noopener">https://github.com/liulixiang1988/javademo/blob/master/hadoop001/src/test/java/io/liulixiang/hadoop/hdfs/HDFSApp.java</a></p>
+<h2 id="7-HDFS文件读写流程"><a href="#7-HDFS文件读写流程" class="headerlink" title="7. HDFS文件读写流程"></a>7. HDFS文件读写流程</h2><p>通过漫画来学习HDFS文件的读写流程，PDF版本可以通过<a href="https://liulixiang1988.github.io/images/Hdfs-cartoon.pdf">这里</a>下载</p>
+<p>三个角色：</p>
+<ol>
+<li>客户端：发起读写请求</li>
+<li>NameNode: 只有1个，负责协调(coordinate)</li>
+<li>DataNode：存储数据，有多个</li>
+</ol>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-18-hdfs-1.png" alt="1"></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-18-hdfs-2.png" alt="2"></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-18-hdfs-3.png" alt="3"></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-18-hdfs-4.png" alt="4"></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-05-18-hdfs-5.png" alt="5"></p>
+<h2 id="8-HDFS优缺点"><a href="#8-HDFS优缺点" class="headerlink" title="8. HDFS优缺点"></a>8. HDFS优缺点</h2><p>优点：</p>
+<ol>
+<li>数据冗余、硬件容错</li>
+<li>适合存储大文件</li>
+<li>可构建在廉价机器上</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>不适合低延迟数据访问：数据比较大</li>
+<li>不适合小文件数据存储：占用太多NameNode中内存存储元数据，对NameNode压力也越大</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Big-Data/" rel="tag"># Big Data</a>
+              <a href="/tags/HDFS/" rel="tag"># HDFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/15/2021-05-15-Hadoop101/" rel="prev" title="Hadoop 101">
+                  <i class="fa fa-angle-left"></i> Hadoop 101
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/19/2021-05-19-YARN/" rel="next" title="YARN学习笔记">
+                  YARN学习笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

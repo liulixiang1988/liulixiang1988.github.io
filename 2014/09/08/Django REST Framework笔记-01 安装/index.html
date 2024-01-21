@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、 Django Rest Framework介绍项目地址：http:&#x2F;&#x2F;www.django-rest-framework.org&#x2F; Django REST framewrok（简称DRF），强大而且灵活的工具箱，它使创建Web API变得简单。 你需要使用REST框架的一些原因：  基于Web可浏览的API能让你赢得更多开发者 包含OAuth1a和OAuth2的认证机制 序列化同时支持ORM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django REST Framework笔记-01 介绍与安装">
+<meta property="og:url" content="https://liulixiang1988.github.io/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="一、 Django Rest Framework介绍项目地址：http:&#x2F;&#x2F;www.django-rest-framework.org&#x2F; Django REST framewrok（简称DRF），强大而且灵活的工具箱，它使创建Web API变得简单。 你需要使用REST框架的一些原因：  基于Web可浏览的API能让你赢得更多开发者 包含OAuth1a和OAuth2的认证机制 序列化同时支持ORM">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.django-rest-framework.org/img/quickstart.png">
+<meta property="article:published_time" content="2014-09-08T14:15:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:35:45.721Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Python, Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.django-rest-framework.org/img/quickstart.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/","path":"2014/09/08/Django REST Framework笔记-01 安装/","title":"Django REST Framework笔记-01 介绍与安装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Django REST Framework笔记-01 介绍与安装 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-Django-Rest-Framework%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">一、 Django Rest Framework介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85%E9%9C%80%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">二、安装需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">三、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BE%8B%E5%AD%90"><span class="nav-number">4.</span> <span class="nav-text">四、例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-number">5.</span> <span class="nav-text">五、快速开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%95%99%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">六、教程</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Django REST Framework笔记-01 介绍与安装 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django REST Framework笔记-01 介绍与安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-09-08 22:15:00" itemprop="dateCreated datePublished" datetime="2014-09-08T22:15:00+08:00">2014-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:35:45" itemprop="dateModified" datetime="2020-06-27T23:35:45+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、-Django-Rest-Framework介绍"><a href="#一、-Django-Rest-Framework介绍" class="headerlink" title="一、 Django Rest Framework介绍"></a>一、 Django Rest Framework介绍</h2><p>项目地址：<a href="http://www.django-rest-framework.org/" target="_blank" rel="noopener">http://www.django-rest-framework.org/</a></p>
+<p>Django REST framewrok（简称DRF），强大而且灵活的工具箱，它使创建Web API变得简单。</p>
+<p>你需要使用REST框架的一些原因：</p>
+<ul>
+<li>基于Web可浏览的API能让你赢得更多开发者</li>
+<li>包含OAuth1a和OAuth2的认证机制</li>
+<li>序列化同时支持ORM和非ORM的数据源</li>
+<li>自定义，如果不想用更为强大的功能，可以只使用常规的函数视图</li>
+<li>大量的文档，牛叉的社区支持</li>
+<li>大公司比如Mozilla和Eventbrite都用它，靠谱~</li>
+</ul>
+<p><img src="http://www.django-rest-framework.org/img/quickstart.png" alt="Browsable API"></p>
+<h2 id="二、安装需求"><a href="#二、安装需求" class="headerlink" title="二、安装需求"></a>二、安装需求</h2><p>REST框架具有以下要求：</p>
+<ul>
+<li>Python(2.6.5+, 2.7, 3.2, 3.3)</li>
+<li>Django(1.4.2+, 1.5, 1.6, 1.7)</li>
+</ul>
+<p>下面的包是可选的：</p>
+<ul>
+<li><a href="http://pypi.python.org/pypi/Markdown/" target="_blank" rel="noopener">Markdown</a> (2.1.0+) - 支持可浏览的API</li>
+<li><a href="http://pypi.python.org/pypi/PyYAML" target="_blank" rel="noopener">PyYAML</a> (3.10+) - 支持YAML的content-type</li>
+<li><a href="https://pypi.python.org/pypi/defusedxml" target="_blank" rel="noopener">defusedxml</a> (0.3+) - 支持XML的content-type</li>
+<li><a href="http://pypi.python.org/pypi/django-filter" target="_blank" rel="noopener">django-filter</a> (0.5.4+) - 支持过滤</li>
+<li><a href="https://bitbucket.org/david/django-oauth-plus/wiki/Home" target="_blank" rel="noopener">django-oauth-plus</a> (2.0+)和<a href="https://github.com/simplegeo/python-oauth2" target="_blank" rel="noopener">oauth2</a> (1.5.211+) - 支持OAuth 1.0a</li>
+<li><a href="https://github.com/caffeinehit/django-oauth2-provider" target="_blank" rel="noopener">django-oauth2-provider</a> (0.2.3+) - 支持OAuth 2.0</li>
+<li><a href="https://github.com/lukaszb/django-guardian" target="_blank" rel="noopener">django-guardian</a> (1.1.1+) - 支持对象级别的权限控制</li>
+</ul>
+<p><strong>注意</strong>: <code>oauth2</code>包很容易让人误解为OAuth2，其实只支持OAuth 1.0a，并且注意在Python3中OAuth 1.0a和Oauth2.0不能同时存在。</p>
+<h2 id="三、安装"><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h2><p>1、使用<code>pip</code>进行安装，包含那些你想要的可选包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework</span><br><span class="line">pip install markdown       # Markdown support for the browsable API.</span><br><span class="line">pip install django-filter  # Filtering support</span><br></pre></td></tr></table></figure>
+
+<p>或者从github上克隆：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:tomchristie&#x2F;django-rest-framework.git</span><br></pre></td></tr></table></figure>
+
+<p>2、添加<code>rest_framework</code>到settings.py的<code>INSTALLED_APPS</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'rest_framework'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>3、(可选)如果想要增加可浏览的API，你也将需要添加REST框架的login和logout视图。添加如下行到根<code>urls.py</code>文件中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">    ...</span><br><span class="line">    url(<span class="string">r'^api-auth/'</span>, include(<span class="string">'rest_framework.urls'</span>, namespace=<span class="string">'rest_framework'</span>))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>，URL路径可以是任意的。但是必须使用<code>&#39;rest_framework&#39;</code>命名空间来包含<code>&#39;rest_framework.urls&#39;</code></p>
+<h2 id="四、例子"><a href="#四、例子" class="headerlink" title="四、例子"></a>四、例子</h2><p>来看一个用REST框架建立基于model的简单API例子。</p>
+<p>我们将创建一个获取获取工程用户信息的读写API。</p>
+<p>所有REST框架的全局设置都被保存到一个叫做<code>REST_FRAMEWORK</code>的配置字典中。我们在<code>settings.py</code>模块中添加下面的内容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="comment"># 使用Django标准的`django.contrib.auth`权限,</span></span><br><span class="line">    <span class="comment"># 或者对未验证的用户使用只读权限</span></span><br><span class="line">    <span class="string">'DEFAULT_PERMISSION_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要忘了在<code>INSTALLED_APPS</code>中添加<code>rest_framework</code>。</p>
+<p>现在我们已经准备好了创建API了。下面是项目的根<code>urls.py</code>模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url, include</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> routers, serializers, viewsets</span><br><span class="line"></span><br><span class="line"><span class="comment"># Serializers 定义了如何展示API</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span><span class="params">(serializers.HyperlinkedModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = User</span><br><span class="line">        fields = (<span class="string">'url'</span>, <span class="string">'username'</span>, <span class="string">'email'</span>, <span class="string">'is_staff'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ViewSets定义了View的行为</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserViewSet</span><span class="params">(viewsets.ModelViewSet)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line"></span><br><span class="line"><span class="comment"># Routers提供了一种简单的方法来自动决定如何路由</span></span><br><span class="line">router = routers.DefaultRouter()</span><br><span class="line">router.register(<span class="string">r'users'</span>, UserViewSet)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用自动路由来提供API</span></span><br><span class="line"><span class="comment"># 另外，提供了登录查看web API的功能</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r'^'</span>, include(router.urls)),</span><br><span class="line">    url(<span class="string">r'^api-auth/'</span>, include(<span class="string">'rest_framework.urls'</span>, namespace=<span class="string">'rest_framework'</span>))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>现在可以在浏览器中输入<a href="http://127.0.0.1:8000/来打开API了。并且查看你刚创建的&#39;users&#39;" target="_blank" rel="noopener">http://127.0.0.1:8000/来打开API了。并且查看你刚创建的&#39;users&#39;</a> API。如果你在右上角点登录，那么现在就应该可以添加、创建和删除用户了。</p>
+<h2 id="五、快速开始"><a href="#五、快速开始" class="headerlink" title="五、快速开始"></a>五、快速开始</h2><p>迫不及待的想要开始了？<a href="http://www.django-rest-framework.org/tutorial/quickstart" target="_blank" rel="noopener">快速开始</a>是最快的方法让你能够创建并运行REST API的方法。</p>
+<h2 id="六、教程"><a href="#六、教程" class="headerlink" title="六、教程"></a>六、教程</h2><p>教程将让你通过REST框架创建每一部分。学习它需要一些时间，但是它会让你对每一部分如何相互匹配在一起邮个全方位的了解，强烈建议读一下。</p>
+<ul>
+<li><a href="http://www.django-rest-framework.org/tutorial/1-serialization" target="_blank" rel="noopener">1-序列化</a></li>
+<li><a href="http://www.django-rest-framework.org/tutorial/2-requests-and-responses" target="_blank" rel="noopener">2-请求和相应</a></li>
+<li><a href="http://www.django-rest-framework.org/tutorial/3-class-based-views" target="_blank" rel="noopener">3-基于类的视图</a></li>
+<li><a href="http://www.django-rest-framework.org/tutorial/4-authentication-and-permissions" target="_blank" rel="noopener">4-认证与权限</a></li>
+<li><a href="http://www.django-rest-framework.org/tutorial/5-relationships-and-hyperlinked-apis" target="_blank" rel="noopener">5-关系和超链接API</a></li>
+<li><a href="http://www.django-rest-framework.org/tutorial/6-viewsets-and-routers" target="_blank" rel="noopener">6-视图集合和路由</a></li>
+</ul>
+<p>为了测试，我们提供了一个API教程结束时的例子，在<a href="http://restframework.herokuapp.com/" target="_blank" rel="noopener">这里</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python-Django/" rel="tag"># Python, Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/" rel="prev" title="使用Python的魔术方法创造更好的正则API">
+                  <i class="fa fa-angle-left"></i> 使用Python的魔术方法创造更好的正则API
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/09/12/Nancy%E6%A1%86%E6%9E%B6/" rel="next" title="Nancy Web框架">
+                  Nancy Web框架 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

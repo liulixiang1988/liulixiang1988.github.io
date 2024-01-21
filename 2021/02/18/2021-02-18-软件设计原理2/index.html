@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="设计的两个基本原则：高内聚，低耦合。 开闭原则：不修改代码实现变更OCP 开闭原则：软件实体（模块、类、函数等等）应该对扩展是开放的，对修改是关闭的。 1. 使用策略模式实现开闭原则  2. 使用适配器模式实现开闭原则  3. 使用观察者模式实现开闭原则: 如果要实现多个控制，使用观察者模式+策略+适配器模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件设计原理2-SOLID原则">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="设计的两个基本原则：高内聚，低耦合。 开闭原则：不修改代码实现变更OCP 开闭原则：软件实体（模块、类、函数等等）应该对扩展是开放的，对修改是关闭的。 1. 使用策略模式实现开闭原则  2. 使用适配器模式实现开闭原则  3. 使用观察者模式实现开闭原则: 如果要实现多个控制，使用观察者模式+策略+适配器模式">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-strategy.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-adapter.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-observer.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-template.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-anti-dip.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-dip.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-dip-ex1.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-02-18-isp.png">
+<meta property="article:published_time" content="2021-02-18T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.050Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="System Design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-02-18-strategy.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/","path":"2021/02/18/2021-02-18-软件设计原理2/","title":"软件设计原理2-SOLID原则"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件设计原理2-SOLID原则 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%EF%BC%9A%E4%B8%8D%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%8F%98%E6%9B%B4"><span class="nav-number">1.</span> <span class="nav-text">开闭原则：不修改代码实现变更</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%EF%BC%9A%E5%A6%82%E4%BD%95%E4%B8%8D%E4%BE%9D%E8%B5%96%E4%BB%A3%E7%A0%81%E5%8D%B4%E5%A4%8D%E7%94%A8%E5%AE%83%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">依赖倒置原则：如何不依赖代码却复用它的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99%EF%BC%9A%E6%AD%A3%E6%96%B9%E5%BD%A2%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF%E9%95%BF%E6%96%B9%E5%BD%A2%E5%90%97%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">里氏替换原则：正方形可以继承长方形吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%BF%9D%E5%8F%8D%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E8%A7%84%E5%88%99%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.</span> <span class="nav-text">一个违反里氏替换规则的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E6%96%B9%E5%BD%A2%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF%E9%95%BF%E6%96%B9%E5%BD%A2%E5%90%97%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">正方形可以继承长方形吗？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%9C%80%E5%A5%BD%E4%B8%8D%E8%A6%81%E8%B6%85%E8%BF%87%E4%B8%80%E5%B1%8F"><span class="nav-number">4.</span> <span class="nav-text">单一职责原则：为什么说一个类文件打开最好不要超过一屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99%EF%BC%9A%E5%A6%82%E4%BD%95%E5%AF%B9%E7%B1%BB%E7%9A%84%E8%B0%83%E7%94%A8%E8%80%85%E9%9A%90%E8%97%8F%E7%B1%BB%E7%9A%84%E5%85%AC%E6%9C%89%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">接口隔离原则：如何对类的调用者隐藏类的公有方法？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件设计原理2-SOLID原则 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件设计原理2-SOLID原则
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-18 15:00:00" itemprop="dateCreated datePublished" datetime="2021-02-18T15:00:00+08:00">2021-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>设计的两个基本原则：高内聚，低耦合。</p>
+<h2 id="开闭原则：不修改代码实现变更"><a href="#开闭原则：不修改代码实现变更" class="headerlink" title="开闭原则：不修改代码实现变更"></a>开闭原则：不修改代码实现变更</h2><p>OCP</p>
+<p>开闭原则：<strong>软件实体（模块、类、函数等等）应该对扩展是开放的，对修改是关闭的。</strong></p>
+<p><strong>1. 使用策略模式实现开闭原则</strong></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-strategy.png" alt="strategy"></p>
+<p><strong>2. 使用适配器模式实现开闭原则</strong></p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-adapter.png" alt="adapter"></p>
+<p><strong>3. 使用观察者模式实现开闭原则</strong>: 如果要实现多个控制，使用观察者模式+策略+适配器模式</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-observer.png" alt="observer"></p>
+<p><strong>4. 使用模板方法模式实现开闭原则</strong>：做一些前置或后置的处理，使用观察者模式+策略+适配器+模版方法</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-template.png" alt="template"></p>
+<p><strong>5. 使用工厂方法实现开闭原则</strong>：观察者+策略+适配器+模板+工厂</p>
+<p><strong>小结</strong>：<strong>实现开闭原则的关键是抽象</strong>。当一个模块依赖的是一个抽象接口的时候，就可以随意对这个抽象接口进行扩展，这个时候，不需要对现有代码进行任何修改，利用接口的多态性，通过增加一个新实现该接口的实现类，就能完成需求变更。不同场景进行扩展的方式是不同的，这时候就会产生不同的设计模式，大部分的设计模式都是用来解决扩展的灵活性问题的。</p>
+<p>开闭原则可以说是软件设计原则的原则，是软件设计的核心原则，其他的设计原则更偏向技术性，具有技术性的指导意义，而开闭原则是方向性的，在软件设计的过程中，应该时刻以开闭原则指导、审视自己的设计：当需求变更的时候，现在的设计能否不修改代码就可以实现功能的扩展？如果不是，那么就应该进一步使用其他的设计原则和设计模式去重新设计。</p>
+<h2 id="依赖倒置原则：如何不依赖代码却复用它的功能"><a href="#依赖倒置原则：如何不依赖代码却复用它的功能" class="headerlink" title="依赖倒置原则：如何不依赖代码却复用它的功能"></a>依赖倒置原则：如何不依赖代码却复用它的功能</h2><p>Dependency Inversion Principal：如何不依赖代码却复用它的功能</p>
+<p>依赖倒置原则是这样的：</p>
+<ul>
+<li><strong>高层模块不应该依赖低层模块，二者都应该依赖抽象。</strong></li>
+<li><strong>抽象不应该依赖具体实现，具体实现应该依赖抽象。</strong></li>
+</ul>
+<p>举例：</p>
+<ul>
+<li>代码并不直接依赖数据库的驱动，而是依赖 JDBC。各种数据库的驱动都实现了 JDBC，当应用程序需要更换数据库的时候，不需要修改任何代码。这正是因为应用代码，高层模块，不依赖数据库驱动，而是依赖抽象 JDBC，而数据库驱动，作为低层模块，也依赖 JDBC。</li>
+<li>Java 开发的 Web 应用也不需要依赖 Tomcat 这样的 Web 容器，只需要依赖 J2EE 规范，Web 应用实现 J2EE 规范的 Servlet 接口，然后把应用程序打包通过 Web 容器启动就可以处理 HTTP 请求了。这个 Web 容器可以是 Tomcat，也可以是 Jetty，任何实现了 J2EE 规范的 Web 容器都可以。同样，高层模块不依赖低层模块，大家都依赖 J2EE 规范。</li>
+</ul>
+<p>这是我们习惯上的层次依赖示例，策略层依赖方法层，方法层依赖工具层。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-anti-dip.png" alt="normal"></p>
+<p>这样分层依赖的一个潜在问题是，策略层对方法层和工具层是传递依赖的，下面两层的任何改动都会导致策略层的改动，这种传递依赖导致的级联改动可能会导致软件维护过程非常糟糕。</p>
+<p>解决办法是利用依赖倒置的设计原则，每个高层模块都为它所需要的服务声明一个抽象接口，而低层模块则实现这些抽象接口，高层模块通过抽象接口使用低层模块。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-dip.png" alt="dip"></p>
+<p>高层模块就不需要直接依赖低层模块，而变成了低层模块依赖高层模块定义的抽象接口，从而实现了依赖倒置，解决了策略层、方法层、工具层的传递依赖问题。</p>
+<p><strong>依赖倒置原则中，除了具体实现要依赖抽象，最重要的是，抽象是属于谁的抽象。</strong>也就是说，接口被高层模块定义，高层模块拥有接口，低层模块实现接口</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-dip-ex1.png" alt="dip"></p>
+<p><strong>总结：</strong></p>
+<p>依赖倒置原则通俗说就是，高层模块不依赖低层模块，而是都依赖抽象接口，这个抽象接口通常是由高层模块定义，低层模块实现。</p>
+<p>遵循依赖倒置原则有这样几个编码守则：</p>
+<ul>
+<li>应用代码中多使用抽象接口，尽量避免使用那些多变的具体实现类。</li>
+<li>不要继承具体类，如果一个类在设计之初不是抽象类，那么尽量不要去继承它。对具体类的继承是一种强依赖关系，维护的时候难以改变。</li>
+<li>不要重写（override）包含具体实现的函数。</li>
+</ul>
+<p>依赖倒置原则最典型的使用场景就是框架的设计。框架提供框架核心功能，比如 HTTP 处理，MVC 等，并提供一组接口规范，应用程序只需要遵循接口规范编程，就可以被框架调用。程序使用框架的功能，但是不调用框架的代码，而是实现框架的接口，被框架调用，从而框架有更高的可复用性，被应用于各种软件开发中。</p>
+<h2 id="里氏替换原则：正方形可以继承长方形吗？"><a href="#里氏替换原则：正方形可以继承长方形吗？" class="headerlink" title="里氏替换原则：正方形可以继承长方形吗？"></a>里氏替换原则：正方形可以继承长方形吗？</h2><p>Liskov Substitution Principle，LSP。关于如何设计类的继承关系，怎样使继承不违反开闭原则，实际上有一个关于继承的设计原则，叫里氏替换原则。</p>
+<h3 id="一个违反里氏替换规则的例子"><a href="#一个违反里氏替换规则的例子" class="headerlink" title="一个违反里氏替换规则的例子"></a>一个违反里氏替换规则的例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawShape</span><span class="params">(Shape shape)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (shape.type == Shape.Circle ) &#123;</span><br><span class="line">        drawCircle((Circle) shape);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (shape.type == Shape.Square) &#123;</span><br><span class="line">        drawSquare((Square) shape);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ……</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先看到这样的 if/else 代码，就可以判断违反了开闭原则：当增加新的 Shape 类型的时候，必须修改这个方法，增加 else if 代码。</p>
+<p>其次也因为同样的原因违反了里氏替换原则：当增加新的 Shape 类型的时候，如果没有修改这个方法，没有增加 else if 代码，那么这个新类型就无法替换基类 Shape。</p>
+<h3 id="正方形可以继承长方形吗？"><a href="#正方形可以继承长方形吗？" class="headerlink" title="正方形可以继承长方形吗？"></a>正方形可以继承长方形吗？</h3><p>正方形在如下情况下不可以：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testArea</span><span class="params">(Rectangle rect)</span> </span>&#123;</span><br><span class="line">    rect.setWidth(<span class="number">3</span>);</span><br><span class="line">    rect.setHeight(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">assert</span> <span class="number">12</span> == rect.calculateArea(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从而得出一个结论：</p>
+<p><strong>子类不能比父类更严格</strong></p>
+<p>当子类继承父类的时候，根据里氏替换原则，使用者可以在使用父类的地方使用子类替换，那么从契约的角度，子类的契约就不能比父类更严格，否则使用者在用子类替换父类的时候，就会因为更严格的契约而失败。</p>
+<p>实践中，当你继承一个父类仅仅是为了复用父类中的方法的时候，那么很有可能你离错误的继承已经不远了。一个类如果不是为了被继承而设计，那么最好就不要继承它。粗暴一点地说，如果不是抽象类或者接口，最好不要继承它。</p>
+<p>如果你确实需要使用一个类的方法，最好的办法是组合这个类而不是继承这个类，这就是人们通常说的<strong>组合优于继承</strong>。</p>
+<p>如果类 B 需要使用类 A 的方法，这时候不要去继承类 A，而是去组合类 A，也能达到使用类 A 方法的效果。这其实就是<strong>对象适配器模式</strong>了，使用这个模式的话，类 B 不需要继承类 A，一样可以拥有类 A 的方法，同时还有更大的灵活性，比如可以改变方法的名称以适应应用接口的需要。</p>
+<p>继承接口或者抽象类也并不保证你的继承设计就是正确的，最好的方法还是用里氏替换原则检查一下你的设计：使用父类的地方是不是可以用子类替换？</p>
+<p>违反里氏替换原则不仅仅发生在设计继承的地方，也可能发生在使用父类和子类的地方，错误的使用方法，也可能导致程序违反里氏替换原则，使子类无法替换父类。</p>
+<h2 id="单一职责原则：为什么说一个类文件打开最好不要超过一屏"><a href="#单一职责原则：为什么说一个类文件打开最好不要超过一屏" class="headerlink" title="单一职责原则：为什么说一个类文件打开最好不要超过一屏"></a>单一职责原则：为什么说一个类文件打开最好不要超过一屏</h2><p>Single responsibility principle, SRP</p>
+<p>类的职责应该是单一的，也就是引起类变化的原因应该只有一个，这样类的代码通常也是比较少的。</p>
+<h2 id="接口隔离原则：如何对类的调用者隐藏类的公有方法？"><a href="#接口隔离原则：如何对类的调用者隐藏类的公有方法？" class="headerlink" title="接口隔离原则：如何对类的调用者隐藏类的公有方法？"></a>接口隔离原则：如何对类的调用者隐藏类的公有方法？</h2><p>Interface Segregation Principle, ISP</p>
+<p>接口隔离原则说：不应该强迫用户依赖他们不需要的方法。</p>
+<p>通过使用接口隔离原则，我们可以<strong>将一个实现类的不同方法包装在不同的接口中对外暴露。</strong>应用程序只需要依赖它们需要的方法，而不会看到不需要的方法。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-02-18-isp.png" alt="ISP"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/System-Design/" rel="tag"># System Design</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/18/2021-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/" rel="prev" title="软件设计原理1-4+1架构图与UML">
+                  <i class="fa fa-angle-left"></i> 软件设计原理1-4+1架构图与UML
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/" rel="next" title="软件设计原理3-设计模式">
+                  软件设计原理3-设计模式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

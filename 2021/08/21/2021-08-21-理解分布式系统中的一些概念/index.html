@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC]  1. 什么是分布式系统计算机科学家Andrew S. Tenenbaum对分布式定义为：  A collection of independent computers that appear to its users as one computer  他认为，分布式系统必须要有的三个特征是：  The computers operate concurrently. The compu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解分布式系统中的一些概念">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[TOC]  1. 什么是分布式系统计算机科学家Andrew S. Tenenbaum对分布式定义为：  A collection of independent computers that appear to its users as one computer  他认为，分布式系统必须要有的三个特征是：  The computers operate concurrently. The compu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-21-distri-sys-read-replica.drawio.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-08-22-distri-sys-replic.png">
+<meta property="article:published_time" content="2021-08-21T04:24:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.052Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="System Design">
+<meta property="article:tag" content="Distributed System">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-08-21-distri-sys-read-replica.drawio.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/","path":"2021/08/21/2021-08-21-理解分布式系统中的一些概念/","title":"理解分布式系统中的一些概念"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>理解分布式系统中的一些概念 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是分布式系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Read-Replication-%E8%AF%BB%E5%89%AF%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">2. Read Replication(读副本)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Sharding-%E5%88%86%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">3. Sharding(分片)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Consistent-Hashing-%E4%B8%80%E8%87%B4%E6%80%A7Hash"><span class="nav-number">4.</span> <span class="nav-text">4. Consistent Hashing(一致性Hash)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-CAP-Theorem-CAP%E7%90%86%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">5. CAP Theorem (CAP理论)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Distributed-Transactions%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. Distributed Transactions（分布式事务）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="理解分布式系统中的一些概念 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          理解分布式系统中的一些概念
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-21 12:24:00" itemprop="dateCreated datePublished" datetime="2021-08-21T12:24:00+08:00">2021-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Distributed-System/" itemprop="url" rel="index"><span itemprop="name">Distributed System</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
+<hr>
+<h2 id="1-什么是分布式系统"><a href="#1-什么是分布式系统" class="headerlink" title="1. 什么是分布式系统"></a>1. 什么是分布式系统</h2><p>计算机科学家<a href="https://en.wikipedia.org/wiki/Andrew_S._Tanenbaum" target="_blank" rel="noopener" title="Andrew S. Tanenbaum">Andrew S. Tenenbaum</a>对分布式定义为：</p>
+<blockquote>
+<p>A collection of independent computers that appear to its users as one computer</p>
+</blockquote>
+<p>他认为，分布式系统必须要有的三个特征是：</p>
+<ol>
+<li>The computers operate concurrently.</li>
+<li>The computers fail independently.</li>
+<li>The computers don’t share a global clock.</li>
+</ol>
+<p>本篇文章包含以下分布式相关的内容：</p>
+<ol>
+<li>Storage(存储): Relational/Mongo, Cassandra, HDFS</li>
+<li>Computation(计算): Hadoop, Spark, Storm</li>
+<li>Synchroniztion(同步): NTP, vector clock(向量时钟)</li>
+<li>Consensus(共识): Paxos, Zookeeper</li>
+<li>Messaging(消息): Kafka</li>
+</ol>
+<p>文中会以一个咖啡店业务的发展过程作为例子来进行分布式概念的引入，该咖啡店提供在线业务，从小到大的发展中遇到了各个技术问题，我们一点点进行说明讲解。</p>
+<h2 id="2-Read-Replication-读副本"><a href="#2-Read-Replication-读副本" class="headerlink" title="2. Read Replication(读副本)"></a>2. Read Replication(读副本)</h2><p><img src="https://liulixiang1988.github.io/images/2021-08-21-distri-sys-read-replica.drawio.png" alt="read replication"></p>
+<p>主要适用于主从场景，主节点负责写入，从节点即read replication负责读取。</p>
+<p>比如，咖啡店业务刚开始用一个数据库就能支撑订单，但是访问越来越多，我们增加了Read Replication来减轻读压力。</p>
+<h2 id="3-Sharding-分片"><a href="#3-Sharding-分片" class="headerlink" title="3. Sharding(分片)"></a>3. Sharding(分片)</h2><p>假设我们的咖啡店业务做得很好，现在订单越来越多，我们的主库已经出现了不能支撑写的请求。此时我们需要考虑能不能将订单数据进行拆分到几个库里来存储。</p>
+<p>Read Replication虽然解决了主节点读的压力，但是对于主节点的写入压力却无能为力。此时，我们考虑使用sharding技术来进行分片，笔者在<a href="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/" title="分布式架构101">之前的笔记</a>中也提到过。分片的作用相当于将工作负载(workload)按照<strong>一定规则</strong>(后面提到的一致性Hash)分配到多个主节点中，由此来均衡压力。</p>
+<p>Sharding技术解决了负载压力过大的问题，但是也引入了一些新的挑战：</p>
+<ol>
+<li>More Complexity: 系统更加复杂</li>
+<li>Limited Data Model: 数据需要能够支持分片，比如要有一个key用来做hash</li>
+<li>Limited Data Access Patterns：使用场景更偏向于OLTP，对于OLAP分析类的数据访问，往往需要涉及多维度数据，可能要便利所有shard，此时使用shard没有优势。</li>
+</ol>
+<h2 id="4-Consistent-Hashing-一致性Hash"><a href="#4-Consistent-Hashing-一致性Hash" class="headerlink" title="4. Consistent Hashing(一致性Hash)"></a>4. Consistent Hashing(一致性Hash)</h2><p>Consistent Hashing也被称为Distributed Hash Table(DHT) ，2007年的<a href="https://liulixiang1988.github.io/images/dynamo.pdf" title="Dynamo">Amazon Dynamo论文</a>中采用了这个算法，<a href="https://en.wikipedia.org/wiki/Consistent_hashing" target="_blank" rel="noopener" title="Consistent Hashing">wikipedia</a>,对其做了比详细的介绍。</p>
+<p>在一致性hash下，当HashTable调整大小时，只需要有n/m个数据需要重新映射，其中n是key的数量，m是槽(slot)的数量。相比之下，在大多数传统哈希表中，数组槽数量的变化会导致几乎所有键都被重新映射，因为key和slot之间的映射是由取余操作来实现的。</p>
+<p>虽然上面说的解决了scale的问题，但是如果环中的节点出现了故障，则会发生单点问题。前面我们为了避免单点问题，使用read replication。在一致性Hash中，为了避免单点故障，我们沿着环将值存储三分。这样避免了单点问题。</p>
+<p>但是在分布式系统领域，解决一个问题往往会引入两个新的问题。</p>
+<p><img src="https://liulixiang1988.github.io/images/2021-08-22-distri-sys-replic.png" alt="replication"></p>
+<p>我们为key <code>9F72</code> 放入了三个副本，现在我想更新对应的值，如果两个更新成功了，一个更新失败了。此时另一个请求来读取值，该怎么来决定读取的值是多少呢？</p>
+<p>上面这个问题是一个典型的<code>Consistency</code>(一致性)问题。像Cassandra中使用的是<code>eventual consistency</code>(最终一致性)，里面核心的原理就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R + W &gt; N</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ol>
+<li><code>N</code>代表副本数量，在上面的例子里，就是3</li>
+<li><code>R</code>代表读取时成功的数量</li>
+<li><code>W</code>代表写入时成功的数量</li>
+<li><code>R + W &gt; N</code>：以上面3个副本为例，写入时我保障半数也就是2个节点已经写入我给的值，读取时有超过半数（也就是2个节点）返回相同的值，那么我获取的值就是一致的，此时<code>2+2&gt;3</code>。</li>
+</ol>
+<p>如果一些场景允许不一致，则不需要等待半数以上写入或读取成功，则可以不用上面的最终一致性方案。因为不用等待半数确认，因此，这种方案性能比较高。</p>
+<p>综上，使用低延迟非一致性方案还是使用最终一致性方案，取决于业务的使用场景。</p>
+<p>上面讲了一致性的问题，对于不一致时该怎么处理呢？这是一个entropy problem(熵问题)，对于这类问题，不同的存储系统，比如cassandra, riak, dynamo，采用的方案不一样。</p>
+<p>上面我们说了这么多，那什么时候使用基于这些技术的存储系统（比如Cassandra）呢？</p>
+<ul>
+<li>Scale（扩展性）</li>
+<li>Transactional data (会话数据)</li>
+<li>Always on (一直在线)</li>
+</ul>
+<h2 id="5-CAP-Theorem-CAP理论"><a href="#5-CAP-Theorem-CAP理论" class="headerlink" title="5. CAP Theorem (CAP理论)"></a>5. CAP Theorem (CAP理论)</h2><p>2000年，<a href="https://en.wikipedia.org/wiki/Eric_Brewer_(scientist)" target="_blank" rel="noopener" title="Eric Brewer">Eric Brewer</a>在ACM的一个会议上提出分布式数据库不能同时满足Consistency（一致性）、Availability（可用性）、Partition Tolerance（分区容忍性）。这个理论就是后来的CAP理论。</p>
+<ul>
+<li>Consistency（一致性）：当我读区数据时，读到的永远都是最近一次写入的数据；</li>
+<li>Availability（可用性）：当查询时，能取得结果；当写入时，能够写入；而不是说现在不能访问；(When I ask, I get the answer; When I try to write, I can write)</li>
+<li>Partition Tolerance (分区容错性)：因为分布式系统存在多个节点，其中的一些节点可能会因为一些原因（比如网络故障）导致不能与其他节点进行通信。当上述发生时，如果节点恢复后，分布式系统能够恢复，这个叫做分区容错性。</li>
+</ul>
+<p>因为节点可以随时故障，因此分区容错性是必选的。那剩下的就是在一致性和可用性中选一个了。也就是我们只能实现CP或AP。</p>
+<p>CP系统例子：由于网络的原因，节点1不能跟其他节点进行通信，它完全不知道外面数据是什么样子了，此时有个客户端连接了它，并且对它发出获取数据的请求。此时节点1会为了保持一致性而拒绝服务。这就是CP系统。</p>
+<p>AP系统例子：由于网络的原因，节点1不能跟其他节点进行通信，它完全不知道外面数据是什么样子了，此时有个客户端连接了它，并且对它发出获取数据的请求。此时节点1如果返回了数据，表现出系统可用的状态。这就是AP系统。</p>
+<p>使用CP还是AP，是一个tradeoff。</p>
+<h2 id="6-Distributed-Transactions（分布式事务）"><a href="#6-Distributed-Transactions（分布式事务）" class="headerlink" title="6. Distributed Transactions（分布式事务）"></a>6. Distributed Transactions（分布式事务）</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/System-Design/" rel="tag"># System Design</a>
+              <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/13/2021-08-13-DistributedLockManager/" rel="prev" title="Distributed Lock Manager笔记">
+                  <i class="fa fa-angle-left"></i> Distributed Lock Manager笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/" rel="next" title="Deploying Applications the DevOps Way">
+                  Deploying Applications the DevOps Way <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[toc] 对于规模不太大的软件系统，我们可以将概要设计文档和详细设计文档合并成一个设计文档。这一篇文章中，我会展现一个设计文档示例模板，你可以参考这个模板编写你的设计文档。 文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业务场景，应该在专门的需求文档中描述，但是在设计文档中，必须要再简单描述一下，以保证设计文档的完整性，这样，即使脱离需求文档，阅读者也能理解主要的设计。 此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件设计文档示例模板">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="[toc] 对于规模不太大的软件系统，我们可以将概要设计文档和详细设计文档合并成一个设计文档。这一篇文章中，我会展现一个设计文档示例模板，你可以参考这个模板编写你的设计文档。 文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业务场景，应该在专门的需求文档中描述，但是在设计文档中，必须要再简单描述一下，以保证设计文档的完整性，这样，即使脱离需求文档，阅读者也能理解主要的设计。 此">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-deploy.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-seq.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-seq2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-activity.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-component.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-seq3.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-activity2.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-class.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-seq4.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-14-status.png">
+<meta property="article:published_time" content="2021-03-14T13:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.051Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="System Design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-03-14-deploy.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/","path":"2021/03/14/2021-03-14-软件设计文档示例模板/","title":"软件设计文档示例模板"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件设计文档示例模板 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1 设计概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 功能概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%9D%9E%E5%8A%9F%E8%83%BD%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 非功能约束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E5%9B%BE%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">2 系统部署图与整体设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E5%9B%BE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 系统部署图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%8B%E5%8D%95%E5%9C%BA%E6%99%AF%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%BA%8F%E5%88%97%E5%9B%BE"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 下单场景子系统序列图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%80%80%E6%AC%BE%E5%9C%BA%E6%99%AF%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%BA%8F%E5%88%97%E5%9B%BE"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 退款场景子系统序列图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E9%80%80%E6%AC%BE%E5%9C%BA%E6%99%AF%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%B4%BB%E5%8A%A8%E5%9B%BE"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 退款场景子系统活动图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AD%90%E7%B3%BB%E7%BB%9F-1-%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">3 子系统 1 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AD%90%E7%B3%BB%E7%BB%9F-1-%E7%BB%84%E4%BB%B6%E5%9B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 子系统 1 组件图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E5%9C%BA%E6%99%AF-A-%E7%BB%84%E4%BB%B6%E5%BA%8F%E5%88%97%E5%9B%BE"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 场景 A 组件序列图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E5%9C%BA%E6%99%AF-B-%E7%BB%84%E4%BB%B6%E6%B4%BB%E5%8A%A8%E5%9B%BE"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 场景 B 组件活动图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%BB%84%E4%BB%B6-1-%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 组件 1 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E7%BB%84%E4%BB%B6-1-%E7%B1%BB%E5%9B%BE"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 组件 1 类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E5%9C%BA%E6%99%AF-A-%E7%B1%BB%E5%BA%8F%E5%88%97%E5%9B%BE"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 场景 A 类序列图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E5%AF%B9%E8%B1%A1-1-%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 对象 1 状态图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E7%BB%84%E4%BB%B6-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 组件 2 设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AD%90%E7%B3%BB%E7%BB%9F-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">4 子系统 2 设计</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件设计文档示例模板 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件设计文档示例模板
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-14 21:00:00" itemprop="dateCreated datePublished" datetime="2021-03-14T21:00:00+08:00">2021-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>[toc]</p>
+<p>对于规模不太大的软件系统，我们可以将概要设计文档和详细设计文档合并成一个设计文档。这一篇文章中，我会展现一个设计文档示例模板，你可以参考这个模板编写你的设计文档。</p>
+<p>文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业务场景，应该在专门的需求文档中描述，但是在设计文档中，必须要再简单描述一下，以保证设计文档的完整性，这样，即使脱离需求文档，阅读者也能理解主要的设计。</p>
+<p>此外，在设计概述中，还需要描述设计的非功能约束，比如关于性能、可用性、维护性、安全性，甚至开发和部署成本方面的设计目标。</p>
+<p>然后就是具体的设计了，第一张设计图应该是部署图，通过部署图描述系统整个物理模型蓝图，包括未来系统长什么样。</p>
+<p>如果系统中包含几个子系统，那么还需要描述子系统间的关系，可以通过子系统序列图，子系统活动图进行描述。</p>
+<p>子系统内部的最顶层设计就是组件图，描述子系统由哪些组件组成，不同场景中，组件之间的调用序列图是什么样的。</p>
+<p>每个组件内部，需要用类图进行建模描述，对于不同场景，用时序图描述类之间的动态调用关系，对于有复杂状态的类，用状态图描述其状态转换。</p>
+<p>具体示例模板如下：</p>
+<h2 id="1-设计概述"><a href="#1-设计概述" class="headerlink" title="1 设计概述"></a>1 设计概述</h2><p>……系统是一个……的系统，是公司……战略的核心系统，承担着公司……的目标任务。</p>
+<h3 id="1-1-功能概述"><a href="#1-1-功能概述" class="headerlink" title="1.1 功能概述"></a>1.1 功能概述</h3><p>系统主要功能包括……，使用者包括……。</p>
+<h3 id="1-2-非功能约束"><a href="#1-2-非功能约束" class="headerlink" title="1.2 非功能约束"></a>1.2 非功能约束</h3><p>……系统未来预计一年用户量达到……，日订单量达到……，日 PV 达到……，图片数量达到 ……。</p>
+<ol>
+<li>查询性能目标：平均响应时间 &lt;300ms，95% 响应时间 &lt;500ms，单机 TPS&gt;100；</li>
+<li>下单性能目标：平均响应时间 &lt;800ms，95% 响应时间 &lt;1000ms，单机 TPS&gt;30；</li>
+<li>……性能目标：平均响应时间 &lt;800ms，95% 响应时间 &lt;1000ms，单机 TPS&gt;30；</li>
+<li>系统核心功能可用性目标：&gt;99.97%；</li>
+<li>系统安全性目标：系统可拦截…… 、……、……攻击，密码数据散列加密，客户端数据 HTTPS 加密，外部系统间通信对称加密；</li>
+<li>数据持久化目标：&gt;99.99999%。</li>
+</ol>
+<h2 id="2-系统部署图与整体设计"><a href="#2-系统部署图与整体设计" class="headerlink" title="2 系统部署图与整体设计"></a>2 系统部署图与整体设计</h2><p>系统上线时预计部署……台物理机，……个子系统，和公司……系统交互，和外部第三方……个系统交互。</p>
+<h3 id="2-1-系统部署图"><a href="#2-1-系统部署图" class="headerlink" title="2.1 系统部署图"></a>2.1 系统部署图</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-14-deploy.png" alt="link"></p>
+<p>子系统 1 的功能职责为……，部署……台服务器，依赖……和……子系统，实现 ……功能。</p>
+<p>子系统 2 参照子系统 1 来写。</p>
+<h3 id="2-2-下单场景子系统序列图"><a href="#2-2-下单场景子系统序列图" class="headerlink" title="2.2 下单场景子系统序列图"></a>2.2 下单场景子系统序列图</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-14-seq.png" alt="link"></p>
+<ol>
+<li>下单时，子系统先发送……消息到子系统 3，子系统 3 需要执行……完成……处理，然后发送……消息到财务系统，消息中包含……数据。</li>
+<li>收到……的处理结果……后，子系统 1 发送……消息到……子系统 2……。</li>
+</ol>
+<h3 id="2-3-退款场景子系统序列图"><a href="#2-3-退款场景子系统序列图" class="headerlink" title="2.3 退款场景子系统序列图"></a>2.3 退款场景子系统序列图</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-14-seq2.png" alt="link"></p>
+<ol>
+<li>退款子系统先发送……消息到子系统 3，子系统 3 需要执行……完成……处理，然后发送……消息到财务系统，消息中包含……数据。</li>
+<li>收到……的处理结果……后，子系统 1 发送……消息到……子系统 2……。</li>
+</ol>
+<h3 id="2-4-退款场景子系统活动图"><a href="#2-4-退款场景子系统活动图" class="headerlink" title="2.4 退款场景子系统活动图"></a>2.4 退款场景子系统活动图</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-14-activity.png" alt="link"></p>
+<p>如图所示：</p>
+<ol>
+<li>退款开始时，子系统 1 处理 XXX，然后判断 m 的状态，如果 m 为真，请求子系统 3 处理 ZZZ，如果 m 为假，子系统继续处理 ZZZ 并结束。</li>
+<li>子系统 3 处理 ZZZ 后，一方面继续处理 XYZ，一方面将……消息发送给财务通进行 AAA 处理。</li>
+<li>子系统在处理完 XYZ 后，返回子系统继续梳理 YYY，然后退款处理结束</li>
+</ol>
+<h2 id="3-子系统-1-设计"><a href="#3-子系统-1-设计" class="headerlink" title="3 子系统 1 设计"></a>3 子系统 1 设计</h2><p>子系统 1 的主要功能职责是……，其中主要包含了……组件。</p>
+<h3 id="3-1-子系统-1-组件图"><a href="#3-1-子系统-1-组件图" class="headerlink" title="3.1 子系统 1 组件图"></a>3.1 子系统 1 组件图</h3><p><img src="https://liulixiang1988.github.io/images/2021-03-14-component.png" alt="link"></p>
+<p>子系统 1 包含 6 个组件：</p>
+<p>组件 1 的功能主要是……，需要依赖组件 2 完成……，是子系统 1 的核心组件，用户……请求主要通过组件 1 完成。</p>
+<p>同样的，组件 2 也可以参照组件 1 来这样写。</p>
+<h4 id="3-1-1-场景-A-组件序列图"><a href="#3-1-1-场景-A-组件序列图" class="headerlink" title="3.1.1 场景 A 组件序列图"></a>3.1.1 场景 A 组件序列图</h4><p><img src="https://liulixiang1988.github.io/images/2021-03-14-seq3.png" alt="link"></p>
+<p>对于场景 A，首先组件 1 收到用户消息 CCC，然后组件 1 调用组件 2 的 XXX 方法……。</p>
+<h4 id="3-1-2-场景-B-组件活动图"><a href="#3-1-2-场景-B-组件活动图" class="headerlink" title="3.1.2 场景 B 组件活动图"></a>3.1.2 场景 B 组件活动图</h4><p><img src="https://liulixiang1988.github.io/images/2021-03-14-activity2.png" alt="link"></p>
+<p>在场景 B 中，首先组件收到……消息，开始处理……，然后判断……，如果为 true，那么……，如果为 false，那么……。</p>
+<h3 id="3-2-组件-1-设计"><a href="#3-2-组件-1-设计" class="headerlink" title="3.2 组件 1 设计"></a>3.2 组件 1 设计</h3><p>组件 1 的主要功能职责是……，其中主要包含了……类。</p>
+<h4 id="3-2-1-组件-1-类图"><a href="#3-2-1-组件-1-类图" class="headerlink" title="3.2.1 组件 1 类图"></a>3.2.1 组件 1 类图</h4><p><img src="https://liulixiang1988.github.io/images/2021-03-14-class.png" alt="link"></p>
+<p>Class1 实现接口 Interface1，主要功能是……，Class1 聚合了 Class2 和 Class3，共同对外提供……服务，Class1 依赖 Class4 实现……功能，Class4……。</p>
+<h4 id="3-2-2-场景-A-类序列图"><a href="#3-2-2-场景-A-类序列图" class="headerlink" title="3.2.2 场景 A 类序列图"></a>3.2.2 场景 A 类序列图</h4><p><img src="https://liulixiang1988.github.io/images/2021-03-14-seq4.png" alt="link"></p>
+<p>在场景 A 中，当外部应用调用类 1 的 create 方法时，类 1……。</p>
+<h4 id="3-2-3-对象-1-状态图"><a href="#3-2-3-对象-1-状态图" class="headerlink" title="3.2.3 对象 1 状态图"></a>3.2.3 对象 1 状态图</h4><p><img src="https://liulixiang1988.github.io/images/2021-03-14-status.png" alt="link"></p>
+<p>对象 1 运行时有 4 种状态，初始状态是状态 1，当条件 1 满足是，状态 1 转换为状态 2，当条件 3 满足时，状态 2 转换为状态 4……。</p>
+<h3 id="3-3-组件-2-设计"><a href="#3-3-组件-2-设计" class="headerlink" title="3.3 组件 2 设计"></a>3.3 组件 2 设计</h3><p>重复上面的格式。</p>
+<h2 id="4-子系统-2-设计"><a href="#4-子系统-2-设计" class="headerlink" title="4 子系统 2 设计"></a>4 子系统 2 设计</h2><p>重复上面的格式。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/System-Design/" rel="tag"># System Design</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/" rel="prev" title="分布式架构101">
+                  <i class="fa fa-angle-left"></i> 分布式架构101
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/" rel="next" title="技术人的思维修炼">
+                  技术人的思维修炼 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

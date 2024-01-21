@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. Tomcat配置1.1 创建环境变量创建环境变量CATALINA_HOME,值为Tomcat所在根目录（比如，windows下可能为为C:\Program Files (x86)\Apache Software Foundation\Tomcat 7.0). 1.2 启动Tomcat在CATALINA_HOME的bin目录下有startup脚本。 1.3 测试地址：http:&#x2F;&#x2F;localh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web之JSP-01 Java Web简介">
+<meta property="og:url" content="https://liulixiang1988.github.io/2015/04/07/Java%20Web%E4%B9%8BJSP-01%20Java%20Web%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1. Tomcat配置1.1 创建环境变量创建环境变量CATALINA_HOME,值为Tomcat所在根目录（比如，windows下可能为为C:\Program Files (x86)\Apache Software Foundation\Tomcat 7.0). 1.2 启动Tomcat在CATALINA_HOME的bin目录下有startup脚本。 1.3 测试地址：http:&#x2F;&#x2F;localh">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/java-web-jsp-01.png">
+<meta property="article:published_time" content="2015-04-07T13:40:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T14:21:11.315Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/java-web-jsp-01.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2015/04/07/Java%20Web%E4%B9%8BJSP-01%20Java%20Web%E7%AE%80%E4%BB%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2015/04/07/Java%20Web%E4%B9%8BJSP-01%20Java%20Web%E7%AE%80%E4%BB%8B/","path":"2015/04/07/Java Web之JSP-01 Java Web简介/","title":"Java Web之JSP-01 Java Web简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java Web之JSP-01 Java Web简介 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Tomcat%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1. Tomcat配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 创建环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%90%AF%E5%8A%A8Tomcat"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 启动Tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Tomcat%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">2. Tomcat目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%89%8B%E5%B7%A5%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AAJava-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">3. 手工编写第一个Java  Web应用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%88%9B%E5%BB%BAWeb-App%E7%9B%AE%E5%BD%95"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 创建Web App目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%9C%A8myhome%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%88%9B%E5%BB%BA%E5%86%85%E5%AE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 在myhome目录下创建内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-WEB-INF%E7%9B%AE%E5%BD%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">4. WEB-INF目录详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8eclipse%E5%BC%80%E5%8F%91web"><span class="nav-number">5.</span> <span class="nav-text">5. 使用eclipse开发web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-MyEclipse%E9%85%8D%E7%BD%AEJRE"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 MyEclipse配置JRE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-MyEclipse%E9%9B%86%E6%88%90Tomcat%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 MyEclipse集成Tomcat服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E4%BD%BF%E7%94%A8MyEclipse%E5%88%9B%E5%BB%BAJava-web%E5%BA%94%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 使用MyEclipse创建Java web应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 修改字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BF%AE%E6%94%B9Tomcat%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3"><span class="nav-number">6.</span> <span class="nav-text">6. 修改Tomcat服务器默认端口</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/07/Java%20Web%E4%B9%8BJSP-01%20Java%20Web%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java Web之JSP-01 Java Web简介 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web之JSP-01 Java Web简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-07 21:40:00" itemprop="dateCreated datePublished" datetime="2015-04-07T21:40:00+08:00">2015-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:21:11" itemprop="dateModified" datetime="2020-06-27T22:21:11+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-Tomcat配置"><a href="#1-Tomcat配置" class="headerlink" title="1. Tomcat配置"></a>1. Tomcat配置</h2><h3 id="1-1-创建环境变量"><a href="#1-1-创建环境变量" class="headerlink" title="1.1 创建环境变量"></a>1.1 创建环境变量</h3><p>创建环境变量<code>CATALINA_HOME</code>,值为Tomcat所在根目录（比如，windows下可能为为<code>C:\Program Files (x86)\Apache Software Foundation\Tomcat 7.0</code>).</p>
+<h3 id="1-2-启动Tomcat"><a href="#1-2-启动Tomcat" class="headerlink" title="1.2 启动Tomcat"></a>1.2 启动Tomcat</h3><p>在<code>CATALINA_HOME</code>的bin目录下有startup脚本。</p>
+<h3 id="1-3-测试"><a href="#1-3-测试" class="headerlink" title="1.3 测试"></a>1.3 测试</h3><p>地址：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p>
+<h2 id="2-Tomcat目录结构"><a href="#2-Tomcat目录结构" class="headerlink" title="2. Tomcat目录结构"></a>2. Tomcat目录结构</h2><p><img src="/images/java-web-jsp-01.png" alt="tomcat"></p>
+<h2 id="3-手工编写第一个Java-Web应用程序"><a href="#3-手工编写第一个Java-Web应用程序" class="headerlink" title="3. 手工编写第一个Java  Web应用程序"></a>3. 手工编写第一个Java  Web应用程序</h2><h3 id="3-1-创建Web-App目录"><a href="#3-1-创建Web-App目录" class="headerlink" title="3.1 创建Web App目录"></a>3.1 创建Web App目录</h3><p>在Tomcat的webapps目录下创建目录myhome</p>
+<h3 id="3-2-在myhome目录下创建内容"><a href="#3-2-在myhome目录下创建内容" class="headerlink" title="3.2 在myhome目录下创建内容"></a>3.2 在myhome目录下创建内容</h3><p>1、创建index.jsp:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>你好<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>你好世界<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、创建WEB-INF目录<br>从Tomcat的webapps/examples/WEB-INF下拷贝web.xml，并且只保留根标签</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee</span></span></span><br><span class="line"><span class="tag"><span class="string">                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">version</span>=<span class="string">"3.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">metadata-complete</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建classes和lib子文件夹</p>
+<h2 id="4-WEB-INF目录详解"><a href="#4-WEB-INF目录详解" class="headerlink" title="4. WEB-INF目录详解"></a>4. WEB-INF目录详解</h2><ol>
+<li>WEB-INF目录是一个安全目录，只有通过服务器才能访问。</li>
+<li>web.xml,项目部署文件，比如配置项目的欢迎页面。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>/haha.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>classes文件夹，用以放置*.class文件。</li>
+<li>lib文件夹，用于存放需要的jar包。</li>
+</ol>
+<h2 id="5-使用eclipse开发web"><a href="#5-使用eclipse开发web" class="headerlink" title="5. 使用eclipse开发web"></a>5. 使用eclipse开发web</h2><h3 id="5-1-MyEclipse配置JRE"><a href="#5-1-MyEclipse配置JRE" class="headerlink" title="5.1 MyEclipse配置JRE"></a>5.1 MyEclipse配置JRE</h3><p>windows-&gt;preference-&gt;java-&gt;Installed JREs</p>
+<h3 id="5-2-MyEclipse集成Tomcat服务器"><a href="#5-2-MyEclipse集成Tomcat服务器" class="headerlink" title="5.2 MyEclipse集成Tomcat服务器"></a>5.2 MyEclipse集成Tomcat服务器</h3><p>windows-&gt;preference-&gt;Myeclipse-&gt;server-&gt;Runtime Environments</p>
+<p>启动Tomcat</p>
+<h3 id="5-3-使用MyEclipse创建Java-web应用"><a href="#5-3-使用MyEclipse创建Java-web应用" class="headerlink" title="5.3 使用MyEclipse创建Java web应用"></a>5.3 使用MyEclipse创建Java web应用</h3><p>新建web project，命名为MyFirstWebApp，其余默认</p>
+<h3 id="5-4-修改字体"><a href="#5-4-修改字体" class="headerlink" title="5.4 修改字体"></a>5.4 修改字体</h3><p>windows-&gt;preference-&gt;General-&gt;Appearance-&gt;Colors and Fonts，然后修改Text Font。</p>
+<h2 id="6-修改Tomcat服务器默认端口"><a href="#6-修改Tomcat服务器默认端口" class="headerlink" title="6. 修改Tomcat服务器默认端口"></a>6. 修改Tomcat服务器默认端口</h2><p>修改conf/server.xml文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">executor</span>=<span class="string">"tomcatThreadPool"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java-Web/" rel="tag"># Java, Web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/10/18/Flask%E7%AC%94%E8%AE%B0-01%20%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" rel="prev" title="Flask笔记－01 基本应用框架">
+                  <i class="fa fa-angle-left"></i> Flask笔记－01 基本应用框架
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/04/08/Java-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" rel="next" title="Java-常用方法">
+                  Java-常用方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 准备工作 安装nodejs 安装http-server: npm install -g http-server 初始化项目：npm init 安装gulp: npm install gulp --save-dev 安装到依赖中  2. 第一个Gulp Task创建一个gulpfile.js，gulp会自动发现这个文件。 12345678&#39;use strict&#39;; &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gulp笔记">
+<meta property="og:url" content="https://liulixiang1988.github.io/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1. 准备工作 安装nodejs 安装http-server: npm install -g http-server 初始化项目：npm init 安装gulp: npm install gulp --save-dev 安装到依赖中  2. 第一个Gulp Task创建一个gulpfile.js，gulp会自动发现这个文件。 12345678&#39;use strict&#39;; &#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-07-01T00:42:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T14:02:05.142Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Gulp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/","path":"2015/07/01/Gulp-Gulp笔记/","title":"Gulp笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Gulp笔记 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">1. 准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AC%AC%E4%B8%80%E4%B8%AAGulp-Task"><span class="nav-number">2.</span> <span class="nav-text">2. 第一个Gulp Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8Gulp%E7%AE%A1%E7%90%86Javascript-%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">3.</span> <span class="nav-text">3. 使用Gulp管理Javascript 工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%BD%BF%E7%94%A8Gulp%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 使用Gulp第三方库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8E%8B%E7%BC%A9JavaScript%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 压缩JavaScript文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8Gulp%E7%BC%96%E8%AF%91Sass"><span class="nav-number">4.</span> <span class="nav-text">4. 使用Gulp编译Sass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Gulp%E8%87%AA%E5%8A%A8%E7%BC%96%E8%AF%91Sass"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Gulp自动编译Sass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E7%BB%99Sass%E6%B7%BB%E5%8A%A0Source-Map"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 给Sass添加Source Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-JavaScript%E7%9A%84Source-Map"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 JavaScript的Source Map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8F%90%E9%AB%98Gulp%E4%BB%BB%E5%8A%A1%E7%AE%A1%E9%81%93"><span class="nav-number">5.</span> <span class="nav-text">5. 进一步提高Gulp任务管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1%E6%94%BE%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 多个任务放在一起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%BD%BF%E7%94%A8watch%E6%96%B9%E6%B3%95%E8%87%AA%E5%8A%A8%E8%BF%90%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 使用watch方法自动运行任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%9E%84%E5%BB%BA%E5%92%8C%E5%BC%80%E5%8F%91%E7%9A%84pipeline"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 构建和开发的pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E6%B7%B1%E5%85%A5development-pipeline"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 深入development pipeline</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Gulp笔记 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gulp笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-07-01 08:42:00" itemprop="dateCreated datePublished" datetime="2015-07-01T08:42:00+08:00">2015-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:02:05" itemprop="dateModified" datetime="2020-06-27T22:02:05+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><ul>
+<li>安装nodejs</li>
+<li>安装http-server: <code>npm install -g http-server</code></li>
+<li>初始化项目：<code>npm init</code></li>
+<li>安装gulp: <code>npm install gulp --save-dev</code> 安装到依赖中</li>
+</ul>
+<h2 id="2-第一个Gulp-Task"><a href="#2-第一个Gulp-Task" class="headerlink" title="2. 第一个Gulp Task"></a>2. 第一个Gulp Task</h2><p>创建一个gulpfile.js，gulp会自动发现这个文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;; &#x2F;&#x2F;使用严格的编译方法</span><br><span class="line"></span><br><span class="line">var gulp &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;定义task，第一个参数是任务名</span><br><span class="line">gulp.task(&quot;hello&quot;, function()&#123;</span><br><span class="line">  console.log(&quot;Hello&quot;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>运行任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ gulp hello</span><br><span class="line">[09:40:32] Using gulpfile G:\git\WebDesign\gulp_learn\gulp_basics\gulpfile.js</span><br><span class="line">[09:40:32] Starting &#39;hello&#39;...</span><br><span class="line">Hello</span><br><span class="line">[09:40:32] Finished &#39;hello&#39; after 354 μs</span><br></pre></td></tr></table></figure>
+
+<p>定义默认的task：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;默认task，第二个参数是依赖任务，依赖任务会在当前任务之前执行</span><br><span class="line">gulp.task(&quot;default&quot;, [&quot;hello&quot;], function()&#123;</span><br><span class="line">  console.log(&quot;This is the default task!&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>运行任务，运行默认的任务不需要任务名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ gulp</span><br><span class="line">[09:43:23] Using gulpfile G:\git\WebDesign\gulp_learn\gulp_basics\gulpfile.js</span><br><span class="line">[09:43:23] Starting &#39;hello&#39;...</span><br><span class="line">Hello</span><br><span class="line">[09:43:23] Finished &#39;hello&#39; after 299 μs</span><br><span class="line">[09:43:23] Starting &#39;default&#39;...</span><br><span class="line">This is the default task!</span><br><span class="line">[09:43:23] Finished &#39;default&#39; after 554 μs</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-使用Gulp管理Javascript-工作流"><a href="#3-使用Gulp管理Javascript-工作流" class="headerlink" title="3. 使用Gulp管理Javascript 工作流"></a>3. 使用Gulp管理Javascript 工作流</h2><h3 id="3-1-使用Gulp第三方库"><a href="#3-1-使用Gulp第三方库" class="headerlink" title="3.1 使用Gulp第三方库"></a>3.1 使用Gulp第三方库</h3><p>gulp社区提供了很多gulp的第三方库，来完成各种工作(比如编译sass, 压缩文件等)。</p>
+<p>这里我们使用gulp-concat库，来分别压缩css和js文件到一个文件中。</p>
+<p><strong>安装gulp-concat</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-concat --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>假设我们页面里有很多js文件，当项目变得越来越大时，管理多个文件就很困难，所以我们可以使用gulp来将这些文件合并成一个文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>), </span><br><span class="line">  concat = <span class="built_in">require</span>(<span class="string">'gulp-concat'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义task，第一个参数是任务名</span></span><br><span class="line">gulp.task(<span class="string">"concatScripts"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//gulp.src可以接受数组和单独的字符串，注意js文件的顺序</span></span><br><span class="line">  <span class="comment">//pipe类似unix中管道的概念，前面的输出作为后面的输入，这里gulp.src的输出作为concat()的输入</span></span><br><span class="line">  <span class="comment">//concat()接受的字符串参数是合并后的文件名</span></span><br><span class="line">  <span class="comment">//gulp.dest()指定文件夹</span></span><br><span class="line">  gulp.src([</span><br><span class="line">    <span class="string">'js/jquery.js'</span>,</span><br><span class="line">    <span class="string">'js/sticky/jquery.sticky.js'</span>,</span><br><span class="line">    <span class="string">'js/main.js'</span>])</span><br><span class="line">  .pipe(concat(<span class="string">"app.js"</span>))</span><br><span class="line">  .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-压缩JavaScript文件"><a href="#3-2-压缩JavaScript文件" class="headerlink" title="3.2 压缩JavaScript文件"></a>3.2 压缩JavaScript文件</h3><p>安装gulp-uglify</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-uglify --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>利用前面concatScripts已经创建好的app.js，进行压缩：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"minifyScripts"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.src(<span class="string">"js/app.js"</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>上面有一个问题，就是原有的app.js被压缩了，看不到原有未压缩前的js了。那我们可以使用gulp-rename来将压缩后的文件重命名。</p>
+<p>安装gulp-rename:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-rename --save-dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"minifyScripts"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.src(<span class="string">"js/app.js"</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(rename(<span class="string">'app.min.js'</span>))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-使用Gulp编译Sass"><a href="#4-使用Gulp编译Sass" class="headerlink" title="4. 使用Gulp编译Sass"></a>4. 使用Gulp编译Sass</h2><h3 id="4-1-Gulp自动编译Sass"><a href="#4-1-Gulp自动编译Sass" class="headerlink" title="4.1 Gulp自动编译Sass"></a>4.1 Gulp自动编译Sass</h3><p>要让Gulp能够编译Sass，第一步就是安装gulp-sass</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-sass --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>然后创建任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"compileSass"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.src(<span class="string">'scss/application.scss'</span>)</span><br><span class="line">    .pipe(sass())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'css'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-给Sass添加Source-Map"><a href="#4-2-给Sass添加Source-Map" class="headerlink" title="4.2 给Sass添加Source Map"></a>4.2 给Sass添加Source Map</h3><p>Source Map用来显示Sass和CSS之间的映射，当Sass文件较多时特别有用。</p>
+<p>安装gulp-sourcemaps</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-sourcemaps</span><br></pre></td></tr></table></figure>
+
+<p>定义source map有点不同：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> maps = <span class="built_in">require</span>(<span class="string">'gulp-sourcemaps'</span>);</span><br><span class="line">gulp.task(<span class="string">"compileSass"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.src(<span class="string">'scss/application.scss'</span>)</span><br><span class="line">    .pipe(maps.init()) <span class="comment">//初始化maps</span></span><br><span class="line">    .pipe(sass())</span><br><span class="line">    .pipe(maps.write(<span class="string">'./'</span>)) <span class="comment">//输出source maps文件路径是相对于输出的css文件路径的，这里让source maps也在css文件夹内</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">'css'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这个时候在谷歌浏览器的开发工具里查看class，就会显示对应的sass文件了。</p>
+<h3 id="4-3-JavaScript的Source-Map"><a href="#4-3-JavaScript的Source-Map" class="headerlink" title="4.3 JavaScript的Source Map"></a>4.3 JavaScript的Source Map</h3><p>gulp-sourcemaps不仅能映射sass和css，还能给js做映射，方法同Sass映射：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"concatScripts"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//gulp.src可以接受数组和单独的字符串，注意js文件的顺序</span></span><br><span class="line">  <span class="comment">//pipe类似unix中管道的概念，前面的输出作为后面的输入，这里gulp.src的输出作为concat()的输入</span></span><br><span class="line">  <span class="comment">//concat()接受的字符串参数是合并后的文件名</span></span><br><span class="line">  <span class="comment">//gulp.dest()指定文件夹</span></span><br><span class="line">  gulp.src([</span><br><span class="line">    <span class="string">'js/jquery.js'</span>,</span><br><span class="line">    <span class="string">'js/sticky/jquery.sticky.js'</span>,</span><br><span class="line">    <span class="string">'js/main.js'</span>])</span><br><span class="line">  .pipe(maps.init())</span><br><span class="line">  .pipe(concat(<span class="string">"app.js"</span>))</span><br><span class="line">  .pipe(maps.write(<span class="string">'./'</span>))</span><br><span class="line">  .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-进一步提高Gulp任务管道"><a href="#5-进一步提高Gulp任务管道" class="headerlink" title="5. 进一步提高Gulp任务管道"></a>5. 进一步提高Gulp任务管道</h2><h3 id="5-1-多个任务放在一起"><a href="#5-1-多个任务放在一起" class="headerlink" title="5.1 多个任务放在一起"></a>5.1 多个任务放在一起</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"build"</span>, [<span class="string">"concatScripts"</span>, <span class="string">"minifyScripts"</span>, <span class="string">"compileSass"</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>但这样做会有一个问题，3个任务是一起执行的，而minifyScripts需要在concatScripts之前执行。要解决这个问题，我们对gulpfile.js进行改造：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>; </span><br><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>), </span><br><span class="line">  concat = <span class="built_in">require</span>(<span class="string">'gulp-concat'</span>),</span><br><span class="line">  uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>),</span><br><span class="line">  rename = <span class="built_in">require</span>(<span class="string">'gulp-rename'</span>),</span><br><span class="line">    sass = <span class="built_in">require</span>(<span class="string">'gulp-sass'</span>),</span><br><span class="line">    maps = <span class="built_in">require</span>(<span class="string">'gulp-sourcemaps'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"concatScripts"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp.src([</span><br><span class="line">    <span class="string">'js/jquery.js'</span>,</span><br><span class="line">    <span class="string">'js/sticky/jquery.sticky.js'</span>,</span><br><span class="line">    <span class="string">'js/main.js'</span>])</span><br><span class="line">  .pipe(maps.init())</span><br><span class="line">  .pipe(concat(<span class="string">"app.js"</span>))</span><br><span class="line">  .pipe(maps.write(<span class="string">'./'</span>))</span><br><span class="line">  .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"minifyScripts"</span>, [<span class="string">"concatScripts"</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp.src(<span class="string">"js/app.js"</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(rename(<span class="string">'app.min.js'</span>))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'js'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"compileSass"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp.src(<span class="string">'scss/application.scss'</span>)</span><br><span class="line">    .pipe(maps.init())</span><br><span class="line">    .pipe(sass())</span><br><span class="line">    .pipe(maps.write(<span class="string">'./'</span>))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'css'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"build"</span>, [<span class="string">"minifyScripts"</span>, <span class="string">"compileSass"</span>]);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"default"</span>, [<span class="string">"build"</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>首先所有的任务都用<code>return</code>进行返回，这样gulp能够在运行需要依赖的任务时，知道依赖任务什么时候结束。</p>
+<p>然后将concatScripts作为minifyScripts的依赖，并从build任务中删除concatScripts，从而实现concatScripts在minifyScripts前运行。</p>
+<h3 id="5-2-使用watch方法自动运行任务"><a href="#5-2-使用watch方法自动运行任务" class="headerlink" title="5.2 使用watch方法自动运行任务"></a>5.2 使用watch方法自动运行任务</h3><p>gulp的watch方法能够自动检测到文件的改变，并且自动执行任务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"watchSass"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.watch([<span class="string">'scss/**/*.scss'</span>], [<span class="string">'compileSass'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp watchSass</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-构建和开发的pipeline"><a href="#5-3-构建和开发的pipeline" class="headerlink" title="5.3 构建和开发的pipeline"></a>5.3 构建和开发的pipeline</h3><p>如果需要部署，则将文件拷贝到dist，但是要提供<code>{base: &#39;./&#39;}</code>，否则只拷贝文件不拷贝目录。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"build"</span>, [<span class="string">"minifyScripts"</span>, <span class="string">"compileSass"</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp.src([<span class="string">"css/application.css"</span>, <span class="string">"js/app.min.js"</span>,</span><br><span class="line">                  <span class="string">"index.html"</span>, <span class="string">"img/**"</span>, <span class="string">"fonts/**"</span>], &#123;<span class="attr">base</span>: <span class="string">'./'</span>&#125;)</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>安装del，删除多余的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install del --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>创建清除</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"clean"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  del([<span class="string">'dist'</span>, <span class="string">'css/application.css*'</span>, <span class="string">'js/app*.js*'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>最后，整个流程是清除原先生成的文件，然后再运行build任务。<br>gulpfile.js中启动任务是<code>gulp.start(&#39;任务名&#39;)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"clean"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  del([<span class="string">'dist'</span>, <span class="string">'css/application.css*'</span>, <span class="string">'js/app*.js*'</span>]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"build"</span>, [<span class="string">"minifyScripts"</span>, <span class="string">"compileSass"</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp.src([<span class="string">"css/application.css"</span>, <span class="string">"js/app.min.js"</span>,</span><br><span class="line">                  <span class="string">"index.html"</span>, <span class="string">"img/**"</span>, <span class="string">"fonts/**"</span>], &#123;<span class="attr">base</span>: <span class="string">'./'</span>&#125;)</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">"default"</span>, [<span class="string">"clean"</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.start(<span class="string">'build'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-深入development-pipeline"><a href="#5-4-深入development-pipeline" class="headerlink" title="5.4 深入development pipeline"></a>5.4 深入development pipeline</h3><p>如果要监视Sass和JS的变化，利用前面创建的watchSass，改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"watchFiles"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gulp.watch([<span class="string">'scss/**/*.scss'</span>], [<span class="string">'compileSass'</span>]);</span><br><span class="line">  gulp.watch(<span class="string">'js/main.js'</span>, [<span class="string">'concatScripts'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>也可以把两个watch合并为一个：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.watch([<span class="string">'scss/**/*.scss'</span>, <span class="string">'js/main.js'</span>], [<span class="string">'compileSass'</span>, <span class="string">'concatScripts'</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>这样，无论是sass还是js文件发生改变，都会引起compileSass和concatScripts任务重新执行，这并不是一个特别好的方法，因为js并不需要compileSass，同样，sass也并不需要concatScripts.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Gulp/" rel="tag"># Gulp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/04/22/Java%20Web%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8-%E8%BF%87%E6%BB%A4%E5%99%A8/" rel="prev" title="Java Web开发技术应用-过滤器">
+                  <i class="fa fa-angle-left"></i> Java Web开发技术应用-过滤器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/" rel="next" title="CSS3扁平化风格博客">
+                  CSS3扁平化风格博客 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

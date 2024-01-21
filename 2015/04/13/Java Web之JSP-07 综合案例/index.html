@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. JDBC DBHelper123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960package util;import java.sql.Connection;import java.sql.DriverManager;pub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web之JSP-07 综合案例">
+<meta property="og:url" content="https://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-07%20%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="1. JDBC DBHelper123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960package util;import java.sql.Connection;import java.sql.DriverManager;pub">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-04-13T12:11:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T14:36:43.287Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Web, JSP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-07%20%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-07%20%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/","path":"2015/04/13/Java Web之JSP-07 综合案例/","title":"Java Web之JSP-07 综合案例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java Web之JSP-07 综合案例 | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JDBC-DBHelper"><span class="nav-number">1.</span> <span class="nav-text">1. JDBC DBHelper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">2. 实体类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-DAO"><span class="nav-number">3.</span> <span class="nav-text">3. DAO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-index-jsp"><span class="nav-number">4.</span> <span class="nav-text">4. index.jsp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-detail-jsp"><span class="nav-number">5.</span> <span class="nav-text">5. detail.jsp</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/13/Java%20Web%E4%B9%8BJSP-07%20%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java Web之JSP-07 综合案例 | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web之JSP-07 综合案例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-13 20:11:00" itemprop="dateCreated datePublished" datetime="2015-04-13T20:11:00+08:00">2015-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:36:43" itemprop="dateModified" datetime="2020-06-27T22:36:43+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-JDBC-DBHelper"><a href="#1-JDBC-DBHelper" class="headerlink" title="1. JDBC DBHelper"></a>1. JDBC DBHelper</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">package util;</span><br><span class="line"></span><br><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.DriverManager;</span><br><span class="line"></span><br><span class="line">public class DBHelper &#123;</span><br><span class="line">   </span><br><span class="line">    private static final String driver &#x3D; &quot;com.mysql.jdbc.Driver&quot;; &#x2F;&#x2F;数据库驱动</span><br><span class="line">    &#x2F;&#x2F;连接数据库的URL地址</span><br><span class="line">    private static final String url&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;shopping?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8&quot;; </span><br><span class="line">    private static final String username&#x3D;&quot;root&quot;;&#x2F;&#x2F;数据库的用户名</span><br><span class="line">    private static final String password&#x3D;&quot;&quot;;&#x2F;&#x2F;数据库的密码</span><br><span class="line">    </span><br><span class="line">    private static Connection conn&#x3D;null;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;静态代码块负责加载驱动</span><br><span class="line">    static </span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            Class.forName(driver);</span><br><span class="line">        &#125;</span><br><span class="line">        catch(Exception ex)</span><br><span class="line">        &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;单例模式返回数据库连接对象</span><br><span class="line">    public static Connection getConnection() throws Exception</span><br><span class="line">    &#123;</span><br><span class="line">        if(conn&#x3D;&#x3D;null)</span><br><span class="line">        &#123;</span><br><span class="line">            conn &#x3D; DriverManager.getConnection(url, username, password);</span><br><span class="line">            return conn;</span><br><span class="line">        &#125;</span><br><span class="line">        return conn;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        </span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">           Connection conn &#x3D; DBHelper.getConnection();</span><br><span class="line">           if(conn!&#x3D;null)</span><br><span class="line">           &#123;</span><br><span class="line">               System.out.println(&quot;数据库连接正常！&quot;);</span><br><span class="line">           &#125;</span><br><span class="line">           else</span><br><span class="line">           &#123;</span><br><span class="line">               System.out.println(&quot;数据库连接异常！&quot;);</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        catch(Exception ex)</span><br><span class="line">        &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-实体类"><a href="#2-实体类" class="headerlink" title="2. 实体类"></a>2. 实体类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">package entity;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;商品类</span><br><span class="line">public class Items &#123;</span><br><span class="line"></span><br><span class="line">    private int id; &#x2F;&#x2F; 商品编号</span><br><span class="line">    private String name; &#x2F;&#x2F; 商品名称</span><br><span class="line">    private String city; &#x2F;&#x2F; 产地</span><br><span class="line">    private int price; &#x2F;&#x2F; 价格</span><br><span class="line">    private int number; &#x2F;&#x2F; 库存</span><br><span class="line">    private String picture; &#x2F;&#x2F; 商品图片</span><br><span class="line"></span><br><span class="line">    public int getId() &#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(int id) &#123;</span><br><span class="line">        this.id &#x3D; id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getCity() &#123;</span><br><span class="line">        return city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCity(String city) &#123;</span><br><span class="line">        this.city &#x3D; city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getPrice() &#123;</span><br><span class="line">        return price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setPrice(int price) &#123;</span><br><span class="line">        this.price &#x3D; price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getNumber() &#123;</span><br><span class="line">        return number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNumber(int number) &#123;</span><br><span class="line">        this.number &#x3D; number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getPicture() &#123;</span><br><span class="line">        return picture;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setPicture(String picture) &#123;</span><br><span class="line">        this.picture &#x3D; picture;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-DAO"><a href="#3-DAO" class="headerlink" title="3. DAO"></a>3. DAO</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">package dao;</span><br><span class="line"></span><br><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.PreparedStatement;</span><br><span class="line">import java.sql.ResultSet;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line">import util.DBHelper;</span><br><span class="line"></span><br><span class="line">import entity.Items;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;商品的业务逻辑类</span><br><span class="line">public class ItemsDAO &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 获得所有的商品信息</span><br><span class="line">    public ArrayList&lt;Items&gt; getAllItems() &#123;</span><br><span class="line">        Connection conn &#x3D; null;</span><br><span class="line">        PreparedStatement stmt &#x3D; null;</span><br><span class="line">        ResultSet rs &#x3D; null;</span><br><span class="line">        ArrayList&lt;Items&gt; list &#x3D; new ArrayList&lt;Items&gt;(); &#x2F;&#x2F; 商品集合</span><br><span class="line">        try &#123;</span><br><span class="line">            conn &#x3D; DBHelper.getConnection();</span><br><span class="line">            String sql &#x3D; &quot;select * from items;&quot;; &#x2F;&#x2F; SQL语句</span><br><span class="line">            stmt &#x3D; conn.prepareStatement(sql);</span><br><span class="line">            rs &#x3D; stmt.executeQuery();</span><br><span class="line">            while (rs.next()) &#123;</span><br><span class="line">                Items item &#x3D; new Items();</span><br><span class="line">                item.setId(rs.getInt(&quot;id&quot;));</span><br><span class="line">                item.setName(rs.getString(&quot;name&quot;));</span><br><span class="line">                item.setCity(rs.getString(&quot;city&quot;));</span><br><span class="line">                item.setNumber(rs.getInt(&quot;number&quot;));</span><br><span class="line">                item.setPrice(rs.getInt(&quot;price&quot;));</span><br><span class="line">                item.setPicture(rs.getString(&quot;picture&quot;));</span><br><span class="line">                list.add(item);&#x2F;&#x2F; 把一个商品加入集合</span><br><span class="line">            &#125;</span><br><span class="line">            return list; &#x2F;&#x2F; 返回集合。</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">            return null;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            &#x2F;&#x2F; 释放数据集对象</span><br><span class="line">            if (rs !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    rs.close();</span><br><span class="line">                    rs &#x3D; null;</span><br><span class="line">                &#125; catch (Exception ex) &#123;</span><br><span class="line">                    ex.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 释放语句对象</span><br><span class="line">            if (stmt !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    stmt.close();</span><br><span class="line">                    stmt &#x3D; null;</span><br><span class="line">                &#125; catch (Exception ex) &#123;</span><br><span class="line">                    ex.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 根据商品编号获得商品资料</span><br><span class="line">    public Items getItemsById(int id) &#123;</span><br><span class="line">        Connection conn &#x3D; null;</span><br><span class="line">        PreparedStatement stmt &#x3D; null;</span><br><span class="line">        ResultSet rs &#x3D; null;</span><br><span class="line">        try &#123;</span><br><span class="line">            conn &#x3D; DBHelper.getConnection();</span><br><span class="line">            String sql &#x3D; &quot;select * from items where id&#x3D;?;&quot;; &#x2F;&#x2F; SQL语句</span><br><span class="line">            stmt &#x3D; conn.prepareStatement(sql);</span><br><span class="line">            stmt.setInt(1, id);</span><br><span class="line">            rs &#x3D; stmt.executeQuery();</span><br><span class="line">            if (rs.next()) &#123;</span><br><span class="line">                Items item &#x3D; new Items();</span><br><span class="line">                item.setId(rs.getInt(&quot;id&quot;));</span><br><span class="line">                item.setName(rs.getString(&quot;name&quot;));</span><br><span class="line">                item.setCity(rs.getString(&quot;city&quot;));</span><br><span class="line">                item.setNumber(rs.getInt(&quot;number&quot;));</span><br><span class="line">                item.setPrice(rs.getInt(&quot;price&quot;));</span><br><span class="line">                item.setPicture(rs.getString(&quot;picture&quot;));</span><br><span class="line">                return item;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">            return null;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            &#x2F;&#x2F; 释放数据集对象</span><br><span class="line">            if (rs !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    rs.close();</span><br><span class="line">                    rs &#x3D; null;</span><br><span class="line">                &#125; catch (Exception ex) &#123;</span><br><span class="line">                    ex.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 释放语句对象</span><br><span class="line">            if (stmt !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    stmt.close();</span><br><span class="line">                    stmt &#x3D; null;</span><br><span class="line">                &#125; catch (Exception ex) &#123;</span><br><span class="line">                    ex.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;获取最近浏览的前五条商品信息</span><br><span class="line">    public ArrayList&lt;Items&gt; getViewList(String list)</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;list:&quot;+list);</span><br><span class="line">        ArrayList&lt;Items&gt; itemlist &#x3D; new ArrayList&lt;Items&gt;();</span><br><span class="line">        int iCount&#x3D;5; &#x2F;&#x2F;每次返回前五条记录</span><br><span class="line">        if(list!&#x3D;null&amp;&amp;list.length()&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            String[] arr &#x3D; list.split(&quot;,&quot;);</span><br><span class="line">            System.out.println(&quot;arr.length&#x3D;&quot;+arr.length);</span><br><span class="line">            &#x2F;&#x2F;如果商品记录大于等于5条</span><br><span class="line">            if(arr.length&gt;&#x3D;5)</span><br><span class="line">            &#123;</span><br><span class="line">               for(int i&#x3D;arr.length-1;i&gt;&#x3D;arr.length-iCount;i--)</span><br><span class="line">               &#123;</span><br><span class="line">                  itemlist.add(getItemsById(Integer.parseInt(arr[i])));  </span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                for(int i&#x3D;arr.length-1;i&gt;&#x3D;0;i--)</span><br><span class="line">                &#123;</span><br><span class="line">                    itemlist.add(getItemsById(Integer.parseInt(arr[i])));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return itemlist;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-index-jsp"><a href="#4-index-jsp" class="headerlink" title="4. index.jsp"></a>4. index.jsp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language&#x3D;&quot;java&quot; import&#x3D;&quot;java.util.*&quot; contentType&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;entity.Items&quot;%&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;dao.ItemsDAO&quot;%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">String path &#x3D; request.getContextPath();</span><br><span class="line">String basePath &#x3D; request.getScheme()+&quot;:&#x2F;&#x2F;&quot;+request.getServerName()+&quot;:&quot;+request.getServerPort()+path+&quot;&#x2F;&quot;;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-&#x2F;&#x2F;W3C&#x2F;&#x2F;DTD HTML 4.01 Transitional&#x2F;&#x2F;EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;base href&#x3D;&quot;&lt;%&#x3D;basePath%&gt;&quot;&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;title&gt;My JSP &#39;index.jsp&#39; starting page&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;pragma&quot; content&#x3D;&quot;no-cache&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;cache-control&quot; content&#x3D;&quot;no-cache&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;expires&quot; content&#x3D;&quot;0&quot;&gt;    </span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;keywords&quot; content&#x3D;&quot;keyword1,keyword2,keyword3&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;description&quot; content&#x3D;&quot;This is my page&quot;&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">    &lt;link rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; href&#x3D;&quot;styles.css&quot;&gt;</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">       div&#123;</span><br><span class="line">          float:left;</span><br><span class="line">          margin: 10px;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd&#123;</span><br><span class="line">          margin:0px;</span><br><span class="line">          font-size:10pt;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd.dd_name</span><br><span class="line">       &#123;</span><br><span class="line">          color:blue;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd.dd_city</span><br><span class="line">       &#123;</span><br><span class="line">          color:#000;</span><br><span class="line">       &#125;</span><br><span class="line">    &lt;&#x2F;style&gt;</span><br><span class="line">  &lt;&#x2F;head&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;商品展示&lt;&#x2F;h1&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;center&gt;</span><br><span class="line">    &lt;table width&#x3D;&quot;750&quot; height&#x3D;&quot;60&quot; cellpadding&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; border&#x3D;&quot;0&quot;&gt;</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;</span><br><span class="line">          </span><br><span class="line">          &lt;!-- 商品循环开始 --&gt;</span><br><span class="line">           &lt;% </span><br><span class="line">               ItemsDAO itemsDao &#x3D; new ItemsDAO(); </span><br><span class="line">               ArrayList&lt;Items&gt; list &#x3D; itemsDao.getAllItems();</span><br><span class="line">               if(list!&#x3D;null&amp;&amp;list.size()&gt;0)</span><br><span class="line">               &#123;</span><br><span class="line">                   for(int i&#x3D;0;i&lt;list.size();i++)</span><br><span class="line">                   &#123;</span><br><span class="line">                      Items item &#x3D; list.get(i);</span><br><span class="line">           %&gt;   </span><br><span class="line">          &lt;div&gt;</span><br><span class="line">             &lt;dl&gt;</span><br><span class="line">               &lt;dt&gt;</span><br><span class="line">                 &lt;a href&#x3D;&quot;details.jsp?id&#x3D;&lt;%&#x3D;item.getId()%&gt;&quot;&gt;&lt;img src&#x3D;&quot;images&#x2F;&lt;%&#x3D;item.getPicture()%&gt;&quot; width&#x3D;&quot;120&quot; height&#x3D;&quot;90&quot; border&#x3D;&quot;1&quot;&#x2F;&gt;&lt;&#x2F;a&gt;</span><br><span class="line">               &lt;&#x2F;dt&gt;</span><br><span class="line">               &lt;dd class&#x3D;&quot;dd_name&quot;&gt;&lt;%&#x3D;item.getName() %&gt;&lt;&#x2F;dd&gt; </span><br><span class="line">               &lt;dd class&#x3D;&quot;dd_city&quot;&gt;产地:&lt;%&#x3D;item.getCity() %&gt;&amp;nbsp;&amp;nbsp;价格:￥ &lt;%&#x3D;item.getPrice() %&gt;&lt;&#x2F;dd&gt; </span><br><span class="line">             &lt;&#x2F;dl&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;!-- 商品循环结束 --&gt;</span><br><span class="line">        </span><br><span class="line">          &lt;%</span><br><span class="line">                   &#125;</span><br><span class="line">              &#125; </span><br><span class="line">          %&gt;</span><br><span class="line">        &lt;&#x2F;td&gt;</span><br><span class="line">      &lt;&#x2F;tr&gt;</span><br><span class="line">    &lt;&#x2F;table&gt;</span><br><span class="line">    &lt;&#x2F;center&gt;</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-detail-jsp"><a href="#5-detail-jsp" class="headerlink" title="5. detail.jsp"></a>5. detail.jsp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language&#x3D;&quot;java&quot; import&#x3D;&quot;java.util.*&quot; contentType&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot; %&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;entity.Items&quot;%&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;dao.ItemsDAO&quot;%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">String path &#x3D; request.getContextPath();</span><br><span class="line">String basePath &#x3D; request.getScheme()+&quot;:&#x2F;&#x2F;&quot;+request.getServerName()+&quot;:&quot;+request.getServerPort()+path+&quot;&#x2F;&quot;;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-&#x2F;&#x2F;W3C&#x2F;&#x2F;DTD HTML 4.01 Transitional&#x2F;&#x2F;EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;base href&#x3D;&quot;&lt;%&#x3D;basePath%&gt;&quot;&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;title&gt;My JSP &#39;details.jsp&#39; starting page&lt;&#x2F;title&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;pragma&quot; content&#x3D;&quot;no-cache&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;cache-control&quot; content&#x3D;&quot;no-cache&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;expires&quot; content&#x3D;&quot;0&quot;&gt;    </span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;keywords&quot; content&#x3D;&quot;keyword1,keyword2,keyword3&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;description&quot; content&#x3D;&quot;This is my page&quot;&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">    &lt;link rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; href&#x3D;&quot;styles.css&quot;&gt;</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">       div&#123;</span><br><span class="line">          float:left;</span><br><span class="line">          margin-left: 30px;</span><br><span class="line">          margin-right:30px;</span><br><span class="line">          margin-top: 5px;</span><br><span class="line">          margin-bottom: 5px;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd&#123;</span><br><span class="line">          margin:0px;</span><br><span class="line">          font-size:10pt;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd.dd_name</span><br><span class="line">       &#123;</span><br><span class="line">          color:blue;</span><br><span class="line">       &#125;</span><br><span class="line">       div dd.dd_city</span><br><span class="line">       &#123;</span><br><span class="line">          color:#000;</span><br><span class="line">       &#125;</span><br><span class="line">    &lt;&#x2F;style&gt;</span><br><span class="line">  &lt;&#x2F;head&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;商品详情&lt;&#x2F;h1&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;center&gt;</span><br><span class="line">      &lt;table width&#x3D;&quot;750&quot; height&#x3D;&quot;60&quot; cellpadding&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; border&#x3D;&quot;0&quot;&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">          &lt;!-- 商品详情 --&gt;</span><br><span class="line">          &lt;% </span><br><span class="line">             ItemsDAO itemDao &#x3D; new ItemsDAO();</span><br><span class="line">             Items item &#x3D; itemDao.getItemsById(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span><br><span class="line">             if(item!&#x3D;null)</span><br><span class="line">             &#123;</span><br><span class="line">          %&gt;</span><br><span class="line">          &lt;td width&#x3D;&quot;70%&quot; valign&#x3D;&quot;top&quot;&gt;</span><br><span class="line">             &lt;table&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                 &lt;td rowspan&#x3D;&quot;4&quot;&gt;&lt;img src&#x3D;&quot;images&#x2F;&lt;%&#x3D;item.getPicture()%&gt;&quot; width&#x3D;&quot;200&quot; height&#x3D;&quot;160&quot;&#x2F;&gt;&lt;&#x2F;td&gt;</span><br><span class="line">               &lt;&#x2F;tr&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                 &lt;td&gt;&lt;B&gt;&lt;%&#x3D;item.getName() %&gt;&lt;&#x2F;B&gt;&lt;&#x2F;td&gt; </span><br><span class="line">               &lt;&#x2F;tr&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                 &lt;td&gt;产地：&lt;%&#x3D;item.getCity()%&gt;&lt;&#x2F;td&gt;</span><br><span class="line">               &lt;&#x2F;tr&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                 &lt;td&gt;价格：&lt;%&#x3D;item.getPrice() %&gt;￥&lt;&#x2F;td&gt;</span><br><span class="line">               &lt;&#x2F;tr&gt; </span><br><span class="line">             &lt;&#x2F;table&gt;</span><br><span class="line">          &lt;&#x2F;td&gt;</span><br><span class="line">          &lt;% </span><br><span class="line">            &#125;</span><br><span class="line">          %&gt;</span><br><span class="line">          &lt;% </span><br><span class="line">              String list &#x3D;&quot;&quot;;</span><br><span class="line">              &#x2F;&#x2F;从客户端获得Cookies集合</span><br><span class="line">              Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">              &#x2F;&#x2F;遍历这个Cookies集合</span><br><span class="line">              if(cookies!&#x3D;null&amp;&amp;cookies.length&gt;0)</span><br><span class="line">              &#123;</span><br><span class="line">                  for(Cookie c:cookies)</span><br><span class="line">                  &#123;</span><br><span class="line">                      if(c.getName().equals(&quot;ListViewCookie&quot;))</span><br><span class="line">                      &#123;</span><br><span class="line">                         list &#x3D; c.getValue();</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              </span><br><span class="line">              list+&#x3D;request.getParameter(&quot;id&quot;)+&quot;,&quot;;</span><br><span class="line">              &#x2F;&#x2F;如果浏览记录超过1000条，清零.</span><br><span class="line">              String[] arr &#x3D; list.split(&quot;,&quot;);</span><br><span class="line">              if(arr!&#x3D;null&amp;&amp;arr.length&gt;0)</span><br><span class="line">              &#123;</span><br><span class="line">                  if(arr.length&gt;&#x3D;1000)</span><br><span class="line">                  &#123;</span><br><span class="line">                      list&#x3D;&quot;&quot;;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              Cookie cookie &#x3D; new Cookie(&quot;ListViewCookie&quot;,list);</span><br><span class="line">              response.addCookie(cookie);</span><br><span class="line">          </span><br><span class="line">          %&gt;</span><br><span class="line">          &lt;!-- 浏览过的商品 --&gt;</span><br><span class="line">          &lt;td width&#x3D;&quot;30%&quot; bgcolor&#x3D;&quot;#EEE&quot; align&#x3D;&quot;center&quot;&gt;</span><br><span class="line">             &lt;br&gt;</span><br><span class="line">             &lt;b&gt;您浏览过的商品&lt;&#x2F;b&gt;&lt;br&gt;</span><br><span class="line">             &lt;!-- 循环开始 --&gt;</span><br><span class="line">             &lt;% </span><br><span class="line">                ArrayList&lt;Items&gt; itemlist &#x3D; itemDao.getViewList(list);</span><br><span class="line">                if(itemlist!&#x3D;null&amp;&amp;itemlist.size()&gt;0 )</span><br><span class="line">                &#123;</span><br><span class="line">                   System.out.println(&quot;itemlist.size&#x3D;&quot;+itemlist.size());</span><br><span class="line">                   for(Items i:itemlist)</span><br><span class="line">                   &#123;</span><br><span class="line">                         </span><br><span class="line">             %&gt;</span><br><span class="line">             &lt;div&gt;</span><br><span class="line">             &lt;dl&gt;</span><br><span class="line">               &lt;dt&gt;</span><br><span class="line">                 &lt;a href&#x3D;&quot;details.jsp?id&#x3D;&lt;%&#x3D;i.getId()%&gt;&quot;&gt;&lt;img src&#x3D;&quot;images&#x2F;&lt;%&#x3D;i.getPicture() %&gt;&quot; width&#x3D;&quot;120&quot; height&#x3D;&quot;90&quot; border&#x3D;&quot;1&quot;&#x2F;&gt;&lt;&#x2F;a&gt;</span><br><span class="line">               &lt;&#x2F;dt&gt;</span><br><span class="line">               &lt;dd class&#x3D;&quot;dd_name&quot;&gt;&lt;%&#x3D;i.getName() %&gt;&lt;&#x2F;dd&gt; </span><br><span class="line">               &lt;dd class&#x3D;&quot;dd_city&quot;&gt;产地:&lt;%&#x3D;i.getCity() %&gt;&amp;nbsp;&amp;nbsp;价格:&lt;%&#x3D;i.getPrice() %&gt; ￥ &lt;&#x2F;dd&gt; </span><br><span class="line">             &lt;&#x2F;dl&gt;</span><br><span class="line">             &lt;&#x2F;div&gt;</span><br><span class="line">             &lt;% </span><br><span class="line">                   &#125;</span><br><span class="line">                &#125;</span><br><span class="line">             %&gt;</span><br><span class="line">             &lt;!-- 循环结束 --&gt;</span><br><span class="line">          &lt;&#x2F;td&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">      &lt;&#x2F;table&gt;</span><br><span class="line">    &lt;&#x2F;center&gt;</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java-Web-JSP/" rel="tag"># Java, Web, JSP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/04/13/Java%20Web%E4%B9%8BJSP-06%20JSP%E6%8C%87%E4%BB%A4%E4%B8%8E%E5%8A%A8%E4%BD%9C%E5%85%83%E7%B4%A0/" rel="prev" title="Java Web之JSP-06 JSP指令与动作元素">
+                  <i class="fa fa-angle-left"></i> Java Web之JSP-06 JSP指令与动作元素
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/04/13/JDBC%E4%BD%BF%E7%94%A8/" rel="next" title="JDBC使用笔记">
+                  JDBC使用笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

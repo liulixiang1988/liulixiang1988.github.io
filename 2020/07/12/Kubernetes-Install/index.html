@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SetupOpenShift is Red Hat’s distribution of Kubernetes minikube and minishift are essentially equivalent and will be used for the demonstrations&#x2F;examples below. Prerequisites Docker or Podman brew ins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes Environment">
+<meta property="og:url" content="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="SetupOpenShift is Red Hat’s distribution of Kubernetes minikube and minishift are essentially equivalent and will be used for the demonstrations&#x2F;examples below. Prerequisites Docker or Podman brew ins">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/minikube_dashboard.png">
+<meta property="og:image" content="https://liulixiang1988.github.io/images/openshift_dashboard.png">
+<meta property="article:published_time" content="2020-07-12T00:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-12T06:38:21.470Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Minikube">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liulixiang1988.github.io/images/minikube_dashboard.png">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/","path":"2020/07/12/Kubernetes-Install/","title":"Kubernetes Environment"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Kubernetes Environment | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Setup"><span class="nav-number">1.</span> <span class="nav-text">Setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Prerequisites"><span class="nav-number">1.1.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Downloads"><span class="nav-number">1.2.</span> <span class="nav-text">Downloads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Environment"><span class="nav-number">1.3.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-the-VM"><span class="nav-number">1.4.</span> <span class="nav-text">Create the VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-status-IP-amp-Dashboard-Console"><span class="nav-number">1.5.</span> <span class="nav-text">Check status, IP &amp; Dashboard&#x2F;Console</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-your-kubectl-CLI"><span class="nav-number">1.6.</span> <span class="nav-text">Check your kubectl CLI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Namespaces-amp-Pods"><span class="nav-number">1.7.</span> <span class="nav-text">Namespaces &amp; Pods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nodes"><span class="nav-number">1.8.</span> <span class="nav-text">Nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-Env-for-Docker"><span class="nav-number">1.9.</span> <span class="nav-text">Configure Env for Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Docker-CLI"><span class="nav-number">1.10.</span> <span class="nav-text">Using Docker CLI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minikube-Minishift-Happy"><span class="nav-number">1.11.</span> <span class="nav-text">Minikube&#x2F;Minishift Happy?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clean-up"><span class="nav-number">2.1.</span> <span class="nav-text">Clean up</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#More-resources"><span class="nav-number">3.</span> <span class="nav-text">More resources</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2020/07/12/Kubernetes-Install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Kubernetes Environment | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kubernetes Environment
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-07-12 08:30:00 / Modified: 14:38:21" itemprop="dateCreated datePublished" datetime="2020-07-12T08:30:00+08:00">2020-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>OpenShift is Red Hat’s distribution of Kubernetes</p>
+<p>minikube and minishift are essentially equivalent and will be used for the demonstrations/examples below.</p>
+<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><ul>
+<li>Docker or</li>
+<li>Podman</li>
+<li>brew install kubectx</li>
+<li>minikube</li>
+<li>kubectl</li>
+</ul>
+<h3 id="Downloads"><a href="#Downloads" class="headerlink" title="Downloads"></a>Downloads</h3><p>Downloads &amp; Install Kubectl CLI</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MacOS</span></span><br><span class="line">$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/darwin/amd64/kubectl</span><br><span class="line"><span class="comment">#</span></span><br><span class="line">$ chmod +x kubectl</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ brew install kubernetes-cli</span><br></pre></td></tr></table></figure>
+
+<p>Linux &amp; Windows instructions for finding and downloading the a kubectl <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl</a></p>
+<p>Download &amp; Install Minikube Cluster</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.4.0/minikube-darwin-amd64</span><br><span class="line">$ chmod +x minikube</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ brew install minikube</span><br><span class="line"><span class="comment"># if you don't have VirtualBox installed</span></span><br><span class="line">$ brew cask install virtualbox</span><br></pre></td></tr></table></figure>
+
+<p>More Minikube releases <a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">https://github.com/kubernetes/minikube/releases</a></p>
+<p>OR</p>
+<p>Download &amp; Install Minishift Cluster</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -LO https://github.com/minishift/minishift/releases/download/v1.33.0/minishift-1.33.0-darwin-amd64.tgz</span><br><span class="line">$ tar -xvf minishift-1.33.0-darwin-amd64.tgz</span><br></pre></td></tr></table></figure>
+
+<p>More Minishift releases <a href="https://github.com/minishift/minishift/releases" target="_blank" rel="noopener">https://github.com/minishift/minishift/releases</a></p>
+<p>Note: “minikube” should be interchangeable with “minishift” in the instructions below, if there is a unique aspect then that will be called out.</p>
+<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> MINIKUBE_HOME=/Users/burrsutter/minikube/;</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$MINIKUBE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">$ minikube version</span><br><span class="line">minikube version: v1.4.0</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ minishift version</span><br><span class="line">minishift v1.33.0+ba29431</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-the-VM"><a href="#Create-the-VM" class="headerlink" title="Create the VM"></a>Create the VM</h3><p>minikube support multiple instance. Use profile to set the instance.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># minishift profile set 9steps</span></span><br><span class="line">minikube --profile 9steps config <span class="built_in">set</span> memory 6144</span><br><span class="line">minikube --profile 9steps config <span class="built_in">set</span> cpus 2 (1)</span><br><span class="line">minikube --profile 9steps config <span class="built_in">set</span> vm-driver virtualbox <span class="comment">#hyperkit (2)</span></span><br><span class="line"><span class="comment"># kubernetes version only applies to minikube</span></span><br><span class="line">minikube --profile 9steps config <span class="built_in">set</span> kubernetes-version v1.12.0 (3)</span><br><span class="line"><span class="comment"># minishift addon enable admin-user (4)</span></span><br><span class="line"><span class="comment"># minishift addon enable anyuid (5)</span></span><br><span class="line">minikube start --profile 9steps (6)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>I use 2 cpus here because I have 6 core laptop. Keep this number at or below 50% of overall laptop resources. There is nothing in this series of exercises that is CPU intensive but minishift has a 10 pod per core limit.</li>
+<li>I use virtualbox because it is available on all platforms. There a number of hypervisor options <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor</a></li>
+<li>Setting the Kubernetes version explicitly so you know what you are getting, only applies to minikube</li>
+<li>Minishift is secured by default, this creates an cluster “admin” user</li>
+<li>A mechanism on OpenShift that allows the execution of an image with any user id, including root. <a href="https://github.com/burrsutter/9stepsawesome/issues/3" target="_blank" rel="noopener">https://github.com/burrsutter/9stepsawesome/issues/3</a></li>
+<li>Profiles are somewhat new in minikube land. These allow you to more easily switch between versions of Kubernetes as well as configurations involving Istio and/or Knative</li>
+</ol>
+<h3 id="Check-status-IP-amp-Dashboard-Console"><a href="#Check-status-IP-amp-Dashboard-Console" class="headerlink" title="Check status, IP &amp; Dashboard/Console"></a>Check status, IP &amp; Dashboard/Console</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps config view</span><br><span class="line">- cpus: 2</span><br><span class="line">- memory: 6144</span><br><span class="line">- vm-driver: virtualbox</span><br><span class="line">$ minikube --profile 9steps status</span><br><span class="line">minikube: Running</span><br><span class="line">cluster: Running</span><br><span class="line">kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.103</span><br><span class="line">$ minikube --profile 9steps ip</span><br><span class="line">192.168.99.103</span><br><span class="line">$ minikube --profile 9steps dashboard --url</span><br><span class="line">http://192.168.99.103:30000</span><br><span class="line">$ minikube --profile 9steps dashboard</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/minikube_dashboard.png" alt="Minikube Dashboard"></p>
+<p>Figure 1. minikube dashboard</p>
+<p><img src="/images/openshift_dashboard.png" alt="minishift Dashboard"></p>
+<h3 id="Check-your-kubectl-CLI"><a href="#Check-your-kubectl-CLI" class="headerlink" title="Check your kubectl CLI"></a>Check your kubectl CLI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config current-context</span><br><span class="line">9steps</span><br><span class="line"><span class="comment"># or in the case of minishift</span></span><br><span class="line"><span class="comment"># myproject/192-168-99-102:8443/admin</span></span><br><span class="line"></span><br><span class="line">$ kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:<span class="string">"1"</span>, Minor:<span class="string">"13"</span>, GitVersion:<span class="string">"v1.13.3"</span>, GitCommit:<span class="string">"721bfa751924da8d1680787490c54b9179b1fed0"</span>, GitTreeState:<span class="string">"clean"</span>, BuildDate:<span class="string">"2019-02-04T04:48:03Z"</span>, GoVersion:<span class="string">"go1.11.5"</span>, Compiler:<span class="string">"gc"</span>, Platform:<span class="string">"darwin/amd64"</span>&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:<span class="string">"1"</span>, Minor:<span class="string">"12"</span>, GitVersion:<span class="string">"v1.12.0"</span>, GitCommit:<span class="string">"0ed33881dc4355495f623c6f22e7dd0b7632b7c0"</span>, GitTreeState:<span class="string">"clean"</span>, BuildDate:<span class="string">"2018-09-27T16:55:41Z"</span>, GoVersion:<span class="string">"go1.10.4"</span>, Compiler:<span class="string">"gc"</span>, Platform:<span class="string">"linux/amd64"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>and if needed, point kubectl back at minikube with “kubectl config use-context minikube”</p>
+<p>Also, there is a cool tool that makes switching between Kubernetes clusters and the context a lot easier <a href="https://github.com/ahmetb/kubectx" target="_blank" rel="noopener">https://github.com/ahmetb/kubectx</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install kubectx</span><br></pre></td></tr></table></figure>
+
+<h3 id="Namespaces-amp-Pods"><a href="#Namespaces-amp-Pods" class="headerlink" title="Namespaces &amp; Pods"></a>Namespaces &amp; Pods</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get namespaces (1)</span><br><span class="line">$ kubectl get pod --all-namespaces</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>Running this command when using minishift will likely result in the following error due to not having admin rights on the openshift cluster. To login as an admin so that you can execute the following command and login with admin (password: admin)</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Error from server (Forbidden): namespaces is forbidden: User <span class="string">"developer"</span> cannot list namespaces at the cluster scope: no RBAC policy matched</span><br><span class="line"></span><br><span class="line">$ oc login $(minishift dashboard --url | sed <span class="string">'s/\/console//'</span>)</span><br><span class="line">Authentication required <span class="keyword">for</span> https://192.168.99.104:8443 (openshift)</span><br><span class="line">Username: admin</span><br><span class="line">Password: admin</span><br><span class="line">Login successful.</span><br><span class="line"></span><br><span class="line">You have access to the following projects and can switch between them with <span class="string">'oc project &lt;projectname&gt;'</span>:</span><br><span class="line"></span><br><span class="line">    default</span><br><span class="line">    kube-dns</span><br><span class="line">    kube-proxy</span><br><span class="line">    kube-public</span><br><span class="line">    kube-system</span><br><span class="line">  * myproject</span><br><span class="line">    openshift</span><br><span class="line">    openshift-apiserver</span><br><span class="line">    openshift-controller-manager</span><br><span class="line">    openshift-core-operators</span><br><span class="line">    openshift-infra</span><br><span class="line">    openshift-node</span><br><span class="line">    openshift-service-cert-signer</span><br><span class="line">    openshift-web-console</span><br><span class="line"></span><br><span class="line">Using project <span class="string">"myproject"</span>.</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nodes"><a href="#Nodes" class="headerlink" title="Nodes"></a>Nodes</h3><p>A Kubernetes cluster normally consists of 3 Masters and N Workers. Minikube and Minishift are all-in-one Master+Worker single VMs</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes --show-labels</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure-Env-for-Docker"><a href="#Configure-Env-for-Docker" class="headerlink" title="Configure Env for Docker"></a>Configure Env for Docker</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps docker-env (1)</span><br><span class="line"><span class="built_in">export</span> DOCKER_TLS_VERIFY=<span class="string">"1"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_HOST=<span class="string">"tcp://192.168.99.108:2376"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_CERT_PATH=<span class="string">"/Users/burrsutter/minikube_0.33.1/bin/.minikube/certs"</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_API_VERSION=<span class="string">"1.35"</span></span><br><span class="line"><span class="comment"># Run this command to configure your shell:</span></span><br><span class="line"><span class="comment"># eval $(minikube --profile 9steps docker-env)</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ <span class="built_in">eval</span> $(minikube --profile 9steps docker-env)</span><br><span class="line"><span class="comment"># and</span></span><br><span class="line"><span class="comment"># eval $(minishift oc-env) (2)</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>This command allows configure your “docker” CLI tool against your minikube or minishift’s Docker daemon. If you are using GKE, AKS, EKS or other, then you will need to “docker push” your image to that platform’s favorite image registry. You can also use quay.io as a vendor neutral registry</li>
+<li>This command puts the “oc” CLI tool in your PATH</li>
+</ol>
+<p>If you use minikube with error for pulling images, to use an image without uploading it, you can follow these steps:</p>
+<ul>
+<li>Set the environment variables with eval $(minikube docker-env)</li>
+<li>Build the image with the Docker daemon of Minikube (eg docker build -t my-image .)</li>
+<li>Set the image in the pod spec like the build tag (eg my-image)</li>
+<li>Set the imagePullPolicy to Never, otherwise Kubernetes will try to download the image.</li>
+</ul>
+<h3 id="Using-Docker-CLI"><a href="#Using-Docker-CLI" class="headerlink" title="Using Docker CLI"></a>Using Docker CLI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">$ docker images</span><br></pre></td></tr></table></figure>
+
+<p>These commands should now be pulling from your minikube/minishift hosted docker daemon. You can turn off the Docker for Mac/Windows daemon to save memory.</p>
+<h3 id="Minikube-Minishift-Happy"><a href="#Minikube-Minishift-Happy" class="headerlink" title="Minikube/Minishift Happy?"></a>Minikube/Minishift Happy?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps ssh (1)</span><br><span class="line">$ free -h</span><br><span class="line">$ df -h</span><br><span class="line">$ top</span><br><span class="line">$ ctrl-c</span><br><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>you can shell into your VM and check on resources</li>
+</ol>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>Minishift is secured by default and requires you to login</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ oc login $(minishift --profile ip):8443 -u admin -p admin</span><br></pre></td></tr></table></figure>
+
+<p>The “default” namespace should already be the current context, but setting it here to make it obvious</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config <span class="built_in">set</span>-context $(kubectl config current-context) --namespace=default</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ kubens default</span><br><span class="line"><span class="comment"># kubens comes with the kubectx tool</span></span><br></pre></td></tr></table></figure>
+
+<p>The command “kubectl run” is the fastest way to deploy a pod (think linux container). It is useful during development but NOT recommended for production. You will receive a deprecation warning.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># Non-deprecated run command is</span></span><br><span class="line"><span class="comment"># kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080 --generator=run-pod/v1</span></span><br><span class="line"><span class="comment"># but this only results in a single Pod</span></span><br></pre></td></tr></table></figure>
+
+<p>It produces a Deployment</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get deployments</span><br><span class="line">NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">hello-minikube   1         1         1            1           7s</span><br></pre></td></tr></table></figure>
+
+<p>which produces a ReplicaSet</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get replicaset</span><br></pre></td></tr></table></figure>
+
+<p>which produces a Pod</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods</span><br><span class="line">NAME                              READY     STATUS    RESTARTS   AGE</span><br><span class="line">hello-minikube-7c77b68cff-2xcpp   1/1       Running   0          27s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tip, if you can not find your pod, perhaps it is in another namespace</span></span><br><span class="line">$ kubectl get pods --all-namespaces</span><br><span class="line"></span><br><span class="line"><span class="comment"># and it can be fun to see what labels were applied to your pod</span></span><br><span class="line">$ kubectl get pods --show-labels</span><br></pre></td></tr></table></figure>
+
+<p>You create a Service</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl expose deployment hello-minikube --<span class="built_in">type</span>=NodePort</span><br><span class="line">service <span class="string">"hello-minikube"</span> exposed</span><br></pre></td></tr></table></figure>
+
+<p>and see that newly minted Service object</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service</span><br><span class="line">NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">hello-minikube   NodePort    10.97.139.177   &lt;none&gt;        8080:32403/TCP   20s</span><br><span class="line">kubernetes       ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP           1h</span><br></pre></td></tr></table></figure>
+
+<p>You can find the Service’s URL</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps service hello-minikube --url</span><br><span class="line">http://192.168.99.103:32403</span><br><span class="line"><span class="comment"># and curl it</span></span><br><span class="line">$ curl $(minikube --profile 9steps service hello-minikube --url)</span><br></pre></td></tr></table></figure>
+
+<p>or just load up the URL in your favorite browser <a href="https://screencast.com/t/k5GVJlfg" target="_blank" rel="noopener">https://screencast.com/t/k5GVJlfg</a></p>
+<p>Note: minishift has a slightly different variant on the “service” command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ minishift openshift service hello-minikube --url</span><br><span class="line"><span class="comment"># and curl it</span></span><br><span class="line">$ curl $(minishift openshift service hello-minikube --url)</span><br></pre></td></tr></table></figure>
+
+<p>You can also get the NodePort using jsonpath</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service hello-minikube -o jsonpath=<span class="string">"&#123;.spec.ports[*].nodePort&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<p>Or using the “jq” (brew install jq) command line tool to parse the JSON is also a very handy trick</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service hello-minikube -ojson | jq -r <span class="string">'.spec.ports[].nodePort'</span></span><br></pre></td></tr></table></figure>
+
+<p>The Deployment that was generated via your “kubectl run” commamnd actually has a bunch of interesting defaults</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe deployment hello-minikube</span><br><span class="line">Name:                   hello-minikube</span><br><span class="line">Namespace:              default</span><br><span class="line">CreationTimestamp:      Sun, 29 Jul 2018 15:21:38 -0400</span><br><span class="line">Labels:                 run&#x3D;hello-minikube</span><br><span class="line">Annotations:            deployment.kubernetes.io&#x2F;revision&#x3D;1</span><br><span class="line">Selector:               run&#x3D;hello-minikube</span><br><span class="line">Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable</span><br><span class="line">StrategyType:           RollingUpdate</span><br><span class="line">MinReadySeconds:        0</span><br><span class="line">RollingUpdateStrategy:  1 max unavailable, 1 max surge</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  run&#x3D;hello-minikube</span><br><span class="line">  Containers:</span><br><span class="line">   hello-minikube:</span><br><span class="line">    Image:        k8s.gcr.io&#x2F;echoserver:1.10</span><br><span class="line">    Port:         8080&#x2F;TCP</span><br><span class="line">    Host Port:    0&#x2F;TCP</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    NewReplicaSetAvailable</span><br><span class="line">OldReplicaSets:  &lt;none&gt;</span><br><span class="line">NewReplicaSet:   hello-minikube-7c77b68cff (1&#x2F;1 replicas created)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age   From                   Message</span><br><span class="line">  ----    ------             ----  ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  5m    deployment-controller  Scaled up replica set hello-minikube-7c77b68cff to 1</span><br></pre></td></tr></table></figure>
+
+<p>but that is beyond the scope of simply getting started, just remember the “kubectl describe <object>“ trick for future reference.</p>
+<p>Another key tip to remember, is “get all” which is useful for seeing what other objects might be floating around</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">get</span> <span class="string">all</span></span><br><span class="line"><span class="comment"># or with -n mynamespace</span></span><br><span class="line"><span class="string">$</span> <span class="string">kubectl</span> <span class="string">get</span> <span class="string">all</span> <span class="string">-n</span> <span class="string">default</span></span><br><span class="line"><span class="string">$</span> <span class="string">curl</span> <span class="string">$(minikube</span> <span class="string">--profile</span> <span class="string">9steps</span> <span class="string">ip):$(kubectl</span> <span class="string">get</span> <span class="string">service</span> <span class="string">hello-minikube</span> <span class="string">-o</span> <span class="string">jsonpath="&#123;.spec.ports[*].nodePort&#125;")</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">Hostname:</span> <span class="string">hello-minikube-56cdb79778-cpbc8</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Pod Information:</span></span><br><span class="line">	<span class="string">-no</span> <span class="string">pod</span> <span class="string">information</span> <span class="string">available-</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Server values:</span></span><br><span class="line">	<span class="string">server_version=nginx:</span> <span class="attr">1.13.3 - lua:</span> <span class="number">10008</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Request Information:</span></span><br><span class="line">	<span class="string">client_address=172.17.0.1</span></span><br><span class="line">	<span class="string">method=GET</span></span><br><span class="line">	<span class="string">real</span> <span class="string">path=/</span></span><br><span class="line">	<span class="string">query=</span></span><br><span class="line">	<span class="string">request_version=1.1</span></span><br><span class="line">	<span class="string">request_scheme=http</span></span><br><span class="line">	<span class="string">request_uri=http://192.168.99.100:8080/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Request Headers:</span></span><br><span class="line">	<span class="string">accept=*/*</span></span><br><span class="line">	<span class="string">host=192.168.99.100:32570</span></span><br><span class="line">	<span class="string">user-agent=curl/7.54.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Request Body:</span></span><br><span class="line">	<span class="string">-no</span> <span class="string">body</span> <span class="string">in</span> <span class="string">request-</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Clean-up"><a href="#Clean-up" class="headerlink" title="Clean up"></a>Clean up</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete service hello-minikube</span><br><span class="line"></span><br><span class="line">$ kubectl delete deployment hello-minikube</span><br></pre></td></tr></table></figure>
+
+<p>And you will notice that the pod also terminates. In another terminal window, use the -w to watch as the pod changes state</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -w</span><br><span class="line">NAME                              READY     STATUS    RESTARTS   AGE</span><br><span class="line">hello-minikube-7c77b68cff-2xcpp   1/1       Running   0          8m</span><br><span class="line">hello-minikube-7c77b68cff-2xcpp   1/1       Terminating   0         9m</span><br><span class="line">hello-minikube-7c77b68cff-2xcpp   0/1       Terminating   0         9m</span><br></pre></td></tr></table></figure>
+
+<p>Use Ctrl-c to stop watching pods</p>
+<p>You can shutdown the VM to save resources when not in use</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps stop</span><br><span class="line"><span class="comment"># go about your business, come back later and</span></span><br><span class="line">$ minikube --profile 9steps start</span><br></pre></td></tr></table></figure>
+
+<p>and if you need to wipe out the VM entirely</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ minikube --profile 9steps delete</span><br></pre></td></tr></table></figure>
+
+<p>Your minikube configuration goes in a hidden directory at</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls <span class="variable">$MINIKUBE_HOME</span>/.minikube/profiles/9steps/</span><br></pre></td></tr></table></figure>
+
+<p>and your kubectl configuration goes in a different hidden directory that is normally at</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>BUT, based on the change in the 0_setenv_minikube.sh, this directory has been moved by setting an env variable, helping to keep your various minikube worlds separated</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> KUBECONFIG=<span class="variable">$MINIKUBE_HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>So if things go really badly, you might need to wipe out those directories</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf ~/.kube</span><br><span class="line"><span class="comment"># OR</span></span><br><span class="line">$ rm -rf <span class="variable">$MINIKUBE_HOME</span>/.kube/config</span><br><span class="line">$ rm -rf <span class="variable">$MINIKUBE_HOME</span>/.minikube</span><br></pre></td></tr></table></figure>
+
+<h2 id="More-resources"><a href="#More-resources" class="headerlink" title="More resources"></a>More resources</h2><p><a href="https://github.com/kubernetes/minikube#installation" target="_blank" rel="noopener">https://github.com/kubernetes/minikube#installation</a></p>
+<p><a href="https://kubernetes.io/docs/setup/minikube/#quickstart" target="_blank" rel="noopener">https://kubernetes.io/docs/setup/minikube/#quickstart</a> including proxy challenges</p>
+<p><strong>Hyperkit for Mac</strong></p>
+<p><a href="https://github.com/kubernetes/minikube/blob/master/docs/drivers.md#hyperkit-driver" target="_blank" rel="noopener">https://github.com/kubernetes/minikube/blob/master/docs/drivers.md#hyperkit-driver</a></p>
+<p><strong>Node.js tutorial</strong></p>
+<p><a href="https://kubernetes.io/docs/tutorials/hello-minikube/" target="_blank" rel="noopener">https://kubernetes.io/docs/tutorials/hello-minikube/</a></p>
+<p><strong>Dealing with multiple clusters</strong></p>
+<p><a href="https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#define-clusters-users-and-contexts" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#define-clusters-users-and-contexts</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Minikube/" rel="tag"># Minikube</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/09/Java-Spring%20Boot%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Spring Boot 学习笔记">
+                  <i class="fa fa-angle-left"></i> Spring Boot 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/12/Kubernetes-Craft%20a%20Dockerfile/" rel="next" title="Building Images & Running Containers">
+                  Building Images & Running Containers <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

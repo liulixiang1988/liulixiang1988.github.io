@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="7.1 映射JPA实体JPA: Java Persistence API 它是从EJB3中抽取出来的。  EntityManagerFactory EntityManager persistence.xml @Entity @Column @Table  要使用JPA，我们需要添加依赖： 1compile group: &#39;javax&#39;, name: &#39;javaee-api&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring笔记07-Hibernate JPA与Spring Data">
+<meta property="og:url" content="https://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="7.1 映射JPA实体JPA: Java Persistence API 它是从EJB3中抽取出来的。  EntityManagerFactory EntityManager persistence.xml @Entity @Column @Table  要使用JPA，我们需要添加依赖： 1compile group: &#39;javax&#39;, name: &#39;javaee-api&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-08-24T10:51:00.000Z">
+<meta property="article:modified_time" content="2020-06-27T15:27:04.526Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Java, Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/","path":"2016/08/24/Spring笔记07-Hibernate JPA与Spring Data/","title":"Spring笔记07-Hibernate JPA与Spring Data"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring笔记07-Hibernate JPA与Spring Data | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E6%98%A0%E5%B0%84JPA%E5%AE%9E%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">7.1 映射JPA实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Entity-Manager%E5%92%8CVendor-Adapter"><span class="nav-number">2.</span> <span class="nav-text">7.2 Entity Manager和Vendor Adapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-%E5%AE%9E%E7%8E%B0JPA-Repository"><span class="nav-number">3.</span> <span class="nav-text">7.3 实现JPA Repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">7.4 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-5-Spring-Data-JPA"><span class="nav-number">5.</span> <span class="nav-text">7.5 Spring Data JPA</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/24/Spring%E7%AC%94%E8%AE%B007-Hibernate%20JPA%E4%B8%8ESpring%20Data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring笔记07-Hibernate JPA与Spring Data | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring笔记07-Hibernate JPA与Spring Data
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-24 18:51:00" itemprop="dateCreated datePublished" datetime="2016-08-24T18:51:00+08:00">2016-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:27:04" itemprop="dateModified" datetime="2020-06-27T23:27:04+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="7-1-映射JPA实体"><a href="#7-1-映射JPA实体" class="headerlink" title="7.1 映射JPA实体"></a>7.1 映射JPA实体</h2><p>JPA: Java Persistence API 它是从EJB3中抽取出来的。</p>
+<ul>
+<li><code>EntityManagerFactory</code></li>
+<li><code>EntityManager</code></li>
+<li><code>persistence.xml</code></li>
+<li><code>@Entity</code></li>
+<li><code>@Column</code></li>
+<li><code>@Table</code></li>
+</ul>
+<p>要使用JPA，我们需要添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile group: &#39;javax&#39;, name: &#39;javaee-api&#39;, version: &#39;7.0&#39;</span><br></pre></td></tr></table></figure>
+
+<p>我们来新建数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class Account &#123;</span><br><span class="line">    @Id</span><br><span class="line">    private Long id;</span><br><span class="line">    private BigDecimal balance;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后配置数据源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages &#x3D; &quot;lx.spring.core&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:prod.properties&quot;)</span><br><span class="line">@EnableTransactionManagement</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private Environment env;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public DataSource dataSource() &#123;</span><br><span class="line">        BasicDataSource dataSource &#x3D; new BasicDataSource();</span><br><span class="line">        dataSource.setDriverClassName(env.getProperty(&quot;db.driver&quot;));</span><br><span class="line">        dataSource.setUrl(env.getProperty(&quot;db.url&quot;));</span><br><span class="line">        dataSource.setUsername(env.getProperty(&quot;db.user&quot;));</span><br><span class="line">        dataSource.setPassword(env.getProperty(&quot;db.pass&quot;));</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-Entity-Manager和Vendor-Adapter"><a href="#7-2-Entity-Manager和Vendor-Adapter" class="headerlink" title="7.2 Entity Manager和Vendor Adapter"></a>7.2 Entity Manager和Vendor Adapter</h2><p>首先我们先添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile group: &#39;org.springframework&#39;, name: &#39;spring-jdbc&#39;, version: &#39;4.3.2.RELEASE&#39; &#x2F;&#x2F;1. jdbc</span><br><span class="line">    compile group: &#39;org.springframework&#39;, name: &#39;spring-orm&#39;, version: &#39;4.3.2.RELEASE&#39; &#x2F;&#x2F;2. orm</span><br><span class="line">    compile group: &#39;org.apache.commons&#39;, name: &#39;commons-dbcp2&#39;, version: &#39;2.1.1&#39;  &#x2F;&#x2F;3. dbcp</span><br><span class="line">    compile group: &#39;org.hibernate&#39;, name: &#39;hibernate-core&#39;, version: &#39;5.2.2.Final&#39; &#x2F;&#x2F;4. hibernate</span><br><span class="line">	&#x2F;&#x2F;...</span><br><span class="line"></span><br><span class="line">    compile &#39;com.h2database:h2:1.4.192&#39; &#x2F;&#x2F;5. h2驱动</span><br><span class="line">    compile group: &#39;mysql&#39;, name: &#39;mysql-connector-java&#39;, version: &#39;6.0.3&#39; &#x2F;&#x2F;6. mysql驱动</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>现在我们来修改<code>AppConfig</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public JpaVendorAdapter jpaVendorAdapter() &#123;</span><br><span class="line">    HibernateJpaVendorAdapter adapter &#x3D; new HibernateJpaVendorAdapter();</span><br><span class="line">    adapter.setShowSql(true);</span><br><span class="line">    adapter.setGenerateDdl(true);</span><br><span class="line">    adapter.setDatabase(Database.MYSQL);</span><br><span class="line">    return adapter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Bean</span><br><span class="line">public LocalContainerEntityManagerFactoryBean entityManagerFactory (</span><br><span class="line">        DataSource dataSource, JpaVendorAdapter jpaVendorAdapter</span><br><span class="line">) &#123;</span><br><span class="line">    Properties props &#x3D; new Properties();</span><br><span class="line">    props.setProperty(&quot;hibernate.format_sql&quot;, String.valueOf(true));</span><br><span class="line"></span><br><span class="line">    LocalContainerEntityManagerFactoryBean emf &#x3D; new LocalContainerEntityManagerFactoryBean();</span><br><span class="line">    emf.setDataSource(dataSource);</span><br><span class="line">    emf.setPackagesToScan(&quot;lx.spring.core.entities&quot;);</span><br><span class="line">    emf.setJpaVendorAdapter(jpaVendorAdapter);</span><br><span class="line">    emf.setJpaProperties(props);</span><br><span class="line"></span><br><span class="line">    return emf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Bean</span><br><span class="line">public PlatformTransactionManager transactionManager(EntityManagerFactory emf) &#123;</span><br><span class="line">    return new JpaTransactionManager(emf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Bean</span><br><span class="line">public BeanPostProcessor persistenceTranslation() &#123;</span><br><span class="line">    return new PersistenceAnnotationBeanPostProcessor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-实现JPA-Repository"><a href="#7-3-实现JPA-Repository" class="headerlink" title="7.3 实现JPA Repository"></a>7.3 实现JPA Repository</h2><p>现在我们用EntityManagerFactory来实现JPA Repository。</p>
+<p>我们来创建<code>AccountRepository</code>接口和<code>JpaAccountRepository</code>类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package lx.spring.core.repositories;</span><br><span class="line"></span><br><span class="line">import lx.spring.core.entities.Account;</span><br><span class="line"></span><br><span class="line">import java.math.BigDecimal;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface AccountRepository &#123;</span><br><span class="line">    List&lt;Account&gt; getAccounts();</span><br><span class="line"></span><br><span class="line">    Account getAccount(Long id);</span><br><span class="line"></span><br><span class="line">    int getNumberOfAccounts();</span><br><span class="line"></span><br><span class="line">    Long createAccount(BigDecimal initialBalance);</span><br><span class="line"></span><br><span class="line">    int deleteAccount(Long id);</span><br><span class="line"></span><br><span class="line">    void updateAccount(Account account);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">package lx.spring.core.repositories;</span><br><span class="line"></span><br><span class="line">import lx.spring.core.entities.Account;</span><br><span class="line">import org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line">import javax.persistence.EntityManager;</span><br><span class="line">import javax.persistence.PersistenceContext;</span><br><span class="line">import java.math.BigDecimal;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@Repository</span><br><span class="line">public class JpaAccountRepository implements AccountRepository &#123;</span><br><span class="line">    private long nextId &#x3D; 4;</span><br><span class="line"></span><br><span class="line">    @PersistenceContext &#x2F;&#x2F;Spring会注入</span><br><span class="line">    private EntityManager entityManager;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;Account&gt; getAccounts() &#123;</span><br><span class="line">        return entityManager.createQuery(&quot;select a from Account a&quot;, Account.class).getResultList();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Account getAccount(Long id) &#123;</span><br><span class="line">        return entityManager.find(Account.class, id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getNumberOfAccounts() &#123;</span><br><span class="line">        String jpaText &#x3D; &quot;select count(a.id) from Account a&quot;;</span><br><span class="line">        Long result &#x3D; (Long) entityManager.createQuery(jpaText).getSingleResult();</span><br><span class="line">        return result.intValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Long createAccount(BigDecimal initialBalance) &#123;</span><br><span class="line">        long id &#x3D; nextId++;</span><br><span class="line">        entityManager.persist(new Account(id, initialBalance));</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int deleteAccount(Long id) &#123;</span><br><span class="line">        entityManager.remove(getAccount(id));</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void updateAccount(Account account) &#123;</span><br><span class="line">        entityManager.merge(account);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们用的不是标准的SQL，而是JPA表达式。而且像<code>select count(a.id) from Account a</code>这些语句里都是类名和字段名，所以是区分大小写的。</p>
+<h2 id="7-4-测试"><a href="#7-4-测试" class="headerlink" title="7.4 测试"></a>7.4 测试</h2><p>我们创建的测试和上一节类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes&#x3D;AppConfig.class)</span><br><span class="line">@Transactional</span><br><span class="line">public class JpaAccountRepositoryTest &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountRepository repository;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccounts() throws Exception &#123;</span><br><span class="line">        List&lt;Account&gt; accounts &#x3D; repository.getAccounts();</span><br><span class="line">        assertThat(accounts.size(), is(3));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getNumberOfAccounts() throws Exception &#123;</span><br><span class="line">        assertThat(repository.getNumberOfAccounts(), is(3));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(1L);</span><br><span class="line">        assertThat(account.getId(), is(1L));</span><br><span class="line">        &#x2F;&#x2F;2. 近似</span><br><span class="line">        assertThat(new BigDecimal(&quot;100.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void createAccount() throws Exception &#123;</span><br><span class="line">        Long id &#x3D; repository.createAccount(new BigDecimal(&quot;250.00&quot;));</span><br><span class="line">        &#x2F;&#x2F;3. 非空</span><br><span class="line">        assertThat(id, is(notNullValue()));</span><br><span class="line"></span><br><span class="line">        Account account &#x3D; repository.getAccount(id);</span><br><span class="line">        assertThat(account.getId(), is(id));</span><br><span class="line">        assertThat(new BigDecimal(&quot;250.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void updateAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.getAccount(1L);</span><br><span class="line">        BigDecimal current &#x3D; account.getBalance();</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line">        account.setBalance(current.add(amount));</span><br><span class="line">        repository.updateAccount(account);</span><br><span class="line"></span><br><span class="line">        Account again &#x3D; repository.getAccount(1L);</span><br><span class="line">        assertThat(again.getBalance(), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void deleteAccount() throws Exception &#123;</span><br><span class="line">        for (Account account: repository.getAccounts()) &#123;</span><br><span class="line">            repository.deleteAccount(account.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        assertThat(repository.getNumberOfAccounts(), is(0));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes &#x3D; AppConfig.class)</span><br><span class="line">@Transactional</span><br><span class="line">public class AccountServiceTest &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountService service;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void deposit() throws Exception &#123;</span><br><span class="line">        BigDecimal start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line"></span><br><span class="line">        service.deposit(1L, amount);</span><br><span class="line">        BigDecimal finish &#x3D; start.add(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void withdraw() throws Exception &#123;</span><br><span class="line">        BigDecimal start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line"></span><br><span class="line">        service.withdraw(1L, amount);</span><br><span class="line">        BigDecimal finish &#x3D; start.subtract(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void transfer() throws Exception &#123;</span><br><span class="line">        BigDecimal acct1start &#x3D; service.getBalance(1L);</span><br><span class="line">        BigDecimal acct2start &#x3D; service.getBalance(2L);</span><br><span class="line"></span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line">        service.transfer(1L, 2L, amount);</span><br><span class="line">        BigDecimal acct1finish &#x3D; acct1start.subtract(amount);</span><br><span class="line">        BigDecimal acct2finish &#x3D; acct2start.add(amount);</span><br><span class="line"></span><br><span class="line">        assertThat(acct1finish, is(closeTo(service.getBalance(1L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">        assertThat(acct2finish, is(closeTo(service.getBalance(2L), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-5-Spring-Data-JPA"><a href="#7-5-Spring-Data-JPA" class="headerlink" title="7.5 Spring Data JPA"></a>7.5 Spring Data JPA</h2><p>Spring Data JPA能够进一步简化我们的应用。首先我们添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile group: &#39;org.springframework.data&#39;, name: &#39;spring-data-jpa&#39;, version: &#39;1.10.2.RELEASE&#39;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们修改<code>AppConfig.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages &#x3D; &quot;lx.spring.core&quot;)</span><br><span class="line">@EnableJpaRepositories(basePackages &#x3D; &quot;lx.spring.core.repositories&quot;) &#x2F;&#x2F;这个注解是用来发现spring data jpa的</span><br><span class="line">@PropertySource(&quot;classpath:prod.properties&quot;)</span><br><span class="line">@EnableTransactionManagement</span><br><span class="line">public class AppConfig &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意<code>@EnableJpaRepositories</code>注解。</p>
+<p>接着，我们修改<code>AccountRepository</code>并删除对应的实现类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface AccountRepository extends JpaRepository&lt;Account, Long&gt;&#123;</span><br><span class="line">    List&lt;Account&gt; findAccountsByBalanceGreaterThanEqual(BigDecimal amount);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里我们继承了<code>JpaRepository</code>，这样就可以了。不需要实现什么。</p>
+<p>同时，我们定义了<code>findAccountsByBalanceGreaterThanEqual</code>方法，这个名称是约定的，<code>find</code>表示查找，<code>By</code>后面的是字段，<code>GreaterThanEqual</code>是条件。</p>
+<p>此时，我们在测试中调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes&#x3D;AppConfig.class)</span><br><span class="line">@Transactional</span><br><span class="line">public class JpaAccountRepositoryTest &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private AccountRepository repository;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccounts() throws Exception &#123;</span><br><span class="line">        List&lt;Account&gt; accounts &#x3D; repository.findAll();</span><br><span class="line">        assertThat(accounts.size(), is(3));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getNumberOfAccounts() throws Exception &#123;</span><br><span class="line">        assertThat(repository.count(), is(3));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void getAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.findOne(1L);</span><br><span class="line">        assertThat(account.getId(), is(1L));</span><br><span class="line">        &#x2F;&#x2F;2. 近似</span><br><span class="line">        assertThat(new BigDecimal(&quot;100.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void createAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; new Account(99L, new BigDecimal(&quot;250.00&quot;));</span><br><span class="line">        repository.save(account);</span><br><span class="line">        Long id &#x3D; account.getId();</span><br><span class="line">        &#x2F;&#x2F;3. 非空</span><br><span class="line">        assertThat(id, is(notNullValue()));</span><br><span class="line"></span><br><span class="line">        Account again &#x3D; repository.findOne(id);</span><br><span class="line">        assertThat(again.getId(), is(id));</span><br><span class="line">        assertThat(new BigDecimal(&quot;250.0&quot;), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void updateAccount() throws Exception &#123;</span><br><span class="line">        Account account &#x3D; repository.findOne(1L);</span><br><span class="line">        BigDecimal current &#x3D; account.getBalance();</span><br><span class="line">        BigDecimal amount &#x3D; new BigDecimal(&quot;50.0&quot;);</span><br><span class="line">        account.setBalance(current.add(amount));</span><br><span class="line">        repository.save(account);</span><br><span class="line"></span><br><span class="line">        Account again &#x3D; repository.findOne(1L);</span><br><span class="line">        assertThat(again.getBalance(), is(closeTo(account.getBalance(), new BigDecimal(&quot;0.01&quot;))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void deleteAccount() throws Exception &#123;</span><br><span class="line">        repository.deleteAll();</span><br><span class="line">        assertThat(repository.count(), is(0L));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到只是方法名变了，怎么样，是不是很简单？</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java-Spring/" rel="tag"># Java, Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/08/23/Spring%E7%AC%94%E8%AE%B006-%E4%BD%BF%E7%94%A8JdbcTemplate%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/" rel="prev" title="Spring笔记06-使用JdbcTemplate进行数据访问">
+                  <i class="fa fa-angle-left"></i> Spring笔记06-使用JdbcTemplate进行数据访问
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/08/29/Go-1-Go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="next" title="Go语言学习">
+                  Go语言学习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Deploying Applications the DevOps Way[TOC] 1. Using the Helm Package Manager Helm is used to streamline installing and managing Kubernetes applications. Helm consists of the helm tool, which needs to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploying Applications the DevOps Way">
+<meta property="og:url" content="https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/index.html">
+<meta property="og:site_name" content="一步一步">
+<meta property="og:description" content="Deploying Applications the DevOps Way[TOC] 1. Using the Helm Package Manager Helm is used to streamline installing and managing Kubernetes applications. Helm consists of the helm tool, which needs to">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-17T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T12:15:51.052Z">
+<meta property="article:author" content="Liu Lixiang">
+<meta property="article:tag" content="Helm">
+<meta property="article:tag" content="Kustomize">
+<meta property="article:tag" content="Operator">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/","path":"2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/","title":"Deploying Applications the DevOps Way"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Deploying Applications the DevOps Way | 一步一步</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="一步一步" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一步一步</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploying-Applications-the-DevOps-Way"><span class="nav-number">1.</span> <span class="nav-text">Deploying Applications the DevOps Way</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Using-the-Helm-Package-Manager"><span class="nav-number">1.1.</span> <span class="nav-text">1. Using the Helm Package Manager</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Installing-the-Helm-Binary"><span class="nav-number">1.1.1.</span> <span class="nav-text">Demo: Installing the Helm Binary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getting-Access-to-Helm-Charts"><span class="nav-number">1.1.2.</span> <span class="nav-text">Getting Access to Helm Charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Managing-Helm-Repositories"><span class="nav-number">1.1.3.</span> <span class="nav-text">Demo: Managing Helm Repositories</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Working-with-Helm-Charts"><span class="nav-number">1.2.</span> <span class="nav-text">2. Working with Helm Charts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Installing-Helm-Charts"><span class="nav-number">1.2.1.</span> <span class="nav-text">Installing Helm Charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Installing-a-Helm-Chart"><span class="nav-number">1.2.2.</span> <span class="nav-text">Demo: Installing a Helm Chart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-Before-Installing"><span class="nav-number">1.2.3.</span> <span class="nav-text">Customizing Before Installing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Customizing-a-Helm-Chart-Before-Installing"><span class="nav-number">1.2.4.</span> <span class="nav-text">Demo: Customizing a Helm Chart Before Installing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Using-Kustomize"><span class="nav-number">1.3.</span> <span class="nav-text">3. Using Kustomize</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Understanding-Kustomize"><span class="nav-number">1.3.1.</span> <span class="nav-text">Understanding Kustomize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Understanding-a-Sample-Kustomization-File"><span class="nav-number">1.3.2.</span> <span class="nav-text">Understanding a Sample Kustomization File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Kustomization-Overlays"><span class="nav-number">1.3.3.</span> <span class="nav-text">Using Kustomization Overlays</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Using-Kustomization"><span class="nav-number">1.3.4.</span> <span class="nav-text">Demo: Using Kustomization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Implementing-Blue-Green-Deployments"><span class="nav-number">1.4.</span> <span class="nav-text">4. Implementing Blue-Green Deployments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Procedure-Overview"><span class="nav-number">1.4.1.</span> <span class="nav-text">Procedure Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Blue-Green-Deployments"><span class="nav-number">1.4.2.</span> <span class="nav-text">Demo: Blue-Green Deployments</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Implement-Canary-Deployments"><span class="nav-number">1.5.</span> <span class="nav-text">5. Implement Canary Deployments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-CRD-Custom-Resource-Definition"><span class="nav-number">1.6.</span> <span class="nav-text">6. CRD: Custom Resource Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Using-Operator"><span class="nav-number">1.7.</span> <span class="nav-text">7. Using Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Installing-the-Calico-Network-Plugin"><span class="nav-number">1.7.1.</span> <span class="nav-text">Demo: Installing the Calico Network Plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Using-StatefulSets"><span class="nav-number">1.8.</span> <span class="nav-text">8. Using StatefulSets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Understanding-StatefulSets-Limitations"><span class="nav-number">1.8.1.</span> <span class="nav-text">Understanding StatefulSets Limitations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-Using-a-StatefulSet"><span class="nav-number">1.8.2.</span> <span class="nav-text">Demo: Using a StatefulSet</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Lixiang"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Liu Lixiang</p>
+  <div class="site-description" itemprop="description">云天收夏色，木叶动秋声</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liulixiang1988" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liulixiang1988@gmail.com" title="E-Mail → mailto:liulixiang1988@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/liulixiang1988" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liulixiang1988" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liulixiang1988" rel="noopener me" target="_blank"><i class="fa-custom zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Deploying Applications the DevOps Way | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Deploying Applications the DevOps Way
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-17 19:00:00" itemprop="dateCreated datePublished" datetime="2022-01-17T19:00:00+08:00">2022-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Deploying-Applications-the-DevOps-Way"><a href="#Deploying-Applications-the-DevOps-Way" class="headerlink" title="Deploying Applications the DevOps Way"></a>Deploying Applications the DevOps Way</h1><p>[TOC]</p>
+<h2 id="1-Using-the-Helm-Package-Manager"><a href="#1-Using-the-Helm-Package-Manager" class="headerlink" title="1. Using the Helm Package Manager"></a>1. Using the Helm Package Manager</h2><ul>
+<li>Helm is used to streamline installing and managing Kubernetes applications.</li>
+<li>Helm consists of the <code>helm</code> tool, which needs to be installed, and a chart.</li>
+<li>A chart is a Helm package, which contains the following:<ul>
+<li>A description of the package</li>
+<li>One or more templates containing Kubernetes manifest files</li>
+</ul>
+</li>
+<li>Charts can be stored locally, or accessed from remote Helm repositories.</li>
+</ul>
+<h3 id="Demo-Installing-the-Helm-Binary"><a href="#Demo-Installing-the-Helm-Binary" class="headerlink" title="Demo: Installing the Helm Binary"></a>Demo: Installing the Helm Binary</h3><ul>
+<li>Fetch the binary from <code>https://github.com/helm/helm/releases</code> ; check for the latest release!</li>
+<li><code>tar xvf helm-xxx.tar.gz</code></li>
+<li><code>sudo mv linux-amd64/helm /usr/local/bin/</code></li>
+<li><code>helm version</code></li>
+</ul>
+<h3 id="Getting-Access-to-Helm-Charts"><a href="#Getting-Access-to-Helm-Charts" class="headerlink" title="Getting Access to Helm Charts"></a>Getting Access to Helm Charts</h3><p>The main site for finding Helm charts, is through <a href="https://artifacthub.io" target="_blank" rel="noopener">https://artifacthub.io</a></p>
+<p>This is a major way for finding repository names. We can search for specific software here, and run the commands to install it; for instance, to run the kubernetes dashboard:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># helm repo add stable https://kubernetes-charts.storage.googleapis.com</span></span><br><span class="line">helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/</span><br><span class="line">helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard</span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo-Managing-Helm-Repositories"><a href="#Demo-Managing-Helm-Repositories" class="headerlink" title="Demo: Managing Helm Repositories"></a>Demo: Managing Helm Repositories</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">helm repo add bitnami https://charts.bitnami.com/bitnami</span><br><span class="line">helm repo list</span><br><span class="line"><span class="comment"># show all the charts in the bitnami repository</span></span><br><span class="line">helm search repo bitnami</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Working-with-Helm-Charts"><a href="#2-Working-with-Helm-Charts" class="headerlink" title="2. Working with Helm Charts"></a>2. Working with Helm Charts</h2><h3 id="Installing-Helm-Charts"><a href="#Installing-Helm-Charts" class="headerlink" title="Installing Helm Charts"></a>Installing Helm Charts</h3><p>After adding repositories, use <code>helm repo update</code> to ensure access to the most up-to-date charts.</p>
+<p>Use <code>helm install</code> to install a chart with default parameters.</p>
+<p>After installation, use <code>helm list</code> to list currently installed charts.</p>
+<p>Use <code>helm delete</code> to remove a chart.</p>
+<h3 id="Demo-Installing-a-Helm-Chart"><a href="#Demo-Installing-a-Helm-Chart" class="headerlink" title="Demo: Installing a Helm Chart"></a>Demo: Installing a Helm Chart</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># install mysql and generate name for you</span></span><br><span class="line">helm install bitnami/mysql --generate-name</span><br><span class="line">kubectl get all</span><br><span class="line"><span class="comment"># show the chart installed in the cluster</span></span><br><span class="line">helm show chart bitnami/mysql</span><br><span class="line">helm show all bitnami/mysql</span><br><span class="line">helm list</span><br><span class="line">helm status mysql-xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="Customizing-Before-Installing"><a href="#Customizing-Before-Installing" class="headerlink" title="Customizing Before Installing"></a>Customizing Before Installing</h3><ul>
+<li>A helm chart consists of templates to which specific values are applied.</li>
+<li>The values are specified in the <code>values.yaml</code> file, within the helm chart.</li>
+<li>The easiest way to customize a helm chart is by first using <code>helm pull</code> to fetch a local copy of the helm chart.</li>
+<li>Next edit the <code>chartname/values.yaml</code> to change any values.</li>
+</ul>
+<h3 id="Demo-Customizing-a-Helm-Chart-Before-Installing"><a href="#Demo-Customizing-a-Helm-Chart-Before-Installing" class="headerlink" title="Demo: Customizing a Helm Chart Before Installing"></a>Demo: Customizing a Helm Chart Before Installing</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">helm show values bitnami/nginx</span><br><span class="line">helm pull bitnami/nginx</span><br><span class="line">tar xvf nginx-xxx.tgz</span><br><span class="line">vim nginx/values.yaml</span><br><span class="line">helm template --debug nginx</span><br><span class="line">helm install -f nginx/values.yaml my-nginx nginx/</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Using-Kustomize"><a href="#3-Using-Kustomize" class="headerlink" title="3. Using Kustomize"></a>3. Using Kustomize</h2><h3 id="Understanding-Kustomize"><a href="#Understanding-Kustomize" class="headerlink" title="Understanding Kustomize"></a>Understanding Kustomize</h3><ul>
+<li><code>kustomize</code> is a kubernetes feature, that use a file with the name <code>kustomization.yaml</code> to apply changes to a set of resources.</li>
+<li>This is convenient for applying changings to input files that the user does not control himeself, and which contents may change because of new versions appearing in Git.</li>
+<li>Use <code>kubectl apply -k ./</code> in the directory with the <code>kustomization.yaml</code> file to apply the changes.</li>
+<li>Use <code>kubectl delete -k ./</code> in the same directory to delete al that was created by the Kustomization.</li>
+</ul>
+<h3 id="Understanding-a-Sample-Kustomization-File"><a href="#Understanding-a-Sample-Kustomization-File" class="headerlink" title="Understanding a Sample Kustomization File"></a>Understanding a Sample Kustomization File</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resources:</span> <span class="comment"># defines which resources (in YAML files) apply</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">deployment.yaml</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">service.yaml</span></span><br><span class="line"><span class="attr">namePrefix:</span> <span class="string">test-</span> <span class="comment"># defines a prefix for all the resources</span></span><br><span class="line"><span class="attr">namespace:</span> <span class="string">testing</span> <span class="comment"># defines the namespace for all the resources</span></span><br><span class="line"><span class="attr">nameSuffix:</span> <span class="string">"-001"</span></span><br><span class="line"><span class="attr">commonLabels:</span> <span class="comment"># defines labels that are common to all the resources</span></span><br><span class="line">  <span class="attr">app:</span> <span class="string">bingo</span></span><br><span class="line"><span class="attr">commonAnnotations:</span></span><br><span class="line">  <span class="attr">oncallPager:</span> <span class="number">800</span><span class="number">-555</span><span class="number">-1212</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Using-Kustomization-Overlays"><a href="#Using-Kustomization-Overlays" class="headerlink" title="Using Kustomization Overlays"></a>Using Kustomization Overlays</h3><p>Kustomization ca be used to define a base configuration, as wel as multiple deployment scenarios (overlays) as in dev, staging and prod for instance.</p>
+<p>In such a configuration, the main <code>kustomization.yaml</code> defines the structure:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">~/someApp</span><br><span class="line">├── base</span><br><span class="line">│   ├── deployment.yaml</span><br><span class="line">│   ├── kustomization.yaml</span><br><span class="line">│   └── service.yaml</span><br><span class="line">└── overlays</span><br><span class="line">    ├── development</span><br><span class="line">    │   ├── cpu_count.yaml</span><br><span class="line">    │   ├── kustomization.yaml</span><br><span class="line">    │   └── replica_count.yaml</span><br><span class="line">    └── production</span><br><span class="line">        ├── cpu_count.yaml</span><br><span class="line">        ├── kustomization.yaml</span><br><span class="line">        └── replica_count.yaml</span><br></pre></td></tr></table></figure>
+
+<p>In each of the <code>overlays/{dev,staging,prod}/kustomization.yaml</code>, users would reference the base configuration in the resources field, and specify changes for the specific environment:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resources:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">../../base</span></span><br><span class="line"><span class="attr">namePrefix:</span> <span class="string">dev-</span></span><br><span class="line"><span class="attr">namespace:</span> <span class="string">development</span></span><br><span class="line"><span class="attr">commonLabels:</span></span><br><span class="line">  <span class="attr">environment:</span> <span class="string">development</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo-Using-Kustomization"><a href="#Demo-Using-Kustomization" class="headerlink" title="Demo: Using Kustomization"></a>Demo: Using Kustomization</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat deployment.yaml</span><br><span class="line">cat service.yaml</span><br><span class="line">kubectl apply -f deployment.yaml service.yaml</span><br><span class="line">cat kustomization.yaml</span><br><span class="line">kubectl apply -k . <span class="comment"># use kustomization.yaml to apply the changes</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deployment.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">k8s-app:</span> <span class="string">nginx-friday20</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-friday20</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">progressDeadlineSeconds:</span> <span class="number">600</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">revisionHistoryLimit:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">k8s-app:</span> <span class="string">nginx-friday20</span></span><br><span class="line">  <span class="attr">strategy:</span></span><br><span class="line">    <span class="attr">rollingUpdate:</span></span><br><span class="line">      <span class="attr">maxSurge:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line">      <span class="attr">maxUnavailable:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">RollingUpdate</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">k8s-app:</span> <span class="string">nginx-friday20</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">nginx-friday20</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">nginx-friday20</span></span><br><span class="line">        <span class="attr">resources:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">privileged:</span> <span class="literal">false</span></span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">      <span class="attr">dnsPolicy:</span> <span class="string">ClusterFirst</span></span><br><span class="line">      <span class="attr">restartPolicy:</span> <span class="string">Always</span></span><br><span class="line">      <span class="attr">schedulerName:</span> <span class="string">default-scheduler</span></span><br><span class="line">      <span class="attr">securityContext:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">      <span class="attr">terminationGracePeriodSeconds:</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># service.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">k8s-app:</span> <span class="string">nginx-friday20</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-friday20</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">k8s-app:</span> <span class="string">nginx-friday20</span></span><br><span class="line"><span class="attr">status:</span></span><br><span class="line">  <span class="attr">loadBalancer:</span> <span class="string">&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kustomization.yaml</span></span><br><span class="line"><span class="attr">resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deployment.yaml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">service.yaml</span></span><br><span class="line"><span class="attr">namePrefix:</span> <span class="string">test-</span></span><br><span class="line"><span class="attr">commonLabels:</span></span><br><span class="line">  <span class="attr">environment:</span> <span class="string">testing</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Implementing-Blue-Green-Deployments"><a href="#4-Implementing-Blue-Green-Deployments" class="headerlink" title="4. Implementing Blue-Green Deployments"></a>4. Implementing Blue-Green Deployments</h2><p>Blue-green deployments are a way to deploy a new version of a service in a cluster, while keeping the old version running. It accomplishes zero downtime application upgrade.</p>
+<p>Essential is the possibility to test the new version of the application before taking it into production.</p>
+<p>The bule Deployment is the current application version, and the green Deployment is the new version.</p>
+<p>Once the green Deployment is ready, the blue Deployment is deleted.</p>
+<p>Blue-green deployments can easily be implemented using Kubernetes Services.</p>
+<h3 id="Procedure-Overview"><a href="#Procedure-Overview" class="headerlink" title="Procedure Overview"></a>Procedure Overview</h3><ul>
+<li>Start with the already running application.</li>
+<li>Create a new deployment for the new version of the application, and test with temporary Service resource.</li>
+<li>If all tests pass, remove the temporary Service resource.</li>
+<li>Remove the old Service resource (pointing to the blue Deployment), and immediately create a new Service resource pointing to the green Deployment.</li>
+<li>After successful transition, remove the blue Deployment.</li>
+<li>It is essential to keep the Service name unchanged, so that front-end resources such as Ingress will automatically pick up the transition.</li>
+</ul>
+<h3 id="Demo-Blue-Green-Deployments"><a href="#Demo-Blue-Green-Deployments" class="headerlink" title="Demo: Blue-Green Deployments"></a>Demo: Blue-Green Deployments</h3><ul>
+<li><code>kubectl create deploy blue-nginx --image=nginx:1.14 --replicas=3</code></li>
+<li><code>kubectl expose deploy blue-nginx --port=80 --target-port=80 --name=bgnginx</code></li>
+<li><code>kubectl get deploy blue-nginx -o yaml &gt; green-nginx.yaml</code><ul>
+<li>Clean up dynamic generated stuff</li>
+<li>Change Image version</li>
+<li>Change “blue” to “green” throughout</li>
+</ul>
+</li>
+<li><code>kubectl create -f green-nginx.yaml</code></li>
+<li><code>kubectl get pods</code></li>
+<li><code>kubectl delete svc bgnginx; kubectl expose deploy green-nginx --port=80 --target-port=80 --name=bgnginx</code></li>
+<li><code>kubectl delete deploy blue-nginx</code></li>
+</ul>
+<h2 id="5-Implement-Canary-Deployments"><a href="#5-Implement-Canary-Deployments" class="headerlink" title="5. Implement Canary Deployments"></a>5. Implement Canary Deployments</h2><p>A canary deployment is an update strategy where you first push the update at small scale to see if it works well.</p>
+<p>In terms of Kuberentes, you could image a Deployment that runs 4 replicas.</p>
+<p>Next you add a new Deployment that uses the same label.</p>
+<p>As the Service is load balancing, only 1 out of 5 requests would be serviced by the new version.</p>
+<p>And if that doesnt seem to be working, you can easily delete it.</p>
+<h2 id="6-CRD-Custom-Resource-Definition"><a href="#6-CRD-Custom-Resource-Definition" class="headerlink" title="6. CRD: Custom Resource Definition"></a>6. CRD: Custom Resource Definition</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#crd-object.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apiextensions.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CustomResourceDefinition</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">backups.stable.example.com</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">stable.example.com</span></span><br><span class="line">  <span class="attr">versions:</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">v1</span></span><br><span class="line">    <span class="attr">served:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">storage:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">schema:</span></span><br><span class="line">      <span class="attr">openAPIV3Schema:</span></span><br><span class="line">        <span class="attr">type:</span> <span class="string">object</span></span><br><span class="line">        <span class="attr">properties:</span></span><br><span class="line">          <span class="attr">spec:</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">object</span></span><br><span class="line">            <span class="attr">properties:</span></span><br><span class="line">              <span class="attr">backupType:</span></span><br><span class="line">                <span class="attr">type:</span> <span class="string">string</span></span><br><span class="line">              <span class="attr">image:</span></span><br><span class="line">                <span class="attr">type:</span> <span class="string">string</span></span><br><span class="line">              <span class="attr">replicas:</span></span><br><span class="line">                <span class="attr">type:</span> <span class="string">integer</span></span><br><span class="line">  <span class="attr">scope:</span> <span class="string">Namespaced</span></span><br><span class="line">  <span class="attr">names:</span></span><br><span class="line">    <span class="attr">plural:</span> <span class="string">backups</span></span><br><span class="line">    <span class="attr">singular:</span> <span class="string">backup</span></span><br><span class="line">    <span class="attr">shortNames:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">bks</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">BackUp</span></span><br></pre></td></tr></table></figure>
+
+<p><code>k apply -f crd-object.yaml</code></p>
+<p><code>k api-versions | grep backup</code></p>
+<p><code>k api-resources | grep backup</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># crd-backup.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">"stable.example.com/v1"</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">BackUp</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mybackup</span></span><br><span class="line"><span class="attr">spec:</span> </span><br><span class="line">  <span class="attr">backupType:</span> <span class="string">full</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">linux-backup-image</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Using-Operator"><a href="#7-Using-Operator" class="headerlink" title="7. Using Operator"></a>7. Using Operator</h2><ul>
+<li>Operators are custom applications, based on Custom Resource Definitions.</li>
+<li>Operators can be seen as a way of packaging, running and managing applications in Kuberentes.</li>
+<li>Opeartors are based on Controllers, which are Kubernetes components that continuously operate dynamic systems.</li>
+<li>The Controller loop is the essence of any Controllers.</li>
+<li>The Kuberentes Controller manager runs a reconciliation loop, which continuously observes the current state, compares it to the desired state, and adjusts it when necessary.</li>
+<li>Operators are application-specific Controllers.</li>
+<li>Operators can be added to Kubernetes by devloping them yourself.</li>
+<li>Operators are alse available from community websites.</li>
+<li>A common registry for Operators is found at operatorhub.io (which is rather OpenShift oriented).</li>
+<li>Many solutions from the Kuberentes ecosystem are provided as operators:<ul>
+<li>Prometheus: a monitoring and alerting solution</li>
+<li>Tigera: the operator that manages the calico network plugin</li>
+<li>Jaeger: a distributed tracing solution</li>
+</ul>
+</li>
+</ul>
+<h3 id="Demo-Installing-the-Calico-Network-Plugin"><a href="#Demo-Installing-the-Calico-Network-Plugin" class="headerlink" title="Demo: Installing the Calico Network Plugin"></a>Demo: Installing the Calico Network Plugin</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">minikube stop; minikube delete</span><br><span class="line">minikube start --network-plugin=cni --extra-config=kubeadm.pod-network-cidr=10.10.0.0/16</span><br><span class="line">kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml</span><br><span class="line">kubectl api-resources | grep tigera</span><br><span class="line">kubectl get pods -n tigera-operator tier-operator-tigera-xxx-yyy</span><br><span class="line">wget https://docs.projectcalico.org/manifests/custom-resources.yaml</span><br><span class="line">sed -i -e s/192.168.0.0/10.10.0.0/g custom-resources.yaml</span><br><span class="line">kubectl get installation -o yaml</span><br><span class="line">kubectl get pods -n calico-system</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-Using-StatefulSets"><a href="#8-Using-StatefulSets" class="headerlink" title="8. Using StatefulSets"></a>8. Using StatefulSets</h2><ul>
+<li>The main purpose of StatefulSets is to provide a persistent identity to Pods as well as the Pod-specific storage.</li>
+<li>Each Pod in a StatefulSet has a persistent identifier that it keeps across rescheduling.</li>
+<li>StatefulSet provides ordering as well.</li>
+<li>Using StatefulSet is valuable for applications that require any of the following:<ul>
+<li>Stable and uniquere network identifiers</li>
+<li>Stable persistent storage</li>
+<li>Ordered deployment and scaling</li>
+<li>Order automated rolling updates</li>
+</ul>
+</li>
+</ul>
+<h3 id="Understanding-StatefulSets-Limitations"><a href="#Understanding-StatefulSets-Limitations" class="headerlink" title="Understanding StatefulSets Limitations"></a>Understanding StatefulSets Limitations</h3><ul>
+<li>Storage Provisioning based on StorageClass must be available.</li>
+<li>To ensure data safety, volumes created by the StatefulSet are not deleted while deleting the StatefulSet</li>
+<li>A headless Service is required for StatefulSets</li>
+<li>To guarantee removal of StatefulSet Pods, scale down the number of Pods to 0 before moving the StatefulSet.</li>
+</ul>
+<h3 id="Demo-Using-a-StatefulSet"><a href="#Demo-Using-a-StatefulSet" class="headerlink" title="Demo: Using a StatefulSet"></a>Demo: Using a StatefulSet</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sfs.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span> <span class="comment"># This is required for StatefulSets</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span> <span class="comment"># has to match .spec.template.metadata.labels</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">"nginx"</span> <span class="comment"># This is requred for StatefulSets</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span> <span class="comment"># by default is 1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span> <span class="comment"># has to match .spec.selector.matchLabels</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">terminationGracePeriodSeconds:</span> <span class="number">10</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">k8s.gcr.io/nginx-slim:0.8</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">www</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/usr/share/nginx/html</span></span><br><span class="line">  <span class="attr">volumeClaimTemplates:</span> <span class="comment"># This is required for StatefulSets if we use PersistentVolumeClaim</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">www</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">accessModes:</span> <span class="string">[</span> <span class="string">"ReadWriteOnce"</span> <span class="string">]</span></span><br><span class="line">      <span class="attr">storageClassName:</span> <span class="string">"standard"</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">requests:</span></span><br><span class="line">          <span class="attr">storage:</span> <span class="string">1Gi</span></span><br></pre></td></tr></table></figure>
+
+<p><code>k get storageclass</code></p>
+<p><code>k apply -f sfs.yaml</code></p>
+<p><code>k get all</code></p>
+<p>StatefulSets don’t use ReplicaSet.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/me/wechatpay.png" alt="Liu Lixiang WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Helm/" rel="tag"># Helm</a>
+              <a href="/tags/Kustomize/" rel="tag"># Kustomize</a>
+              <a href="/tags/Operator/" rel="tag"># Operator</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/" rel="prev" title="理解分布式系统中的一些概念">
+                  <i class="fa fa-angle-left"></i> 理解分布式系统中的一些概念
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Liu Lixiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
