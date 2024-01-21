@@ -6,7 +6,7 @@
   <link href="https://liulixiang1988.github.io/atom.xml" rel="self"/>
   
   <link href="https://liulixiang1988.github.io/"/>
-  <updated>2024-01-21T12:15:51.052Z</updated>
+  <updated>2024-01-21T15:03:31.202Z</updated>
   <id>https://liulixiang1988.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2024 Renew</title>
+    <link href="https://liulixiang1988.github.io/2024/01/22/2024-01-22-Renew/"/>
+    <id>https://liulixiang1988.github.io/2024/01/22/2024-01-22-Renew/</id>
+    <published>2024-01-22T14:40:00.000Z</published>
+    <updated>2024-01-21T15:03:31.202Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;2024年了，我已经36岁了，我还是一个程序员，我还是在微软工作，似乎还是没有什么变化。但是仔细想来，周边发生了很多的变化。&lt;/p&gt;
+&lt;p&gt;去年举家从南京搬往苏州，女儿也上了小学。每天上班下班带娃写作业，周末带娃去骑自行车。&lt;/p&gt;
+&lt;p&gt;每年得学习一些新的知识来刷新自己，</summary>
+        
+      
+    
+    
+    
+    <category term="生活" scheme="https://liulixiang1988.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+    <category term="life" scheme="https://liulixiang1988.github.io/tags/life/"/>
+    
+  </entry>
   
   <entry>
     <title>Deploying Applications the DevOps Way</title>
@@ -618,45 +645,6 @@
 &lt;p&gt;&lt;img src=&quot;/images/istio-5.png&quot; alt=&quot;Grapha&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;1-2-Jaeger&quot;&gt;&lt;a href=&quot;#1-2-Jaeger&quot; class=&quot;headerlink&quot; title=&quot;1.2 Jaeger&quot;&gt;&lt;/a&gt;1.2 Jaeger&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/images/istio-6.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/istio-7.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Kubernetes" scheme="https://liulixiang1988.github.io/categories/Kubernetes/"/>
-    
-    
-    <category term="Kubernetes" scheme="https://liulixiang1988.github.io/tags/Kubernetes/"/>
-    
-    <category term="Istio" scheme="https://liulixiang1988.github.io/tags/Istio/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Extend The Istio Service Mesh</title>
-    <link href="https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/"/>
-    <id>https://liulixiang1988.github.io/2020/07/19/kubernetes-istio/</id>
-    <published>2020-07-19T02:48:00.000Z</published>
-    <updated>2020-08-09T09:34:01.902Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;Understand-Microservices-architecture-requirements-and-challenges&quot;&gt;&lt;a href=&quot;#Understand-Microservices-architecture-requirements-and-challenges&quot; class=&quot;headerlink&quot; title=&quot;Understand Microservices architecture requirements and challenges&quot;&gt;&lt;/a&gt;Understand Microservices architecture requirements and challenges&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;/images/Istio-on-Kubernetes.pdf&quot;&gt;resource&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;API&lt;/li&gt;
-&lt;li&gt;Discovery&lt;/li&gt;
-&lt;li&gt;Invocation&lt;/li&gt;
-&lt;li&gt;Elasticity&lt;/li&gt;
-&lt;li&gt;Resillience&lt;/li&gt;
-&lt;li&gt;Pipeline&lt;/li&gt;
-&lt;li&gt;Authentication&lt;/li&gt;
-&lt;li&gt;Logging&lt;/li&gt;
-&lt;li&gt;Monitoring&lt;/li&gt;
-&lt;li&gt;Tracing&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;/images/before-istio.png&quot; alt=&quot;before Istio&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/after-istio.png&quot; alt=&quot;after Istio&quot;&gt;&lt;/p&gt;
-&lt;p&gt;The sidecar intercepts all network traffic.&lt;/p&gt;
-&lt;h3 id=&quot;How-to-add-an-Istio-Proxy-sidecar&quot;&gt;&lt;a href=&quot;#How-to-add-an-Istio-Proxy-sidecar&quot; class=&quot;headerlink&quot; title=&quot;How to add an Istio-Proxy(sidecar)?&quot;&gt;&lt;/a&gt;How to add an Istio-Proxy(sidecar)?&lt;/h3&gt;&lt;p&gt;&lt;code&gt;istioctl kube-inject -f NormalDeployment.yaml&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;or&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;kubectl label namespace myspace istio-injection=enabled&lt;/code&gt;&lt;/p&gt;</summary>
     
     
     
