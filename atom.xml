@@ -6,7 +6,7 @@
   <link href="https://liulixiang1988.github.io/atom.xml" rel="self"/>
   
   <link href="https://liulixiang1988.github.io/"/>
-  <updated>2024-01-21T15:09:23.286Z</updated>
+  <updated>2024-03-31T14:19:00.436Z</updated>
   <id>https://liulixiang1988.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2024.03.31 水光潋滟晴方好</title>
+    <link href="https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/"/>
+    <id>https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/</id>
+    <published>2024-03-01T14:08:00.000Z</published>
+    <updated>2024-03-31T14:19:00.436Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;昨天去了趟杭州，算是对自己多年想去杭州的心一个交代。早上开车，一路南下，高速上车一直很多，在从嘉兴到杭州的路段，前面两辆车忽然追尾，自己开始半刹还有二三十米发现可能也会撞上去，一脚踩死，立即打开双闪。所幸后车没有追上来。此时心里已经有些烦躁，为什么人这么多。&lt;/p&gt;
+&lt;p&gt;到了杭州市区，发现杭州的交通确实有些堵，快速路只能三四十的速度，下了快速路后有一段300米的路堵了十五分钟。路边的花不知道是桃花还是梨花，跟苏州的赛雪欺霜的满树缤纷不同，多了一些青青的绿色，甚是好看。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-01.jpeg&quot; alt=&quot;路边的树开了花&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在南山路上转了一圈，除了堵还是堵，没有找到停车位，路边时不时有中年人说要停车不？转了一圈找到一个叫涌金广场的停车场。这个涌金广场不知是不是有些年头了，给人一些陈旧之感。一路按照导航，穿过过街通道，走过银泰广场。想去洗手间，去了二楼，在洗手间指示牌旁有家店，让我大受震撼，一个穿着可能已经比内裤多一些布料的短裤，上身可能有些类似泳装清凉，中间不知道纹的什么的一个挺好看的女生在整理店里的衣服，也不知道是老板还是服务员。杭州这么前卫的嘛。当然别人穿什么是否纹身跟我一毛钱关系也没有，更是不能对此人做评判。只是感叹世界之大，自己眼界太窄罢了。&lt;/p&gt;
+&lt;p&gt;来到湖边，远处是青山隐隐，湖光潋滟，但更多的是前面游人如织。没想到不是赶在节前来还是这么多人。湖边有长廊凉亭，聚集了很多退休大爷大妈，放生高歌，带音响的那种，你方唱罢我登场，我自己也喜欢听一些老歌，但唱的这么难听，还放着么大声，头都要被轰炸了。不得不感叹，浙江养老金高就是好啊。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-03.jpeg&quot; alt=&quot;湖心亭&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-03.jpeg&quot; alt=&quot;湖边柳树掩映白墙&quot;&gt;&lt;/p&gt;
+&lt;p&gt;走了半天，发现这条路之前走过，那次是跟同事出差，夜里十点以后走在湖边。夏季的凉风伴着虫鸣，哪能想到白天喧嚣如此。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-04.jpeg&quot; alt=&quot;湖边人很多，我也是其中一个&quot;&gt;&lt;/p&gt;
+&lt;p&gt;近景是不能看的，毕竟全是人，只能远眺。如果在无人的晨间，必定很美。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://liulixiang1988.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+    <category term="life" scheme="https://liulixiang1988.github.io/tags/life/"/>
+    
+  </entry>
   
   <entry>
     <title>2024 Renew</title>
@@ -617,34 +645,6 @@
 &lt;h2 id=&quot;1-Istio架构&quot;&gt;&lt;a</summary>
         
       
-    
-    
-    
-    <category term="Kubernetes" scheme="https://liulixiang1988.github.io/categories/Kubernetes/"/>
-    
-    
-    <category term="Kubernetes" scheme="https://liulixiang1988.github.io/tags/Kubernetes/"/>
-    
-    <category term="Istio" scheme="https://liulixiang1988.github.io/tags/Istio/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Explore the Istio Service Mesh</title>
-    <link href="https://liulixiang1988.github.io/2020/08/09/kubernetes-istio2/"/>
-    <id>https://liulixiang1988.github.io/2020/08/09/kubernetes-istio2/</id>
-    <published>2020-08-09T09:36:00.000Z</published>
-    <updated>2020-08-09T10:30:42.600Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;1-Explorer-Observability&quot;&gt;&lt;a href=&quot;#1-Explorer-Observability&quot; class=&quot;headerlink&quot; title=&quot;1.Explorer Observability&quot;&gt;&lt;/a&gt;1.Explorer Observability&lt;/h2&gt;&lt;p&gt;Open the dashboard:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#!/bin/bash&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; MINIKUBE_IP=$(minikube --profile istio-mk  ip)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/grafana -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc grafana -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/jaeger-query -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc jaeger-query -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/prometheus -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc prometheus -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;kubectl patch service/kiali -p &lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;&quot;spec&quot;:&amp;#123;&quot;type&quot;:&quot;NodePort&quot;&amp;#125;&amp;#125;&#39;&lt;/span&gt; -n istio-system&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;open http://&lt;span class=&quot;variable&quot;&gt;$MINIKUBE_IP&lt;/span&gt;:$(kubectl get svc kiali -n istio-system -o &lt;span class=&quot;string&quot;&gt;&#39;jsonpath=&amp;#123;.spec.ports[0].nodePort&amp;#125;&#39;&lt;/span&gt;)/kiali&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;Kiali: default username/password: admin/admin&lt;/p&gt;
-&lt;h3 id=&quot;1-1-Grafana&quot;&gt;&lt;a href=&quot;#1-1-Grafana&quot; class=&quot;headerlink&quot; title=&quot;1.1 Grafana&quot;&gt;&lt;/a&gt;1.1 Grafana&lt;/h3&gt;&lt;p&gt;In the grapana. Home-&amp;gt;Istio-&amp;gt;Istio Workload Dashboard.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/istio-5.png&quot; alt=&quot;Grapha&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;1-2-Jaeger&quot;&gt;&lt;a href=&quot;#1-2-Jaeger&quot; class=&quot;headerlink&quot; title=&quot;1.2 Jaeger&quot;&gt;&lt;/a&gt;1.2 Jaeger&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/images/istio-6.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/istio-7.png&quot; alt=&quot;Jaeger&quot;&gt;&lt;/p&gt;</summary>
     
     
     
