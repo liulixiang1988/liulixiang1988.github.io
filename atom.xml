@@ -6,7 +6,7 @@
   <link href="https://liulixiang1988.github.io/atom.xml" rel="self"/>
   
   <link href="https://liulixiang1988.github.io/"/>
-  <updated>2024-03-31T14:19:00.436Z</updated>
+  <updated>2024-03-31T14:28:05.385Z</updated>
   <id>https://liulixiang1988.github.io/</id>
   
   <author>
@@ -21,19 +21,17 @@
     <link href="https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/"/>
     <id>https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/</id>
     <published>2024-03-01T14:08:00.000Z</published>
-    <updated>2024-03-31T14:19:00.436Z</updated>
+    <updated>2024-03-31T14:28:05.385Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;昨天去了趟杭州，算是对自己多年想去杭州的心一个交代。早上开车，一路南下，高速上车一直很多，在从嘉兴到杭州的路段，前面两辆车忽然追尾，自己开始半刹还有二三十米发现可能也会撞上去，一脚踩死，立即打开双闪。所幸后车没有追上来。此时心里已经有些烦躁，为什么人这么多。&lt;/p&gt;
-&lt;p&gt;到了杭州市区，发现杭州的交通确实有些堵，快速路只能三四十的速度，下了快速路后有一段300米的路堵了十五分钟。路边的花不知道是桃花还是梨花，跟苏州的赛雪欺霜的满树缤纷不同，多了一些青青的绿色，甚是好看。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-01.jpeg&quot; alt=&quot;路边的树开了花&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在南山路上转了一圈，除了堵还是堵，没有找到停车位，路边时不时有中年人说要停车不？转了一圈找到一个叫涌金广场的停车场。这个涌金广场不知是不是有些年头了，给人一些陈旧之感。一路按照导航，穿过过街通道，走过银泰广场。想去洗手间，去了二楼，在洗手间指示牌旁有家店，让我大受震撼，一个穿着可能已经比内裤多一些布料的短裤，上身可能有些类似泳装清凉，中间不知道纹的什么的一个挺好看的女生在整理店里的衣服，也不知道是老板还是服务员。杭州这么前卫的嘛。当然别人穿什么是否纹身跟我一毛钱关系也没有，更是不能对此人做评判。只是感叹世界之大，自己眼界太窄罢了。&lt;/p&gt;
-&lt;p&gt;来到湖边，远处是青山隐隐，湖光潋滟，但更多的是前面游人如织。没想到不是赶在节前来还是这么多人。湖边有长廊凉亭，聚集了很多退休大爷大妈，放生高歌，带音响的那种，你方唱罢我登场，我自己也喜欢听一些老歌，但唱的这么难听，还放着么大声，头都要被轰炸了。不得不感叹，浙江养老金高就是好啊。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-03.jpeg&quot; alt=&quot;湖心亭&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-03.jpeg&quot; alt=&quot;湖边柳树掩映白墙&quot;&gt;&lt;/p&gt;
-&lt;p&gt;走了半天，发现这条路之前走过，那次是跟同事出差，夜里十点以后走在湖边。夏季的凉风伴着虫鸣，哪能想到白天喧嚣如此。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-03-30-04.jpeg&quot; alt=&quot;湖边人很多，我也是其中一个&quot;&gt;&lt;/p&gt;
-&lt;p&gt;近景是不能看的，毕竟全是人，只能远眺。如果在无人的晨间，必定很美。&lt;/p&gt;</summary>
+&lt;p&gt;</summary>
+        
+      
     
     
     
@@ -79,26 +77,13 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;Deploying-Applications-the-DevOps-Way&quot;&gt;&lt;a href=&quot;#Deploying-Applications-the-DevOps-Way&quot; class=&quot;headerlink&quot; title=&quot;Deploying Applications the DevOps Way&quot;&gt;&lt;/a&gt;Deploying Applications the DevOps Way&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-Using-the-Helm-Package-Manager&quot;&gt;&lt;a href=&quot;#1-Using-the-Helm-Package-Manager&quot; class=&quot;headerlink&quot; title=&quot;1. Using the Helm Package Manager&quot;&gt;&lt;/a&gt;1. Using the Helm Package Manager&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Helm is used to streamline installing and managing Kubernetes applications.&lt;/li&gt;
-&lt;li&gt;Helm consists of the &lt;code&gt;helm&lt;/code&gt; tool, which needs to be installed, and a chart.&lt;/li&gt;
-&lt;li&gt;A chart is a Helm package, which contains the following:&lt;ul&gt;
-&lt;li&gt;A description of the package&lt;/li&gt;
-&lt;li&gt;One or more templates containing Kubernetes manifest files&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Charts can be stored locally, or accessed from remote Helm repositories.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;Demo-Installing-the-Helm-Binary&quot;&gt;&lt;a href=&quot;#Demo-Installing-the-Helm-Binary&quot; class=&quot;headerlink&quot; title=&quot;Demo: Installing the Helm Binary&quot;&gt;&lt;/a&gt;Demo: Installing the Helm Binary&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Fetch the binary from &lt;code&gt;https://github.com/helm/helm/releases&lt;/code&gt; ; check for the latest release!&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tar xvf helm-xxx.tar.gz&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;sudo mv linux-amd64/helm /usr/local/bin/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;helm version&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;Getting-Access-to-Helm-Charts&quot;&gt;&lt;a href=&quot;#Getting-Access-to-Helm-Charts&quot; class=&quot;headerlink&quot; title=&quot;Getting Access to Helm Charts&quot;&gt;&lt;/a&gt;Getting Access to Helm Charts&lt;/h3&gt;&lt;p&gt;The main site for finding Helm charts, is through &lt;a href=&quot;https://artifacthub.io&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://artifacthub.io&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;This is a major way for finding repository names. We can search for specific software here, and run the commands to install it; for instance, to run the kubernetes dashboard:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# helm repo add stable https://kubernetes-charts.storage.googleapis.com&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Deploying-Applications-the-DevOps-Way&quot;&gt;&lt;a href=&quot;#Deploying-Applications-the-DevOps-Way&quot; class=&quot;headerlink&quot; title=&quot;Deploying</summary>
+        
+      
     
     
     
@@ -121,27 +106,15 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;1-什么是分布式系统&quot;&gt;&lt;a href=&quot;#1-什么是分布式系统&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是分布式系统&quot;&gt;&lt;/a&gt;1. 什么是分布式系统&lt;/h2&gt;&lt;p&gt;计算机科学家&lt;a href=&quot;https://en.wikipedia.org/wiki/Andrew_S._Tanenbaum&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; title=&quot;Andrew S. Tanenbaum&quot;&gt;Andrew S. Tenenbaum&lt;/a&gt;对分布式定义为：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;A collection of independent computers that appear to its users as one computer&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;他认为，分布式系统必须要有的三个特征是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;The computers operate concurrently.&lt;/li&gt;
-&lt;li&gt;The computers fail independently.&lt;/li&gt;
-&lt;li&gt;The computers don’t share a global clock.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;本篇文章包含以下分布式相关的内容：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Storage(存储): Relational/Mongo, Cassandra, HDFS&lt;/li&gt;
-&lt;li&gt;Computation(计算): Hadoop, Spark, Storm&lt;/li&gt;
-&lt;li&gt;Synchroniztion(同步): NTP, vector clock(向量时钟)&lt;/li&gt;
-&lt;li&gt;Consensus(共识): Paxos, Zookeeper&lt;/li&gt;
-&lt;li&gt;Messaging(消息): Kafka&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;文中会以一个咖啡店业务的发展过程作为例子来进行分布式概念的引入，该咖啡店提供在线业务，从小到大的发展中遇到了各个技术问题，我们一点点进行说明讲解。&lt;/p&gt;</summary>
+&lt;h2 id=&quot;1-什么是分布式系统&quot;&gt;&lt;a href=&quot;#1-什么是分布式系统&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是分布式系统&quot;&gt;&lt;/a&gt;1. 什么是分布式系统&lt;/h2&gt;&lt;p&gt;计算机科学家&lt;a</summary>
+        
+      
     
     
     
@@ -162,17 +135,15 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;本文源自对&lt;a href=&quot;https://www.youtube.com/watch?v=vFW1U1vimVs&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;陈皓老师Distributed Lock Manager的分享&lt;/a&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;Consistency&quot;&gt;&lt;a href=&quot;#Consistency&quot; class=&quot;headerlink&quot; title=&quot;Consistency&quot;&gt;&lt;/a&gt;Consistency&lt;/h2&gt;&lt;p&gt;比如对于一个订单，买家取消订单、商家发货这两个动作，先后顺序不一样，走的流程也不一致。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-08-13-lock-consistency.png&quot; alt=&quot;consistency&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;锁的类型&quot;&gt;&lt;a href=&quot;#锁的类型&quot; class=&quot;headerlink&quot; title=&quot;锁的类型&quot;&gt;&lt;/a&gt;锁的类型&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;数据库锁(Database Lock)&lt;/li&gt;
-&lt;li&gt;应用Sharding(Shard Application)&lt;/li&gt;
-&lt;li&gt;中心分布式锁(Centralized Distributed Lock Manager)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;DB-Lock&quot;&gt;&lt;a href=&quot;#DB-Lock&quot; class=&quot;headerlink&quot; title=&quot;DB Lock&quot;&gt;&lt;/a&gt;DB Lock&lt;/h3&gt;&lt;p&gt;以MySQL InnoDB Lock举例：&lt;/p&gt;</summary>
+&lt;p&gt;本文源自对&lt;a href=&quot;https://www.youtube.com/watch?v=vFW1U1vimVs&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;陈皓老师Distributed Lock</summary>
+        
+      
     
     
     
@@ -191,43 +162,14 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-编写消息并编译为go代码&quot;&gt;&lt;a href=&quot;#1-编写消息并编译为go代码&quot; class=&quot;headerlink&quot; title=&quot;1. 编写消息并编译为go代码&quot;&gt;&lt;/a&gt;1. 编写消息并编译为go代码&lt;/h2&gt;&lt;h3 id=&quot;1-1-安装&quot;&gt;&lt;a href=&quot;#1-1-安装&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装&quot;&gt;&lt;/a&gt;1.1 安装&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;安装go vscode&lt;/li&gt;
-&lt;li&gt;vscode安装protobuf插件&lt;/li&gt;
-&lt;li&gt;安装protoc，编写makefile生成go代码&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;1-2-protocol-message规则&quot;&gt;&lt;a href=&quot;#1-2-protocol-message规则&quot; class=&quot;headerlink&quot; title=&quot;1.2 protocol message规则&quot;&gt;&lt;/a&gt;1.2 protocol message规则&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;message使用驼峰&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;字段使用&lt;code&gt;lower_snake_case&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;内置的类型&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;string, bool, bytes&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;float, double&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;int32, int64, uint32, uint64, sint32, sint64&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;也可以使用其他message作为字段类型&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;tag很重要：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;tag整数，从1到2^29-1&lt;/li&gt;
-&lt;li&gt;19000-19999保留&lt;/li&gt;
-&lt;li&gt;第1-15个tag使用1个byte&lt;/li&gt;
-&lt;li&gt;16-2047个tag占用2个byte&lt;/li&gt;
-&lt;li&gt;tag不需要有顺序或者递增tag必须唯一定义消息&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;1-3-消息定义&quot;&gt;&lt;a href=&quot;#1-3-消息定义&quot; class=&quot;headerlink&quot; title=&quot;1.3 消息定义&quot;&gt;&lt;/a&gt;1.3 消息定义&lt;/h3&gt;&lt;p&gt;定义文件&lt;code&gt;proto/processor_message.proto&lt;/code&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight protobuf&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;syntax = &lt;span class=&quot;string&quot;&gt;&quot;proto3&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;option&lt;/span&gt; go_package=&lt;span class=&quot;string&quot;&gt;&quot;io.liux/pcbook/pb&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; pb;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;CPU&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// comment 1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; brand = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    /*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    * comment &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    */&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; name = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;uint32&lt;/span&gt; number_cores = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;uint32&lt;/span&gt; number_threads = &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;double&lt;/span&gt; min_ghz = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;double&lt;/span&gt; max_ghz = &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;1-4-编译为Go&quot;&gt;&lt;a href=&quot;#1-4-编译为Go&quot; class=&quot;headerlink&quot; title=&quot;1.4 编译为Go&quot;&gt;&lt;/a&gt;1.4 编译为Go&lt;/h3&gt;</summary>
+&lt;h2 id=&quot;1-编写消息并编译为go代码&quot;&gt;&lt;a href=&quot;#1-编写消息并编译为go代码&quot; class=&quot;headerlink&quot; title=&quot;1. 编写消息并编译为go代码&quot;&gt;&lt;/a&gt;1. 编写消息并编译为go代码&lt;/h2&gt;&lt;h3</summary>
+        
+      
     
     
     
@@ -274,23 +216,14 @@
     <updated>2024-01-21T12:15:51.051Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-MapReduce概述&quot;&gt;&lt;a href=&quot;#1-MapReduce概述&quot; class=&quot;headerlink&quot; title=&quot;1. MapReduce概述&quot;&gt;&lt;/a&gt;1. MapReduce概述&lt;/h2&gt;&lt;p&gt;源自于google的&lt;a href=&quot;https://liulixiang1988.github.io/images/mapreduce.pdf&quot;&gt;MapReduce论文&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Hadoop MapReduce是Google MapReduce的开源版本。&lt;/p&gt;
-&lt;p&gt;MapReduce优点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;海量数据离线处理&lt;/li&gt;
-&lt;li&gt;易开发&lt;/li&gt;
-&lt;li&gt;易运行&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;MapReduce缺点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;实时流式计算&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Hadoop MapReduce is a software framework for easily writing applications which process vast amounts of data (multi-terabyte data-sets) in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner.&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
+&lt;h2 id=&quot;1-MapReduce概述&quot;&gt;&lt;a href=&quot;#1-MapReduce概述&quot; class=&quot;headerlink&quot; title=&quot;1. MapReduce概述&quot;&gt;&lt;/a&gt;1.</summary>
+        
+      
     
     
     
@@ -311,24 +244,14 @@
     <updated>2024-01-21T12:15:51.051Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-YARN产生背景&quot;&gt;&lt;a href=&quot;#1-YARN产生背景&quot; class=&quot;headerlink&quot; title=&quot;1. YARN产生背景&quot;&gt;&lt;/a&gt;1. YARN产生背景&lt;/h2&gt;&lt;h3 id=&quot;1-1-Hadoop-1-x中MapReduce存在的问题&quot;&gt;&lt;a href=&quot;#1-1-Hadoop-1-x中MapReduce存在的问题&quot; class=&quot;headerlink&quot; title=&quot;1.1 Hadoop 1.x中MapReduce存在的问题&quot;&gt;&lt;/a&gt;1.1 Hadoop 1.x中MapReduce存在的问题&lt;/h3&gt;&lt;p&gt;Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master/Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;JobTracker主要的功能是资源的管理与作业的调度。&lt;/li&gt;
-&lt;li&gt;TaskTracker&lt;ul&gt;
-&lt;li&gt;定期（通过心跳）向JobTracker汇报本节点的健康状况、资源使用情况、作业执行情况。&lt;/li&gt;
-&lt;li&gt;接收来自JobTracker的命令：启动任务、杀死任务&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png&quot; alt=&quot;map-reduce&quot;&gt;&lt;/p&gt;
-&lt;p&gt;存在采用的Master的问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;单点故障：整个集群只有1个JobTracker。&lt;/li&gt;
-&lt;li&gt;JobTracker要接受各个TaskTracker与client的通信请求，节点压力大。&lt;/li&gt;
-&lt;li&gt;JobTracker承担了多种职责，且只能接受MapReduce的作业，不易扩展。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;1-2-提高资源利用率和降低运维成本的诉求&quot;&gt;&lt;a href=&quot;#1-2-提高资源利用率和降低运维成本的诉求&quot; class=&quot;headerlink&quot; title=&quot;1.2 提高资源利用率和降低运维成本的诉求&quot;&gt;&lt;/a&gt;1.2 提高资源利用率和降低运维成本的诉求&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-05-19-yarn-1.png&quot; alt=&quot;resource usage&quot;&gt;&lt;/p&gt;</summary>
+&lt;h2 id=&quot;1-YARN产生背景&quot;&gt;&lt;a href=&quot;#1-YARN产生背景&quot; class=&quot;headerlink&quot; title=&quot;1. YARN产生背景&quot;&gt;&lt;/a&gt;1. YARN产生背景&lt;/h2&gt;&lt;h3</summary>
+        
+      
     
     
     
@@ -349,18 +272,14 @@
     <updated>2024-01-21T12:15:51.051Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-HDFS-概述及设计目标&quot;&gt;&lt;a href=&quot;#1-HDFS-概述及设计目标&quot; class=&quot;headerlink&quot; title=&quot;1. HDFS 概述及设计目标&quot;&gt;&lt;/a&gt;1. HDFS 概述及设计目标&lt;/h2&gt;&lt;p&gt;Hadoop设计目标：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;非常巨大的分布式文件系统&lt;/li&gt;
-&lt;li&gt;运行在普通廉价的硬件上&lt;/li&gt;
-&lt;li&gt;易扩展、为用户提供性能不错的文件存储服务&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;具体见：&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Assumptions_and_Goals&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;2-HDFS架构&quot;&gt;&lt;a href=&quot;#2-HDFS架构&quot; class=&quot;headerlink&quot; title=&quot;2. HDFS架构&quot;&gt;&lt;/a&gt;2. HDFS架构&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
-&lt;p&gt;HDFS采用1个Master(NameNode/NN) 带N个Slaves(DataNode/DN)架构。同时YARN、HBase也是一个Master带多个Slave。&lt;/p&gt;
-&lt;p&gt;1个文件会被拆分成多个Block。(BlockSize默认是128M)。比如一个130M的文件会被分成128M和2M的Block。&lt;/p&gt;</summary>
+&lt;h2 id=&quot;1-HDFS-概述及设计目标&quot;&gt;&lt;a href=&quot;#1-HDFS-概述及设计目标&quot; class=&quot;headerlink&quot; title=&quot;1. HDFS 概述及设计目标&quot;&gt;&lt;/a&gt;1. HDFS</summary>
+        
+      
     
     
     
@@ -381,23 +300,14 @@
     <updated>2024-01-21T12:15:51.051Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-Hadoop概述&quot;&gt;&lt;a href=&quot;#1-Hadoop概述&quot; class=&quot;headerlink&quot; title=&quot;1. Hadoop概述&quot;&gt;&lt;/a&gt;1. Hadoop概述&lt;/h2&gt;&lt;p&gt;官网：&lt;a href=&quot;https://hadoop.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://hadoop.apache.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Hadoop包含以下模块：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Hadoop Common: 支撑其他模块的通用工具&lt;/li&gt;
-&lt;li&gt;Hadoop Distributed File System(HDFS): 分布式文件系统，提供高吞吐数据读取&lt;/li&gt;
-&lt;li&gt;Hadoop YARN: 作业调度与资源管理框架&lt;/li&gt;
-&lt;li&gt;Hadoop MapReduce: 基于YARN的大数据并行处理。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;开源的分布式存储与分布式计算平台&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;1-1-Hadoop能做什么&quot;&gt;&lt;a href=&quot;#1-1-Hadoop能做什么&quot; class=&quot;headerlink&quot; title=&quot;1.1 Hadoop能做什么&quot;&gt;&lt;/a&gt;1.1 Hadoop能做什么&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;搜索引擎&lt;/li&gt;
-&lt;li&gt;日志分析&lt;/li&gt;
-&lt;li&gt;商业智能&lt;/li&gt;
-&lt;li&gt;数据挖掘&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;2-Hadoop核心组件&quot;&gt;&lt;a href=&quot;#2-Hadoop核心组件&quot; class=&quot;headerlink&quot; title=&quot;2. Hadoop核心组件&quot;&gt;&lt;/a&gt;2. Hadoop核心组件&lt;/h2&gt;&lt;h3 id=&quot;2-1-分布式文件系统HDFS&quot;&gt;&lt;a href=&quot;#2-1-分布式文件系统HDFS&quot; class=&quot;headerlink&quot; title=&quot;2.1 分布式文件系统HDFS&quot;&gt;&lt;/a&gt;2.1 分布式文件系统HDFS&lt;/h3&gt;</summary>
+&lt;h2 id=&quot;1-Hadoop概述&quot;&gt;&lt;a href=&quot;#1-Hadoop概述&quot; class=&quot;headerlink&quot; title=&quot;1. Hadoop概述&quot;&gt;&lt;/a&gt;1. Hadoop概述&lt;/h2&gt;&lt;p&gt;官网：&lt;a</summary>
+        
+      
     
     
     
@@ -418,15 +328,14 @@
     <updated>2024-01-21T12:15:51.050Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
-&lt;h2 id=&quot;德雷福斯模型&quot;&gt;&lt;a href=&quot;#德雷福斯模型&quot; class=&quot;headerlink&quot; title=&quot;德雷福斯模型&quot;&gt;&lt;/a&gt;德雷福斯模型&lt;/h2&gt;&lt;p&gt;德雷福斯是一个专业人员能力成长模型，这个模型认为所有专业人员都需要经历 5 个成长阶段，不管是医生还是律师，或者是软件开发，任何专业技能的从业者都需要经历新手、高级新手、胜任者、精通者、专家 5 个阶段。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-03-14-deleifusi.png&quot; alt=&quot;link&quot;&gt;&lt;/p&gt;
-&lt;p&gt;通常一个人进入专业的技能领域，即使在学校已经系统学习过这个专业的相关知识，但依然无法独立完成工作，必须在有经验的同事指导下，学习相关的技能。这里主要学习的是有关工作的规则和套路。比如用什么工具、什么框架，如何开发程序，如何开会、写周报，如何和同事合作，业务领域的名词术语是什么意思等等这些各种各样和工作有关的大小事情。这个阶段叫做&lt;strong&gt;新手&lt;/strong&gt;阶段。&lt;/p&gt;
-&lt;p&gt;通常说来，一个人大约工作两三年后，就差不多掌握了工作的各种套路，可以摆脱新手阶段，独立完成一些基本的工作了。通过新手阶段的人，少部分会直接进入胜任者阶段，而大多数则进入&lt;strong&gt;高级新手&lt;/strong&gt;阶段。&lt;/p&gt;
-&lt;p&gt;高级新手其实是新手的自然延续，他不需要别人指导工作，也不需要学习工作的规则和套路，因为高级新手已经在新手阶段掌握了这些套路，他可以熟练应用这些规则套路完成他的工作。但是高级新手的能力也仅限于此，他不明白这些规则是如何制定出来的，为什么使用这个框架开发而不是另一个框架，也不明白这个框架是如何开发出来的。&lt;/p&gt;
-&lt;p&gt;一个悲观的事实是，新手会自然进入高级新手阶段，而高级新手却无法自然进入其后的其他等级阶段。实际上，&lt;strong&gt;在各个专业领域中，超过半数的人终其一生都停留在高级新手阶段&lt;/strong&gt;，也就是说，大多数人一生的工作就是基于其专业领域的规则在进行重复性的劳动。他们不了解这些规则背后的原理，也无法在面对新的问题时，开创出新的方法和规则。那些简历上十多年如一日使用相同的技术方案、开发类似软件项目的资深工程师大部分都是高级新手。&lt;/p&gt;
-&lt;p&gt;导致一个人终身停留在高级新手阶段的原因有很多，其中一个重要的原因是：&lt;strong&gt;高级新手不知道自己是高级新手&lt;/strong&gt;。高级新手觉得自己在这个专业领域混得很不错，做事熟练，经验丰富。&lt;/p&gt;
-&lt;p&gt;事实上，这种熟练只是对既有规则的熟练，如果岁月静好，一切都循规蹈矩，也没什么问题。而一旦行业出现技术变革或者工作出现新情况，高级新手就会遇到巨大的工作困难。事实上，各行各业都存在大量的高级新手，只是软件开发领域的技术变革更加频繁，问题变化也更加快速，使高级新手问题更加突出。&lt;/p&gt;</summary>
+&lt;h2 id=&quot;德雷福斯模型&quot;&gt;&lt;a href=&quot;#德雷福斯模型&quot; class=&quot;headerlink&quot; title=&quot;德雷福斯模型&quot;&gt;&lt;/a&gt;德雷福斯模型&lt;/h2&gt;&lt;p&gt;德雷福斯是一个专业人员能力成长模型，这个模型认为所有专业人员都需要经历 5</summary>
+        
+      
     
     
     
@@ -445,16 +354,15 @@
     <updated>2024-01-21T12:15:51.051Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
 &lt;p&gt;对于规模不太大的软件系统，我们可以将概要设计文档和详细设计文档合并成一个设计文档。这一篇文章中，我会展现一个设计文档示例模板，你可以参考这个模板编写你的设计文档。&lt;/p&gt;
-&lt;p&gt;文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业务场景，应该在专门的需求文档中描述，但是在设计文档中，必须要再简单描述一下，以保证设计文档的完整性，这样，即使脱离需求文档，阅读者也能理解主要的设计。&lt;/p&gt;
-&lt;p&gt;此外，在设计概述中，还需要描述设计的非功能约束，比如关于性能、可用性、维护性、安全性，甚至开发和部署成本方面的设计目标。&lt;/p&gt;
-&lt;p&gt;然后就是具体的设计了，第一张设计图应该是部署图，通过部署图描述系统整个物理模型蓝图，包括未来系统长什么样。&lt;/p&gt;
-&lt;p&gt;如果系统中包含几个子系统，那么还需要描述子系统间的关系，可以通过子系统序列图，子系统活动图进行描述。&lt;/p&gt;
-&lt;p&gt;子系统内部的最顶层设计就是组件图，描述子系统由哪些组件组成，不同场景中，组件之间的调用序列图是什么样的。&lt;/p&gt;
-&lt;p&gt;每个组件内部，需要用类图进行建模描述，对于不同场景，用时序图描述类之间的动态调用关系，对于有复杂状态的类，用状态图描述其状态转换。&lt;/p&gt;
-&lt;p&gt;具体示例模板如下：&lt;/p&gt;
-&lt;h2 id=&quot;1-设计概述&quot;&gt;&lt;a href=&quot;#1-设计概述&quot; class=&quot;headerlink&quot; title=&quot;1 设计概述&quot;&gt;&lt;/a&gt;1 设计概述&lt;/h2&gt;</summary>
+&lt;p&gt;文档开头是设计概述，简单描述业务场景要解决的核心问题领域是什么。至于业</summary>
+        
+      
     
     
     
@@ -473,13 +381,14 @@
     <updated>2024-01-21T12:15:51.050Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;分布式架构&quot;&gt;&lt;a href=&quot;#分布式架构&quot; class=&quot;headerlink&quot; title=&quot;分布式架构&quot;&gt;&lt;/a&gt;分布式架构&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-19-arch-01.jpeg&quot; alt=&quot;arch&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;缓存架构：如何减少不必要的计算&quot;&gt;&lt;a href=&quot;#缓存架构：如何减少不必要的计算&quot; class=&quot;headerlink&quot; title=&quot;缓存架构：如何减少不必要的计算?&quot;&gt;&lt;/a&gt;缓存架构：如何减少不必要的计算?&lt;/h2&gt;&lt;p&gt;缓存分为&lt;strong&gt;通读缓存&lt;/strong&gt;与&lt;strong&gt;旁路缓存&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;通读缓存&quot;&gt;&lt;a href=&quot;#通读缓存&quot; class=&quot;headerlink&quot; title=&quot;通读缓存&quot;&gt;&lt;/a&gt;通读缓存&lt;/h3&gt;&lt;p&gt;通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-19-cache-read-through.png&quot; alt=&quot;read-through&quot;&gt;&lt;/p&gt;
-&lt;p&gt;互联网应用中主要使用的通读缓存是 CDN 和反向代理缓存。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-19-cdn.png&quot; alt=&quot;cdn&quot;&gt;&lt;/p&gt;</summary>
+&lt;h2 id=&quot;分布式架构&quot;&gt;&lt;a href=&quot;#分布式架构&quot; class=&quot;headerlink&quot; title=&quot;分布式架构&quot;&gt;&lt;/a&gt;分布式架构&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
     
     
     
@@ -498,16 +407,14 @@
     <updated>2024-01-21T12:15:51.050Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;h2 id=&quot;设计模式基础&quot;&gt;&lt;a href=&quot;#设计模式基础&quot; class=&quot;headerlink&quot; title=&quot;设计模式基础&quot;&gt;&lt;/a&gt;设计模式基础&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;设计模式的精髓是对多态的使用&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&quot;装饰器模式&quot;&gt;&lt;a href=&quot;#装饰器模式&quot; class=&quot;headerlink&quot; title=&quot;装饰器模式&quot;&gt;&lt;/a&gt;装饰器模式&lt;/h3&gt;&lt;p&gt;装饰模式最大的特点是，通过类的构造函数传入一个同类对象，也就是每个类实现的接口和构造函数传入的对象是同一个接口。&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Moon&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Moon&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a = a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;明月装饰了&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Dream&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Dream&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a=a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;梦装饰了&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;You&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;AnyThing&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; AnyThing a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;You&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(AnyThing a)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.a = a;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;exe&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    System.out.print(&lt;span class=&quot;string&quot;&gt;&quot;你&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;调用：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;AnyThing t = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Moon(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Dream(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; You(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;t.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;输出：明月装饰了梦装饰了你&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;AnyThing t = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Dream(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Moon(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; You(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;t.exe();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;输出：梦装饰了明月装饰了你&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;面试官让你“聊聊设计模式”，也许你可以这样回答：“除了单例和工厂，我更喜欢适配器和观察者，还有，组合模式在处理树形结构的时候也非常有用。”&lt;/p&gt;
-&lt;p&gt;组合模式遍历树：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DefaultModule&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;DefaultModule&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String value)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.value = value;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(value);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ComponentModule&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Module currentModule;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; List&amp;lt;Module&amp;gt; modules;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ComponentModule&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Module currentModule, Module... modules)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.currentModule = currentModule;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.modules = Arrays.asList(modules);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.currentModule.print();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.modules.forEach(Module::print);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Module&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule subModule31 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;31&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;311&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;312&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;313&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule subModule3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;3&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            subModule31,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;32&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;33&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ComponentModule &lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ComponentModule(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;0&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DefaultModule(&lt;span class=&quot;string&quot;&gt;&quot;2&quot;&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            subModule3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt;.print();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+&lt;h3 id=&quot;装饰器模式&quot;&gt;&lt;a</summary>
+        
+      
     
     
     
@@ -526,15 +433,14 @@
     <updated>2024-01-21T12:15:51.050Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;设计的两个基本原则：高内聚，低耦合。&lt;/p&gt;
-&lt;h2 id=&quot;开闭原则：不修改代码实现变更&quot;&gt;&lt;a href=&quot;#开闭原则：不修改代码实现变更&quot; class=&quot;headerlink&quot; title=&quot;开闭原则：不修改代码实现变更&quot;&gt;&lt;/a&gt;开闭原则：不修改代码实现变更&lt;/h2&gt;&lt;p&gt;OCP&lt;/p&gt;
-&lt;p&gt;开闭原则：&lt;strong&gt;软件实体（模块、类、函数等等）应该对扩展是开放的，对修改是关闭的。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;1. 使用策略模式实现开闭原则&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-strategy.png&quot; alt=&quot;strategy&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2. 使用适配器模式实现开闭原则&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-adapter.png&quot; alt=&quot;adapter&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;3. 使用观察者模式实现开闭原则&lt;/strong&gt;: 如果要实现多个控制，使用观察者模式+策略+适配器模式&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-observer.png&quot; alt=&quot;observer&quot;&gt;&lt;/p&gt;</summary>
+&lt;h2 id=&quot;开闭原则：不修改代码实现变更&quot;&gt;&lt;a href=&quot;#开闭原则：不修改代码实现变更&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
@@ -553,18 +459,13 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;4-1架构视图&quot;&gt;&lt;a href=&quot;#4-1架构视图&quot; class=&quot;headerlink&quot; title=&quot;4+1架构视图&quot;&gt;&lt;/a&gt;4+1架构视图&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-4-1.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;逻辑视图&lt;/strong&gt;：描述软件的功能逻辑，由哪些模块组成，模块中包含哪些类，其依赖关系如何。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;开发视图&lt;/strong&gt;：包括系统架构层面的层次划分，包的管理，依赖的系统与第三方的程序包。开发视图某些方面和逻辑视图有一定重复性，不同视角看到的可能是同一个东西，开发视图中一个程序包，可能正好对应逻辑视图中的一个功能模块。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;过程视图&lt;/strong&gt;：描述程序运行期的进程、线程、对象实例，以及与此相关的并发、同步、通信等问题。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;物理视图&lt;/strong&gt;：描述软件如何安装并部署到物理的服务上，以及不同的服务器之间如何关联、通信。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;场景视图&lt;/strong&gt;：针对具体的用例场景，将上述 4 个视图关联起来，一方面从业务角度描述，功能流程如何完成，一方面从软件角度描述，相关组成部分如何互相依赖、调用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;UML&quot;&gt;&lt;a href=&quot;#UML&quot; class=&quot;headerlink&quot; title=&quot;UML&quot;&gt;&lt;/a&gt;UML&lt;/h2&gt;&lt;h3 id=&quot;类图&quot;&gt;&lt;a href=&quot;#类图&quot; class=&quot;headerlink&quot; title=&quot;类图&quot;&gt;&lt;/a&gt;类图&lt;/h3&gt;&lt;p&gt;在&lt;strong&gt;详细设计阶段&lt;/strong&gt;与&lt;strong&gt;需求分析阶段&lt;/strong&gt;使用。&lt;/p&gt;
-&lt;p&gt;一个类包含三个部分：类的名字、类的属性列表和类的方法列表。类之间有 6 种静态关系：关联、依赖、组合、聚合、继承、泛化。&lt;/p&gt;
-&lt;p&gt;在需求分析阶段，可以将关键的领域模型对象用类图画出来，在这个阶段中，我们需要关注的是领域对象的识别及其关系，所以用简化的类图来描述，只画出类的名字及关系就可以了。&lt;/p&gt;
-&lt;h3 id=&quot;序列图&quot;&gt;&lt;a href=&quot;#序列图&quot; class=&quot;headerlink&quot; title=&quot;序列图&quot;&gt;&lt;/a&gt;序列图&lt;/h3&gt;&lt;p&gt;序列图通常用于表示对象之间的交互，这个对象可以是类对象，也可以是更大粒度的参与者，比如组件、服务器、子系统等，总之，只要是描述不同参与者之间交互的，都可以使用序列图，也就是说，&lt;strong&gt;在软件设计的不同阶段&lt;/strong&gt;，都可以画序列图。&lt;/p&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;4-1架构视图&quot;&gt;&lt;a href=&quot;#4-1架构视图&quot; class=&quot;headerlink&quot; title=&quot;4+1架构视图&quot;&gt;&lt;/a&gt;4+1架构视图&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
     
     
     
@@ -608,16 +509,14 @@
     <updated>2024-01-21T12:15:51.052Z</updated>
     
     
+      
+      
+        
+        
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
-&lt;h2 id=&quot;类-Class&quot;&gt;&lt;a href=&quot;#类-Class&quot; class=&quot;headerlink&quot; title=&quot;类(Class)&quot;&gt;&lt;/a&gt;类(Class)&lt;/h2&gt;&lt;h3 id=&quot;类定义&quot;&gt;&lt;a href=&quot;#类定义&quot; class=&quot;headerlink&quot; title=&quot;类定义&quot;&gt;&lt;/a&gt;类定义&lt;/h3&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;className&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;/* All member variables&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;  and member functions*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;; &lt;span class=&quot;comment&quot;&gt;// 注意，类定义必须以分号结尾&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;创建对象&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;className&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i; &lt;span class=&quot;comment&quot;&gt;//integer object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  className c; &lt;span class=&quot;comment&quot;&gt;// className object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;类访问范围&quot;&gt;&lt;a href=&quot;#类访问范围&quot; class=&quot;headerlink&quot; title=&quot;类访问范围&quot;&gt;&lt;/a&gt;类访问范围&lt;/h3&gt;&lt;p&gt;私有：&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Class1&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; num; &lt;span class=&quot;comment&quot;&gt;// 1. 默认时私有的&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Class2&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt;: &lt;span class=&quot;comment&quot;&gt;// 也可以显示声明私有&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; num;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;public &amp;amp; protected&lt;/p&gt;</summary>
+&lt;h2 id=&quot;类-Class&quot;&gt;&lt;a href=&quot;#类-Class&quot; class=&quot;headerlink&quot; title=&quot;类(Class)&quot;&gt;&lt;/a&gt;类(Class)&lt;/h2&gt;&lt;h3 id=&quot;类定义&quot;&gt;&lt;a href=&quot;#类定义&quot;</summary>
+        
+      
     
     
     
