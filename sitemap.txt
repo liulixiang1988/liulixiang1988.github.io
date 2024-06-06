@@ -1,3 +1,4 @@
+https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/
 https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/
 https://liulixiang1988.github.io/2024/01/22/2024-01-22-Renew/
 https://liulixiang1988.github.io/about/index.html
@@ -128,3 +129,4 @@ https://liulixiang1988.github.io/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3
 https://liulixiang1988.github.io/categories/Big-Data/
 https://liulixiang1988.github.io/categories/Micro-Service/
 https://liulixiang1988.github.io/categories/C/
+https://liulixiang1988.github.io/categories/AI/

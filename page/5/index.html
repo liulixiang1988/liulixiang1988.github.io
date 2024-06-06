@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">68</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -124,13 +124,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -172,6 +172,109 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/06/22/Java-Java8-parallel-stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/22/Java-Java8-parallel-stream/" class="post-title-link" itemprop="url">Java8中的并行流</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-22 20:00:00" itemprop="dateCreated datePublished" datetime="2016-06-22T20:00:00+08:00">2016-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:49:27" itemprop="dateModified" datetime="2020-06-27T22:49:27+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><em>此笔记是我在阅读《Java8实战》中的一些记录。</em></p>
+<p>Java8中增加了流(stream)的概念，为数据的处理带来了很大的方便。</p>
+<p>并行流将数据分割成不同的块，并且用不同的线程处理不同的块。</p>
+<p>现在要根据输入<code>n</code>，求从1到n的和，这里我们不使用<code>n*(1+n)/2</code>的方式，而是使用累加。我们分别写出迭代、顺序流、并行流的写法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ParallelStreams</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">sequentialSum</span><span class="params">(<span class="keyword">long</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Stream.iterate(<span class="number">1L</span>, i-&gt;i+<span class="number">1</span>)</span><br><span class="line">                .limit(n)</span><br><span class="line">                .reduce(<span class="number">0L</span>, Long::sum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">iterativeSum</span><span class="params">(<span class="keyword">long</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">1L</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            result += i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">parallelSum</span><span class="params">(<span class="keyword">long</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Stream.iterate(<span class="number">1L</span>, i-&gt;i+<span class="number">1</span>)</span><br><span class="line">                .limit(n)</span><br><span class="line">                .parallel()</span><br><span class="line">                .reduce(<span class="number">0L</span>, Long::sum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，将顺序流转换为并行流只需要<code>parallel()</code>方法即可。</p>
+<p>现在我们来测量这几个方法的性能：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">measureSumPerf</span><span class="params">(Function&lt;Long, Long&gt; adder, <span class="keyword">long</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> fastest = Long.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line">        <span class="keyword">long</span> sum = adder.apply(n);</span><br><span class="line">        <span class="keyword">long</span> duration = (System.nanoTime() - start) / <span class="number">1_000_000</span>; <span class="comment">//毫秒</span></span><br><span class="line">        System.out.println(<span class="string">"Result: "</span>+sum);</span><br><span class="line">        <span class="keyword">if</span>(duration &lt; fastest) fastest = duration;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fastest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后分别测试这三个方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"顺序流:"</span> + measureSumPerf(ParallelStreams::sequentialSum, <span class="number">10_000_000</span>)+<span class="string">" 毫秒"</span>);</span><br><span class="line">    System.out.println(<span class="string">"循环:"</span> + measureSumPerf(ParallelStreams::iterativeSum, <span class="number">10_000_000</span>)+<span class="string">" 毫秒"</span>);</span><br><span class="line">    System.out.println(<span class="string">"并行流:"</span> + measureSumPerf(ParallelStreams::parallelSum, <span class="number">10_000_000</span>)+<span class="string">" 毫秒"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/22/Java-Java8-parallel-stream/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1049,113 +1152,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Gulp笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-07-01 08:42:00" itemprop="dateCreated datePublished" datetime="2015-07-01T08:42:00+08:00">2015-07-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-06-27 22:02:05" itemprop="dateModified" datetime="2020-06-27T22:02:05+08:00">2020-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><ul>
-<li>安装nodejs</li>
-<li>安装http-server: <code>npm install -g http-server</code></li>
-<li>初始化项目：<code>npm init</code></li>
-<li>安装gulp: <code>npm install gulp --save-dev</code> 安装到依赖中</li>
-</ul>
-<h2 id="2-第一个Gulp-Task"><a href="#2-第一个Gulp-Task" class="headerlink" title="2. 第一个Gulp Task"></a>2. 第一个Gulp Task</h2><p>创建一个gulpfile.js，gulp会自动发现这个文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;; &#x2F;&#x2F;使用严格的编译方法</span><br><span class="line"></span><br><span class="line">var gulp &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;定义task，第一个参数是任务名</span><br><span class="line">gulp.task(&quot;hello&quot;, function()&#123;</span><br><span class="line">  console.log(&quot;Hello&quot;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>运行任务：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ gulp hello</span><br><span class="line">[09:40:32] Using gulpfile G:\git\WebDesign\gulp_learn\gulp_basics\gulpfile.js</span><br><span class="line">[09:40:32] Starting &#39;hello&#39;...</span><br><span class="line">Hello</span><br><span class="line">[09:40:32] Finished &#39;hello&#39; after 354 μs</span><br></pre></td></tr></table></figure>
-
-<p>定义默认的task：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;默认task，第二个参数是依赖任务，依赖任务会在当前任务之前执行</span><br><span class="line">gulp.task(&quot;default&quot;, [&quot;hello&quot;], function()&#123;</span><br><span class="line">  console.log(&quot;This is the default task!&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>运行任务，运行默认的任务不需要任务名：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/07/01/Gulp-Gulp%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/</loc>
+    
+    <lastmod>2024-06-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/</loc>
     
     <lastmod>2024-03-31</lastmod>
@@ -661,7 +670,7 @@
 
   <url>
     <loc>https://liulixiang1988.github.io/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -669,294 +678,294 @@
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/life/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/CSS3/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Python/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/MySQL/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Flask/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Go/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Gulp/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Hibernate/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Functional-Programming/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Web/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Web-JSP/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Web-Servlet/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Gradle/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Maven/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Spring/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Kotlin-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Nancy-C-NET-web/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Java-Spring/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Python-Django/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Netty/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Kubernetes-MiniKube-Docker/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Kubernetes-MiniKube-Docker/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Kubernetes/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/MiniKube/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Docker/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Minikube/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Istio/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/System-Design/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Distributed-System/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Big-Data/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/HDFS/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Hadoop/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/YARN/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Database/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Map-Reduce/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/GRPC/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/C/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Helm/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Kustomize/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/tags/Operator/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -965,98 +974,105 @@
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Web/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Python/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Database/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Go/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Java/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/DotNET/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Kubernetes/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/System-Design/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Distributed-System/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E6%83%B3/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Big-Data/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/Micro-Service/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://liulixiang1988.github.io/categories/C/</loc>
-    <lastmod>2024-03-31</lastmod>
+    <lastmod>2024-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://liulixiang1988.github.io/categories/AI/</loc>
+    <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
