@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -181,6 +181,245 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2024/06/09/2024-06-09-Vector-Databases/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/06/09/2024-06-09-Vector-Databases/" class="post-title-link" itemprop="url">LLM Foundations: Vector Databases for Caching and Retrieval Augmented Generation (RAG)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-06-09 18:46:00 / Modified: 18:59:04" itemprop="dateCreated datePublished" datetime="2024-06-09T18:46:00+08:00">2024-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>Status: Finished</li>
+<li>Author: Kumaran Ponnambalam</li>
+<li>Publishing&#x2F;Release Date: February 23, 2024</li>
+<li>Publisher: Linkedin</li>
+<li>Link: <a target="_blank" rel="noopener" href="https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&u=3322">https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&amp;u=3322</a></li>
+<li>Type: Courses</li>
+<li>Start Date: May 28, 2024</li>
+<li>End Date: June 9, 2024</li>
+</ul>
+<h3 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h3><ul>
+<li>Vector and vector search concepts review</li>
+<li>Concepts and Setup of Milvus DB</li>
+<li>Milvus DB data manipulation and search</li>
+<li>Vector DB as a LLM cache</li>
+<li>Vector DB for Retrieval Augmented Generation (RAG)</li>
+</ul>
+<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><ul>
+<li>NLP for Machine learning</li>
+<li>LLM and embeddings</li>
+<li>Python, jupyter notebooks, docker</li>
+<li>LangChain</li>
+</ul>
+<h2 id="Introduction-to-Vector-Databases"><a href="#Introduction-to-Vector-Databases" class="headerlink" title="Introduction to Vector Databases"></a>Introduction to Vector Databases</h2><h3 id="What-is-a-vector"><a href="#What-is-a-vector" class="headerlink" title="What is a vector?"></a>What is a vector?</h3><p>A vector is an object that has both magnitude (size, quantity) and direction (line, angle, trend)</p>
+<p>Vectors in Programming:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/06/09/2024-06-09-Vector-Databases/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/" class="post-title-link" itemprop="url">Fine Tune Your LLMS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-06 20:00:00" itemprop="dateCreated datePublished" datetime="2024-06-06T20:00:00+08:00">2024-06-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-06-09 18:55:17" itemprop="dateModified" datetime="2024-06-09T18:55:17+08:00">2024-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-Exploring-Concepts-and-Costs-of-Fine-Tuning"><a href="#1-Exploring-Concepts-and-Costs-of-Fine-Tuning" class="headerlink" title="1. Exploring Concepts and Costs of Fine-Tuning"></a>1. Exploring Concepts and Costs of Fine-Tuning</h2><h3 id="Review-the-fine-tuning-process"><a href="#Review-the-fine-tuning-process" class="headerlink" title="Review the fine-tuning process"></a>Review the fine-tuning process</h3><ul>
+<li>Why Fine-Tune?<ul>
+<li>Fine tuning improves the overall performance of a model for your particular use case. The responses to your prompts are improved when using a fine tuned model.</li>
+<li>You can reduce token costs because your prompts are shorter and require fewer examples than few shot prompting or retrieval augmented generation or RAG</li>
+<li>The model responds to your queries (prompts) faster with lower latency.</li>
+</ul>
+</li>
+<li>Fine-tuning process<ul>
+<li>Obtain the data: a minimum for 10 examples is required. 50-100 training examples will clearly improve the fine-tuning</li>
+<li>Prepare the data: Format your data in the JSONL format.</li>
+<li>Upload the data to the OpenAI server: Use the Files API to upload your data.</li>
+<li>Create a fine-tuning job: Use the OpenAI API, SDK, or option in the Playground.</li>
+<li>Evaluate the model: Use metrics like training loss and training token accuracy.</li>
+<li>Use the model: Use in the <code>model</code> parameter of your <code>ChatCompletions</code> call</li>
+</ul>
+</li>
+</ul>
+<h3 id="Understand-the-costs-of-the-fine-tuning"><a href="#Understand-the-costs-of-the-fine-tuning" class="headerlink" title="Understand the costs of the fine-tuning"></a>Understand the costs of the fine-tuning</h3><p>OpenAI charges you based on tokens, the input and output tokens will be charged.</p>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-01.png" alt="01"></p>
+<ul>
+<li>Fine-tuned prompt allows you send short tokens.</li>
+<li>Getting to know the number of tokens helps 1. estimate the costs; 2. reduce the latency</li>
+<li>Pricing<ul>
+<li>Training the fine-tuned model (base price * token * epoch)</li>
+<li>Using the fine-tuned model during inference</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Setting-up-your-environment-for-fine-tuning"><a href="#2-Setting-up-your-environment-for-fine-tuning" class="headerlink" title="2. Setting up your environment for fine-tuning"></a>2. Setting up your environment for fine-tuning</h2><h3 id="Explore-the-OpenAI-API-for-fine-tuning"><a href="#Explore-the-OpenAI-API-for-fine-tuning" class="headerlink" title="Explore the OpenAI API for fine-tuning"></a>Explore the OpenAI API for fine-tuning</h3><ul>
+<li>Fine-Tuning Endpoints<ol>
+<li>Create fine-tuning job</li>
+<li>List fine-tuning job</li>
+<li>List fine-tuning events</li>
+<li>Retrieve fine-tuning job</li>
+<li>Cancel fine-tuning</li>
+</ol>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -217,7 +456,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-06-06 19:35:16" itemprop="dateModified" datetime="2024-06-06T19:35:16+08:00">2024-06-06</time>
+      <time title="Modified: 2024-06-09 18:49:03" itemprop="dateModified" datetime="2024-06-09T18:49:03+08:00">2024-06-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1022,225 +1261,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/14/2021-06-14-MapReduce/" class="post-title-link" itemprop="url">MapReduce学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-14 21:16:00" itemprop="dateCreated datePublished" datetime="2021-06-14T21:16:00+08:00">2021-06-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h2 id="1-MapReduce概述"><a href="#1-MapReduce概述" class="headerlink" title="1. MapReduce概述"></a>1. MapReduce概述</h2><p>源自于google的<a href="https://liulixiang1988.github.io/images/mapreduce.pdf">MapReduce论文</a>.</p>
-<p>Hadoop MapReduce是Google MapReduce的开源版本。</p>
-<p>MapReduce优点：</p>
-<ol>
-<li>海量数据离线处理</li>
-<li>易开发</li>
-<li>易运行</li>
-</ol>
-<p>MapReduce缺点：</p>
-<ol>
-<li>实时流式计算</li>
-</ol>
-<p><a href="https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html" target="_blank" rel="noopener">官网</a></p>
-<blockquote>
-<p>Hadoop MapReduce is a software framework for easily writing applications which process vast amounts of data (multi-terabyte data-sets) in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner.</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/14/2021-06-14-MapReduce/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/19/2021-05-19-YARN/" class="post-title-link" itemprop="url">YARN学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-19 06:30:00" itemprop="dateCreated datePublished" datetime="2021-05-19T06:30:00+08:00">2021-05-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h2 id="1-YARN产生背景"><a href="#1-YARN产生背景" class="headerlink" title="1. YARN产生背景"></a>1. YARN产生背景</h2><h3 id="1-1-Hadoop-1-x中MapReduce存在的问题"><a href="#1-1-Hadoop-1-x中MapReduce存在的问题" class="headerlink" title="1.1 Hadoop 1.x中MapReduce存在的问题"></a>1.1 Hadoop 1.x中MapReduce存在的问题</h3><p>Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master/Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。</p>
-<ul>
-<li>JobTracker主要的功能是资源的管理与作业的调度。</li>
-<li>TaskTracker<ul>
-<li>定期（通过心跳）向JobTracker汇报本节点的健康状况、资源使用情况、作业执行情况。</li>
-<li>接收来自JobTracker的命令：启动任务、杀死任务</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png" alt="map-reduce"></p>
-<p>存在采用的Master的问题：</p>
-<ol>
-<li>单点故障：整个集群只有1个JobTracker。</li>
-<li>JobTracker要接受各个TaskTracker与client的通信请求，节点压力大。</li>
-<li>JobTracker承担了多种职责，且只能接受MapReduce的作业，不易扩展。</li>
-</ol>
-<h3 id="1-2-提高资源利用率和降低运维成本的诉求"><a href="#1-2-提高资源利用率和降低运维成本的诉求" class="headerlink" title="1.2 提高资源利用率和降低运维成本的诉求"></a>1.2 提高资源利用率和降低运维成本的诉求</h3><p><img src="https://liulixiang1988.github.io/images/2021-05-19-yarn-1.png" alt="resource usage"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/19/2021-05-19-YARN/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

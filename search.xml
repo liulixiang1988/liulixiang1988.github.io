@@ -5747,7 +5747,643 @@ DATABASES = {
         <category>AI</category>
       </categories>
       <tags>
-        <tag>life</tag>
+        <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fine Tune Your LLMS</title>
+    <url>/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/</url>
+    <content><![CDATA[<h2 id="1-Exploring-Concepts-and-Costs-of-Fine-Tuning"><a href="#1-Exploring-Concepts-and-Costs-of-Fine-Tuning" class="headerlink" title="1. Exploring Concepts and Costs of Fine-Tuning"></a>1. Exploring Concepts and Costs of Fine-Tuning</h2><h3 id="Review-the-fine-tuning-process"><a href="#Review-the-fine-tuning-process" class="headerlink" title="Review the fine-tuning process"></a>Review the fine-tuning process</h3><ul>
+<li>Why Fine-Tune?<ul>
+<li>Fine tuning improves the overall performance of a model for your particular use case. The responses to your prompts are improved when using a fine tuned model.</li>
+<li>You can reduce token costs because your prompts are shorter and require fewer examples than few shot prompting or retrieval augmented generation or RAG</li>
+<li>The model responds to your queries (prompts) faster with lower latency.</li>
+</ul>
+</li>
+<li>Fine-tuning process<ul>
+<li>Obtain the data: a minimum for 10 examples is required. 50-100 training examples will clearly improve the fine-tuning</li>
+<li>Prepare the data: Format your data in the JSONL format.</li>
+<li>Upload the data to the OpenAI server: Use the Files API to upload your data.</li>
+<li>Create a fine-tuning job: Use the OpenAI API, SDK, or option in the Playground.</li>
+<li>Evaluate the model: Use metrics like training loss and training token accuracy.</li>
+<li>Use the model: Use in the <code>model</code> parameter of your <code>ChatCompletions</code> call</li>
+</ul>
+</li>
+</ul>
+<h3 id="Understand-the-costs-of-the-fine-tuning"><a href="#Understand-the-costs-of-the-fine-tuning" class="headerlink" title="Understand the costs of the fine-tuning"></a>Understand the costs of the fine-tuning</h3><p>OpenAI charges you based on tokens, the input and output tokens will be charged.</p>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-01.png" alt="01"></p>
+<ul>
+<li>Fine-tuned prompt allows you send short tokens.</li>
+<li>Getting to know the number of tokens helps 1. estimate the costs; 2. reduce the latency</li>
+<li>Pricing<ul>
+<li>Training the fine-tuned model (base price * token * epoch)</li>
+<li>Using the fine-tuned model during inference</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Setting-up-your-environment-for-fine-tuning"><a href="#2-Setting-up-your-environment-for-fine-tuning" class="headerlink" title="2. Setting up your environment for fine-tuning"></a>2. Setting up your environment for fine-tuning</h2><h3 id="Explore-the-OpenAI-API-for-fine-tuning"><a href="#Explore-the-OpenAI-API-for-fine-tuning" class="headerlink" title="Explore the OpenAI API for fine-tuning"></a>Explore the OpenAI API for fine-tuning</h3><ul>
+<li>Fine-Tuning Endpoints<ol>
+<li>Create fine-tuning job</li>
+<li>List fine-tuning job</li>
+<li>List fine-tuning events</li>
+<li>Retrieve fine-tuning job</li>
+<li>Cancel fine-tuning</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">client = OpenAI()</span><br><span class="line">client.fine_tuning.create(</span><br><span class="line">    training_file=<span class="string">&quot;file-IntFuYDWVfJwMp6TpSrJa8aq&quot;</span>,</span><br><span class="line">    model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">    hyperparameters=&#123;</span><br><span class="line">        <span class="string">&quot;n_epochs&quot;</span>: <span class="number">5</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">FineTuningJob(<span class="built_in">id</span>=<span class="string">&#x27;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&#x27;</span>, created_at=<span class="number">1707178194</span>, error=<span class="literal">None</span>, fine_tuned_model=<span class="literal">None</span>, finished_at=<span class="literal">None</span>, hyperparameters=Hyperparameters(n_epochs=<span class="number">5</span>, batch_size=<span class="string">&#x27;auto&#x27;</span>, learning_rate_multiplier=<span class="string">&#x27;auto&#x27;</span>), model=<span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>, <span class="built_in">object</span>=<span class="string">&#x27;fine_tuning.job&#x27;</span>, organization_id=<span class="string">&#x27;org-RZLvEijW4GW0KmC3rLIAjZlu&#x27;</span>, result_files=[], status=<span class="string">&#x27;validating_files&#x27;</span>, trained_tokens=<span class="literal">None</span>, training_file=<span class="string">&#x27;file-IntFuYDWVfJwMp6TpSrJa8aq&#x27;</span>, validation_file=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Retrieve job status</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Retrieve job status</span></span><br><span class="line">job_id = <span class="string">&quot;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Retrieve the state of a fine-tune</span></span><br><span class="line"><span class="comment"># Status field can contain: running or succeeded or failed, etc.</span></span><br><span class="line">client.fine_tuning.jobs.retrieve(job_id)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">FineTuningJob(<span class="built_in">id</span>=<span class="string">&#x27;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&#x27;</span>, created_at=<span class="number">1707178194</span>, error=<span class="literal">None</span>, fine_tuned_model=<span class="string">&#x27;ft:gpt-3.5-turbo-0613:keysoft::8p3gc9SA&#x27;</span>, finished_at=<span class="number">1707179589</span>, hyperparameters=Hyperparameters(n_epochs=<span class="number">5</span>, batch_size=<span class="number">1</span>, learning_rate_multiplier=<span class="number">2</span>), model=<span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>, <span class="built_in">object</span>=<span class="string">&#x27;fine_tuning.job&#x27;</span>, organization_id=<span class="string">&#x27;org-RZLvEijW4GW0KmC3rLIAjZlu&#x27;</span>, result_files=[<span class="string">&#x27;file-4XHPig2LQ1VAUTnVIPqlbWJO&#x27;</span>], status=<span class="string">&#x27;succeeded&#x27;</span>, trained_tokens=<span class="number">34235</span>, training_file=<span class="string">&#x27;file-IntFuYDWVfJwMp6TpSrJa8aq&#x27;</span>, validation_file=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Supported Language and Libraries</p>
+<ul>
+<li>Python</li>
+<li>TypeScript&#x2F;JavaScript</li>
+<li>Node.js</li>
+<li>Java</li>
+<li>.NET</li>
+</ul>
+<h3 id="Use-GitHub-Codespaces"><a href="#Use-GitHub-Codespaces" class="headerlink" title="Use GitHub Codespaces"></a>Use GitHub Codespaces</h3><p><a href="https://github.com/LinkedInLearning/fine-tune-llms--4511663">LinkedInLearning&#x2F;fine-tune-llms–4511663: This repo is for linkedin learning course: Fine-Tune Your LLMs (github.com)</a></p>
+<h2 id="3-Preparing-data-for-Fine-Tuning"><a href="#3-Preparing-data-for-Fine-Tuning" class="headerlink" title="3. Preparing data for Fine-Tuning"></a>3. Preparing data for Fine-Tuning</h2><p>Providing the specific name of the business in the dataset is important for the fine-tuning. Since we are teaching the model to answer questions.</p>
+<h3 id="Prompts-to-generate-dataset"><a href="#Prompts-to-generate-dataset" class="headerlink" title="Prompts to generate dataset"></a>Prompts to generate dataset</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Customer Support Automation</span><br><span class="line">Automating responses to customer inquiries on various platforms (email, chatbots, social media).</span><br><span class="line">Collect a dataset of customer inquiries <span class="keyword">and</span> manually crafted responses. This dataset should cover a wide <span class="built_in">range</span> of common questions, complaints, <span class="keyword">and</span> feedback, along <span class="keyword">with</span> the company<span class="string">&#x27;s standard responses. Ensure to anonymize personal information. </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openai</span><br><span class="line">pip install openai[datalib]</span><br><span class="line">pip install urllib3==<span class="number">1.26</span><span class="number">.6</span> </span><br><span class="line">pip install python-dotenv</span><br><span class="line">pip install tiktoken</span><br></pre></td></tr></table></figure>
+
+<p>Import the libraries and enviornment file to gain access to the Open API Key, the key can be generated here: <a href="https://platform.openai.com/account/api-keys">https://platform.openai.com/account/api-keys</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv, find_dotenv</span><br><span class="line">_ = load_dotenv(find_dotenv()) <span class="comment"># read local .env file</span></span><br><span class="line"></span><br><span class="line">client = OpenAI(</span><br><span class="line">  api_key=os.environ[<span class="string">&#x27;OPENAI_API_KEY&#x27;</span>]  </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Help-Functions"><a href="#Help-Functions" class="headerlink" title="Help Functions"></a>Help Functions</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> tiktoken <span class="comment"># for token counting</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line">encoding = tiktoken.get_encoding(<span class="string">&quot;cl100k_base&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#input_file=formatted_custom_support.json ; output_file=output.jsonl</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">json_to_jsonl</span>(<span class="params">input_file, output_file</span>):</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Open JSON file</span></span><br><span class="line">    f = <span class="built_in">open</span>(input_file)</span><br><span class="line">     </span><br><span class="line">    <span class="comment"># returns JSON object as </span></span><br><span class="line">    <span class="comment"># a dictionary</span></span><br><span class="line">    data = json.load(f)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># produce JSONL from JSON</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> outfile:</span><br><span class="line">        <span class="keyword">for</span> entry <span class="keyword">in</span> data:</span><br><span class="line">            json.dump(entry, outfile)</span><br><span class="line">            outfile.write(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_file_format</span>(<span class="params">dataset</span>):</span><br><span class="line">    <span class="comment"># Format error checks</span></span><br><span class="line">    format_errors = defaultdict(<span class="built_in">int</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> ex <span class="keyword">in</span> dataset:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(ex, <span class="built_in">dict</span>):</span><br><span class="line">            format_errors[<span class="string">&quot;data_type&quot;</span>] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">            </span><br><span class="line">        messages = ex.get(<span class="string">&quot;messages&quot;</span>, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> messages:</span><br><span class="line">            format_errors[<span class="string">&quot;missing_messages_list&quot;</span>] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> message <span class="keyword">in</span> messages:</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;role&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> message <span class="keyword">or</span> <span class="string">&quot;content&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> message:</span><br><span class="line">                format_errors[<span class="string">&quot;message_missing_key&quot;</span>] += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">any</span>(k <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">&quot;role&quot;</span>, <span class="string">&quot;content&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;function_call&quot;</span>) <span class="keyword">for</span> k <span class="keyword">in</span> message):</span><br><span class="line">                format_errors[<span class="string">&quot;message_unrecognized_key&quot;</span>] += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> message.get(<span class="string">&quot;role&quot;</span>, <span class="literal">None</span>) <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">&quot;system&quot;</span>, <span class="string">&quot;user&quot;</span>, <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;function&quot;</span>):</span><br><span class="line">                format_errors[<span class="string">&quot;unrecognized_role&quot;</span>] += <span class="number">1</span></span><br><span class="line">                </span><br><span class="line">            content = message.get(<span class="string">&quot;content&quot;</span>, <span class="literal">None</span>)</span><br><span class="line">            function_call = message.get(<span class="string">&quot;function_call&quot;</span>, <span class="literal">None</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">not</span> content <span class="keyword">and</span> <span class="keyword">not</span> function_call) <span class="keyword">or</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(content, <span class="built_in">str</span>):</span><br><span class="line">                format_errors[<span class="string">&quot;missing_content&quot;</span>] += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">any</span>(message.get(<span class="string">&quot;role&quot;</span>, <span class="literal">None</span>) == <span class="string">&quot;assistant&quot;</span> <span class="keyword">for</span> message <span class="keyword">in</span> messages):</span><br><span class="line">            format_errors[<span class="string">&quot;example_missing_assistant_message&quot;</span>] += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> format_errors:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Found errors:&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> format_errors.items():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;k&#125;</span>: <span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;No errors found&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># not exact!</span></span><br><span class="line"><span class="comment"># simplified from https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">num_tokens_from_messages</span>(<span class="params">messages, tokens_per_message=<span class="number">3</span>, tokens_per_name=<span class="number">1</span></span>):</span><br><span class="line">    num_tokens = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> message <span class="keyword">in</span> messages:</span><br><span class="line">        num_tokens += tokens_per_message</span><br><span class="line">        <span class="keyword">for</span> key, value <span class="keyword">in</span> message.items():</span><br><span class="line">            num_tokens += <span class="built_in">len</span>(encoding.encode(value))</span><br><span class="line">            <span class="keyword">if</span> key == <span class="string">&quot;name&quot;</span>:</span><br><span class="line">                num_tokens += tokens_per_name</span><br><span class="line">    num_tokens += <span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> num_tokens</span><br></pre></td></tr></table></figure>
+
+<p>Convert JSON to JSONL</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">json_to_jsonl(<span class="string">&#x27;custom_support.json&#x27;</span>, <span class="string">&#x27;output.jsonl&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-File-Format"><a href="#Check-File-Format" class="headerlink" title="Check File Format"></a><strong>Check File Format</strong></h3><p><a href="https://cookbook.openai.com/examples/chat_finetuning_data_prep">https://cookbook.openai.com/examples/chat_finetuning_data_prep</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data_path = <span class="string">&quot;output.jsonl&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load the dataset</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(data_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    dataset = [json.loads(line) <span class="keyword">for</span> line <span class="keyword">in</span> f]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initial dataset stats</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num examples:&quot;</span>, <span class="built_in">len</span>(dataset))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;First example:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> message <span class="keyword">in</span> dataset[<span class="number">0</span>][<span class="string">&quot;messages&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(message)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cost-Estimation"><a href="#Cost-Estimation" class="headerlink" title="Cost Estimation"></a>Cost Estimation</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Get the length of the conversation</span></span><br><span class="line">conversation_length = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> msg <span class="keyword">in</span> dataset:</span><br><span class="line">    messages = msg[<span class="string">&quot;messages&quot;</span>]</span><br><span class="line">    conversation_length.append(num_tokens_from_messages(messages))</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Pricing and default n_epochs estimate</span></span><br><span class="line">MAX_TOKENS_PER_EXAMPLE = <span class="number">4096</span></span><br><span class="line">TARGET_EPOCHS = <span class="number">5</span></span><br><span class="line">MIN_TARGET_EXAMPLES = <span class="number">100</span></span><br><span class="line">MAX_TARGET_EXAMPLES = <span class="number">25000</span></span><br><span class="line">MIN_DEFAULT_EPOCHS = <span class="number">1</span></span><br><span class="line">MAX_DEFAULT_EPOCHS = <span class="number">25</span></span><br><span class="line"></span><br><span class="line">n_epochs = TARGET_EPOCHS</span><br><span class="line">n_train_examples = <span class="built_in">len</span>(dataset)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> n_train_examples * TARGET_EPOCHS &lt; MIN_TARGET_EXAMPLES:</span><br><span class="line">    n_epochs = <span class="built_in">min</span>(MAX_DEFAULT_EPOCHS, MIN_TARGET_EXAMPLES // n_train_examples)</span><br><span class="line"><span class="keyword">elif</span> n_train_examples * TARGET_EPOCHS &gt; MAX_TARGET_EXAMPLES:</span><br><span class="line">    n_epochs = <span class="built_in">max</span>(MIN_DEFAULT_EPOCHS, MAX_TARGET_EXAMPLES // n_train_examples)</span><br><span class="line"></span><br><span class="line">n_billing_tokens_in_dataset = <span class="built_in">sum</span>(<span class="built_in">min</span>(MAX_TOKENS_PER_EXAMPLE, length) <span class="keyword">for</span> length <span class="keyword">in</span> conversation_length)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Dataset has ~<span class="subst">&#123;n_billing_tokens_in_dataset&#125;</span> tokens that will be charged for during training&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;By default, you&#x27;ll train for <span class="subst">&#123;n_epochs&#125;</span> epochs on this dataset&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;By default, you&#x27;ll be charged for ~<span class="subst">&#123;n_epochs * n_billing_tokens_in_dataset&#125;</span> tokens&quot;</span>)</span><br><span class="line"></span><br><span class="line">num_tokens = n_epochs * n_billing_tokens_in_dataset</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># gpt-3.5-turbo	$0.0080 / 1K tokens</span></span><br><span class="line">cost = (num_tokens/<span class="number">1000</span>) * <span class="number">0.0080</span> </span><br><span class="line"><span class="built_in">print</span>(cost)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Upload-File"><a href="#Upload-File" class="headerlink" title="Upload File"></a>Upload File</h3><p>Once you have the data validated, the file needs to be uploaded using the files API in order to be used with a fine-tuning jobs</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">client.files.create(</span><br><span class="line">  file=<span class="built_in">open</span>(<span class="string">&quot;output.jsonl&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">  purpose=<span class="string">&quot;fine-tune&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Fine-Tuning-a-Pretrained-LLM"><a href="#4-Fine-Tuning-a-Pretrained-LLM" class="headerlink" title="4. Fine-Tuning a Pretrained LLM"></a>4. Fine-Tuning a Pretrained LLM</h2><h3 id="Train-a-new-fine-tuned-model"><a href="#Train-a-new-fine-tuned-model" class="headerlink" title="Train a new fine-tuned model"></a>Train a new fine-tuned model</h3><p>Normal Parameters:</p>
+<ul>
+<li>training_file</li>
+<li>model: the model name you want to fine-tune</li>
+<li>validation_file: to evaluate the model performance during training</li>
+</ul>
+<p>Hyperparameters:</p>
+<ul>
+<li>batch_size</li>
+<li>learning_rate_multiplier</li>
+<li>n_epochs</li>
+</ul>
+<h3 id="Upload-data-create-fine-tuning-job-retrieve-job-status"><a href="#Upload-data-create-fine-tuning-job-retrieve-job-status" class="headerlink" title="Upload data, create fine-tuning job, retrieve job status"></a>Upload data, create fine-tuning job, retrieve job status</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">client.files.create(</span><br><span class="line">  file=<span class="built_in">open</span>(<span class="string">&quot;output.jsonl&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">  purpose=<span class="string">&quot;fine-tune&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output: FileObject(id=&#x27;file-IntFuYDWVfJwMp6TpSrJa8aq&#x27;</span></span><br><span class="line"></span><br><span class="line">client.fine_tuning.jobs.create(</span><br><span class="line">  training_file=<span class="string">&quot;file-IntFuYDWVfJwMp6TpSrJa8aq&quot;</span>, </span><br><span class="line">  model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">  hyperparameters=&#123;</span><br><span class="line">    <span class="string">&quot;n_epochs&quot;</span>:<span class="number">5</span></span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Retrieve job status</span></span><br><span class="line">job_id = <span class="string">&quot;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Retrieve the state of a fine-tune</span></span><br><span class="line"><span class="comment"># Status field can contain: running or succeeded or failed, etc.</span></span><br><span class="line">client.fine_tuning.jobs.retrieve(job_id)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Use-a-fine-tuned-model"><a href="#Use-a-fine-tuned-model" class="headerlink" title="Use a fine-tuned model"></a>Use a fine-tuned model</h3><p>base model: </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response = client.chat.completions.create(</span><br><span class="line">  model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">  messages=[</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;This is a customer support chatbot designed to help with common inquiries.&quot;</span>,</span><br><span class="line">    <span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;What is the return policy at Kesha&#x27;s Boutique?&quot;</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(response.choices[<span class="number">0</span>].message.content)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">I apologize, but <span class="keyword">as</span> an AI language model, I do <span class="keyword">not</span> have access to specific information about the <span class="keyword">return</span> policy at Kesha<span class="string">&#x27;s Boutique. To find out about their return policy, I recommend visiting their official website or contacting their customer service directly.</span></span><br></pre></td></tr></table></figure>
+
+<p>Use fine-tuned model:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fine_tuned_model = <span class="string">&quot;ft:gpt-3.5-turbo-0613:keysoft::8p2M8Tzi&quot;</span></span><br><span class="line"></span><br><span class="line">response = client.chat.completions.create(</span><br><span class="line">  model=fine_tuned_model,</span><br><span class="line">  messages=[</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;This is a customer support chatbot designed to help with common inquiries for Kesha&#x27;s Boutique.&quot;</span>,</span><br><span class="line">     <span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;What is the return policy at Kesha&#x27;s Boutique?&quot;</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(response.choices[<span class="number">0</span>].message.content)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Our <span class="keyword">return</span> policy allows customers to <span class="keyword">return</span> items within <span class="number">30</span> days of purchase <span class="keyword">for</span> a full refund, <span class="keyword">as</span> long <span class="keyword">as</span> the items are <span class="keyword">in</span> their original condition. Sale items <span class="keyword">and</span> certain products may have different <span class="keyword">return</span> conditions, so please check our <span class="keyword">return</span> policy page <span class="keyword">for</span> more details.</span><br></pre></td></tr></table></figure>
+
+<h3 id="Develop-a-chatbot-based-on-a-fine-tuned-model"><a href="#Develop-a-chatbot-based-on-a-fine-tuned-model" class="headerlink" title="Develop a chatbot based on a fine-tuned model"></a>Develop a chatbot based on a fine-tuned model</h3><p>Steps:</p>
+<ol>
+<li>Manage the conversation history</li>
+<li>Define a system message</li>
+<li>Send in customer support questions</li>
+<li>End the conversation on “exit”</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#sets the persona for the AI assistant using a system message</span></span><br><span class="line">context = [&#123;<span class="string">&#x27;role&#x27;</span>:<span class="string">&#x27;system&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&quot;&quot;&quot;This is a customer support chatbot designed to help with common </span></span><br><span class="line"><span class="string">                                           inquiries for Kesha&#x27;s Boutique.&quot;&quot;&quot;</span>&#125;]  </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">collect_messages</span>(<span class="params">role, message</span>): <span class="comment">#keeps track of the message exchange between user and assistant</span></span><br><span class="line">    context.append(&#123;<span class="string">&#x27;role&#x27;</span>: role, <span class="string">&#x27;content&#x27;</span>:<span class="string">f&quot;<span class="subst">&#123;message&#125;</span>&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_completion</span>(): </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = client.chat.completions.create(</span><br><span class="line">            model=fine_tuned_model,</span><br><span class="line">            messages=context</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n Assistant: &quot;</span>, response.choices[<span class="number">0</span>].message.content, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> response.choices[<span class="number">0</span>].message.content</span><br><span class="line">    <span class="keyword">except</span> openai.APIError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e.http_status)</span><br><span class="line">        <span class="built_in">print</span>(e.error)</span><br><span class="line">        <span class="keyword">return</span> e.error </span><br><span class="line"></span><br><span class="line"><span class="comment">#Start the conversation between the user and the AI assistant/chatbot</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    collect_messages(<span class="string">&#x27;assistant&#x27;</span>, get_completion()) <span class="comment">#stores the response from the AI assistant</span></span><br><span class="line">        </span><br><span class="line">    user_prompt = <span class="built_in">input</span>(<span class="string">&#x27;User: &#x27;</span>) <span class="comment">#input box for entering prompt</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> user_prompt == <span class="string">&#x27;exit&#x27;</span>: <span class="comment">#end the conversation with the AI assistant</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n Goodbye&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    collect_messages(<span class="string">&#x27;user&#x27;</span>, user_prompt) <span class="comment">#stores the user prompt</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Evaluating-a-Fine-Tuned-Model"><a href="#5-Evaluating-a-Fine-Tuned-Model" class="headerlink" title="5. Evaluating a Fine-Tuned Model"></a>5. Evaluating a Fine-Tuned Model</h2><h3 id="Evaluate-a-fine-tuned-model"><a href="#Evaluate-a-fine-tuned-model" class="headerlink" title="Evaluate a fine-tuned model"></a>Evaluate a fine-tuned model</h3><p>When retrieving job status, you’ll get the <code>FineTurningJob</code> which contains <code>result_file</code> attribute if the job is succeeded.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Retrieve job status</span></span><br><span class="line">job_id = <span class="string">&quot;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Retrieve the state of a fine-tune</span></span><br><span class="line"><span class="comment"># Status field can contain: running or succeeded or failed, etc.</span></span><br><span class="line">client.fine_tuning.jobs.retrieve(job_id)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">FineTuningJob(<span class="built_in">id</span>=<span class="string">&#x27;ftjob-ts4hC5Qakf2XzytcGrTW0GRZ&#x27;</span>, created_at=<span class="number">1707178194</span>, error=<span class="literal">None</span>, fine_tuned_model=<span class="string">&#x27;ft:gpt-3.5-turbo-0613:keysoft::8p3gc9SA&#x27;</span>, finished_at=<span class="number">1707179589</span>, hyperparameters=Hyperparameters(n_epochs=<span class="number">5</span>, batch_size=<span class="number">1</span>, learning_rate_multiplier=<span class="number">2</span>), model=<span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>, <span class="built_in">object</span>=<span class="string">&#x27;fine_tuning.job&#x27;</span>, organization_id=<span class="string">&#x27;org-RZLvEijW4GW0KmC3rLIAjZlu&#x27;</span>, result_files=[<span class="string">&#x27;file-4XHPig2LQ1VAUTnVIPqlbWJO&#x27;</span>], status=<span class="string">&#x27;succeeded&#x27;</span>, trained_tokens=<span class="number">34235</span>, training_file=<span class="string">&#x27;file-IntFuYDWVfJwMp6TpSrJa8aq&#x27;</span>, validation_file=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Evaluate results:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment">#once training is finished, you can retrieve the file in &quot;result_files=[]&quot;</span></span><br><span class="line">result_file = <span class="string">&quot;file-4XHPig2LQ1VAUTnVIPqlbWJO&quot;</span></span><br><span class="line"></span><br><span class="line">file_data = client.files.content(result_file)</span><br><span class="line"></span><br><span class="line"><span class="comment"># its binary, so read it and then make it a file like object</span></span><br><span class="line">file_data_bytes = file_data.read()</span><br><span class="line">file_like_object = io.BytesIO(file_data_bytes)</span><br><span class="line"></span><br><span class="line"><span class="comment">#now read as csv to create df</span></span><br><span class="line">df = pd.read_csv(file_like_object)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-02.png" alt="02"></p>
+<ul>
+<li><code>step</code>: Number of batches the model has processed</li>
+<li><code>train_loss</code>: The difference between the model’s predictions and the actual targets on the training set</li>
+<li><code>train_accuracy</code>: The percentage of correct predictions on the training set</li>
+<li><code>valid_loss</code>: Like train loss but for the validation set</li>
+<li><code>valid_mean_token_accuracy</code>: Measures how accurately the model predicts each token in the validation set</li>
+</ul>
+<h3 id="Iterate-a-fine-tuned-model"><a href="#Iterate-a-fine-tuned-model" class="headerlink" title="Iterate a fine-tuned model"></a>Iterate a fine-tuned model</h3><p>Iteration Options</p>
+<ul>
+<li>Iterate on your fine-tuned model: you can fine tune a fine-tuned model</li>
+<li>Iterate on your data quality: collect examples that target specific issues you’re seeing</li>
+<li>Iterate on your data quantity: adding additional examples for the model to learn from</li>
+<li>Iterate on your hyperparameters</li>
+</ul>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM Foundations: Vector Databases for Caching and Retrieval Augmented Generation (RAG)</title>
+    <url>/2024/06/09/2024-06-09-Vector-Databases/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>Status: Finished</li>
+<li>Author: Kumaran Ponnambalam</li>
+<li>Publishing&#x2F;Release Date: February 23, 2024</li>
+<li>Publisher: Linkedin</li>
+<li>Link: <a href="https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&u=3322">https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&amp;u=3322</a></li>
+<li>Type: Courses</li>
+<li>Start Date: May 28, 2024</li>
+<li>End Date: June 9, 2024</li>
+</ul>
+<h3 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h3><ul>
+<li>Vector and vector search concepts review</li>
+<li>Concepts and Setup of Milvus DB</li>
+<li>Milvus DB data manipulation and search</li>
+<li>Vector DB as a LLM cache</li>
+<li>Vector DB for Retrieval Augmented Generation (RAG)</li>
+</ul>
+<h3 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h3><ul>
+<li>NLP for Machine learning</li>
+<li>LLM and embeddings</li>
+<li>Python, jupyter notebooks, docker</li>
+<li>LangChain</li>
+</ul>
+<h2 id="Introduction-to-Vector-Databases"><a href="#Introduction-to-Vector-Databases" class="headerlink" title="Introduction to Vector Databases"></a>Introduction to Vector Databases</h2><h3 id="What-is-a-vector"><a href="#What-is-a-vector" class="headerlink" title="What is a vector?"></a>What is a vector?</h3><p>A vector is an object that has both magnitude (size, quantity) and direction (line, angle, trend)</p>
+<p>Vectors in Programming:</p>
+<ul>
+<li>A one-dimensional data structure</li>
+<li>Homogeneous (has elements of the same type)</li>
+<li>Defined position for each element</li>
+<li>Storage &#x2F; access different from lists and arrays</li>
+<li>For example: <code>[1.0, 2.1, 2.2]</code></li>
+</ul>
+<h3 id="Vectorization-in-NLP"><a href="#Vectorization-in-NLP" class="headerlink" title="Vectorization in NLP"></a>Vectorization in NLP</h3><ul>
+<li>ML algorithm can only handle numeric data</li>
+<li>Text data needs to be converted to equivalent numeric representations for ML purposes</li>
+<li>Vectorization converts text to numeric values</li>
+<li>Captures structure and &#x2F; or semantics of original text</li>
+</ul>
+<h3 id="Vectorization-Techniques"><a href="#Vectorization-Techniques" class="headerlink" title="Vectorization Techniques"></a>Vectorization Techniques</h3><ul>
+<li>Bag of words</li>
+<li>TF-IDF (text frequency - inverse document frequency)<ul>
+<li>Creates sparse matrices of documents</li>
+</ul>
+</li>
+<li>Word embeddings<ul>
+<li>Captures semantic information in vectors</li>
+</ul>
+</li>
+<li>Sentence embeddings<ul>
+<li>Popular with large language model (LLM)-based applications</li>
+</ul>
+</li>
+</ul>
+<h3 id="Vector-similarity-search"><a href="#Vector-similarity-search" class="headerlink" title="Vector similarity search"></a>Vector similarity search</h3><ul>
+<li><p>Each vector has a series of data points</p>
+</li>
+<li><p>A sentence can be a vector of its embeddings</p>
+</li>
+<li><p>Similarity measures how close two vectors are</p>
+</li>
+<li><p>Distance measures are used to measure similarity</p>
+<ul>
+<li><p>Euclidean distance (L2)</p>
+<p>  $$<br>  \begin{equation}d(i,j)&#x3D;\sqrt {(p_1-q_1)^2 + (p_2-q_2)^2+…+(p_n-q_n)^2}\end{equation}<br>  $$</p>
+</li>
+<li><p>Inner product (IP)</p>
+<p>  $$<br>  \begin{equation}A \cdot B &#x3D; \sum_{i&#x3D;1}^{n} {A_i}{B_i}\end{equation}<br>  $$</p>
+</li>
+<li><p>Cosine similarity (COSINE)</p>
+<p>  $$<br>  \begin{equation}\cos(A,B) &#x3D; \frac{A\cdot B}{|A||B|}&#x3D;\frac{\sum_{i&#x3D;1}^{n}{A_iB_i}}{\sqrt{\sum_{i&#x3D;1}^{n}A_i^2}\cdot\sqrt{\sum_{i&#x3D;1}^{n}B_i^2}}\end{equation}<br>  $$</p>
+</li>
+</ul>
+</li>
+<li><p>Vectorize strings using any of the vectorization techniques</p>
+<ul>
+<li>List of strings to search</li>
+<li>Query string to compare against</li>
+</ul>
+</li>
+<li><p>Compare vectors using approximate nearest neighbor (ANN) algorithms</p>
+</li>
+<li><p>Use distance measures with ANN to determine similarity</p>
+</li>
+<li><p>Retrieve top-K results ordered by similarity</p>
+</li>
+</ul>
+<h3 id="Vector-databases"><a href="#Vector-databases" class="headerlink" title="Vector databases"></a>Vector databases</h3><p>Vector databases are specialized database products that are optimized for storage and querying of vector data.</p>
+<ul>
+<li>Vector Database Features<ul>
+<li>Support for vector data types</li>
+<li>Support for regular datatypes</li>
+<li>CRUD operations on vector and scalar data</li>
+<li>Semantic search on vector data</li>
+</ul>
+</li>
+</ul>
+<p>Vectors Databases Available</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Open Source</th>
+<th>Commercial</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Specialized Vector Databases</td>
+<td>Milvus, Chroma, Vespa, Qdrant</td>
+<td>Pinecone, Weaviate</td>
+</tr>
+<tr>
+<td>General databases supporting vector search</td>
+<td>PostgreSQL, Cassandra, OpenSearch</td>
+<td>Elasticsearch, Redis, SingleStore</td>
+</tr>
+</tbody></table>
+<h3 id="Pros-and-cons-of-vector-databases"><a href="#Pros-and-cons-of-vector-databases" class="headerlink" title="Pros and cons of vector databases"></a>Pros and cons of vector databases</h3><p>Vector DB Advantages</p>
+<ul>
+<li>Semantic search support (ANN, distance measures)</li>
+<li>Bulk data loading</li>
+<li>Indexing</li>
+<li>Efficient data retrieval</li>
+<li>Scalability</li>
+<li>Clustering and fault tolerance</li>
+</ul>
+<p>Vector DB Shortcomings</p>
+<ul>
+<li>Limited support for traditional querying</li>
+<li>Transactional support</li>
+<li>Insert latency when handling large datasets</li>
+<li>Computationally expensive for semantic searches</li>
+<li>Memory intensive</li>
+<li>Integrations</li>
+</ul>
+<hr>
+<h2 id="Milvus-Databases-Concepts"><a href="#Milvus-Databases-Concepts" class="headerlink" title="Milvus Databases Concepts"></a>Milvus Databases Concepts</h2><h3 id="Introduction-to-Milvus-DB"><a href="#Introduction-to-Milvus-DB" class="headerlink" title="Introduction to Milvus DB"></a>Introduction to Milvus DB</h3><p>Milvus is a specialized database that is built for storing, indexing, and searching vectors.</p>
+<ul>
+<li>Open source and commercial</li>
+<li>Standalone, cluster, and managed (Zilliz cloud) options</li>
+<li>Highly scalable for vector storage and search</li>
+<li>Euclidean distance (L2), inner product (IP) and COSINE metrics</li>
+<li>Hybrid data storage and search</li>
+<li>Access with SDKs (Python, Node.js, Go, Java)</li>
+</ul>
+<h3 id="Milvus-architecture"><a href="#Milvus-architecture" class="headerlink" title="Milvus architecture"></a>Milvus architecture</h3><p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-03.png" alt="01"></p>
+<ul>
+<li>SDK</li>
+<li>Access Layer</li>
+<li>Coordinator Service</li>
+<li>Metadata storage (ETCD)</li>
+<li>Message Queue (RocksMQ(default), Kafka, Pulsar)</li>
+<li>Worker Node</li>
+<li>Object Storage (MinIO (default), S3, Azure Blob)</li>
+</ul>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-04.png" alt="02"></p>
+<h3 id="Collections-in-Milvus"><a href="#Collections-in-Milvus" class="headerlink" title="Collections in Milvus"></a>Collections in Milvus</h3><ul>
+<li>Databases in Milvus<ul>
+<li>Each Milvus instance can manage multiple databases. A single instance can have up to 64 databases)</li>
+<li>Default database is <code>default</code>. It is automatically created. If a new entity is created without a specified database name, it is stored in the default database.</li>
+<li>A database is a container for data. It will store collections, partitions, and indexes within it.</li>
+<li>RBAC implemented by database. Users can be created and configured at a database level. Roles can also be created for each database with specified permissions and then assigned to users.</li>
+<li>Multi-tenancy option. Each tenant can be provided with their own database, and data belonging to that tenant can be stored there. This provides the highest level of tenant isolation within a Milvus database.</li>
+</ul>
+</li>
+<li>Collections in Milvus<ul>
+<li>A milvus collection is like a table in traditional databases. It is the logic entry that is used to store and manage data.</li>
+<li>Each collection is created by providing a schema that defines fields for data storage. Schema can also be modified with certain restrictions.</li>
+<li>Fields have datatypes, size, default values</li>
+<li>Scalar and vector datatypes: A give collection can have a combination of scalar and vector fields</li>
+<li>Primary keys and auto-generated keys are available</li>
+<li>Dynamic fields allowed ad hoc fields to be added</li>
+</ul>
+</li>
+</ul>
+<p>Scalar datatypes: INT8, INT16, INT32, INT64, FLOAT, DOUBLE, VARCHAR, BOOL, JSON, ARRAY</p>
+<p>Vector datatypes: BINARY_VECTOR, FLOAT_VECTOR</p>
+<h3 id="Partitions-in-Milvus"><a href="#Partitions-in-Milvus" class="headerlink" title="Partitions in Milvus"></a>Partitions in Milvus</h3><ul>
+<li>Each collection can bee split up as multiple partitions</li>
+<li>Data in the same partition is stored physically together</li>
+<li>Default partition is _default</li>
+<li>可以指定从特定partition存取 Data can be inserted to and queried from partitions specially</li>
+<li>Partition keys can be used for automatic allocation</li>
+<li>Partition help optimize storage and search options</li>
+</ul>
+<h3 id="Indexes-in-Milvus"><a href="#Indexes-in-Milvus" class="headerlink" title="Indexes in Milvus"></a>Indexes in Milvus</h3><ul>
+<li><p>Indexes help speed up search operations</p>
+</li>
+<li><p>Create on scalar or vector fields</p>
+</li>
+<li><p>One index only per field</p>
+</li>
+<li><p>Organizes vectors based on the approximate nearest neighbor (ANN) metrics type chosen (L2, IP)</p>
+</li>
+<li><p>Indexes is the prerequisite for doing ANN searches</p>
+</li>
+<li><p>Index Types</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FLAT</td>
+<td>Small dataset, 100% recall rate</td>
+</tr>
+<tr>
+<td>IVF_FLAT</td>
+<td>Large dataset, fast query, high recall rate</td>
+</tr>
+<tr>
+<td>GPU_IVF_FLAT</td>
+<td>Same as IVF_FLAT, for GPUs</td>
+</tr>
+<tr>
+<td>IVF_SQ8</td>
+<td>Fast query with limited resources</td>
+</tr>
+<tr>
+<td>IVF_PQ</td>
+<td>Fast query, limited resources, and low recall rate</td>
+</tr>
+<tr>
+<td>HNSW</td>
+<td>Fast query, high recall, high memory</td>
+</tr>
+<tr>
+<td>SCANN</td>
+<td>Fast query, high recall, high memory</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="Managing-Data-in-Milvus"><a href="#Managing-Data-in-Milvus" class="headerlink" title="Managing Data in Milvus"></a>Managing Data in Milvus</h3><ul>
+<li>Rows are called entities in Milvus</li>
+<li>Bulk inserts possible and recommended</li>
+<li>Flush operation is needed to index newly insert data. Milvus automatically flushes data after then pending records reach a specific size after insertion. But if immediate query is need, it is recommended to manually trigger the flush operation.</li>
+<li>Upsert available based on the primary key. If a duplicated record is inserted with the same primary key, the existing record is updated rather than creating a new record.</li>
+<li>Records can be deleted by a primary key or a boolean expression.</li>
+</ul>
+<h3 id="Query-and-Search-in-Milvus"><a href="#Query-and-Search-in-Milvus" class="headerlink" title="Query and Search in Milvus"></a>Query and Search in Milvus</h3><ul>
+<li>Query<ul>
+<li>Scalar-based filtering and retrieval process (like RDBMS)</li>
+<li>Specify output fields, offset and limits</li>
+<li>Restrict query to partitions by partition key or name</li>
+<li><code>Count(*)</code> available to aggregate data, other capacity like <code>sum()</code> or <code>avg()</code> is <strong>not</strong> available.</li>
+<li>Query features are limited compared to RDBMS systems.</li>
+</ul>
+</li>
+<li>Filters in Query<ul>
+<li>Comparison Operators (<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>, <code>in</code>)</li>
+<li>Logical Operators (<code>&amp;&amp;</code>, <code>||</code>)</li>
+<li>Match Operators (<code>like</code>)</li>
+<li>Array Operator (<code>ARRAY_CONTAINS</code>)</li>
+<li>JSON Operator (<code>JSON_CONTAINS</code>)</li>
+<li><a href="https://milvus.io/docs/boolean.md">https://milvus.io/docs/boolean.md</a></li>
+</ul>
+</li>
+<li>Search on Vector Fields<ul>
+<li>Search on any vector field using a search query using distance measures.</li>
+<li>An input string can be compared to strings in the database, and related strings can be extracted with semantic search. For this, an input string or the search query should first be converted to a vector using the same embedding model as the one used when ingesting the vector field.</li>
+<li>Metric used should be the same as the index metric (like L2, IP): The metric used for comparison should be the same metric that was used when creating the index for the vector field. Do note that the index is a prerequisite before search can be performed on the vector field.</li>
+<li>Specify limit and offset</li>
+<li>Radius can be used to filter based on similarity (distance). The smaller the distance, the higher the similarity.</li>
+<li>Returns distance to the original query in addition to results</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://milvus.io/docs">https://milvus.io/docs</a></p>
+<h3 id="Set-up-Milvus"><a href="#Set-up-Milvus" class="headerlink" title="Set up Milvus"></a>Set up Milvus</h3><p><a href="https://milvus.io/docs/install_standalone-docker.md">https://milvus.io/docs/install_standalone-docker.md</a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"># Download the installation script</span><br><span class="line">$ curl -sfL https:<span class="comment">//raw.githubusercontent.com/milvus-io/milvus/master/scripts/standalone_embed.sh</span></span><br><span class="line"></span><br><span class="line"># Start the Docker container</span><br><span class="line">$ bash standalone_embed.sh start</span><br><span class="line"># run UI</span><br><span class="line">docker run -d -p <span class="number">8000</span>:<span class="number">3000</span> -e MILVUS_URL=&#123;milvus server IP&#125;:<span class="number">19530</span> zilliz/attu:v2<span class="number">.4</span><span class="number">.0</span></span><br><span class="line"></span><br><span class="line"># Stop Milvus</span><br><span class="line">$ bash standalone_embed.sh stop</span><br><span class="line"></span><br><span class="line"># Delete Milvus data</span><br><span class="line">$ bash standalone_embed.sh stop</span><br></pre></td></tr></table></figure>
+
+<p>After running the installation script:</p>
+<ul>
+<li>A docker container named milvus has been started at port <strong>19530</strong>.</li>
+<li>An embed etcd is installed along with Milvus in the same container and serves at port <strong>2379</strong>. Its configuration file is mapped to <strong>embedEtcd.yaml</strong> in the current folder.</li>
+<li>The Milvus data volume is mapped to <strong>volumes&#x2F;milvus</strong> in the current folder.</li>
+</ul>
+<h2 id="3-Milvus-Database-Operations"><a href="#3-Milvus-Database-Operations" class="headerlink" title="3. Milvus Database Operations"></a>3. Milvus Database Operations</h2><h3 id="Create-a-connection"><a href="#Create-a-connection" class="headerlink" title="Create a connection"></a>Create a connection</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">!pip install pymilvus==<span class="number">2.3</span><span class="number">.5</span></span><br><span class="line">!pip install openai==<span class="number">1.6</span><span class="number">.1</span></span><br><span class="line">!pip install langchain==<span class="number">0.0</span><span class="number">.354</span></span><br><span class="line">!pip install tiktoken==<span class="number">0.5</span><span class="number">.2</span></span><br><span class="line">!pip install transformers==<span class="number">4.36</span><span class="number">.2</span></span><br><span class="line">!pip install pandas==<span class="number">2.1</span><span class="number">.4</span></span><br><span class="line">!pip install pdfminer==<span class="number">20191125</span></span><br><span class="line">!pip install pdfminer.six==<span class="number">20221105</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Connecting to Milvus</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Creating a connection</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Import the pymilvus package</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> connections</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create list of connections</span></span><br><span class="line">connections.add_connection(</span><br><span class="line">    <span class="comment">#Specify a name for the connection</span></span><br><span class="line">    learn=&#123;    </span><br><span class="line">        <span class="string">&quot;host&quot;</span>: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">        <span class="string">&quot;port&quot;</span>: <span class="string">&quot;19530&quot;</span>,</span><br><span class="line">        <span class="string">&quot;username&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span> : <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Connect</span></span><br><span class="line">connection_id=<span class="string">&quot;learn&quot;</span> <span class="comment"># connection name for future reference</span></span><br><span class="line">connections.connect(connection_id)</span><br><span class="line"></span><br><span class="line"><span class="comment">#List all connections</span></span><br><span class="line">connections.list_connections()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Create-databases-and-users"><a href="#Create-databases-and-users" class="headerlink" title="Create databases and users"></a>Create databases and users</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Database operations</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> db</span><br><span class="line"></span><br><span class="line"><span class="comment">#Get current list of databases available to the connection</span></span><br><span class="line">current_dbs=db.list_database(using=connection_id)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Current databases: &quot;</span>, current_dbs)</span><br><span class="line"></span><br><span class="line">db_name=<span class="string">&quot;course_db&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( db_name <span class="keyword">not</span> <span class="keyword">in</span> current_dbs):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Creating database :&quot;</span>, db_name)</span><br><span class="line">    wiki_db = db.create_database(db_name, using=connection_id) </span><br><span class="line">    </span><br><span class="line"><span class="comment">#Switch to use the new database</span></span><br><span class="line">db.using_database(db_name, using=connection_id)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Current databases:  [<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line">Creating database : course_db</span><br></pre></td></tr></table></figure>
+
+<p>Create a new user:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#user management</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> Role,utility</span><br><span class="line"></span><br><span class="line">current_users=utility.list_usernames(using=connection_id)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Current user list: &quot;</span>, current_users)</span><br><span class="line"></span><br><span class="line">new_user = <span class="string">&quot;course_public&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> new_user <span class="keyword">not</span> <span class="keyword">in</span> current_users:</span><br><span class="line">    utility.create_user(new_user, <span class="string">&quot;password&quot;</span>, using=connection_id)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Assign a role to the user</span></span><br><span class="line">public_role = Role(<span class="string">&quot;public&quot;</span>, using=connection_id)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot; Role public exists? &quot;</span>, public_role.is_exist())</span><br><span class="line"></span><br><span class="line"><span class="comment">#Add user to role</span></span><br><span class="line">public_role.add_user(new_user)</span><br></pre></td></tr></table></figure>
+
+<p>We can access <a href="http://localhost:8000/#/">192.168.3.4:19530 - Attu</a> to view the database and user.</p>
+<h3 id="Create-collections"><a href="#Create-collections" class="headerlink" title="Create collections"></a>Create collections</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> CollectionSchema, FieldSchema, DataType, Collection</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment">#Define fields</span></span><br><span class="line">course_id = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;course_id&quot;</span>,</span><br><span class="line">    dtype=DataType.INT64,</span><br><span class="line">    is_primary=<span class="literal">True</span>,</span><br><span class="line">    max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">title= FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;title&quot;</span>,</span><br><span class="line">    dtype=DataType.VARCHAR,</span><br><span class="line">    max_length=<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line">description= FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;description&quot;</span>,</span><br><span class="line">    dtype=DataType.VARCHAR,</span><br><span class="line">    max_length=<span class="number">2048</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Dim should match the embedding size to store vector for description</span></span><br><span class="line">desc_embedding = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;desc_embedding&quot;</span>,</span><br><span class="line">    dtype=DataType.FLOAT_VECTOR,</span><br><span class="line">    dim=<span class="number">1536</span> <span class="comment"># We use OpenAI&#x27;s embedding model which&#x27;s dimension size is 1536</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Define schema</span></span><br><span class="line">wiki_schema=CollectionSchema(</span><br><span class="line">    fields=[course_id, title, description, desc_embedding],</span><br><span class="line">    description=<span class="string">&quot;Courses List&quot;</span>,</span><br><span class="line">    enable_dynamic_field=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">collection_name=<span class="string">&quot;courses_list&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Creation collection</span></span><br><span class="line">wiki_collection=Collection(</span><br><span class="line">    name=collection_name,</span><br><span class="line">    schema=wiki_schema,</span><br><span class="line">    using=connection_id,</span><br><span class="line">    shard_num=<span class="number">2</span> <span class="comment"># The number of shards specify the amount of parallelism that is possible during DML operations</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> utility</span><br><span class="line"></span><br><span class="line"><span class="comment">#List all collections</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Current collections: &quot;</span>,utility.list_collections(using=connection_id))</span><br><span class="line"></span><br><span class="line"><span class="comment">#setup existing collection into another object</span></span><br><span class="line">r_collection=Collection(collection_name, using=connection_id)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>, r_collection.schema)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Inserting-data-into-Milvus"><a href="#Inserting-data-into-Milvus" class="headerlink" title="Inserting data into Milvus"></a>Inserting data into Milvus</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#read the input course CSV</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">course_descriptions = pd.read_csv(<span class="string">&quot;course-descriptions.csv&quot;</span>)</span><br><span class="line">course_descriptions.head()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Use langchain to create embeddings.</span></span><br><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#Setup open API key to use OpenAI&#x27;s LLM</span></span><br><span class="line"><span class="comment">#Use your own key for OpenAI.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#If you use the free tier, you may hit rate limits with the number of requests</span></span><br><span class="line"></span><br><span class="line">openai_api_key=<span class="string">&quot;&quot;</span></span><br><span class="line">os.environ[<span class="string">&quot;OPENAI_API_KEY&quot;</span>] = openai_api_key</span><br><span class="line"></span><br><span class="line">embeddings_model = OpenAIEmbeddings()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Prepare data for insert</span></span><br><span class="line"></span><br><span class="line">i_course_id = course_descriptions[<span class="string">&quot;Course ID&quot;</span>].tolist()</span><br><span class="line">i_title = course_descriptions[<span class="string">&quot;Title&quot;</span>].tolist()</span><br><span class="line">i_description = course_descriptions[<span class="string">&quot;Description&quot;</span>].tolist()</span><br><span class="line"></span><br><span class="line">i_desc_embedding=[embeddings_model.embed_query(i)</span><br><span class="line">                  <span class="keyword">for</span> i <span class="keyword">in</span> i_description]</span><br><span class="line"></span><br><span class="line"><span class="comment">#Format for data input</span></span><br><span class="line">insert_data=[i_course_id, i_title, i_description, i_desc_embedding]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Initiate a collection object and insert data</span></span><br><span class="line">course_collection = Collection(collection_name,using=connection_id)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Insert</span></span><br><span class="line">mr=course_collection.insert(insert_data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Flush the data after insert</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Inserted data. Now flushing&quot;</span>)</span><br><span class="line">course_collection.flush(timeout=<span class="number">180</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Build-an-index"><a href="#Build-an-index" class="headerlink" title="Build an index"></a>Build an index</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Build an index</span></span><br><span class="line">index_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>:<span class="string">&quot;L2&quot;</span>, <span class="comment"># or IP, COSINE</span></span><br><span class="line">    <span class="string">&quot;index_type&quot;</span>:<span class="string">&quot;IVF_FLAT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;params&quot;</span> :&#123;<span class="string">&quot;nlist&quot;</span>:<span class="number">1024</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">course_collection.create_index(</span><br><span class="line">    field_name=<span class="string">&quot;desc_embedding&quot;</span>,</span><br><span class="line">    index_params=index_params</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">utility.index_building_progress(collection_name,using=connection_id)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>nlist</code>: the number of clusters or buckets to create the index. Higher values of this parameter can lead to better efficiency but lower search effectiveness.</li>
+</ul>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-05.png" alt="05"></p>
+<h3 id="Querying-scalar-data"><a href="#Querying-scalar-data" class="headerlink" title="Querying scalar data"></a>Querying scalar data</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Load the Collection</span></span><br><span class="line"><span class="comment"># <span class="doctag">NOTE:</span> A collection should first be loaded into memory before</span></span><br><span class="line"><span class="comment">#       queries can be executed against it</span></span><br><span class="line"></span><br><span class="line">course_collection.load()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Course collection loaded..&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">q_result= course_collection.query(</span><br><span class="line">    expr = <span class="string">&quot;course_id == 1001&quot;</span>,</span><br><span class="line">    output_fields = [<span class="string">&quot;title&quot;</span>,<span class="string">&quot;description&quot;</span>]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(q_result)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n Result object :&quot;</span>, <span class="built_in">type</span>(q_result[<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">q_result2= course_collection.query(</span><br><span class="line">    expr = <span class="string">&quot;(title LIKE &#x27;MLOps%&#x27;) &amp;&amp; (course_id &gt; 1001) &quot;</span>,</span><br><span class="line">    output_fields = [<span class="string">&quot;title&quot;</span>,<span class="string">&quot;description&quot;</span>]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(q_result2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Searching-vector-fields"><a href="#Searching-vector-fields" class="headerlink" title="Searching vector fields"></a>Searching vector fields</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Make sure that the collection is already loaded.</span></span><br><span class="line"></span><br><span class="line">search_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>: <span class="string">&quot;L2&quot;</span>, </span><br><span class="line">    <span class="string">&quot;offset&quot;</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="string">&quot;ignore_growing&quot;</span>: <span class="literal">False</span>, </span><br><span class="line">    <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;nprobe&quot;</span>: <span class="number">10</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#Embed the input search string</span></span><br><span class="line">search_string = <span class="string">&quot;machine learning&quot;</span></span><br><span class="line">search_embed=embeddings_model.embed_query(search_string)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Perform search</span></span><br><span class="line">s_results=course_collection.search(</span><br><span class="line">    data=[search_embed], <span class="comment">#input query to search for</span></span><br><span class="line">    anns_field=<span class="string">&quot;desc_embedding&quot;</span>, <span class="comment">#field to search with ANN</span></span><br><span class="line">    param=search_params,</span><br><span class="line">    limit=<span class="number">10</span>, <span class="comment">#Limit output</span></span><br><span class="line">    expr=<span class="literal">None</span>, <span class="comment">#Use additional scalar conditions</span></span><br><span class="line">    output_fields=[<span class="string">&quot;title&quot;</span>],</span><br><span class="line">    consistency_level=<span class="string">&quot;Strong&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Search result object:&quot;</span>, <span class="built_in">type</span>(s_results[<span class="number">0</span>]),<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="comment">#Print results in order of match</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s_results[<span class="number">0</span>]:</span><br><span class="line">    <span class="built_in">print</span>(i.<span class="built_in">id</span>, <span class="built_in">str</span>(<span class="built_in">round</span>(i.distance, <span class="number">2</span>)), <span class="string">&quot;\t&quot;</span>,i.entity.get(<span class="string">&quot;title&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ignore_growing</code> : whether the search should ignore segments that are not fully populated. Milvus internally processes data in segments. If set to true, the search may ignore some newly added data. Setting it to false would also include all new data at an additional query cost.</li>
+<li><code>nprobe</code> indicates the number of clusters to search starting from the most matching records cluster. Reducing nprobe helps in efficiency, but may possibly ignore additional matches beyond the number of clusters searched.</li>
+<li><code>consistency_level</code> controls whether data in processing will be considered for the search.</li>
+</ul>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-06.png" alt="06"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Search an unrelated query</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Embed the input search string</span></span><br><span class="line">search_string2 = <span class="string">&quot;best movies of the year&quot;</span></span><br><span class="line">search_embed2=embeddings_model.embed_query(search_string2)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Perform search</span></span><br><span class="line">s_results2=course_collection.search(</span><br><span class="line">    data=[search_embed2], <span class="comment">#input query to search for</span></span><br><span class="line">    anns_field=<span class="string">&quot;desc_embedding&quot;</span>, <span class="comment">#field to search with ANN</span></span><br><span class="line">    param=search_params,</span><br><span class="line">    limit=<span class="number">10</span>, <span class="comment">#Limit output</span></span><br><span class="line">    expr=<span class="literal">None</span>, <span class="comment">#Use additional scalar conditions</span></span><br><span class="line">    output_fields=[<span class="string">&quot;title&quot;</span>],</span><br><span class="line">    consistency_level=<span class="string">&quot;Strong&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Print results in order of match</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s_results2[<span class="number">0</span>]:</span><br><span class="line">    <span class="built_in">print</span>(i.<span class="built_in">id</span>, <span class="built_in">str</span>(<span class="built_in">round</span>(i.distance, <span class="number">2</span>)), <span class="string">&quot;\t&quot;</span>,i.entity.get(<span class="string">&quot;title&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-07.png" alt="07"></p>
+<p>So how do we ensure that we get results that are similar to the search string? We need to use the distances returned and use a similarity cut off threshold.</p>
+<h3 id="Deleting-objects-and-entities"><a href="#Deleting-objects-and-entities" class="headerlink" title="Deleting objects and entities"></a>Deleting objects and entities</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Delete a single record</span></span><br><span class="line">course_collection.delete(<span class="string">&quot;course_id in [1002]&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Drop a collection</span></span><br><span class="line">utility.drop_collection(collection_name,using=connection_id)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#drop a database</span></span><br><span class="line"><span class="comment">#Make sure to drop all collections in the database first</span></span><br><span class="line"></span><br><span class="line">db.drop_database(db_name, using=connection_id)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Vector-DB-for-LLM-Query-Caching"><a href="#4-Vector-DB-for-LLM-Query-Caching" class="headerlink" title="4. Vector DB for LLM Query Caching"></a>4. Vector DB for LLM Query Caching</h2><h3 id="LLMs-and-Caching"><a href="#LLMs-and-Caching" class="headerlink" title="LLMs and Caching"></a>LLMs and Caching</h3><p>Shortcomings with Using LLMs and how vector DB can help:</p>
+<ul>
+<li>LLMs have revolutionized the use of AI</li>
+<li>Several apps are being built with LLMs in the backend</li>
+<li>LLMs are expensive to build, deploy, maintain, and use</li>
+<li>Cost per inference call is high</li>
+<li>Latency per inference is also high, given the nature of LLMs</li>
+</ul>
+<p>How caching help?</p>
+<ul>
+<li>In a given organization or context, users trigger similar prompts to the LLM, resulting in the same responses</li>
+<li>Caching prompts and responses and serving similar prompts from the cache helps reduce cost and latency</li>
+<li>Prompt&#x2F;response caching is becoming an essential component of generative AI applications</li>
+</ul>
+<h3 id="Prompt-caching-workflow"><a href="#Prompt-caching-workflow" class="headerlink" title="Prompt caching workflow"></a>Prompt caching workflow</h3><p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-08.png" alt="08"></p>
+<h3 id="Set-up-the-Milvus-cache"><a href="#Set-up-the-Milvus-cache" class="headerlink" title="Set up the Milvus cache"></a>Set up the Milvus cache</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Setup database &amp; collection</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> connections</span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> db,Collection</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> utility</span><br><span class="line"></span><br><span class="line"><span class="comment">#Names for connections, database and collections</span></span><br><span class="line">conn_name = <span class="string">&quot;cache_conn&quot;</span></span><br><span class="line">db_name=<span class="string">&quot;cache_db&quot;</span></span><br><span class="line">collection_name=<span class="string">&quot;llm_cache&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Create a connection to Milvus</span></span><br><span class="line">connections.add_connection(</span><br><span class="line">    cache_conn=&#123;</span><br><span class="line">        <span class="string">&quot;host&quot;</span>: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">        <span class="string">&quot;port&quot;</span>: <span class="string">&quot;19530&quot;</span>,</span><br><span class="line">        <span class="string">&quot;username&quot;</span> : <span class="string">&quot;username&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span> : <span class="string">&quot;password&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Connect</span></span><br><span class="line">connections.connect(conn_name)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create a DB if not already present</span></span><br><span class="line">current_dbs=db.list_database(using=conn_name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( db_name <span class="keyword">not</span> <span class="keyword">in</span> current_dbs):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Creating database :&quot;</span>, db_name)</span><br><span class="line">    resume_db = db.create_database(db_name, using=conn_name) <span class="comment">#default db is &quot;default&quot;</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(db_name, <span class="string">&quot;: Database already exists&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Switch to the new database</span></span><br><span class="line">db.using_database(db_name, using=conn_name)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Create a Collection for cache</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> CollectionSchema, FieldSchema, DataType, Collection</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment">#Define fields in the cache</span></span><br><span class="line"><span class="comment">#Autogenerated ID field for each entity</span></span><br><span class="line">cache_id = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;cache_id&quot;</span>,</span><br><span class="line">    dtype=DataType.INT64,</span><br><span class="line">    auto_id=<span class="literal">True</span>,</span><br><span class="line">    is_primary=<span class="literal">True</span>,</span><br><span class="line">    max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Text for the input prompt</span></span><br><span class="line">prompt_text= FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;prompt_text&quot;</span>,</span><br><span class="line">    dtype=DataType.VARCHAR,</span><br><span class="line">    max_length=<span class="number">2048</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Text for the LLM response</span></span><br><span class="line">response_text= FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;response_text&quot;</span>,</span><br><span class="line">    dtype=DataType.VARCHAR,</span><br><span class="line">    max_length=<span class="number">2048</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Embedding for the input prompt</span></span><br><span class="line">prompt_embedding = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;prompt_embedding&quot;</span>,</span><br><span class="line">    dtype=DataType.FLOAT_VECTOR,</span><br><span class="line">    dim=<span class="number">1536</span> <span class="comment">#Define based on embedding used</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Define the schema for the cache collection</span></span><br><span class="line">cache_schema=CollectionSchema(</span><br><span class="line">    fields=[cache_id, prompt_text, response_text, prompt_embedding],</span><br><span class="line">    description=<span class="string">&quot;Cache for LLM&quot;</span>,</span><br><span class="line">    enable_dynamic_field=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create the collection</span></span><br><span class="line">cache_collection=Collection(</span><br><span class="line">    name=collection_name,</span><br><span class="line">    schema=cache_schema,</span><br><span class="line">    using=conn_name,</span><br><span class="line">    shard_num=<span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Schema : &quot;</span>, cache_collection.schema, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Build an index for the prompt embedding field</span></span><br><span class="line">index_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>:<span class="string">&quot;L2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;index_type&quot;</span>:<span class="string">&quot;IVF_FLAT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;params&quot;</span> :&#123;<span class="string">&quot;nlist&quot;</span>:<span class="number">1024</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cache_collection.create_index(</span><br><span class="line">    field_name=<span class="string">&quot;prompt_embedding&quot;</span>,</span><br><span class="line">    index_params=index_params</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Flush the collection to persist</span></span><br><span class="line">cache_collection.flush()</span><br><span class="line"><span class="comment">#Load the collection in memory</span></span><br><span class="line">cache_collection.load()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Inference-processing-and-caching"><a href="#Inference-processing-and-caching" class="headerlink" title="Inference processing and caching"></a>Inference processing and caching</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer</span><br><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">#Setup open API key to use OpenAI&#x27;s LLM</span></span><br><span class="line">openai_api_key=<span class="string">&quot;&quot;</span></span><br><span class="line">os.environ[<span class="string">&quot;OPENAI_API_KEY&quot;</span>] = openai_api_key</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create an LLM object</span></span><br><span class="line">llm= OpenAI(temperature=<span class="number">0.</span>, model=<span class="string">&quot;text-davinci-003&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Setup embedding model for creating embeddings</span></span><br><span class="line">embeddings_model = OpenAIEmbeddings()</span><br><span class="line"></span><br><span class="line"><span class="comment">#setup threshold for similarity between vectors</span></span><br><span class="line">similarity_threshold=<span class="number">0.3</span></span><br><span class="line"></span><br><span class="line">search_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>: <span class="string">&quot;L2&quot;</span>, </span><br><span class="line">    <span class="string">&quot;offset&quot;</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="string">&quot;ignore_growing&quot;</span>: <span class="literal">False</span>, </span><br><span class="line">    <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;nprobe&quot;</span>: <span class="number">20</span>, <span class="string">&quot;radius&quot;</span>:similarity_threshold&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#create a function to run the inference loop</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_response</span>(<span class="params">prompt</span>):</span><br><span class="line">    </span><br><span class="line">    start_time=time.time()</span><br><span class="line">    <span class="comment">#create embedding for incoming prompt</span></span><br><span class="line">    prompt_embed=embeddings_model.embed_query(prompt)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#Check cache if result exists</span></span><br><span class="line">    cache_results=cache_collection.search(</span><br><span class="line">        data=[prompt_embed],</span><br><span class="line">        anns_field=<span class="string">&quot;prompt_embedding&quot;</span>,</span><br><span class="line">        param=search_params,</span><br><span class="line">        limit=<span class="number">1</span>, <span class="comment">#Look for the top result only</span></span><br><span class="line">        expr=<span class="literal">None</span>,</span><br><span class="line">        output_fields=[<span class="string">&quot;prompt_text&quot;</span>, <span class="string">&quot;response_text&quot;</span>],</span><br><span class="line">        consistency_level=<span class="string">&quot;Strong&quot;</span></span><br><span class="line">    )</span><br><span class="line">        </span><br><span class="line">    returned_response =<span class="string">&quot;None&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">len</span>(cache_results[<span class="number">0</span>]) &gt; <span class="number">0</span> ):</span><br><span class="line">        </span><br><span class="line">        <span class="comment">#Cache hit</span></span><br><span class="line">        <span class="built_in">print</span>(prompt, <span class="string">&quot; :\n Cache hit : &quot;</span>,cache_results[<span class="number">0</span>])</span><br><span class="line">        returned_response = cache_results[<span class="number">0</span>][<span class="number">0</span>].entity.get(<span class="string">&quot;response_text&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment">#Find answer with LLM</span></span><br><span class="line">        llm_response=llm(prompt)</span><br><span class="line">        <span class="built_in">print</span>(prompt, <span class="string">&quot;:\n LLM returned :&quot;</span>, llm_response)</span><br><span class="line">        returned_response = llm_response</span><br><span class="line">        </span><br><span class="line">        <span class="comment">#save prompt/response to cache</span></span><br><span class="line">        prompt_text = [prompt]</span><br><span class="line">        prompt_embedding=[prompt_embed]</span><br><span class="line">        response_text = [llm_response]</span><br><span class="line"></span><br><span class="line">        insert_data=[prompt_text, response_text, prompt_embedding]</span><br><span class="line">        mr=cache_collection.insert(insert_data)</span><br><span class="line">    </span><br><span class="line">    end_time = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Time elapsed :&quot;</span>,  end_time - start_time, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> returned_response</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>radius</code>: Only matches with distances less than the threshold</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Build up the cache</span></span><br><span class="line">response=get_response(<span class="string">&quot;In which year was Abraham Lincoln born?&quot;</span>)</span><br><span class="line">response=get_response(<span class="string">&quot;What is distance between the sun and the moon?&quot;</span>)</span><br><span class="line">response=get_response(<span class="string">&quot;How many years have Lebron James played in the NBA?&quot;</span>)</span><br><span class="line">response=get_response(<span class="string">&quot;What are the advantages of the python language?&quot;</span>)</span><br><span class="line">response=get_response(<span class="string">&quot;What is the typical height of an elephant&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response=get_response(<span class="string">&quot;List some advantages of the python language&quot;</span>)</span><br><span class="line">response=get_response(<span class="string">&quot;How tall is an elephant?&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cache-management"><a href="#Cache-management" class="headerlink" title="Cache management"></a>Cache management</h3><ul>
+<li>Track cache hit ratio to measure cache effectiveness</li>
+<li>Benchmark&#x2F;test to find the right similarity threshold (radius)</li>
+<li>Limit size of cached entries</li>
+<li>Track last used timestamp (another scalar)</li>
+<li>Prone entries based on age, last used</li>
+<li>Get user feedback to measure if cached answers are accurate</li>
+</ul>
+<h2 id="5-Introduction-to-Retrieval-Augmented-Generation-RAG"><a href="#5-Introduction-to-Retrieval-Augmented-Generation-RAG" class="headerlink" title="5. Introduction to Retrieval Augmented Generation (RAG)"></a>5. Introduction to Retrieval Augmented Generation (RAG)</h2><h3 id="LLM-as-a-knowledge-source"><a href="#LLM-as-a-knowledge-source" class="headerlink" title="LLM as a knowledge source"></a>LLM as a knowledge source</h3><p>LLM capabilities:</p>
+<ul>
+<li>Language capabilities: Understanding, reasoning, generating, and translating text</li>
+<li>Knowledge capabilities: Question answering, knowledge distillation</li>
+</ul>
+<p>LLM as a Knowledge Base: shortcomings</p>
+<ul>
+<li>can only answer questions based on the data they are trained on</li>
+<li>Answers may not be current</li>
+<li>LLMs can hallucinate</li>
+<li>Cannot answer based on enterprise&#x2F;confidential data</li>
+<li>Building custom LLMs&#x2F;fine-tuning with organizational</li>
+</ul>
+<h3 id="Introduction-to-retrieval-augmented-generation-RAG"><a href="#Introduction-to-retrieval-augmented-generation-RAG" class="headerlink" title="Introduction to retrieval augmented generation (RAG)"></a>Introduction to retrieval augmented generation (RAG)</h3><p>Retrieval augmented generation (RAG) is a framework that combines knowledge from a curated (精心策划的）knowledge base with the generation capabilities of an LLM to provide accurate and well-structured answers.</p>
+<p>When users provide prompts, the knowledge base provides contextual knowledge and the LLM provides well-structured answers.</p>
+<ul>
+<li>RAG Features<ul>
+<li>Use enterprise and confidential data sources</li>
+<li>Combined data from multiple data sources in different formats</li>
+<li>Curate&#x2F;prune data to ensure up-to-date and accurate knowledge</li>
+<li>To find answers to queries, we can combine scalar and vector searches. Vector searches can be used to find relevant answers in vectors, while scalar filters can help with narrowing down the context. For example, if the user asks a troubleshooting question about a specific product, scalar filters can be used to filter answers for that specific product.</li>
+<li>RAG can use standard and out-of-the-box LLMs for language generation without the need to create or fine-tune custom models. This significantly reduces the cost.</li>
+</ul>
+</li>
+</ul>
+<h3 id="RAG-Knowledge-curation-process"><a href="#RAG-Knowledge-curation-process" class="headerlink" title="RAG: Knowledge curation process"></a>RAG: Knowledge curation process</h3><p>How do we build a RAG systems?</p>
+<ul>
+<li>The knowledge curation process</li>
+<li>The inference process</li>
+</ul>
+<p><strong>The knowledge curation process</strong>:</p>
+<p>We can have one or more sources of data for the RAG system. This could be websites, ticket system, traditional RDBMS databases, document hubs like SharePoint or Google Drive, and a Doc documents. </p>
+<p>Do note that the structure of the data sources will be vastly different.  For each of these data sources, we need to build an acquisition module. The module will fetch data from the sources, filter it for relevant information, and then cleanse them to eliminate any kind of noise.</p>
+<p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-09.png" alt="09"></p>
+<h3 id="RAG-question-answering-process"><a href="#RAG-question-answering-process" class="headerlink" title="RAG question-answering process"></a>RAG question-answering process</h3><p><img src="https://liulixiang1988.github.io/images/2024/2024-06-09-10.png" alt="10"></p>
+<h3 id="Applications-of-RAG"><a href="#Applications-of-RAG" class="headerlink" title="Applications of RAG"></a>Applications of RAG</h3><ul>
+<li>Interactive chatbots</li>
+<li>Automated email responses for customer queries</li>
+<li>Root cause analysis (based on observations and manuals)</li>
+<li>Ecommerce search</li>
+<li>Automated help desks (HR, legal, logistics)</li>
+<li>Document hub searches</li>
+</ul>
+<h2 id="6-Implementing-RAG-with-Milvus"><a href="#6-Implementing-RAG-with-Milvus" class="headerlink" title="6. Implementing RAG with Milvus"></a>6. Implementing RAG with Milvus</h2><h3 id="Set-up-Milvus-for-RAG"><a href="#Set-up-Milvus-for-RAG" class="headerlink" title="Set up Milvus for RAG"></a>Set up Milvus for RAG</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Create the Connection and database for RAG</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> connections</span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> db,Collection</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> utility</span><br><span class="line"></span><br><span class="line">connections.add_connection(</span><br><span class="line">    rag_conn=&#123;</span><br><span class="line">        <span class="string">&quot;host&quot;</span>: <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">        <span class="string">&quot;port&quot;</span>: <span class="string">&quot;19530&quot;</span>,</span><br><span class="line">        <span class="string">&quot;username&quot;</span> : <span class="string">&quot;username&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span> : <span class="string">&quot;password&quot;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">conn_name=<span class="string">&quot;rag_conn&quot;</span></span><br><span class="line">db_name=<span class="string">&quot;rag_db&quot;</span></span><br><span class="line"></span><br><span class="line">connections.connect(conn_name)</span><br><span class="line">connections.list_connections()</span><br><span class="line"></span><br><span class="line">current_dbs=db.list_database(using=conn_name)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Databases: &quot;</span>, current_dbs)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( db_name <span class="keyword">not</span> <span class="keyword">in</span> current_dbs):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Creating database :&quot;</span>, db_name)</span><br><span class="line">    resume_db = db.create_database(db_name, using=conn_name) </span><br><span class="line"></span><br><span class="line"><span class="comment">#Switch to the new database</span></span><br><span class="line">db.using_database(db_name, using=conn_name)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Create a new collection for RAG</span></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> CollectionSchema, FieldSchema, DataType, Collection</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">chunk_id_field = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;chunk_id&quot;</span>,</span><br><span class="line">    dtype=DataType.INT64,</span><br><span class="line">    is_primary=<span class="literal">True</span>,</span><br><span class="line">    max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">rag_text_field= FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;rag_text&quot;</span>,</span><br><span class="line">    dtype=DataType.VARCHAR,</span><br><span class="line">    max_length=<span class="number">2048</span>)</span><br><span class="line"></span><br><span class="line">rag_embedding_field = FieldSchema(</span><br><span class="line">    name=<span class="string">&quot;rag_embedding&quot;</span>,</span><br><span class="line">    dtype=DataType.FLOAT_VECTOR,</span><br><span class="line">    dim=<span class="number">1536</span> <span class="comment">#Define based on embedding used</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">rag_schema=CollectionSchema(</span><br><span class="line">    fields=[chunk_id_field, rag_text_field, rag_embedding_field],</span><br><span class="line">    description=<span class="string">&quot;RAG Schema&quot;</span>,</span><br><span class="line">    enable_dynamic_field=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">collection_name=<span class="string">&quot;rag_collection&quot;</span></span><br><span class="line"></span><br><span class="line">rag_collection=Collection(</span><br><span class="line">    name=collection_name,</span><br><span class="line">    schema=rag_schema,</span><br><span class="line">    using=conn_name,</span><br><span class="line">    shard_num=<span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pymilvus <span class="keyword">import</span> utility</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Collections: &quot;</span>, utility.list_collections(using=conn_name))</span><br><span class="line"></span><br><span class="line">r_collection=Collection(collection_name, using=conn_name)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n Schema :&quot;</span>, r_collection.schema)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Prepare-data-for-the-knowledge-base"><a href="#Prepare-data-for-the-knowledge-base" class="headerlink" title="Prepare data for the knowledge base"></a>Prepare data for the knowledge base</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Load up the PDF document</span></span><br><span class="line"><span class="keyword">from</span> langchain.document_loaders <span class="keyword">import</span> PDFMinerLoader</span><br><span class="line"></span><br><span class="line">loader = PDFMinerLoader(<span class="string">&quot;Large Language Models.pdf&quot;</span>)</span><br><span class="line">pdf_docs = loader.load()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Split document into chunks</span></span><br><span class="line"><span class="keyword">from</span> langchain.text_splitter <span class="keyword">import</span> RecursiveCharacterTextSplitter</span><br><span class="line"></span><br><span class="line">text_splitter   =   RecursiveCharacterTextSplitter(</span><br><span class="line">    chunk_size=<span class="number">512</span>, <span class="comment"># Specify the character chunk size</span></span><br><span class="line">    chunk_overlap=<span class="number">32</span>, <span class="comment"># &quot;Allowed&quot; Overlap across chunks</span></span><br><span class="line">    length_function=<span class="built_in">len</span> <span class="comment"># Function used to evaluate the chunk size (here in terms of characters)</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">pdf_docs    =   text_splitter.split_documents(pdf_docs)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create a list of chunks</span></span><br><span class="line">rag_text =[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pdf_docs:</span><br><span class="line">    rag_text.append(i.page_content)</span><br><span class="line">    </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Total chunks :&quot;</span>, <span class="built_in">len</span>(rag_text))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Sample chunk text: &quot;</span>, rag_text[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#create embeddings</span></span><br><span class="line"><span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">openai_api_key=<span class="string">&quot;&quot;</span></span><br><span class="line">os.environ[<span class="string">&quot;OPENAI_API_KEY&quot;</span>] = openai_api_key</span><br><span class="line"></span><br><span class="line">embeddings_model = OpenAIEmbeddings()</span><br><span class="line"></span><br><span class="line">rag_embedding=[embeddings_model.embed_query(i) </span><br><span class="line">                  <span class="keyword">for</span> i <span class="keyword">in</span> rag_text]</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create chunk IDs </span></span><br><span class="line">record_ids=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(rag_text))]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Populate-the-Milvus-database"><a href="#Populate-the-Milvus-database" class="headerlink" title="Populate the Milvus database"></a>Populate the Milvus database</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">insert_data=[record_ids, rag_text, rag_embedding]</span><br><span class="line"></span><br><span class="line">i_collection = Collection(collection_name, using=conn_name)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Insert the records</span></span><br><span class="line">mr=i_collection.insert(insert_data)</span><br><span class="line"><span class="comment">#Flush the inserted records</span></span><br><span class="line">i_collection.flush()</span><br><span class="line"></span><br><span class="line"><span class="comment">#Build an index on the embedding field</span></span><br><span class="line">index_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>:<span class="string">&quot;L2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;index_type&quot;</span>:<span class="string">&quot;IVF_FLAT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;params&quot;</span> :&#123;<span class="string">&quot;nlist&quot;</span>:<span class="number">1024</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">i_collection.create_index(</span><br><span class="line">    field_name=<span class="string">&quot;rag_embedding&quot;</span>,</span><br><span class="line">    index_params=index_params</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">utility.index_building_progress(collection_name, using=conn_name)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Answer-questions-with-RAG"><a href="#Answer-questions-with-RAG" class="headerlink" title="Answer questions with RAG"></a>Answer questions with RAG</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#The retrieval process</span></span><br><span class="line">search_params = &#123;</span><br><span class="line">    <span class="string">&quot;metric_type&quot;</span>: <span class="string">&quot;L2&quot;</span>, </span><br><span class="line">    <span class="string">&quot;offset&quot;</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="string">&quot;ignore_growing&quot;</span>: <span class="literal">False</span>, </span><br><span class="line">    <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;nprobe&quot;</span>: <span class="number">20</span>, <span class="string">&quot;radius&quot;</span>:<span class="number">0.5</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query = <span class="string">&quot;What is gender bias?&quot;</span></span><br><span class="line">search_embed=embeddings_model.embed_query(query)</span><br><span class="line"><span class="comment">#print(search_embed)</span></span><br><span class="line"></span><br><span class="line">q_collection = Collection(collection_name, using=conn_name)</span><br><span class="line">q_collection.load()</span><br><span class="line"></span><br><span class="line">results=q_collection.search(</span><br><span class="line">    data=[search_embed],</span><br><span class="line">    anns_field=<span class="string">&quot;rag_embedding&quot;</span>,</span><br><span class="line">    param=search_params,</span><br><span class="line">    limit=<span class="number">3</span>, <span class="comment">#Get top 3 results only</span></span><br><span class="line">    expr=<span class="literal">None</span>,</span><br><span class="line">    output_fields=[<span class="string">&quot;rag_text&quot;</span>],</span><br><span class="line">    consistency_level=<span class="string">&quot;Strong&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Top result :&quot;</span>, results[<span class="number">0</span>][<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Prepare prompt for LLM</span></span><br><span class="line"></span><br><span class="line">context=[]</span><br><span class="line"></span><br><span class="line"><span class="comment">#Append all returned chunks</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(results[<span class="number">0</span>])):</span><br><span class="line">    context.append(results[<span class="number">0</span>][i].entity.get(<span class="string">&quot;rag_text&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create a prompt</span></span><br><span class="line">prompt= (<span class="string">&quot;Based on only the context provided, answer the query below: &quot;</span></span><br><span class="line">        + <span class="string">&quot; Context: &quot;</span> + <span class="built_in">str</span>(context)</span><br><span class="line">        + <span class="string">&quot;\n\n Query: &quot;</span> + query)</span><br><span class="line">        </span><br><span class="line"><span class="built_in">print</span>(prompt)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Generate with LLM</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">llm= OpenAI(temperature=<span class="number">0.</span>, model=<span class="string">&quot;text-davinci-003&quot;</span>)</span><br><span class="line"></span><br><span class="line">completion=llm(prompt)</span><br><span class="line"><span class="built_in">print</span>(completion)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Vector-Databases-Best-Practices"><a href="#7-Vector-Databases-Best-Practices" class="headerlink" title="7. Vector Databases Best Practices"></a>7. Vector Databases Best Practices</h2><h3 id="Choose-a-vector-database"><a href="#Choose-a-vector-database" class="headerlink" title="Choose a vector database"></a>Choose a vector database</h3><ul>
+<li>Several vector DB options available<ul>
+<li>Cloud vs standalone, embedded vs cluster, specialized vs general</li>
+</ul>
+</li>
+<li>Use case decides the choice of the database<ul>
+<li>Storage, scalability and reliability needs</li>
+<li>Frequency of hybrid queries</li>
+<li>OK to store data in the cloud?</li>
+<li>Can provide resources for local hosting and management?</li>
+</ul>
+</li>
+</ul>
+<h3 id="Combine-vector-and-scalar-data"><a href="#Combine-vector-and-scalar-data" class="headerlink" title="Combine vector and scalar data"></a>Combine vector and scalar data</h3><ul>
+<li>Specialized vector databases<ul>
+<li>Excellent support for vector search</li>
+<li>Lack the extensive query capabilities that traditional databases provide</li>
+</ul>
+</li>
+<li>Does the use case require hybrid search?</li>
+<li>Keep scalar and vector data in separate databases?</li>
+<li>Choose carefully, since it has significant implications</li>
+</ul>
+<h3 id="Distance-measure-considerations"><a href="#Distance-measure-considerations" class="headerlink" title="Distance measure considerations"></a>Distance measure considerations</h3><ul>
+<li>Vector search will always return hits as long as there are records available in the database. If we set a limit of 10 in the query, it will return 10 records as long as there are 10 records in the database.</li>
+<li>Distance or similarity thresholds needs to check if vectors in DB match the vector in query. In Milvus, we can set the radius search parameter to this value.</li>
+<li>What exactly is similar? Depends on the use case.</li>
+<li>Embedding models and metric type impact similarity thresholds<ul>
+<li>Custom embedding by domain (examples: healthcare, finance)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Tune-vector-DB-performance"><a href="#Tune-vector-DB-performance" class="headerlink" title="Tune vector DB performance"></a>Tune vector DB performance</h3><ul>
+<li>Effectiveness of search depends upon the search data, embedding model, metric type, and thresholds</li>
+<li>Find the best combination by experimentation<ul>
+<li>Use a good test dataset that matches real-word data</li>
+<li>Experiment with embedding models and metric types</li>
+<li>Experiment with different distance thresholds to find the optimal value</li>
+<li>Continue to monitor this performance in production also</li>
+</ul>
+</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Keep exploring:</p>
+<ul>
+<li>Other vector database products beyond Milvus to understand how they compare</li>
+<li>Tools like LangChain and LlmalIndex help in building applications with vector databases</li>
+<li>Retrieval augmented generation application for your organization with vector databases</li>
+</ul>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+        <tag>RAG</tag>
       </tags>
   </entry>
 </search>

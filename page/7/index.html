@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -172,6 +172,214 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/09/Java%20Web%E4%B9%8BJSP-03%20JSP%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/09/Java%20Web%E4%B9%8BJSP-03%20JSP%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">Java Web之JSP-03 JSP内置对象</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-09 16:47:00" itemprop="dateCreated datePublished" datetime="2015-04-09T16:47:00+08:00">2015-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:25:31" itemprop="dateModified" datetime="2020-06-27T22:25:31+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-jsp内置对象简介"><a href="#1-jsp内置对象简介" class="headerlink" title="1. jsp内置对象简介"></a>1. jsp内置对象简介</h2><p>1、JSP内置对象是Web容器创建的一组对象，【不使用new关键字】就可以使用的内置对象。<br>2、九大内置对象:<br>out,request,response,session,application（五大常用对象）<br>Page,pageContext,exception.config（四个不太常用对象）</p>
+<h2 id="2-out对象"><a href="#2-out对象" class="headerlink" title="2. out对象"></a>2. out对象</h2><p>缓冲区Buffer：就是内存的一块区域涌来保存临时数据。</p>
+<p>out是JspWriter 的实例,是向客户端输出内容的常用对象.<br>常用方法:</p>
+<ol>
+<li>void println() 向客户端打印字符串.</li>
+<li>void clear() 清除缓冲区,在flush之后调用会抛出异常.</li>
+<li>void clearBuffer() 清除缓冲区,在flush之后调用不会抛出异常.</li>
+<li>void flush() 将缓冲区内容输出到客户端.</li>
+<li>int getBufferSize() </li>
+<li>int getRemaining()</li>
+<li>boolean isAutoFlush() 返回缓冲区满时，是自动清空还是抛出异常</li>
+<li>void close() 关闭输出流</li>
+</ol>
+<h2 id="3-Get和Post提交方式的区别"><a href="#3-Get和Post提交方式的区别" class="headerlink" title="3. Get和Post提交方式的区别"></a>3. Get和Post提交方式的区别</h2><p>表单有两种提交方式：get与post。定义在<code>&lt;form action=&quot;dologin.jsp&quot; name=&quot;loginForm&quot; method=&quot;提交方式***&quot;&gt;&lt;/form&gt;</code> 动作／名称等顺序无所谓。<br>1.get：以【明文】方式，通过URL提交数据，数据在URL中【可以看到】。提交数据最多不超过【2KB】。安全性较低，但效率比post方式高。适合提交数据量不大，且安全要求不高的数据：比如：搜索、查询等功能。<br>2.post：将用户提交的信息封装在HTML HEADER内。适合提交数据量大，安全性高的用户信息。如：注册、修改、上传等功能。</p>
+<h2 id="4-request对象"><a href="#4-request对象" class="headerlink" title="4. request对象"></a>4. request对象</h2><p>客户端的请求信息被封装在request对象中，它是HttpServletRequest类的实例。request对象具有请求域，即完成客户端的请求之前，该对象一直有效。常用方法如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/04/09/Java%20Web%E4%B9%8BJSP-03%20JSP%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/09/Java%20Web%E4%B9%8BJSP-04%20Java%20Beans/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/09/Java%20Web%E4%B9%8BJSP-04%20Java%20Beans/" class="post-title-link" itemprop="url">Java Web之JSP-04 Java Beans</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-09 16:47:00" itemprop="dateCreated datePublished" datetime="2015-04-09T16:47:00+08:00">2015-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 22:29:10" itemprop="dateModified" datetime="2020-06-27T22:29:10+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-JavaBean简介"><a href="#1-JavaBean简介" class="headerlink" title="1. JavaBean简介"></a>1. JavaBean简介</h2><p>javaBeans就是符合某种特定的规范的java类。使用JavaBeans的好处是解决代码重复编写，减少代码冗余，功能区分明确，提高了代码的可维护性。</p>
+<p>JavaBean的设计原则：</p>
+<ol>
+<li>公有类</li>
+<li>属性私有</li>
+<li>无参的公有构造方法</li>
+<li>getter和setter方法</li>
+</ol>
+<h2 id="2-JSP动作元素"><a href="#2-JSP动作元素" class="headerlink" title="2. JSP动作元素"></a>2. JSP动作元素</h2><h3 id="2-1-什么是JSP动作元素"><a href="#2-1-什么是JSP动作元素" class="headerlink" title="2.1 什么是JSP动作元素"></a>2.1 什么是JSP动作元素</h3><p>JSP动作元素（action element），动作元素为请求处理阶段提供信息。动作元素遵循XML语法，有一个包含元素名的开始标签，可以有属性，可选的内容、与开始标签匹配的结束标签。</p>
+<h3 id="2-2-JSP动作元素的五大类"><a href="#2-2-JSP动作元素的五大类" class="headerlink" title="2.2 JSP动作元素的五大类"></a>2.2 JSP动作元素的五大类</h3><p>第一类是与存取JavaBean有关的，包括：<br><code>&lt;jsp:useBean&gt; &lt;jsp:setProperty&gt; &lt;jsp:getProperty&gt;</code></p>
+<p>第二类是JSP1.2就开始有的基本元素，包括6个动作元素：<br><code>&lt;jsp:include&gt; &lt;jsp:forward&gt; &lt;jsp:param&gt; &lt;jsp:plugin&gt; &lt;jsp:params&gt; &lt;jsp:fallback&gt;</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/04/09/Java%20Web%E4%B9%8BJSP-04%20Java%20Beans/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1023,101 +1231,8 @@ DATABASES = {
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/04/19/2014-04-19/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/04/19/2014-04-19/" class="post-title-link" itemprop="url">醉笑陪公三万场</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-04-19 00:00:00" itemprop="dateCreated datePublished" datetime="2014-04-19T00:00:00+08:00">2014-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-06-27 16:52:58" itemprop="dateModified" datetime="2020-06-27T16:52:58+08:00">2020-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在百度上看到<a href="http://zhidao.baidu.com/link?url=2FYYejydAEvBpdnti51Ul2MPYlCV6SUQkc821EFyfywhbn1rLQv4PCbPJLBvFDwDIvk0NRdaCY7XqTngf80ltq" target="_blank" rel="noopener">这篇</a>。昨日参加同事婚礼，不胜唏嘘。</p>
-<blockquote>
-<p>东武望馀杭<br>云海天涯两杳茫<br>何日功成名遂了，还乡<br>醉笑陪公三万场<br>不用诉离觞<br>痛饮从来别有肠<br>今夜送归灯火冷，河塘<br>堕泪羊公却姓杨  </p>
-</blockquote>
-<p>再后来，又有滚滚红尘中进行了改编：</p>
-<blockquote>
-<p>楼高日尽<br>望断天涯路<br>来时陌上初熏<br>有情风万里卷潮来<br>推枕惘然不见<br>分携如昨到处萍漂泊<br>浩然相对今夕何年<br>谁道人生无再少<br>依旧梦魂中<br>但有旧欢新怨<br>人生底事往来如梭<br>醉笑陪君三万场 不诉离伤<br>禅心已失人间爱<br>又何曾梦觉<br>这些个千生万生只在<br>踏尽红尘何处是吾乡  </p>
-</blockquote>
-<p><img src="/images/2014-04-19.jpeg" alt="img"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -172,6 +172,219 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/08/Netty%E7%AC%94%E8%AE%B002-%E7%AC%AC%E4%B8%80%E4%B8%AANetty%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/08/Netty%E7%AC%94%E8%AE%B002-%E7%AC%AC%E4%B8%80%E4%B8%AANetty%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Netty笔记02-第一个Netty应用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-08 20:06:00" itemprop="dateCreated datePublished" datetime="2016-08-08T20:06:00+08:00">2016-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本章包含：</p>
+<ul>
+<li>设置开发环境</li>
+<li>一个Echo服务和客户端</li>
+<li>构建和测试应用</li>
+</ul>
+<h2 id="2-1-设置开发环境"><a href="#2-1-设置开发环境" class="headerlink" title="2.1 设置开发环境"></a>2.1 设置开发环境</h2><p>下载安装JDK和MAVEN，设置<code>JAVA_HOME</code>，并且设置<code>M2_HOME</code></p>
+<h2 id="2-2-Netty的客户端和服务器概览"><a href="#2-2-Netty的客户端和服务器概览" class="headerlink" title="2.2 Netty的客户端和服务器概览"></a>2.2 Netty的客户端和服务器概览</h2><p>下图是我们的Echo服务器和客户端一览。虽然我们大部分是在写web应用，但实现服务器和客户端有助于更好的理解Netty API.<br><img src="/images/1470379065595.png" alt="Alt text"></p>
+<h2 id="2-3-编写Echo服务器"><a href="#2-3-编写Echo服务器" class="headerlink" title="2.3 编写Echo服务器"></a>2.3 编写Echo服务器</h2><p>所有的Netty Server都需要：</p>
+<ul>
+<li><strong>至少一个</strong><code>ChannelHandler</code>:这个组建实现了服务端用于处理客户端提交的数据，它是业务逻辑。</li>
+<li><strong>Bootstrapping</strong>:用来配置服务的启动代码。最少的启动代码是绑定端口。</li>
+</ul>
+<h3 id="2-3-1-ChannelHandler和业务逻辑"><a href="#2-3-1-ChannelHandler和业务逻辑" class="headerlink" title="2.3.1 ChannelHandler和业务逻辑"></a>2.3.1 <code>ChannelHandler</code>和业务逻辑</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/08/08/Netty%E7%AC%94%E8%AE%B002-%E7%AC%AC%E4%B8%80%E4%B8%AANetty%E5%BA%94%E7%94%A8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Netty笔记01-Netty简介</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-05 14:04:00" itemprop="dateCreated datePublished" datetime="2016-08-05T14:04:00+08:00">2016-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-06-27 23:39:18" itemprop="dateModified" datetime="2020-06-27T23:39:18+08:00">2020-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Netty(<a href="http://netty.io" target="_blank" rel="noopener">http://netty.io</a> )是一个用来快速开发可维护高性能服务器和客户端应用的异步事件驱动网络应用框架。</p>
+<p>高性能系统不仅需要我们有优秀的编码技巧，还需要对网络、多线程与并发有相关的经验。</p>
+<h2 id="1-1-Java网络"><a href="#1-1-Java网络" class="headerlink" title="1.1 Java网络"></a>1.1 Java网络</h2><p>早期版本Java的<code>java.net</code>支持本地系统的socket库提供的阻塞函数。</p>
+<p><img src="/images/1470366209159.png" alt="Alt text"></p>
+<ul>
+<li><code>accept()</code>一直阻塞直到<code>ServerSocket</code>简历了链接，它返回一个<code>Socket</code>对象用来在客户端和服务器之间进行通信。</li>
+<li><code>BufferedRead</code>用来从<code>Socket</code>中读取文本；<code>PrintWriter</code>用来写入。</li>
+<li><code>readLine</code>阻塞直到发送了回车换行</li>
+</ul>
+<p>上面的代码每次只能处理一个链接。要管理多个并发的客户端，需要为每一个新的<code>Socket</code>来分配一个<code>Thread</code>,如图：<br><img src="/images/1470366696015.png" alt="Alt text"></p>
+<p>我们来思考一下这个方法：</p>
+<ul>
+<li>首先，很多时间线程处于等待状态，这是一种资源的浪费；</li>
+<li>每个线程需要在内存上分配64k到1M的空间；</li>
+<li>即使JVM支持大量的线程，但上下文之间的切换耗时。</li>
+</ul>
+<h3 id="1-1-1-Java-NIO"><a href="#1-1-1-Java-NIO" class="headerlink" title="1.1.1 Java NIO"></a>1.1.1 Java NIO</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/08/05/Netty%E7%AC%94%E8%AE%B001-Netty%E7%AE%80%E4%BB%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -971,211 +1184,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2016/01/01/Db-MySQL%E5%B8%B8%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/01/01/Db-MySQL%E5%B8%B8%E7%94%A8/" class="post-title-link" itemprop="url">MySQL常用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-01-01 13:15:00" itemprop="dateCreated datePublished" datetime="2016-01-01T13:15:00+08:00">2016-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-06-27 21:51:13" itemprop="dateModified" datetime="2020-06-27T21:51:13+08:00">2020-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将持续更新。</p>
-<h2 id="1-Mac上安装后需要配置的PATH"><a href="#1-Mac上安装后需要配置的PATH" class="headerlink" title="1. Mac上安装后需要配置的PATH"></a>1. Mac上安装后需要配置的PATH</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;mysql&#x2F;bin</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-Python使用MySQL"><a href="#2-Python使用MySQL" class="headerlink" title="2. Python使用MySQL"></a>2. Python使用MySQL</h2><p>Python中有5种常见客户端可连接MySQL.</p>
-<h3 id="2-1-MySQLdb"><a href="#2-1-MySQLdb" class="headerlink" title="2.1 MySQLdb"></a>2.1 <code>MySQLdb</code></h3><p>最早的，使用C语言写成，但是不支持Python3</p>
-<h3 id="2-2-mysql-connector-python"><a href="#2-2-mysql-connector-python" class="headerlink" title="2.2 mysql-connector-python"></a>2.2 <code>mysql-connector-python</code></h3><p><a href="https://pypi.python.org/pypi/mysql-connector-python/" target="_blank" rel="noopener">https://pypi.python.org/pypi/mysql-connector-python/</a></p>
-<p>这个是Oracle官方支持的，是纯Python编写的，但是有点慢，而且不兼容<code>MySQLdb</code></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/01/01/Db-MySQL%E5%B8%B8%E7%94%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">CSS3扁平化风格博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-07-08 19:39:00" itemprop="dateCreated datePublished" datetime="2015-07-08T19:39:00+08:00">2015-07-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-06-27 13:07:30" itemprop="dateModified" datetime="2020-06-27T13:07:30+08:00">2020-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-页面整体分析"><a href="#1-页面整体分析" class="headerlink" title="1. 页面整体分析"></a>1. 页面整体分析</h2><p>做一个网页或者网站，第一步就是先定义网页与网站的结构，这是所有任务的前提。</p>
-<hr>
-<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2 准备工作"></a>2 准备工作</h2><p>在这个案例中，我们将使用Gulp, SASS和Compass来创建。</p>
-<h3 id="2-1-安装Gulp"><a href="#2-1-安装Gulp" class="headerlink" title="2.1 安装Gulp"></a>2.1 安装Gulp</h3><p>Gulp是为了后期进行自动化工作而做的。</p>
-<ul>
-<li>如果电脑没有安装node，那么第一步就是下载node，并且安装。</li>
-<li>安装http-server来查看网页: <code>npm install -g http-server</code> </li>
-<li>全局安装gulp: <code>sudo npm install -g gulp</code> </li>
-<li>初始化项目： <code>npm init</code> </li>
-<li>安装gulp及常用库</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp --save-dev</span><br><span class="line">npm install gulp-concat --save-dev</span><br><span class="line">npm install gulp-uglify --save-dev</span><br><span class="line">npm install gulp-rename --save-dev</span><br><span class="line">npm install gulp-minify-css --save-dev</span><br><span class="line">npm install gulp-sass --save-dev</span><br><span class="line">npm install gulp-compass --save-dev</span><br><span class="line">npm install gulp-sourcemaps</span><br><span class="line">npm install del --save-dev</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-2-安装SASS与Compass"><a href="#2-2-安装SASS与Compass" class="headerlink" title="2.2 安装SASS与Compass"></a>2.2 安装SASS与Compass</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/07/08/CSS3%E6%89%81%E5%B9%B3%E5%8C%96%E9%A3%8E%E6%A0%BC%E5%8D%9A%E5%AE%A2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

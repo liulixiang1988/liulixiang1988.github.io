@@ -6,7 +6,7 @@
   <link href="https://liulixiang1988.github.io/atom.xml" rel="self"/>
   
   <link href="https://liulixiang1988.github.io/"/>
-  <updated>2024-06-06T11:35:16.253Z</updated>
+  <updated>2024-06-09T10:59:04.850Z</updated>
   <id>https://liulixiang1988.github.io/</id>
   
   <author>
@@ -17,11 +17,112 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LLM Foundations: Vector Databases for Caching and Retrieval Augmented Generation (RAG)</title>
+    <link href="https://liulixiang1988.github.io/2024/06/09/2024-06-09-Vector-Databases/"/>
+    <id>https://liulixiang1988.github.io/2024/06/09/2024-06-09-Vector-Databases/</id>
+    <published>2024-06-09T10:46:00.000Z</published>
+    <updated>2024-06-09T10:59:04.850Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Status: Finished&lt;/li&gt;
+&lt;li&gt;Author: Kumaran Ponnambalam&lt;/li&gt;
+&lt;li&gt;Publishing&amp;#x2F;Release Date: February 23, 2024&lt;/li&gt;
+&lt;li&gt;Publisher: Linkedin&lt;/li&gt;
+&lt;li&gt;Link: &lt;a href=&quot;https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&amp;u=3322&quot;&gt;https://www.linkedin.com/learning/llm-foundations-vector-databases-for-caching-and-retrieval-augmented-generation-rag/genai-with-vector-databases?resume=false&amp;amp;u=3322&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Type: Courses&lt;/li&gt;
+&lt;li&gt;Start Date: May 28, 2024&lt;/li&gt;
+&lt;li&gt;End Date: June 9, 2024&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Scope&quot;&gt;&lt;a href=&quot;#Scope&quot; class=&quot;headerlink&quot; title=&quot;Scope&quot;&gt;&lt;/a&gt;Scope&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Vector and vector search concepts review&lt;/li&gt;
+&lt;li&gt;Concepts and Setup of Milvus DB&lt;/li&gt;
+&lt;li&gt;Milvus DB data manipulation and search&lt;/li&gt;
+&lt;li&gt;Vector DB as a LLM cache&lt;/li&gt;
+&lt;li&gt;Vector DB for Retrieval Augmented Generation (RAG)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Prerequisites&quot;&gt;&lt;a href=&quot;#Prerequisites&quot; class=&quot;headerlink&quot; title=&quot;Prerequisites&quot;&gt;&lt;/a&gt;Prerequisites&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;NLP for Machine learning&lt;/li&gt;
+&lt;li&gt;LLM and embeddings&lt;/li&gt;
+&lt;li&gt;Python, jupyter notebooks, docker&lt;/li&gt;
+&lt;li&gt;LangChain&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Introduction-to-Vector-Databases&quot;&gt;&lt;a href=&quot;#Introduction-to-Vector-Databases&quot; class=&quot;headerlink&quot; title=&quot;Introduction to Vector Databases&quot;&gt;&lt;/a&gt;Introduction to Vector Databases&lt;/h2&gt;&lt;h3 id=&quot;What-is-a-vector&quot;&gt;&lt;a href=&quot;#What-is-a-vector&quot; class=&quot;headerlink&quot; title=&quot;What is a vector?&quot;&gt;&lt;/a&gt;What is a vector?&lt;/h3&gt;&lt;p&gt;A vector is an object that has both magnitude (size, quantity) and direction (line, angle, trend)&lt;/p&gt;
+&lt;p&gt;Vectors in Programming:&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AI" scheme="https://liulixiang1988.github.io/categories/AI/"/>
+    
+    
+    <category term="LLM" scheme="https://liulixiang1988.github.io/tags/LLM/"/>
+    
+    <category term="RAG" scheme="https://liulixiang1988.github.io/tags/RAG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Fine Tune Your LLMS</title>
+    <link href="https://liulixiang1988.github.io/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/"/>
+    <id>https://liulixiang1988.github.io/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/</id>
+    <published>2024-06-06T12:00:00.000Z</published>
+    <updated>2024-06-09T10:55:17.276Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-Exploring-Concepts-and-Costs-of-Fine-Tuning&quot;&gt;&lt;a href=&quot;#1-Exploring-Concepts-and-Costs-of-Fine-Tuning&quot; class=&quot;headerlink&quot; title=&quot;1. Exploring Concepts and Costs of Fine-Tuning&quot;&gt;&lt;/a&gt;1. Exploring Concepts and Costs of Fine-Tuning&lt;/h2&gt;&lt;h3 id=&quot;Review-the-fine-tuning-process&quot;&gt;&lt;a href=&quot;#Review-the-fine-tuning-process&quot; class=&quot;headerlink&quot; title=&quot;Review the fine-tuning process&quot;&gt;&lt;/a&gt;Review the fine-tuning process&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Why Fine-Tune?&lt;ul&gt;
+&lt;li&gt;Fine tuning improves the overall performance of a model for your particular use case. The responses to your prompts are improved when using a fine tuned model.&lt;/li&gt;
+&lt;li&gt;You can reduce token costs because your prompts are shorter and require fewer examples than few shot prompting or retrieval augmented generation or RAG&lt;/li&gt;
+&lt;li&gt;The model responds to your queries (prompts) faster with lower latency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Fine-tuning process&lt;ul&gt;
+&lt;li&gt;Obtain the data: a minimum for 10 examples is required. 50-100 training examples will clearly improve the fine-tuning&lt;/li&gt;
+&lt;li&gt;Prepare the data: Format your data in the JSONL format.&lt;/li&gt;
+&lt;li&gt;Upload the data to the OpenAI server: Use the Files API to upload your data.&lt;/li&gt;
+&lt;li&gt;Create a fine-tuning job: Use the OpenAI API, SDK, or option in the Playground.&lt;/li&gt;
+&lt;li&gt;Evaluate the model: Use metrics like training loss and training token accuracy.&lt;/li&gt;
+&lt;li&gt;Use the model: Use in the &lt;code&gt;model&lt;/code&gt; parameter of your &lt;code&gt;ChatCompletions&lt;/code&gt; call&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Understand-the-costs-of-the-fine-tuning&quot;&gt;&lt;a href=&quot;#Understand-the-costs-of-the-fine-tuning&quot; class=&quot;headerlink&quot; title=&quot;Understand the costs of the fine-tuning&quot;&gt;&lt;/a&gt;Understand the costs of the fine-tuning&lt;/h3&gt;&lt;p&gt;OpenAI charges you based on tokens, the input and output tokens will be charged.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2024/2024-06-09-01.png&quot; alt=&quot;01&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fine-tuned prompt allows you send short tokens.&lt;/li&gt;
+&lt;li&gt;Getting to know the number of tokens helps 1. estimate the costs; 2. reduce the latency&lt;/li&gt;
+&lt;li&gt;Pricing&lt;ul&gt;
+&lt;li&gt;Training the fine-tuned model (base price * token * epoch)&lt;/li&gt;
+&lt;li&gt;Using the fine-tuned model during inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2-Setting-up-your-environment-for-fine-tuning&quot;&gt;&lt;a href=&quot;#2-Setting-up-your-environment-for-fine-tuning&quot; class=&quot;headerlink&quot; title=&quot;2. Setting up your environment for fine-tuning&quot;&gt;&lt;/a&gt;2. Setting up your environment for fine-tuning&lt;/h2&gt;&lt;h3 id=&quot;Explore-the-OpenAI-API-for-fine-tuning&quot;&gt;&lt;a href=&quot;#Explore-the-OpenAI-API-for-fine-tuning&quot; class=&quot;headerlink&quot; title=&quot;Explore the OpenAI API for fine-tuning&quot;&gt;&lt;/a&gt;Explore the OpenAI API for fine-tuning&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Fine-Tuning Endpoints&lt;ol&gt;
+&lt;li&gt;Create fine-tuning job&lt;/li&gt;
+&lt;li&gt;List fine-tuning job&lt;/li&gt;
+&lt;li&gt;List fine-tuning events&lt;/li&gt;
+&lt;li&gt;Retrieve fine-tuning job&lt;/li&gt;
+&lt;li&gt;Cancel fine-tuning&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="AI" scheme="https://liulixiang1988.github.io/categories/AI/"/>
+    
+    
+    <category term="LLM" scheme="https://liulixiang1988.github.io/tags/LLM/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2024.06.02 PyTorch Essential Training</title>
     <link href="https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/"/>
     <id>https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/</id>
     <published>2024-06-02T14:08:00.000Z</published>
-    <updated>2024-06-06T11:35:16.253Z</updated>
+    <updated>2024-06-09T10:49:03.288Z</updated>
     
     
     <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Status: Finished&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Author: Terezija Semenski&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Publishing/Release Date: April 15, 2024&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Publisher: Linkedin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Link: https://www.linkedin.com/learning/pytorch-essential-training-deep-learning-23753149/deep-learning-with-pytorch?resume=false&amp;amp;u=3322&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Type: Courses&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Tags: AI&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Start Date: June 1, 2024&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;End Date: June 2, 2024&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -47,7 +148,7 @@
     <category term="AI" scheme="https://liulixiang1988.github.io/categories/AI/"/>
     
     
-    <category term="life" scheme="https://liulixiang1988.github.io/tags/life/"/>
+    <category term="PyTorch" scheme="https://liulixiang1988.github.io/tags/PyTorch/"/>
     
   </entry>
   
@@ -607,59 +708,6 @@
     
     
     <category term="System Design" scheme="https://liulixiang1988.github.io/tags/System-Design/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分布式架构笔记</title>
-    <link href="https://liulixiang1988.github.io/2021/02/15/2021-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E7%AC%94%E8%AE%B0/"/>
-    <id>https://liulixiang1988.github.io/2021/02/15/2021-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E7%AC%94%E8%AE%B0/</id>
-    <published>2021-02-15T04:15:00.000Z</published>
-    <updated>2024-01-21T12:15:51.052Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;1-为什么需要分布式架构&quot;&gt;&lt;a href=&quot;#1-为什么需要分布式架构&quot; class=&quot;headerlink&quot; title=&quot;1. 为什么需要分布式架构&quot;&gt;&lt;/a&gt;1.</summary>
-        
-      
-    
-    
-    
-    <category term="Distributed System" scheme="https://liulixiang1988.github.io/categories/Distributed-System/"/>
-    
-    
-    <category term="Distributed System" scheme="https://liulixiang1988.github.io/tags/Distributed-System/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++面向对象</title>
-    <link href="https://liulixiang1988.github.io/2020/12/10/2021-12-10-cpp-opp/"/>
-    <id>https://liulixiang1988.github.io/2020/12/10/2021-12-10-cpp-opp/</id>
-    <published>2020-12-10T11:00:00.000Z</published>
-    <updated>2024-01-21T12:15:51.052Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
-&lt;h2 id=&quot;类-Class&quot;&gt;&lt;a href=&quot;#类-Class&quot; class=&quot;headerlink&quot; title=&quot;类(Class)&quot;&gt;&lt;/a&gt;类(Class)&lt;/h2&gt;&lt;h3 id=&quot;类定义&quot;&gt;&lt;a href=&quot;#类定义&quot; class=&quot;headerlink&quot; title=&quot;类定义&quot;&gt;&lt;/a&gt;类定义&lt;/h3&gt;&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;className&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;/* All member variables&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;  and member functions*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;; &lt;span class=&quot;comment&quot;&gt;// 注意，类定义必须以分号结尾&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;创建对象&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;className&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i; &lt;span class=&quot;comment&quot;&gt;//integer object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  className c; &lt;span class=&quot;comment&quot;&gt;// className object&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;类访问范围&quot;&gt;&lt;a href=&quot;#类访问范围&quot; class=&quot;headerlink&quot; title=&quot;类访问范围&quot;&gt;&lt;/a&gt;类访问范围&lt;/h3&gt;&lt;p&gt;私有：&lt;/p&gt;
-&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Class1&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; num; &lt;span class=&quot;comment&quot;&gt;// 1. 默认时私有的&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Class2&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt;: &lt;span class=&quot;comment&quot;&gt;// 也可以显示声明私有&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; num;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;public &amp;amp; protected&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="C++" scheme="https://liulixiang1988.github.io/categories/C/"/>
-    
-    
-    <category term="C++" scheme="https://liulixiang1988.github.io/tags/C/"/>
     
   </entry>
   
