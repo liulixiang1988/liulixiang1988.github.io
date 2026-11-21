@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="Deploying Applications the DevOps Way[TOC] 1. Using the Helm Package Manager Helm is used to streamline installing and managing Kubernetes applications. Helm consists of the helm tool, which needs to">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-17T11:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-21T09:32:38.300Z">
+<meta property="article:modified_time" content="2026-11-21T09:40:45.129Z">
 <meta property="article:author" content="Liu Lixiang">
 <meta property="article:tag" content="Helm">
 <meta property="article:tag" content="Kustomize">
@@ -239,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 17:32:38" itemprop="dateModified" datetime="2026-11-21T17:32:38+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:40:45" itemprop="dateModified" datetime="2026-11-21T17:40:45+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -309,7 +309,7 @@
 <p>In such a configuration, the main <code>kustomization.yaml</code> defines the structure:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">~/someApp</span><br><span class="line">├── base</span><br><span class="line">│   ├── deployment.yaml</span><br><span class="line">│   ├── kustomization.yaml</span><br><span class="line">│   └── service.yaml</span><br><span class="line">└── overlays</span><br><span class="line">    ├── development</span><br><span class="line">    │   ├── cpu_count.yaml</span><br><span class="line">    │   ├── kustomization.yaml</span><br><span class="line">    │   └── replica_count.yaml</span><br><span class="line">    └── production</span><br><span class="line">        ├── cpu_count.yaml</span><br><span class="line">        ├── kustomization.yaml</span><br><span class="line">        └── replica_count.yaml</span><br></pre></td></tr></table></figure>
 
-<p>In each of the <code>overlays/&#123;dev,staging,prod&#125;/kustomization.yaml</code>, users would reference the base configuration in the resources field, and specify changes for the specific environment:</p>
+<p>In each of the <code>overlays/{dev,staging,prod}/kustomization.yaml</code>, users would reference the base configuration in the resources field, and specify changes for the specific environment:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resources:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">../../base</span></span><br><span class="line"><span class="attr">namePrefix:</span> <span class="string">dev-</span></span><br><span class="line"><span class="attr">namespace:</span> <span class="string">development</span></span><br><span class="line"><span class="attr">commonLabels:</span></span><br><span class="line">  <span class="attr">environment:</span> <span class="string">development</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="Demo-Using-Kustomization"><a href="#Demo-Using-Kustomization" class="headerlink" title="Demo: Using Kustomization"></a>Demo: Using Kustomization</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> deployment.yaml</span><br><span class="line"><span class="built_in">cat</span> service.yaml</span><br><span class="line">kubectl apply -f deployment.yaml service.yaml</span><br><span class="line"><span class="built_in">cat</span> kustomization.yaml</span><br><span class="line">kubectl apply -k . <span class="comment"># use kustomization.yaml to apply the changes</span></span><br></pre></td></tr></table></figure>
