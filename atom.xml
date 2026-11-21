@@ -6,7 +6,7 @@
   <link href="https://liulixiang1988.github.io/atom.xml" rel="self"/>
   
   <link href="https://liulixiang1988.github.io/"/>
-  <updated>2026-11-21T04:51:07.789Z</updated>
+  <updated>2026-11-21T09:26:48.094Z</updated>
   <id>https://liulixiang1988.github.io/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>2026.11.21 AI乱纪元</title>
+    <link href="https://liulixiang1988.github.io/2026/11/21/2026-11-21-wondering/"/>
+    <id>https://liulixiang1988.github.io/2026/11/21/2026-11-21-wondering/</id>
+    <published>2026-11-21T09:10:00.000Z</published>
+    <updated>2026-11-21T09:26:48.094Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;又是一年的尾声，美国那边开始陆陆续续开始休假。自己这每天也不知道每天在追去啥，得过且过。&lt;/p&gt;
+&lt;p&gt;年轻时，我肯定不会这么承认，或者内心也会挣扎一下。现在吧，总感觉就这么滴吧。&lt;/p&gt;
+&lt;p&gt;躺又躺不平，卷又卷不赢。&lt;/p&gt;
+&lt;p&gt;今天让AI整理了自己的博客的发布。AI一顿操作，好想现在我只用保存跟提交了。其实这一步也能省。这就是AI，猛的很。&lt;/p&gt;
+&lt;p&gt;现在只需要每天跟AI聊天，让它帮着修改。自己就是流水线上看机器的人。之所以还需要人类，是为了让它能够有更多的数据，训练更大的模型，更快的替换人类。&lt;/p&gt;
+&lt;p&gt;程序员的工作跟以前有了翻天覆地的变化，让之前引以为傲的各种奇技淫巧变得没多少意义。当然有人会说，我们的设计模式、架构思想仍然是宝贵的。确实如此，但是这些可能只在长期的职业生涯中的五分之一。每个人的理解也不相同，难以分辨优劣。&lt;/p&gt;
+&lt;p&gt;反倒是之前只会一点点编程或者不会编程，但是知道自己想做什么的人此刻会比较幸福。&lt;/p&gt;
+&lt;p&gt;除了工作，另一个就是对孩子的学习。将来她去做什么呢？一边说卷没有用，一遍接着卷。&lt;/p&gt;
+&lt;p&gt;身体也是发出各种警告。快39岁了。&lt;/p&gt;
+&lt;p&gt;升职也无望，做的事情也是边缘。这些也不用去期盼。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="生活" scheme="https://liulixiang1988.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+    <category term="life" scheme="https://liulixiang1988.github.io/tags/life/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LLM Foundations: Vector Databases for Caching and Retrieval Augmented Generation (RAG)</title>
     <link href="https://liulixiang1988.github.io/2024/06/09/2024-06-09-Vector-Databases/"/>
     <id>https://liulixiang1988.github.io/2024/06/09/2024-06-09-Vector-Databases/</id>
     <published>2024-06-09T10:46:00.000Z</published>
-    <updated>2026-11-21T04:51:07.789Z</updated>
+    <updated>2026-11-21T09:26:48.094Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;ul&gt;
@@ -66,7 +94,7 @@
     <link href="https://liulixiang1988.github.io/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/"/>
     <id>https://liulixiang1988.github.io/2024/06/06/2024-06-09-Fine-Tune-Your-LLMs/</id>
     <published>2024-06-06T12:00:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.094Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;1-Exploring-Concepts-and-Costs-of-Fine-Tuning&quot;&gt;&lt;a href=&quot;#1-Exploring-Concepts-and-Costs-of-Fine-Tuning&quot; class=&quot;headerlink&quot; title=&quot;1. Exploring Concepts and Costs of Fine-Tuning&quot;&gt;&lt;/a&gt;1. Exploring Concepts and Costs of Fine-Tuning&lt;/h2&gt;&lt;h3 id=&quot;Review-the-fine-tuning-process&quot;&gt;&lt;a href=&quot;#Review-the-fine-tuning-process&quot; class=&quot;headerlink&quot; title=&quot;Review the fine-tuning process&quot;&gt;&lt;/a&gt;Review the fine-tuning process&lt;/h3&gt;&lt;ul&gt;
@@ -122,7 +150,7 @@
     <link href="https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/"/>
     <id>https://liulixiang1988.github.io/2024/06/02/2024-06-02-pytorch-essential-training/</id>
     <published>2024-06-02T14:08:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.094Z</updated>
     
     
     <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Status: Finished&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Author: Terezija Semenski&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Publishing/Release Date: April 15, 2024&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Publisher: Linkedin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Link: https://www.linkedin.com/learning/pytorch-essential-training-deep-learning-23753149/deep-learning-with-pytorch?resume=false&amp;amp;u=3322&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Type: Courses&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Tags: AI&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Start Date: June 1, 2024&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;End Date: June 2, 2024&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -157,7 +185,7 @@
     <link href="https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/"/>
     <id>https://liulixiang1988.github.io/2024/03/01/2024-03-31-%E6%B0%B4%E5%85%89%E6%BD%8B%E6%BB%9F%E6%99%B4%E6%96%B9%E5%A5%BD/</id>
     <published>2024-03-01T14:08:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;昨天去了趟杭州，算是对自己多年想去杭州的心一个交代。早上开车，一路南下，高速上车一直很多，在从嘉兴到杭州的路段，前面两辆车忽然追尾，自己开始半刹还有二三十米发现可能也会撞上去，一脚踩死，立即打开双闪。所幸后车没有追上来。此时心里已经有些烦躁，为什么人这么多。&lt;/p&gt;
@@ -185,7 +213,7 @@
     <link href="https://liulixiang1988.github.io/2024/01/22/2024-01-22-Renew/"/>
     <id>https://liulixiang1988.github.io/2024/01/22/2024-01-22-Renew/</id>
     <published>2024-01-22T14:40:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
       
@@ -212,7 +240,7 @@
     <link href="https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/"/>
     <id>https://liulixiang1988.github.io/2022/01/17/2022-01-17-Deploying-Applications-The-DevOps-Way/</id>
     <published>2022-01-17T11:00:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;Deploying-Applications-the-DevOps-Way&quot;&gt;&lt;a href=&quot;#Deploying-Applications-the-DevOps-Way&quot; class=&quot;headerlink&quot; title=&quot;Deploying Applications the DevOps Way&quot;&gt;&lt;/a&gt;Deploying Applications the DevOps Way&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
@@ -254,7 +282,7 @@
     <link href="https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/"/>
     <id>https://liulixiang1988.github.io/2021/08/21/2021-08-21-%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/</id>
     <published>2021-08-21T04:24:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -295,7 +323,7 @@
     <link href="https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/"/>
     <id>https://liulixiang1988.github.io/2021/08/13/2021-08-13-DistributedLockManager/</id>
     <published>2021-08-13T13:21:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
@@ -324,7 +352,7 @@
     <link href="https://liulixiang1988.github.io/2021/07/17/2021-07-17-grpc/"/>
     <id>https://liulixiang1988.github.io/2021/07/17/2021-07-17-grpc/</id>
     <published>2021-07-17T14:52:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -379,7 +407,7 @@
     <link href="https://liulixiang1988.github.io/2021/07/10/2021-07-10-MySQL-Optimization/"/>
     <id>https://liulixiang1988.github.io/2021/07/10/2021-07-10-MySQL-Optimization/</id>
     <published>2021-07-10T08:54:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
       
@@ -407,7 +435,7 @@
     <link href="https://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/"/>
     <id>https://liulixiang1988.github.io/2021/06/14/2021-06-14-MapReduce/</id>
     <published>2021-06-14T13:16:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -444,7 +472,7 @@
     <link href="https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/"/>
     <id>https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/</id>
     <published>2021-05-18T22:30:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -482,7 +510,7 @@
     <link href="https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/"/>
     <id>https://liulixiang1988.github.io/2021/05/15/2021-05-15-HDFS/</id>
     <published>2021-05-15T12:37:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -514,7 +542,7 @@
     <link href="https://liulixiang1988.github.io/2021/05/15/2021-05-15-Hadoop101/"/>
     <id>https://liulixiang1988.github.io/2021/05/15/2021-05-15-Hadoop101/</id>
     <published>2021-05-15T05:18:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -551,7 +579,7 @@
     <link href="https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/"/>
     <id>https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E6%8A%80%E6%9C%AF%E4%BA%BA%E7%9A%84%E6%80%9D%E7%BB%B4%E4%BF%AE%E7%82%BC/</id>
     <published>2021-03-14T13:00:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
@@ -578,7 +606,7 @@
     <link href="https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/"/>
     <id>https://liulixiang1988.github.io/2021/03/14/2021-03-14-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E7%A4%BA%E4%BE%8B%E6%A8%A1%E6%9D%BF/</id>
     <published>2021-03-14T13:00:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.093Z</updated>
     
     
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
@@ -606,7 +634,7 @@
     <link href="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/"/>
     <id>https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/</id>
     <published>2021-02-19T02:35:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.092Z</updated>
     
     
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
@@ -631,7 +659,7 @@
     <link href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/"/>
     <id>https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%863/</id>
     <published>2021-02-18T13:30:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.092Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;设计模式基础&quot;&gt;&lt;a href=&quot;#设计模式基础&quot; class=&quot;headerlink&quot; title=&quot;设计模式基础&quot;&gt;&lt;/a&gt;设计模式基础&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;设计模式的精髓是对多态的使用&lt;/strong&gt;&lt;/p&gt;
@@ -659,7 +687,7 @@
     <link href="https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/"/>
     <id>https://liulixiang1988.github.io/2021/02/18/2021-02-18-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%862/</id>
     <published>2021-02-18T07:00:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
+    <updated>2026-11-21T09:26:48.092Z</updated>
     
     
     <summary type="html">&lt;p&gt;设计的两个基本原则：高内聚，低耦合。&lt;/p&gt;
@@ -671,36 +699,6 @@
 &lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-adapter.png&quot; alt=&quot;adapter&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;3. 使用观察者模式实现开闭原则&lt;/strong&gt;: 如果要实现多个控制，使用观察者模式+策略+适配器模式&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-observer.png&quot; alt=&quot;observer&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="System Design" scheme="https://liulixiang1988.github.io/categories/System-Design/"/>
-    
-    
-    <category term="System Design" scheme="https://liulixiang1988.github.io/tags/System-Design/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>软件设计原理1-4+1架构图与UML</title>
-    <link href="https://liulixiang1988.github.io/2021/02/18/2021-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/"/>
-    <id>https://liulixiang1988.github.io/2021/02/18/2021-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/</id>
-    <published>2021-02-18T04:15:00.000Z</published>
-    <updated>2026-11-21T04:51:07.788Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;4-1架构视图&quot;&gt;&lt;a href=&quot;#4-1架构视图&quot; class=&quot;headerlink&quot; title=&quot;4+1架构视图&quot;&gt;&lt;/a&gt;4+1架构视图&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://liulixiang1988.github.io/images/2021-02-18-4-1.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;逻辑视图&lt;/strong&gt;：描述软件的功能逻辑，由哪些模块组成，模块中包含哪些类，其依赖关系如何。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;开发视图&lt;/strong&gt;：包括系统架构层面的层次划分，包的管理，依赖的系统与第三方的程序包。开发视图某些方面和逻辑视图有一定重复性，不同视角看到的可能是同一个东西，开发视图中一个程序包，可能正好对应逻辑视图中的一个功能模块。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;过程视图&lt;/strong&gt;：描述程序运行期的进程、线程、对象实例，以及与此相关的并发、同步、通信等问题。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;物理视图&lt;/strong&gt;：描述软件如何安装并部署到物理的服务上，以及不同的服务器之间如何关联、通信。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;场景视图&lt;/strong&gt;：针对具体的用例场景，将上述 4 个视图关联起来，一方面从业务角度描述，功能流程如何完成，一方面从软件角度描述，相关组成部分如何互相依赖、调用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;UML&quot;&gt;&lt;a href=&quot;#UML&quot; class=&quot;headerlink&quot; title=&quot;UML&quot;&gt;&lt;/a&gt;UML&lt;/h2&gt;&lt;h3 id=&quot;类图&quot;&gt;&lt;a href=&quot;#类图&quot; class=&quot;headerlink&quot; title=&quot;类图&quot;&gt;&lt;/a&gt;类图&lt;/h3&gt;&lt;p&gt;在&lt;strong&gt;详细设计阶段&lt;/strong&gt;与&lt;strong&gt;需求分析阶段&lt;/strong&gt;使用。&lt;/p&gt;
-&lt;p&gt;一个类包含三个部分：类的名字、类的属性列表和类的方法列表。类之间有 6 种静态关系：关联、依赖、组合、聚合、继承、泛化。&lt;/p&gt;
-&lt;p&gt;在需求分析阶段，可以将关键的领域模型对象用类图画出来，在这个阶段中，我们需要关注的是领域对象的识别及其关系，所以用简化的类图来描述，只画出类的名字及关系就可以了。&lt;/p&gt;
-&lt;h3 id=&quot;序列图&quot;&gt;&lt;a href=&quot;#序列图&quot; class=&quot;headerlink&quot; title=&quot;序列图&quot;&gt;&lt;/a&gt;序列图&lt;/h3&gt;&lt;p&gt;序列图通常用于表示对象之间的交互，这个对象可以是类对象，也可以是更大粒度的参与者，比如组件、服务器、子系统等，总之，只要是描述不同参与者之间交互的，都可以使用序列图，也就是说，&lt;strong&gt;在软件设计的不同阶段&lt;/strong&gt;，都可以画序列图。&lt;/p&gt;</summary>
     
     
     

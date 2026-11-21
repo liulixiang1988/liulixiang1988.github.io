@@ -100,7 +100,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">72</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -139,7 +139,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -196,6 +196,115 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/10/Java%20Web%E4%B9%8BJSP-05%20JSP%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Liu Lixiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一步一步">
+      <meta itemprop="description" content="云天收夏色，木叶动秋声">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 一步一步">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/10/Java%20Web%E4%B9%8BJSP-05%20JSP%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">Java Web之JSP-05 JSP状态管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-10 16:30:00" itemprop="dateCreated datePublished" datetime="2015-04-10T16:30:00+08:00">2015-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-http协议的无状态性"><a href="#1-http协议的无状态性" class="headerlink" title="1. http协议的无状态性"></a>1. http协议的无状态性</h2><ol>
+<li>无状态是指，当浏览器发送请求给服务器的时候，服务器会响应。但当同一个浏览器再次发送请求时，服务器不会知道是刚才那个浏览器。</li>
+<li>简单说，服务器【不会保存用户状态】，不会记得客户端是否访问过，所以这就是无状态协议。</li>
+</ol>
+<h2 id="2-Cookie概述"><a href="#2-Cookie概述" class="headerlink" title="2. Cookie概述"></a>2. Cookie概述</h2><p>保存用户的状态的两大机制：session ，cookie</p>
+<p>cookie作用:</p>
+<ol>
+<li>对特定对象的追踪 </li>
+<li>保存用户网页浏览记录与习惯</li>
+<li>简化登录</li>
+</ol>
+<p>安全风险：容易泄露用户信息<br>典型应用一：判断注册用户是否已经登录网站<br>典型应用二：“购物车”的处理</p>
+<h2 id="3-JSP页面中创建和使用Cookie"><a href="#3-JSP页面中创建和使用Cookie" class="headerlink" title="3. JSP页面中创建和使用Cookie"></a>3. JSP页面中创建和使用Cookie</h2><ol>
+<li>创建Cookie对象：<code>Cookie cookie = new Cookie(String key , Object value);</code></li>
+<li>写入Cookie对象：<code>response.addCookie(cookie);</code></li>
+<li>读取Cookie对象：<code>Cookie[] cookies = request.getCookies();</code></li>
+</ol>
+<p>Cookie常用方法：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/04/10/Java%20Web%E4%B9%8BJSP-05%20JSP%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2015/04/09/Java%20Web%E4%B9%8BJSP-03%20JSP%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,7 +341,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,7 +447,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -440,7 +549,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -573,7 +682,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -668,7 +777,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -764,7 +873,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -865,7 +974,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -976,7 +1085,7 @@ DATABASES = &#123;
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1078,7 +1187,7 @@ DATABASES = &#123;
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
+      <time title="Modified: 2026-11-21 17:26:48" itemprop="dateModified" datetime="2026-11-21T17:26:48+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1121,120 +1230,6 @@ DATABASES = &#123;
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/09/08/Django%20REST%20Framework%E7%AC%94%E8%AE%B0-01%20%E5%AE%89%E8%A3%85/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Liu Lixiang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一步一步">
-      <meta itemprop="description" content="云天收夏色，木叶动秋声">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 一步一步">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/" class="post-title-link" itemprop="url">使用Python的魔术方法创造更好的正则API</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-07-27 00:00:00" itemprop="dateCreated datePublished" datetime="2014-07-27T00:00:00+08:00">2014-07-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-21 12:51:07" itemprop="dateModified" datetime="2026-11-21T12:51:07+08:00">2026-11-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>原文<a target="_blank" rel="noopener" href="http://charlesleifer.com/blog/playing-with-python-magic-methods-to-make-a-nicer-regex-api/">在此</a></p>
-<p>我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。</p>
-<p>首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子：</p>
-<pre><code>&gt;&gt;&gt; import re
-&gt;&gt;&gt; match_obj = re.match(&#39;([0-9]+)&#39;, &#39;123foo&#39;)
-&gt;&gt;&gt; match_obj  # What is `match_obj`?
-&lt;_sre.SRE_Match object at 0x7fd1bb000828&gt;
-&gt;&gt;&gt; match_obj.groups()(&#39;123&#39;,)
-&gt;&gt;&gt; match_obj = re.match(&#39;([0-9]+)&#39;, &#39;abc&#39;)
-&gt;&gt;&gt; match_objNone
-</code></pre>
-<p>依我来看，如果能像下面这样就更好了：</p>
-<pre><code>&gt;&gt;&gt; re.get_matches(&#39;([0-9]+)&#39;, &#39;123foo&#39;)(&#39;123&#39;,)
-&gt;&gt;&gt; re.get_matches(&#39;([0-9]+)&#39;, &#39;abc&#39;)None
-</code></pre>
-<p>另一个我常遇到的问题是弄混re.sub的参数，re.sub是用来查找和替换用的。所需要的参数按照顺序依次是模式(pattern)，替换(replacement)，还有字符串。由于更重各样的原因，对我来说search_string放在replacement前面看着更起来更直接。</p>
-<p>不幸的是，弄混这些参数将会导致看上去正确的结果。下面是个例子，为了把单词foo用bar来代替。</p>
-<pre><code>&gt;&gt;&gt; re.sub(&#39;foo&#39;, &#39;replace foo with bar&#39;, &#39;bar&#39;)
-&#39;bar&#39;
-&gt;&gt;&gt; re.sub(&#39;foo&#39;, &#39;bar&#39;, &#39;replace foo with bar&#39;)
-&#39;replace bar with bar&#39;
-</code></pre>
-<p>在上面例子中，有时我们会推测输入的字符串仅仅是foo</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
