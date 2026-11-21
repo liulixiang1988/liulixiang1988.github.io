@@ -12,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="[TOC] 分布式架构 缓存架构：如何减少不必要的计算?缓存分为通读缓存与旁路缓存。 通读缓存通读（read-through）缓存，应用程序访问通读缓存获取数据的时候，如果通读缓存有应用程序需要的数据，那么就返回这个数据；如果没有，那么通读缓存就自己负责访问数据源，从数据源获取数据返回给应用程序，并将这个数据缓存在自己的缓存中。这样，下次应用程序需要数据的时候，就可以通过通读缓存直接获得数据了。">
 <meta property="og:type" content="article">
@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-block-chain.png">
 <meta property="og:image" content="https://liulixiang1988.github.io/images/2021-03-15-block-chain2.jpeg">
 <meta property="article:published_time" content="2021-02-19T02:35:00.000Z">
-<meta property="article:modified_time" content="2024-01-21T12:15:51.050Z">
+<meta property="article:modified_time" content="2026-11-21T04:48:39.542Z">
 <meta property="article:author" content="Liu Lixiang">
 <meta property="article:tag" content="Distributed System">
 <meta name="twitter:card" content="summary">
@@ -79,7 +79,6 @@
 
 
 <link rel="canonical" href="https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/">
-
 
 
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/02/19/2021-02-19-%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84101/","path":"2021/02/19/2021-02-19-分布式架构101/","title":"分布式架构101"}</script>
@@ -95,6 +94,28 @@
 
 
 
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -107,12 +128,7 @@
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
+  <div class="site-nav-search popup-trigger" aria-label="Search" role="button">
   </div>
 
   <div class="site-meta">
@@ -124,16 +140,15 @@
     </a>
   </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
+  <div class="site-nav-toggle" aria-label="Toggle navigation bar" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
   </div>
 </div>
 
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -184,7 +199,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -267,7 +282,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+      <time title="Modified: 2026-11-21 12:48:39" itemprop="dateModified" datetime="2026-11-21T12:48:39+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,7 +346,7 @@
 <h3 id="反向代理负载均衡"><a href="#反向代理负载均衡" class="headerlink" title="反向代理负载均衡"></a>反向代理负载均衡</h3><p>反向代理服务器查找本机是否有请求的资源，如果有就直接返回资源数据，如果没有，就将请求发送给后面的应用服务器继续处理。</p>
 <p>反向代理服务器是工作在 HTTP 协议层之上的，所以它代理的也是 HTTP 的请求和响应。作为互联网应用层的一个协议，HTTP 协议相对说来比较重，效率比较低，所以反向代理负载均衡通常用在小规模的互联网系统上，只有几台或者十几台服务器的规模。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-02-19-reproxy-2.png" alt="reversed proxy"></p>
-<h3 id="IP-负载均衡"><a href="#IP-负载均衡" class="headerlink" title="IP 负载均衡"></a>IP 负载均衡</h3><p>反向代理负载均衡是工作在应用层网络协议上的负载均衡，因此也叫应用层负载均衡。应用层负载均衡之下的负载均衡方法是在 TCP/IP 协议的 IP 层进行负载均衡，IP 层是网络通讯协议的网络层，所以有时候叫网络层负载均衡。它的主要工作原理是当用户的请求到达负载均衡服务器以后，负载均衡服务器会对网络层的数据包的 IP 地址进行转换，修改 IP 地址，将其修改为应用服务器的 IP 地址，然后把数据包重新发送出去，请求数据就会到达应用服务器。</p>
+<h3 id="IP-负载均衡"><a href="#IP-负载均衡" class="headerlink" title="IP 负载均衡"></a>IP 负载均衡</h3><p>反向代理负载均衡是工作在应用层网络协议上的负载均衡，因此也叫应用层负载均衡。应用层负载均衡之下的负载均衡方法是在 TCP&#x2F;IP 协议的 IP 层进行负载均衡，IP 层是网络通讯协议的网络层，所以有时候叫网络层负载均衡。它的主要工作原理是当用户的请求到达负载均衡服务器以后，负载均衡服务器会对网络层的数据包的 IP 地址进行转换，修改 IP 地址，将其修改为应用服务器的 IP 地址，然后把数据包重新发送出去，请求数据就会到达应用服务器。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-02-19-ip-lb.png" alt="ip lb"></p>
 <p>IP 负载均衡不需要在 HTTP 协议层工作，可以在操作系统内核直接修改 IP 数据包的地址，因此，效率比应用层的反向代理负载均衡高得多。但是它依然有一个缺陷，不管是请求还是响应的数据包，都要通过负载均衡服务器进行 IP 地址转换，才能够正确地把请求数据分发到应用服务器，或者正确地将响应数据包发送到用户端程序。请求的数据通常比较小，一个 URL 或者是一个简单的表单，但是响应的数据不管是 HTML 还是图片，或者是 JS、CSS 这样的资源文件通常都会比较大，因此负载均衡服务器会成为响应数据的流量瓶颈。</p>
 <h3 id="数据链路层负载均衡"><a href="#数据链路层负载均衡" class="headerlink" title="数据链路层负载均衡"></a>数据链路层负载均衡</h3><p>数据链路层负载均衡可以解决响应数据量大而导致的负载均衡服务器输出带宽不足的问题。也就是说，负载均衡服务器并不修改数据包的 IP 地址，而是修改数据链路层里的网卡 mac 地址，在数据链路层实现负载均衡。而应用服务器和负载均衡服务器都使用相同的虚拟 IP 地址，这样 IP 路由就不会受到影响，但是网卡会根据自己的 mac 地址，选择负载均衡服务器发送到自己网卡的数据包，交给对应的应用程序去处理，处理结束以后，当把响应的数据包发送到网络上的时候，因为 IP 地址没有修改过，所以这个响应会直接到达用户的浏览器，而不会再经过负载均衡服务器。</p>
@@ -388,7 +403,7 @@
 <p>搜索单词的时候，我们可以将所有单词构成一个 Hash 表，根据搜索词直接查找 Hash 表，就可以得到单词了。</p>
 <h3 id="搜索引擎结果排序"><a href="#搜索引擎结果排序" class="headerlink" title="搜索引擎结果排序"></a>搜索引擎结果排序</h3><p>PageRank 算法认为，如果一个网页里包含了某个网页的超链接，那么就表示该网页认可某个网页，或者说，该网页给某个网页投了一票。如下 A、B、C、D 四个网页，箭头指向的方向就是表示超链接的方向，B 的箭头指向 A，表示 B 网页包含 A 网页的超链接，也就是 B 网页给 A 网页投了一票。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-02-21-search-engine-4.png" alt="link"></p>
-<p>开始的时候，所有网页都初始化权重值为 1，然后根据超链接关系计算新的权重。比如 B 页面包含了 A 和 D 两个页面的超链接，那么自己的权重 1 就被分成两个 1/2 分别投给 A 和 D。而 A 页面的超链接包含在 B、C、D 三个页面中，那么 A 页面新的权重值就是这个三个页面投给它的权重值之和：1/2 + 1/3 + 1 = 11/6。经过一轮 PageRank 计算后，每个页面都有了新的权重，然后基于这个新的权重再继续一轮计算，直到所有的网页权重稳定下来，就得到最终所有网页的权重，即最终的 PageRank 值。</p>
+<p>开始的时候，所有网页都初始化权重值为 1，然后根据超链接关系计算新的权重。比如 B 页面包含了 A 和 D 两个页面的超链接，那么自己的权重 1 就被分成两个 1&#x2F;2 分别投给 A 和 D。而 A 页面的超链接包含在 B、C、D 三个页面中，那么 A 页面新的权重值就是这个三个页面投给它的权重值之和：1&#x2F;2 + 1&#x2F;3 + 1 &#x3D; 11&#x2F;6。经过一轮 PageRank 计算后，每个页面都有了新的权重，然后基于这个新的权重再继续一轮计算，直到所有的网页权重稳定下来，就得到最终所有网页的权重，即最终的 PageRank 值。</p>
 <p>PageRank 算法对于互联网网页排序效果很好，但是，对于那些用户生成内容（UGC）的网站而言，比如豆瓣、知乎，或者我们的InfoQ，如果想在这些网站内部进行搜索，PageRank 算法就没什么效果了。因为豆瓣的影评，知乎的回答，InfoQ 的技术文章之间很少通过超链接进行推荐。这种可以用点赞数排序。</p>
 <p>还有一种是分词，计算词频进行排序。</p>
 <h2 id="微服务架构：微服务究竟是灵丹还是毒药？"><a href="#微服务架构：微服务究竟是灵丹还是毒药？" class="headerlink" title="微服务架构：微服务究竟是灵丹还是毒药？"></a>微服务架构：微服务究竟是灵丹还是毒药？</h2><h3 id="单体架构的困难与挑战"><a href="#单体架构的困难与挑战" class="headerlink" title="单体架构的困难与挑战"></a>单体架构的困难与挑战</h3><ul>
@@ -409,7 +424,7 @@
 <p>并发数：系统同时处理的请求数，体现的是系统的负载压力情况。</p>
 <p>吞吐量：单位时间内系统处理请求的数量，体现的是系统的处理能力。</p>
 <p>吞吐量、响应时间和并发数三者之间是有关联性的。并发数不变，响应时间越快，单位时间的吞吐量越高。</p>
-<p>性能计数器：指的是服务器或者操作系统性能的一些指标数据，包括系统负载 System Load、对象和线程数、内存使用、CPU 使用、磁盘和网络 I/O 使用等指标，这些指标是系统监控的重要参数，反映系统负载和处理能力的一些关键指标，通常这些指标和性能是强相关的。这些指标很高，成为瓶颈，通常也预示着性能可能会出现问题。</p>
+<p>性能计数器：指的是服务器或者操作系统性能的一些指标数据，包括系统负载 System Load、对象和线程数、内存使用、CPU 使用、磁盘和网络 I&#x2F;O 使用等指标，这些指标是系统监控的重要参数，反映系统负载和处理能力的一些关键指标，通常这些指标和性能是强相关的。这些指标很高，成为瓶颈，通常也预示着性能可能会出现问题。</p>
 <h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><p><strong>性能测试</strong>是指以系统设计初期规划的性能指标为预期目标，对系统不断地施加压力，验证系统在资源可接受的范围内是否达到了性能的预期目标。这个过程中，随着并发数的增加，吞入量也在增加，但是响应时间变化不大。系统正常情况下的并发访问压力应该都在这个范围内。</p>
 <p><strong>负载测试</strong>则是对系统不断地施加并发请求，增加系统的压力，直到系统的某项或多项指标达到安全临界值。这个过程中，随着并发数的增加，吞吐量只有小幅的增加，达到最大值后，吞吐量还会下降，而响应时间则会不断增加。</p>
 <p><strong>压力测试</strong>是指在超过安全负载的情况下，增加并发请求数，对系统继续施加压力，直到系统崩溃，或者不再处理任何请求，此时的并发数就是系统的最大压力承受能力。这个过程中，吞吐量迅速下降，响应时间迅速增加，到了系统崩溃点，吞吐量为 0，响应时间无穷大。</p>
@@ -422,16 +437,18 @@
 <li>操作系统优化：比如在某些Linux中，transparent huge page 这个参数是默认打开的，导致系统占用 CPU 过高。关闭这个参数后，系统 CPU 占用下降，整个计算时间也大幅缩短了</li>
 <li>虚拟机优化：JVM优化</li>
 <li>基础组件优化，如Web容器、数据库连接池、MVC框架等</li>
-<li>架构优化<ul>
+<li>架构优化</li>
+</ol>
+<ul>
 <li>缓存</li>
 <li>消息队列</li>
 <li>集群</li>
 </ul>
-</li>
+<ol start="7">
 <li>代码优化</li>
 </ol>
 <h2 id="高可用架构"><a href="#高可用架构" class="headerlink" title="高可用架构"></a>高可用架构</h2><p>高可用的度量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可用性&#x3D;(1-年度不可用时间&#x2F;年度总时间)*100%</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可用性=(1-年度不可用时间/年度总时间)*100%</span><br></pre></td></tr></table></figure>
 
 <p>一般说来，两个 9 表示系统基本可用，年度不可用时间小于 88 小时；3 个 9 是较高可用，年度不可用时间小于 9 个小时；4 个 9 是具有自动恢复能力的高可用，年度不可用时间小于 53 分钟；5 个 9 指极高的可用性，年度不可用时间小于 5 分钟。我们熟悉的互联网产品的可用性大多是 4 个 9。淘宝、百度、微信，差不多都是这样。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-03-15-ha.png" alt="link"></p>
@@ -460,7 +477,7 @@
 <p>MapReduce 将计算过程分成两个部分，一个是 map 过程，每个服务器上会启动多个 map 进程，map 优先读取本地数据进行计算，计算后输出一个<br><code>&lt;key, value&gt;</code> 集合。另一个是 reduce 过程，MapReduce 在每个服务器上都启动多个 reduce 进程，然后对所有 map 输出的 <code>&lt;key, value&gt;</code> 集合进行 shuffle 操作。所谓 shuffle 就是将相同的 key 发送到同一个 reduce 进程，在 reduce 中完成数据关联计算。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-03-15-word-count.png" alt="link"></p>
 <p>word count: 假设原始数据有两个数据块，MapReduce 框架启动两个 map 进程进行处理，分别读入数据。map 函数对输入数据进行分词处理，然后针对每个单词输出 <code>&lt; 单词, 1&gt;</code> 这样的 <code>&lt;key, value&gt;</code> 结果。然后，MapReduce 框架进行 shuffle 操作，相同的 key 发送给同一个 reduce 进程，reduce 的输入就是 <code>&lt;key, value 列表 &gt;</code> 这样的结构，即相同 key 的 value 合并成一个 value 列表。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenizerMapper</span></span></span><br><span class="line"><span class="class">       <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Object</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> IntWritable one = <span class="keyword">new</span> IntWritable(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">private</span> Text word = <span class="keyword">new</span> Text();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">map</span><span class="params">(Object key, Text value, Context context</span></span></span><br><span class="line"><span class="function"><span class="params">                    )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">      StringTokenizer itr = <span class="keyword">new</span> StringTokenizer(value.toString());</span><br><span class="line">      <span class="keyword">while</span> (itr.hasMoreTokens()) &#123;</span><br><span class="line">        word.set(itr.nextToken());</span><br><span class="line">        context.write(word, one);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntSumReducer</span></span></span><br><span class="line"><span class="class">       <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>,<span class="title">IntWritable</span>,<span class="title">Text</span>,<span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> IntWritable result = <span class="keyword">new</span> IntWritable();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                       Context context</span></span></span><br><span class="line"><span class="function"><span class="params">                       )</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (IntWritable val : values) &#123;</span><br><span class="line">        sum += val.get();</span><br><span class="line">      &#125;</span><br><span class="line">      result.set(sum);</span><br><span class="line">      context.write(key, result);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WordCount</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">TokenizerMapper</span></span><br><span class="line">       <span class="keyword">extends</span> <span class="title class_">Mapper</span>&lt;Object, Text, Text, IntWritable&gt;&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">IntWritable</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IntWritable</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Text</span> <span class="variable">word</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Text</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">map</span><span class="params">(Object key, Text value, Context context</span></span><br><span class="line"><span class="params">                    )</span> <span class="keyword">throws</span> IOException, InterruptedException &#123;</span><br><span class="line">      <span class="type">StringTokenizer</span> <span class="variable">itr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringTokenizer</span>(value.toString());</span><br><span class="line">      <span class="keyword">while</span> (itr.hasMoreTokens()) &#123;</span><br><span class="line">        word.set(itr.nextToken());</span><br><span class="line">        context.write(word, one);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">IntSumReducer</span></span><br><span class="line">       <span class="keyword">extends</span> <span class="title class_">Reducer</span>&lt;Text,IntWritable,Text,IntWritable&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">IntWritable</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IntWritable</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values,</span></span><br><span class="line"><span class="params">                       Context context</span></span><br><span class="line"><span class="params">                       )</span> <span class="keyword">throws</span> IOException, InterruptedException &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (IntWritable val : values) &#123;</span><br><span class="line">        sum += val.get();</span><br><span class="line">      &#125;</span><br><span class="line">      result.set(sum);</span><br><span class="line">      context.write(key, result);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>这些进程是如何在分布式的服务器集群上启动的呢？数据是如何流动，最终完成计算的呢？</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-03-15-map-reduce.png" alt="link"></p>
@@ -469,7 +486,7 @@
 <p>TaskTracker 收到任务后，启动一个 TaskRunner 进程下载任务对应的程序，然后反射加载程序中的 map 函数，读取任务中分配的数据块，进行 map 计算。map 计算结束后，TaskTracker 会对 map 输出进行 shuffle 操作，然后 TaskRunner 加载 reduce 函数进行后续计算。HDFS 和 MapReduce 都是 Hadoop 的组成部分。</p>
 <p>HDFS 和 MapReduce 都是 Hadoop 的组成部分。</p>
 <h3 id="大数据仓库-Hive-架构"><a href="#大数据仓库-Hive-架构" class="headerlink" title="大数据仓库 Hive 架构"></a>大数据仓库 Hive 架构</h3><p>MapReduce写起来较为复杂，Hive是一个根据SQL生成MapReduce的工具：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pageid, age, <span class="keyword">count</span>(<span class="number">1</span>) <span class="keyword">FROM</span> pv_users <span class="keyword">GROUP</span> <span class="keyword">BY</span> pageid, age;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pageid, age, <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">FROM</span> pv_users <span class="keyword">GROUP</span> <span class="keyword">BY</span> pageid, age;</span><br></pre></td></tr></table></figure>
 
 <p> Hive 要做的就是将 SQL 翻译成 MapReduce 程序代码，实际上，Hive 内置了很多 Operator，每个 Operator 完成一个特定的计算过程，Hive 将这些 Operator 构造成一个有向无环图 DAG，然后根据这些 Operator 之间是否存在 shuffle 将其封装到 map 或者 reduce 函数，就可以提交给 MapReduce 执行了。Operator 组成的 DAG 图示例如下，这是一个包含 where 查询条件的 SQL，where 查询条件对应一个 FilterOperator。<br><img src="https://liulixiang1988.github.io/images/2021-03-15-hive.jpg" alt="link"></p>
 <p>Hive 整体架构如下，Hive 的表数据存储在 HDFS。表的结构，比如表名、字段名、字段之间的分隔符等存储在 Metastore。用户通过 Client 提交 SQL 到 Driver，Driver 请求 Compiler 将 SQL 编译成如上示例的 DAG 执行计划，然后交给 Hadoop 执行。</p>
@@ -477,7 +494,7 @@
 <h3 id="快速大数据计算Spark架构"><a href="#快速大数据计算Spark架构" class="headerlink" title="快速大数据计算Spark架构"></a>快速大数据计算Spark架构</h3><p>MapReduce 主要使用硬盘存储计算过程中的数据，这样虽然可靠性比较高，但是性能其实比较差。</p>
 <p>Spark 在 MapReduce 基础上进行改进，主要使用内存进行中间计算数据存储，加快了计算执行时间，在某些情况下，性能可以提升上百倍。</p>
 <p>Spark 的主要编程模型是 RDD，弹性数据集。在 RDD 上定义了许多常见的大数据计算函数，利用这些函数，可以用极少的代码完成较为复杂的大数据计算。前面举例的 WorkCount，如果用 Spark 编程，只需要三行代码：</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> textFile = sc.textFile(<span class="string">"hdfs://..."</span>)</span><br><span class="line"><span class="keyword">val</span> counts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>))</span><br><span class="line">                 .map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line">                 .reduceByKey(_ + _)</span><br><span class="line">counts.saveAsTextFile(<span class="string">"hdfs://..."</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> textFile = sc.textFile(<span class="string">&quot;hdfs://...&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> counts = textFile.flatMap(line =&gt; line.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">                 .map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line">                 .reduceByKey(_ + _)</span><br><span class="line">counts.saveAsTextFile(<span class="string">&quot;hdfs://...&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>首先，从 HDFS 读取数据，构建出一个 RDD textFile。然后，在这个 RDD 上执行三个操作：将输入数据的每一行文本用空格拆分成单词；将每个单词进行转换，word→(word, 1)，生成 <code>&lt;Key, Value&gt;</code> 的结构；相同的 Key 进行统计，统计方式是对 Value 求和。最后，将 RDD counts 写入到 HDFS，完成结果输出。</p>
 <p>Spark DAG 示例如下：</p>
@@ -563,7 +580,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -581,7 +598,6 @@
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
   </div>
-  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -592,34 +608,10 @@
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4a97ee309ca9adeb20978cf81dd1b665"}</script>
-<script src="/js/third-party/comments/gitalk.js"></script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4a97ee309ca9adeb20978cf81dd1b665"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
 
 </body>
 </html>

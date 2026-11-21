@@ -4,50 +4,70 @@ NexT.motion = {};
 
 NexT.motion.integrator = {
   queue: [],
-  init : function() {
+  init() {
     this.queue = [];
     return this;
   },
-  add: function(fn) {
+  add(fn) {
     const sequence = fn();
-    if (CONFIG.motion.async) this.queue.push(sequence);
-    else this.queue = this.queue.concat(sequence);
+    this.queue.push(sequence);
     return this;
   },
-  bootstrap: function() {
-    if (!CONFIG.motion.async) this.queue = [this.queue];
-    this.queue.forEach(sequence => {
-      const timeline = window.anime.timeline({
-        duration: 200,
-        easing  : 'linear'
-      });
-      sequence.forEach(item => {
-        if (item.deltaT) timeline.add(item, item.deltaT);
-        else timeline.add(item);
-      });
+  bootstrap() {
+    if (typeof Element.prototype.animate !== 'function') {
+      document.body.classList.remove('use-motion');
+      CONFIG.motion.enable = false;
+      return;
+    }
+    if (!CONFIG.motion.async) this.queue = [this.queue.flat()];
+    this.queue.forEach(sequence => this.schedule(sequence));
+  },
+  schedule(sequence) {
+    let cursor = 0;
+    sequence.forEach(item => {
+      const duration = item.duration ?? CONFIG.motion?.duration ?? 200;
+      const start = Math.max(0, cursor - (item.overlap ?? 0));
+      const end = start + duration;
+      cursor = Math.max(cursor, end);
+
+      if (item.styles) {
+        const targets = typeof item.targets === 'string' ? document.querySelectorAll(item.targets) : [item.targets].filter(Boolean);
+        targets.forEach(target => {
+          const animation = target.animate([{}, item.styles], {
+            delay : start,
+            duration,
+            easing: 'linear',
+            fill  : 'forwards'
+          });
+          animation.finished.then(() => {
+            Object.assign(target.style, item.styles);
+            animation.cancel();
+          }).catch(() => {});
+        });
+      }
+      if (item.complete) setTimeout(item.complete, end);
     });
   }
 };
 
 NexT.motion.middleWares = {
-  header: function() {
+  header() {
     const sequence = [];
 
     function getMistLineSettings(targets) {
       sequence.push({
         targets,
-        scaleX  : [0, 1],
+        styles  : { transform: 'scaleX(1)' },
         duration: 500,
-        deltaT  : '-=200'
+        overlap : 200
       });
     }
 
     function pushToSequence(targets, sequenceQueue = false) {
       sequence.push({
         targets,
-        opacity: 1,
-        top    : 0,
-        deltaT : sequenceQueue ? '-=200' : '-=0'
+        styles : { opacity: 1, top: '0px' },
+        overlap: sequenceQueue ? 200 : 0
       });
     }
 
@@ -65,7 +85,7 @@ NexT.motion.middleWares = {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', menuItemTransition),
-          deltaT  : '-=200'
+          overlap : 200
         });
       });
     }
@@ -73,7 +93,7 @@ NexT.motion.middleWares = {
     return sequence;
   },
 
-  subMenu: function() {
+  subMenu() {
     const subMenuItem = document.querySelectorAll('.sub-menu .menu-item');
     if (subMenuItem.length > 0) {
       subMenuItem.forEach(element => {
@@ -83,7 +103,7 @@ NexT.motion.middleWares = {
     return [];
   },
 
-  postList: function() {
+  postList() {
     const sequence = [];
     const { post_block, post_header, post_body, coll_header } = CONFIG.motion.transition;
 
@@ -93,7 +113,7 @@ NexT.motion.middleWares = {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', animation),
-          deltaT  : '-=100'
+          overlap : 100
         });
       });
     }
@@ -102,7 +122,7 @@ NexT.motion.middleWares = {
       sequence.push({
         targets,
         complete: () => targets.classList.add('animated', post_block),
-        deltaT  : '-=100'
+        overlap : 100
       });
       animate(coll_header, targets.querySelectorAll('.collection-header'));
       animate(post_header, targets.querySelectorAll('.post-header'));
@@ -114,27 +134,27 @@ NexT.motion.middleWares = {
     return sequence;
   },
 
-  sidebar: function() {
+  sidebar() {
     const sequence = [];
     const sidebar = document.querySelectorAll('.sidebar-inner');
     const sidebarTransition = CONFIG.motion.transition.sidebar;
-    // Only for Pisces | Gemini.
-    if (sidebarTransition && (CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini')) {
+    // Only for desktop of Pisces | Gemini.
+    if (sidebarTransition && (CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') && window.innerWidth >= 992) {
       sidebar.forEach(targets => {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', sidebarTransition),
-          deltaT  : '-=100'
+          overlap : 100
         });
       });
     }
     return sequence;
   },
 
-  footer: function() {
+  footer() {
     return [{
       targets: document.querySelector('.footer'),
-      opacity: 1
+      styles : { opacity: 1 }
     }];
   }
 };

@@ -12,32 +12,31 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="原文在此 我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。 首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子： &amp;gt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Python的魔术方法创造更好的正则API">
-<meta property="og:url" content="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/index.html">
+<meta property="og:url" content="https://liulixiang1988.github.io/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/index.html">
 <meta property="og:site_name" content="一步一步">
 <meta property="og:description" content="原文在此 我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。 首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子： &amp;gt">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2014-07-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-27T13:48:23.007Z">
+<meta property="article:modified_time" content="2026-11-21T04:48:39.548Z">
 <meta property="article:author" content="Liu Lixiang">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
+<link rel="canonical" href="https://liulixiang1988.github.io/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
 
 
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/","path":"2014/07/27/使用Python的魔术方法创造更好的正则API/","title":"使用Python的魔术方法创造更好的正则API"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/","path":"2014/07/26/使用Python的魔术方法创造更好的正则API/","title":"使用Python的魔术方法创造更好的正则API"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>使用Python的魔术方法创造更好的正则API | 一步一步</title>
@@ -47,6 +46,28 @@
 
 
 
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
 
@@ -62,12 +83,7 @@
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
+  <div class="site-nav-search popup-trigger" aria-label="Search" role="button">
   </div>
 
   <div class="site-meta">
@@ -79,16 +95,15 @@
     </a>
   </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
+  <div class="site-nav-toggle" aria-label="Toggle navigation bar" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
   </div>
 </div>
 
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -139,7 +154,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -186,7 +201,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/07/27/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2014/07/26/%E4%BD%BF%E7%94%A8Python%E7%9A%84%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%88%9B%E9%80%A0%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%AD%A3%E5%88%99API/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -222,7 +237,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-06-27 21:48:23" itemprop="dateModified" datetime="2020-06-27T21:48:23+08:00">2020-06-27</time>
+      <time title="Modified: 2026-11-21 12:48:39" itemprop="dateModified" datetime="2026-11-21T12:48:39+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,37 +258,49 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>原文<a href="http://charlesleifer.com/blog/playing-with-python-magic-methods-to-make-a-nicer-regex-api/" target="_blank" rel="noopener">在此</a></p>
+    <div class="post-body" itemprop="articleBody"><p>原文<a target="_blank" rel="noopener" href="http://charlesleifer.com/blog/playing-with-python-magic-methods-to-make-a-nicer-regex-api/">在此</a></p>
 <p>我的一个同事说他怀念Ruby的正则表达式语法糖。我没有用过Ruby的正则表达式，但是我熟悉Python的，并且知道它的API需要一些语法糖来弥补一下。</p>
 <p>首先，从正则表达式中获取分组需要2步。第一步，调用match()或者search()，并且将结果付值给一个变量。然后，需要检察结果是否为None(表示是否有找到匹配)。最后，如果匹配确实存在，你可以安全地取出分组。下面是一个例子：</p>
 <pre><code>&gt;&gt;&gt; import re
-&gt;&gt;&gt; match_obj = re.match(&apos;([0-9]+)&apos;, &apos;123foo&apos;)
+&gt;&gt;&gt; match_obj = re.match(&#39;([0-9]+)&#39;, &#39;123foo&#39;)
 &gt;&gt;&gt; match_obj  # What is `match_obj`?
 &lt;_sre.SRE_Match object at 0x7fd1bb000828&gt;
-&gt;&gt;&gt; match_obj.groups()(&apos;123&apos;,)
-&gt;&gt;&gt; match_obj = re.match(&apos;([0-9]+)&apos;, &apos;abc&apos;)
-&gt;&gt;&gt; match_objNone</code></pre><p>依我来看，如果能像下面这样就更好了：</p>
-<pre><code>&gt;&gt;&gt; re.get_matches(&apos;([0-9]+)&apos;, &apos;123foo&apos;)(&apos;123&apos;,)
-&gt;&gt;&gt; re.get_matches(&apos;([0-9]+)&apos;, &apos;abc&apos;)None</code></pre><p>另一个我常遇到的问题是弄混re.sub的参数，re.sub是用来查找和替换用的。所需要的参数按照顺序依次是模式(pattern)，替换(replacement)，还有字符串。由于更重各样的原因，对我来说search_string放在replacement前面看着更起来更直接。</p>
+&gt;&gt;&gt; match_obj.groups()(&#39;123&#39;,)
+&gt;&gt;&gt; match_obj = re.match(&#39;([0-9]+)&#39;, &#39;abc&#39;)
+&gt;&gt;&gt; match_objNone
+</code></pre>
+<p>依我来看，如果能像下面这样就更好了：</p>
+<pre><code>&gt;&gt;&gt; re.get_matches(&#39;([0-9]+)&#39;, &#39;123foo&#39;)(&#39;123&#39;,)
+&gt;&gt;&gt; re.get_matches(&#39;([0-9]+)&#39;, &#39;abc&#39;)None
+</code></pre>
+<p>另一个我常遇到的问题是弄混re.sub的参数，re.sub是用来查找和替换用的。所需要的参数按照顺序依次是模式(pattern)，替换(replacement)，还有字符串。由于更重各样的原因，对我来说search_string放在replacement前面看着更起来更直接。</p>
 <p>不幸的是，弄混这些参数将会导致看上去正确的结果。下面是个例子，为了把单词foo用bar来代替。</p>
-<pre><code>&gt;&gt;&gt; re.sub(&apos;foo&apos;, &apos;replace foo with bar&apos;, &apos;bar&apos;)
-&apos;bar&apos;
-&gt;&gt;&gt; re.sub(&apos;foo&apos;, &apos;bar&apos;, &apos;replace foo with bar&apos;)
-&apos;replace bar with bar&apos;</code></pre><p>在上面例子中，有时我们会推测输入的字符串仅仅是foo</p>
+<pre><code>&gt;&gt;&gt; re.sub(&#39;foo&#39;, &#39;replace foo with bar&#39;, &#39;bar&#39;)
+&#39;bar&#39;
+&gt;&gt;&gt; re.sub(&#39;foo&#39;, &#39;bar&#39;, &#39;replace foo with bar&#39;)
+&#39;replace bar with bar&#39;
+</code></pre>
+<p>在上面例子中，有时我们会推测输入的字符串仅仅是foo</p>
 <h2 id="糖"><a href="#糖" class="headerlink" title="糖"></a>糖</h2><p>为了有趣，我把加了一些语法糖的helper class和python的正则表达式放在了一起。我不是要每个人都这样做，我的目的是为了让它更有趣，能给你在改进其它库的语法时给你一些启发。</p>
 <p>在我展示具体实现之前，先说说我设计的几个API的例子。</p>
 <p>在一步操作中同事完成查找和匹配。</p>
 <pre><code>&gt;&gt;&gt; def has_lower(s):
-...     return bool(R/&apos;[a-z]+&apos;/s)
+...     return bool(R/&#39;[a-z]+&#39;/s)
 
-&gt;&gt;&gt; has_lower(&apos;This contains lower-case&apos;)
+&gt;&gt;&gt; has_lower(&#39;This contains lower-case&#39;)
 True
-&gt;&gt;&gt; has_lower(&apos;NO LOWER-CASE HERE!&apos;)
-False</code></pre><p>获取分组也很简单</p>
-<pre><code>&gt;&gt;&gt; list(R/&apos;([0-9]+)&apos;/&apos;extract 12 the 456 numbers&apos;)
-[&apos;12&apos;, &apos;456&apos;]</code></pre><p>最后，你可以适用字符串插入操作来执行替换。</p>
-<pre><code>&gt;&gt;&gt; R/&apos;(foo|bar)&apos;/&apos;replace foo and bar&apos; % &apos;Huey!&apos;
-&apos;replace Huey! and Huey!&apos;</code></pre><p>则么样，是不是很有意思？</p>
+&gt;&gt;&gt; has_lower(&#39;NO LOWER-CASE HERE!&#39;)
+False
+</code></pre>
+<p>获取分组也很简单</p>
+<pre><code>&gt;&gt;&gt; list(R/&#39;([0-9]+)&#39;/&#39;extract 12 the 456 numbers&#39;)
+[&#39;12&#39;, &#39;456&#39;]
+</code></pre>
+<p>最后，你可以适用字符串插入操作来执行替换。</p>
+<pre><code>&gt;&gt;&gt; R/&#39;(foo|bar)&#39;/&#39;replace foo and bar&#39; % &#39;Huey!&#39;
+&#39;replace Huey! and Huey!&#39;
+</code></pre>
+<p>则么样，是不是很有意思？</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>具体的实现时非常直接的，并且依赖于Python的魔术方法来提供API。如果有一个简单的技巧，那就是使用元类(metaclass)来实现classmethod的操作符重载。</p>
 <pre><code>import re
 
@@ -307,23 +334,33 @@ class RegexOperation(object):
         return self._regex.sub(replacement, self._search)
 
     def __iter__(self):
-        return iter(self._regex.findall(self._search))</code></pre><p>一步一步的分解操作，希望它能简化背后发生了什么。</p>
-<p>调用R/<something>将会调用_R类的<strong>div</strong>方法，它使一个工厂方法，用来生产R实例。</p>
-<pre><code>&gt;&gt;&gt; R/&apos;foo&apos;
-&lt;rx.R at 0x7f77c00831d0&gt;</code></pre><p>然后，通过调用R对象的<strong>div</strong>，我们获得一个RegexOperation实例，所以R.<strong>div</strong>是另一种工厂方法。</p>
-<pre><code>&gt;&gt;&gt; r_obj = R/&apos;foo&apos;
-&gt;&gt;&gt; r_obj / &apos;bar&apos;
-&lt;rx.RegexOperation at 0x7f77c00837d0&gt;</code></pre><p>最后一个对象，RegexOperation，实现了一些魔术方法来匹配、替换和测试匹配的存在性。</p>
+        return iter(self._regex.findall(self._search))
+</code></pre>
+<p>一步一步的分解操作，希望它能简化背后发生了什么。</p>
+<p>调用R&#x2F;<something>将会调用_R类的__div__方法，它使一个工厂方法，用来生产R实例。</p>
+<pre><code>&gt;&gt;&gt; R/&#39;foo&#39;
+&lt;rx.R at 0x7f77c00831d0&gt;
+</code></pre>
+<p>然后，通过调用R对象的__div__，我们获得一个RegexOperation实例，所以R.__div__是另一种工厂方法。</p>
+<pre><code>&gt;&gt;&gt; r_obj = R/&#39;foo&#39;
+&gt;&gt;&gt; r_obj / &#39;bar&#39;
+&lt;rx.RegexOperation at 0x7f77c00837d0&gt;
+</code></pre>
+<p>最后一个对象，RegexOperation，实现了一些魔术方法来匹配、替换和测试匹配的存在性。</p>
 <h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="1楼"><a href="#1楼" class="headerlink" title="1楼"></a>1楼</h3><p>很酷的运算符重载＋1 造轮子-1</p>
-<p>你的代码：<br>    &gt;&gt;&gt; list(R/‘([0-9]+)’/‘extract 12 the 456 numbers’)<br>    [‘12’, ‘456’]</p>
+<p>你的代码：<br>    &gt;&gt;&gt; list(R&#x2F;‘([0-9]+)’&#x2F;‘extract 12 the 456 numbers’)<br>    [‘12’, ‘456’]</p>
 <p>我认为比Python本身的要复杂：</p>
-<pre><code>&gt;&gt;&gt; re.findall(&apos;([0-9]+)&apos;, &apos;extract 12 the 456 numbers&apos;)
-[&apos;12&apos;, &apos;456&apos;]</code></pre><p>如果没有明显的分组，re.findall()将会返回一个group 0的匹配的list；如果定义了多个分组，re.findall()返回由每个分组组成的tuple构成的list：</p>
-<pre><code>&gt;&gt;&gt; re.findall(&apos;([A-Z])([0-9]+)&apos;, &apos;A133 B873 xxx yyy C946&apos;)
-[(&apos;A&apos;, &apos;133&apos;), (&apos;B&apos;, &apos;873&apos;), (&apos;C&apos;, &apos;946&apos;)]</code></pre><p>非常有趣的文章。我赞同你对re.sub参数列表顺序的看法。</p>
+<pre><code>&gt;&gt;&gt; re.findall(&#39;([0-9]+)&#39;, &#39;extract 12 the 456 numbers&#39;)
+[&#39;12&#39;, &#39;456&#39;]
+</code></pre>
+<p>如果没有明显的分组，re.findall()将会返回一个group 0的匹配的list；如果定义了多个分组，re.findall()返回由每个分组组成的tuple构成的list：</p>
+<pre><code>&gt;&gt;&gt; re.findall(&#39;([A-Z])([0-9]+)&#39;, &#39;A133 B873 xxx yyy C946&#39;)
+[(&#39;A&#39;, &#39;133&#39;), (&#39;B&#39;, &#39;873&#39;), (&#39;C&#39;, &#39;946&#39;)]
+</code></pre>
+<p>非常有趣的文章。我赞同你对re.sub参数列表顺序的看法。</p>
 <p>我想说re.findall()返回空列表，如果没有匹配就返回空列表。</p>
 <p>同样，re.finditer()提供了一个匹配对象的迭代器。</p>
-<h3 id="2楼"><a href="#2楼" class="headerlink" title="2楼"></a>2楼</h3><p>正则表达式高级教程：<br><a href="http://www.cofoh.com/advanced-regex-tutorial-python/traps" target="_blank" rel="noopener">http://www.cofoh.com/advanced-regex-tutorial-python/traps</a></p>
+<h3 id="2楼"><a href="#2楼" class="headerlink" title="2楼"></a>2楼</h3><p>正则表达式高级教程：<br><a target="_blank" rel="noopener" href="http://www.cofoh.com/advanced-regex-tutorial-python/traps">http://www.cofoh.com/advanced-regex-tutorial-python/traps</a></p>
 <h3 id="3楼"><a href="#3楼" class="headerlink" title="3楼"></a>3楼</h3><p>使用parsely库可以用来写复杂的正则。</p>
 
     </div>
@@ -355,7 +392,7 @@ class RegexOperation(object):
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2014/04/19/2014-04-19/" rel="prev" title="醉笑陪公三万场">
+                <a href="/2014/04/18/2014-04-19/" rel="prev" title="醉笑陪公三万场">
                   <i class="fa fa-angle-left"></i> 醉笑陪公三万场
                 </a>
             </div>
@@ -383,7 +420,7 @@ class RegexOperation(object):
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -401,7 +438,6 @@ class RegexOperation(object):
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
   </div>
-  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -412,34 +448,10 @@ class RegexOperation(object):
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"fe486617f89adafcb207626b8d3f8eca"}</script>
-<script src="/js/third-party/comments/gitalk.js"></script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"768d33e26afcbbf79d5d1ccd577162dc"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
 
 </body>
 </html>

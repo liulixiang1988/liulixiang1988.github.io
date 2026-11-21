@@ -3,22 +3,26 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const isRight = CONFIG.sidebar.position === 'right';
+  // Create the dimmer dynamically to prevent an unwanted animation before main.css is applied.
+  const sidebarDimmer = document.createElement('div');
+  sidebarDimmer.className = 'sidebar-dimmer';
+  document.body.appendChild(sidebarDimmer);
 
   const sidebarToggleMotion = {
     mouse: {},
-    init : function() {
+    init() {
       window.addEventListener('mousedown', this.mousedownHandler.bind(this));
       window.addEventListener('mouseup', this.mouseupHandler.bind(this));
-      document.querySelector('.sidebar-dimmer').addEventListener('click', this.clickHandler.bind(this));
+      sidebarDimmer.addEventListener('click', this.clickHandler.bind(this));
       document.querySelector('.sidebar-toggle').addEventListener('click', this.clickHandler.bind(this));
       window.addEventListener('sidebar:show', this.showSidebar);
       window.addEventListener('sidebar:hide', this.hideSidebar);
     },
-    mousedownHandler: function(event) {
+    mousedownHandler(event) {
       this.mouse.X = event.pageX;
       this.mouse.Y = event.pageY;
     },
-    mouseupHandler: function(event) {
+    mouseupHandler(event) {
       const deltaX = event.pageX - this.mouse.X;
       const deltaY = event.pageY - this.mouse.Y;
       const clickingBlankPart = Math.hypot(deltaX, deltaY) < 20 && event.target.matches('.main');
@@ -27,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
         this.hideSidebar();
       }
     },
-    clickHandler: function() {
+    clickHandler() {
       document.body.classList.contains('sidebar-active') ? this.hideSidebar() : this.showSidebar();
     },
-    showSidebar: function() {
+    showSidebar() {
       document.body.classList.add('sidebar-active');
       const animateAction = isRight ? 'fadeInRight' : 'fadeInLeft';
       document.querySelectorAll('.sidebar .animated').forEach((element, index) => {
@@ -42,19 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     },
-    hideSidebar: function() {
+    hideSidebar() {
       document.body.classList.remove('sidebar-active');
     }
   };
-  if (CONFIG.sidebar.display !== 'remove') sidebarToggleMotion.init();
-
-  function updateFooterPosition() {
-    const footer = document.querySelector('.footer');
-    const containerHeight = document.querySelector('.main').offsetHeight + footer.offsetHeight;
-    footer.classList.toggle('footer-fixed', containerHeight <= window.innerHeight);
-  }
-
-  updateFooterPosition();
-  window.addEventListener('resize', updateFooterPosition);
-  window.addEventListener('scroll', updateFooterPosition, { passive: true });
+  sidebarToggleMotion.init();
 });

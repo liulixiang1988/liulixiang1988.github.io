@@ -12,19 +12,19 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liulixiang1988.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskTracke">
+    <meta name="description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YARN学习笔记">
-<meta property="og:url" content="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/index.html">
+<meta property="og:url" content="https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/index.html">
 <meta property="og:site_name" content="一步一步">
-<meta property="og:description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskTracke">
+<meta property="og:description" content="[TOC] 1. YARN产生背景1.1 Hadoop 1.x中MapReduce存在的问题Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。  JobTracker主要的功能是资源的管理与作业的调度。 TaskT">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png">
 <meta property="og:image" content="https://liulixiang1988.github.io/images/2021-05-19-yarn-1.png">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://liulixiang1988.github.io/images/yarn_architecture.gif">
 <meta property="og:image" content="https://liulixiang1988.github.io/images/2021-06-14-yarn.drawio.png">
 <meta property="article:published_time" content="2021-05-18T22:30:00.000Z">
-<meta property="article:modified_time" content="2024-01-21T12:15:51.051Z">
+<meta property="article:modified_time" content="2026-11-21T04:48:39.542Z">
 <meta property="article:author" content="Liu Lixiang">
 <meta property="article:tag" content="Big Data">
 <meta property="article:tag" content="YARN">
@@ -40,11 +40,10 @@
 <meta name="twitter:image" content="https://liulixiang1988.github.io/images/2021-05-19-map-reduce-arch-1.png">
 
 
-<link rel="canonical" href="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/">
+<link rel="canonical" href="https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/">
 
 
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/","path":"2021/05/19/2021-05-19-YARN/","title":"YARN学习笔记"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/","path":"2021/05/18/2021-05-19-YARN/","title":"YARN学习笔记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>YARN学习笔记 | 一步一步</title>
@@ -54,6 +53,28 @@
 
 
 
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
 
@@ -69,12 +90,7 @@
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
+  <div class="site-nav-search popup-trigger" aria-label="Search" role="button">
   </div>
 
   <div class="site-meta">
@@ -86,16 +102,15 @@
     </a>
   </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
+  <div class="site-nav-toggle" aria-label="Toggle navigation bar" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
   </div>
 </div>
 
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">42</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">71</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
   </ul>
 </nav>
 
@@ -146,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -193,7 +208,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/05/19/2021-05-19-YARN/">
+    <link itemprop="mainEntityOfPage" href="https://liulixiang1988.github.io/2021/05/18/2021-05-19-YARN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -229,7 +244,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-21 20:15:51" itemprop="dateModified" datetime="2024-01-21T20:15:51+08:00">2024-01-21</time>
+      <time title="Modified: 2026-11-21 12:48:39" itemprop="dateModified" datetime="2026-11-21T12:48:39+08:00">2026-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,7 +266,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
-<h2 id="1-YARN产生背景"><a href="#1-YARN产生背景" class="headerlink" title="1. YARN产生背景"></a>1. YARN产生背景</h2><h3 id="1-1-Hadoop-1-x中MapReduce存在的问题"><a href="#1-1-Hadoop-1-x中MapReduce存在的问题" class="headerlink" title="1.1 Hadoop 1.x中MapReduce存在的问题"></a>1.1 Hadoop 1.x中MapReduce存在的问题</h3><p>Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master/Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。</p>
+<h2 id="1-YARN产生背景"><a href="#1-YARN产生背景" class="headerlink" title="1. YARN产生背景"></a>1. YARN产生背景</h2><h3 id="1-1-Hadoop-1-x中MapReduce存在的问题"><a href="#1-1-Hadoop-1-x中MapReduce存在的问题" class="headerlink" title="1.1 Hadoop 1.x中MapReduce存在的问题"></a>1.1 Hadoop 1.x中MapReduce存在的问题</h3><p>Hadoop 1.x时，还没有YARN。MapReduce架构采用的是Master&#x2F;Slave架构，一个JobTracker带多个TaskTracker。提交作业时客户端直接与MapReduce的JobTracker进行通信。</p>
 <ul>
 <li>JobTracker主要的功能是资源的管理与作业的调度。</li>
 <li>TaskTracker<ul>
@@ -271,9 +286,9 @@
 <p>我们如果不同的作业类型（Hadoop、Spark、MPI）如果使用不同的集群，会需要更多的资源，同时资源利用率也比较低、运维需要维护多个集群，还存在跨网络的问题。</p>
 <p>如何将多种作业类型放在同一个集群，共享数据、计算资源，成为日益迫切的诉求。</p>
 <h3 id="1-3-YARN的诞生"><a href="#1-3-YARN的诞生" class="headerlink" title="1.3 YARN的诞生"></a>1.3 YARN的诞生</h3><p>基于上述两节，催生了YARN。可以在YARN上运行多种不同的计算框架。不同计算框架可以共享同一个HDFS集群上的数据，享受整体的资源调度。</p>
-<p>所谓的多种框架运行在YARN，就是常说的xxx on YARN，比如Spark/MapReduce/Flink on YARN. xxx on YARN的好处：与其他计算框架共享集群资源，按资源需要分配，进而提高集群资源的利用率。</p>
+<p>所谓的多种框架运行在YARN，就是常说的xxx on YARN，比如Spark&#x2F;MapReduce&#x2F;Flink on YARN. xxx on YARN的好处：与其他计算框架共享集群资源，按资源需要分配，进而提高集群资源的利用率。</p>
 <p><img src="https://liulixiang1988.github.io/images/2021-05-19-yarn-2.png" alt="resource usage"></p>
-<h2 id="2-YARN概述"><a href="#2-YARN概述" class="headerlink" title="2. YARN概述"></a>2. YARN概述</h2><p>官网地址：<a href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html</a></p>
+<h2 id="2-YARN概述"><a href="#2-YARN概述" class="headerlink" title="2. YARN概述"></a>2. YARN概述</h2><p>官网地址：<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html</a></p>
 <ol>
 <li>YARN的名称其实是Yet Another Resource Negoitiator的首字母缩写；</li>
 <li>YARN是一个<strong>通用</strong>的资源管理系统；</li>
@@ -299,7 +314,7 @@
 <ol>
 <li>每个应用程序对应一个：MapReduce、Spark，负责应用程序的管理；</li>
 <li>为应用程序向Resource Manager申请资源(core、memory)，分配给内部task；</li>
-<li>需要与Node Manager通信：启动/停止task，task是运行在container里面，Application Master也运行在container里面。</li>
+<li>需要与Node Manager通信：启动&#x2F;停止task，task是运行在container里面，Application Master也运行在container里面。</li>
 </ol>
 <p><strong>Container:</strong></p>
 <ol>
@@ -322,7 +337,7 @@
 <li>Node Manager为Application Master创建任务对应的container。</li>
 </ol>
 <p>上述流程是一个通用YARN任务流程，只需要按照YARN接口实现不同的Application Master，比如实现Map Reduce Application Master，或者Spark Application Master。</p>
-<h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><p><a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#YARN_on_a_Single_Node" target="_blank" rel="noopener">官方参考</a></p>
+<h2 id="5-YARN环境搭建"><a href="#5-YARN环境搭建" class="headerlink" title="5. YARN环境搭建"></a>5. YARN环境搭建</h2><p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#YARN_on_a_Single_Node">官方参考</a></p>
 <h3 id="5-1-配置YARN"><a href="#5-1-配置YARN" class="headerlink" title="5.1 配置YARN"></a>5.1 配置YARN</h3><p><code>etc/hadoop/mapred-site.xml</code>: 指定map reduce跑在yarn之上。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -334,7 +349,7 @@
 <h3 id="5-3-验证"><a href="#5-3-验证" class="headerlink" title="5.3 验证"></a>5.3 验证</h3><p>方法1：jps:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liulixiang@DESKTOP-34LMJFE:/mnt/d/app/hadoop-2.10.1/sbin$ jps -l</span><br><span class="line">1597 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">1759 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br></pre></td></tr></table></figure>
 
-<p>方法2：访问：ResourceManager - <a href="http://localhost:8088/" target="_blank" rel="noopener">http://localhost:8088/</a></p>
+<p>方法2：访问：ResourceManager - <a target="_blank" rel="noopener" href="http://localhost:8088/">http://localhost:8088/</a></p>
 <h3 id="5-4-停止"><a href="#5-4-停止" class="headerlink" title="5.4 停止"></a>5.4 停止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./stop-yarn.sh</span><br></pre></td></tr></table></figure>
 
 <h2 id="6-提交作业到YARN上执行"><a href="#6-提交作业到YARN上执行" class="headerlink" title="6. 提交作业到YARN上执行"></a>6. 提交作业到YARN上执行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-examples-2.10.1.jar</span><br></pre></td></tr></table></figure>
@@ -400,7 +415,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -418,7 +433,6 @@
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
   </div>
-  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -429,34 +443,10 @@
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"837d37861fde65745076ac5e8a3ed465"}</script>
-<script src="/js/third-party/comments/gitalk.js"></script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liulixiang1988","repo":"liulixiang1988.github.io","client_id":"989434836f2531f84f64","client_secret":"ebc11cd18d9234f4902824f90312bdc1fdc5a9b2","admin_user":"liulixiang1988","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b3b55c370ad60a40f749439ae5b4269c"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
 
 </body>
 </html>

@@ -3,6 +3,7 @@
 const pjax = new Pjax({
   selectors: [
     'head title',
+    'meta[property="og:title"]',
     'script[type="application/json"]',
     // Precede .main-inner to prevent placeholder TOC changes asap
     '.post-toc-wrap',
@@ -11,7 +12,7 @@ const pjax = new Pjax({
     '.pjax'
   ],
   switches: {
-    '.post-toc-wrap': function(oldWrap, newWrap) {
+    '.post-toc-wrap'(oldWrap, newWrap) {
       if (newWrap.querySelector('.post-toc')) {
         Pjax.switches.outerHTML.call(this, oldWrap, newWrap);
       } else {
@@ -25,7 +26,8 @@ const pjax = new Pjax({
   },
   analytics: false,
   cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
+  // scrollTo accepts a number (vertical offset), a number array ([x, y]), or false (do not scroll).
+  scrollTo : CONFIG.bookmark.enable ? false : 0
 });
 
 document.addEventListener('pjax:success', () => {
@@ -33,13 +35,19 @@ document.addEventListener('pjax:success', () => {
   NexT.boot.refresh();
   // Define Motion Sequence & Bootstrap Motion.
   if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      // Add sidebar-post-related transition.
-      .add(NexT.motion.middleWares.sidebar)
-      .bootstrap();
+    try {
+      NexT.motion.integrator
+        .init()
+        .add(NexT.motion.middleWares.subMenu)
+        // Add sidebar-post-related transition.
+        .add(NexT.motion.middleWares.sidebar)
+        .add(NexT.motion.middleWares.postList)
+        .bootstrap();
+    } catch (error) {
+      console.warn('NexT Motion Error, fallback to static mode', error);
+      document.body.classList.remove('use-motion');
+      CONFIG.motion.enable = false;
+    }
   }
   if (CONFIG.sidebar.display !== 'remove') {
     const hasTOC = document.querySelector('.post-toc:not(.placeholder-toc)');
@@ -48,3 +56,5 @@ document.addEventListener('pjax:success', () => {
     NexT.utils.updateSidebarPosition();
   }
 });
+
+if (!window.pjax) window.pjax = pjax;
