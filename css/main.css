@@ -1246,7 +1246,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #ff3c06;
+  background: #74e42f;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2404,14 +2404,6 @@ ul.breadcrumb li:last-child {
   border-bottom-color: #111;
   color: #111;
 }
-.gt-header a,
-.gt-comments a,
-.gt-popup a {
-  border-bottom: 0;
-}
-.gt-container .gt-popup .gt-action.is--active::before {
-  top: 0.7em;
-}
 mark.search-keyword {
   background: transparent;
   border-bottom: 1px dashed #ff2a2a;
@@ -2570,6 +2562,10 @@ header.header {
   .sidebar-active .footer-fixed {
     left: 320px;
   }
+}
+.giscus {
+  max-width: unset;
+  box-sizing: border-box;
 }
 @font-face {
   font-family: "iconfont";
